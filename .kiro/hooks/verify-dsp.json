@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Verify DSP core",
+  "description": "Run the dsp-core unit tests whenever a file in crates/dsp-core changes. Note: cargo test runs local code (tests, and build.rs or proc macros if present). scripts/check-no-buildrs.mjs first fails the hook if crates/dsp-core has build.rs or proc-macro dependencies.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["crates/dsp-core/**/*.rs", "crates/dsp-core/Cargo.toml"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "node scripts/check-no-buildrs.mjs && cargo test --manifest-path crates/dsp-core/Cargo.toml"
+  }
+}

@@ -1,0 +1,6 @@
+#!/bin/sh
+# Template only. To use it, copy this file to .git/hooks/pre-push and make it executable.
+# It runs the full local gate and blocks the push when any stage fails.
+set -e
+cd "$(git rev-parse --show-toplevel)"
+exec npm run verify:all

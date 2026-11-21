@@ -1,0 +1,24 @@
+node_modules/
+dist/
+target/
+pkg/
+.zonked-state.json
+.zonked-signals.json
+.zonked-verify.json
+.zonked-build.json
+*.zip
+.DS_Store
+.work/
+coverage/
+# Working screenshots from earlier rounds (13 MB). media/ux3/ is the committed set.
+media/ux/
+media/ux2/
+.privacy-terms
+.zonked-*.json
+.env
+.env.*
+*.bundle
+*.tgz
+media/ux*/
+test-results/
+playwright-report/

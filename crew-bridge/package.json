@@ -1,0 +1,20 @@
+{
+  "name": "zonked-bridge",
+  "version": "0.1.0",
+  "description": "Loopback bridge that serves the Zonked crew state over Server-Sent Events.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "bin": { "zonked-bridge": "dist/src/cli.js" },
+  "files": ["dist/src", "scripts", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/test/*.test.js",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.0"
+  }
+}

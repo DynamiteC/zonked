@@ -1,0 +1,171 @@
+.app {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: var(--s3) var(--s4);
+  display: grid;
+  gap: var(--s3);
+  overflow-x: clip;
+}
+
+.top {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.top h1 {
+  color: var(--text);
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+}
+
+.tag {
+  color: var(--muted);
+  margin: 0;
+  flex: 1;
+}
+
+.help-wrap {
+  position: relative;
+}
+
+.popover {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.4rem;
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1rem;
+  z-index: 10;
+  min-width: 240px;
+}
+
+.popover ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+}
+
+.col-left,
+.col-right {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.check {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* Narrow: the drawer is a bottom sheet; leave room so the page can scroll above it. */
+.app.has-drawer {
+  padding-bottom: calc(min(68vh, 620px) + 1rem);
+}
+
+/* Wide screens: mascot and controls on the left, readouts and scope on the right. */
+@media (min-width: 960px) {
+  .main {
+    grid-template-columns: 320px minmax(0, 1fr);
+  }
+
+  .hud dl {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  }
+
+  /* An open drawer pushes the page left instead of covering the HUD and scope. */
+  .app.has-drawer {
+    --drawer-w: 440px;
+    margin: 0 var(--drawer-w) 0 auto;
+    padding-bottom: 1rem;
+    max-width: min(1240px, calc(100vw - var(--drawer-w)));
+  }
+
+  .app.has-drawer .main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .app.has-drawer .main {
+    grid-template-columns: 240px minmax(0, 1fr);
+  }
+}
+
+.viz {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 0.5rem;
+}
+
+.scope {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.foot {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .top h1 {
+    font-size: 1.1rem;
+  }
+
+  .top .tag {
+    display: none;
+  }
+
+  .top {
+    gap: 0.4rem;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .top .toolbar {
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+    margin-left: auto;
+  }
+
+  .top .btn {
+    padding: 0.3rem 0.45rem;
+    font-size: 0.85rem;
+  }
+}

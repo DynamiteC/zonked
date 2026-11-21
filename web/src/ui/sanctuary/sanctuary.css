@@ -1,0 +1,191 @@
+/* Sanctuary panel. Sharp edges (border-radius 0), 1px hairlines, tabular numbers. Classes start with sx-.
+   Gold and teal mark only the primary action and the active state. No animation at all, so reduced motion needs no special case. */
+.sx-root {
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+  padding: var(--s3, 12px);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  border-radius: 0;
+  background: var(--panel, #101218);
+  overflow-wrap: anywhere;
+}
+.sx-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2, 8px);
+  margin-bottom: var(--s3, 12px);
+}
+.sx-title {
+  font-size: 1.1rem;
+}
+.sx-h {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.sx-h4 {
+  margin: 0 0 var(--s2, 8px);
+  font-size: 0.95rem;
+}
+.sx-stack {
+  display: grid;
+  gap: var(--s3, 12px);
+  min-width: 0;
+}
+.sx-stack p,
+.sx-stack ul {
+  margin: 0;
+}
+.sx-card {
+  display: grid;
+  gap: var(--s2, 8px);
+  padding: var(--s3, 12px);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  border-radius: 0;
+  min-width: 0;
+}
+.sx-note {
+  padding: var(--s2, 8px) var(--s3, 12px);
+  border-left: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  color: var(--muted, #a9afbd);
+}
+.sx-muted {
+  color: var(--muted, #a9afbd);
+  font-size: 0.9rem;
+}
+.sx-block {
+  display: block;
+}
+.sx-list {
+  padding-left: 1.1rem;
+  display: grid;
+  gap: var(--s1, 4px);
+}
+.sx-rows {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--s2, 8px);
+}
+.sx-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s2, 8px);
+  padding: var(--s2, 8px);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  border-radius: 0;
+  min-width: 0;
+}
+.sx-wrap {
+  flex-wrap: wrap;
+}
+.sx-row[aria-current='true'] {
+  border-color: var(--mint, #00e5a8);
+}
+.sx-grow {
+  flex: 1 1 10rem;
+  min-width: 0;
+}
+.sx-label {
+  font-size: 0.9rem;
+  color: var(--muted, #a9afbd);
+}
+.sx-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  border-radius: 0;
+  background: var(--bg, #0a0b0f);
+  color: var(--text, #f2f4f8);
+  font: inherit;
+}
+.sx-check {
+  display: flex;
+  align-items: center;
+  gap: var(--s2, 8px);
+  min-height: 44px;
+}
+.sx-fieldset {
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  border-radius: 0;
+  padding: var(--s2, 8px);
+  margin: 0;
+}
+.sx-primary {
+  border-color: var(--gold, #ffe600);
+}
+.sx-notice:empty {
+  display: none;
+}
+.sx-notice {
+  margin-bottom: var(--s2, 8px);
+  color: var(--muted, #a9afbd);
+}
+.sx-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: var(--s2, 8px);
+  margin: 0;
+}
+.sx-stat {
+  padding: var(--s2, 8px);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  border-radius: 0;
+}
+.sx-stat dt {
+  color: var(--muted, #a9afbd);
+  font-size: 0.8rem;
+}
+.sx-stat dd {
+  margin: 0;
+  font-size: 1.3rem;
+  font-variant-numeric: tabular-nums;
+}
+.sx-badge {
+  font-size: 0.8rem;
+  color: var(--muted, #a9afbd);
+  font-variant-numeric: tabular-nums;
+}
+.sx-badge.sx-on {
+  color: var(--mint, #00e5a8);
+}
+
+.sx-root input {
+  border-radius: 0;
+}
+/* Chromium draws native radios round (UA border-radius 50%). Draw a square one instead, same size and focus ring. */
+.sx-root input[type='radio'] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border: 1px solid var(--muted, #a9afbd);
+  border-radius: 0;
+  background: var(--bg, #0a0b0f);
+  display: inline-grid;
+  place-content: center;
+  flex: none;
+}
+.sx-root input[type='radio']:checked {
+  border-color: var(--mint, #00e5a8);
+  box-shadow: inset 0 0 0 4px var(--bg, #0a0b0f);
+  background: var(--mint, #00e5a8);
+}
+.sx-root input[type='file']::file-selector-button {
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  border-radius: 0;
+  background: var(--panel, #101218);
+  color: var(--text, #f2f4f8);
+  padding: 0.4rem 0.8rem;
+  margin-right: 0.6rem;
+  font: inherit;
+}
+
+/* The drawer already draws the frame. */
+.drawer .sx-root {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}

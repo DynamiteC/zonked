@@ -1,0 +1,8 @@
+# Zonked Library: Design (summary)
+
+- DSP: new modules `layers/` (lofi, instrument, pad, chime, perc) driven by the param block (contracts C1). Voices are fixed arrays (max 4 instrument voices, 4 pad oscillators with a shared detune table, 6 chime partials, 1 perc voice). Scheduling uses a sample counter and a small Xoshiro stream so notes are deterministic. Filters are one-pole or biquad with fixed state. Layer mix budget: lofi 0.25, instrument 0.25, pad 0.25, chimes 0.15, perc 0.25, summed with the tone bed scaled by 0.6, then master gain, then limiter.
+- Catalog: a DSL of archetypes x parameter grids generates templates. Archetypes per category define stage shapes (ramp down, plateau, wave, step ladder). Names come from deterministic word tables. A seed list maps the 21 Android programs and 3 Gnaural schedules to templates (`source`). A test asserts count, uniqueness, category coverage and bounds.
+- Recommender: score = situation match (40) + vibe match (15) + time fit (15) + time-of-day fit (10) + device fit (10) + sensitivity fit (10) minus penalties. Ties break by id. Reasons are filled from `reasonTemplate` and matched features.
+- Player: timers run on the injected clock at 10 Hz tick. Sleep fade and Pomodoro modulate a `gainScale` and `beatBias` applied after the event voice.
+- UI: lazy chunks for Editor, Catalog browser, Recommender, Mixer. Catalog data itself is a lazy chunk. Mascot 3D uses CSS perspective and transforms updated on rAF, layers by SVG group translateZ-like parallax.
+- Budget: `web/scripts/check-bundle.mjs` gzips first-load JS and CSS from dist/index.html's module graph and fails above 120 KB.

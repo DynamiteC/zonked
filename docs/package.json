@@ -1,0 +1,14 @@
+{
+  "name": "zonked-docs",
+  "private": true,
+  "license": "MIT",
+  "version": "1.0.0",
+  "description": "Architecture docs and pitch deck build for Zonked.",
+  "type": "module",
+  "scripts": {
+    "build:deck": "node build-deck.mjs"
+  },
+  "devDependencies": {
+    "pptxgenjs": "^3.12.0"
+  }
+}

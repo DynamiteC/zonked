@@ -1,0 +1,37 @@
+Zonked
+Copyright (c) 2026 Zonked contributors
+
+Zonked original code, documentation and templates are licensed under the MIT
+License (see LICENSE).
+
+Third-party material is kept apart in legacy/ as reference only. It is not
+imported, compiled, bundled or shipped by the app.
+
+1. legacy/android
+   "Binaural Beats Therapy" by Giorgio Regni, an Android app published as the
+   GitHub project GiorgioRegni/Binaural-Beats. License: GNU General Public
+   License version 3, full text in legacy/android/LICENSE. The files in that
+   folder are Giorgio Regni's work, not Zonked's, and stay under the GPLv3.
+
+2. legacy/gnaural
+   Three binaural beat schedules in the Gnaural XML format (Power Nap, a
+   meditation schedule for airplane travel, and "Arrive sharp"). Each file
+   names Gnaural as its source (see the gnaural.sourceforge.net link in the
+   file header) and carries no license text of its own. They came with the
+   GPLv3 Android app above. Treat them as third-party reference material.
+   Gnaural itself is free software published under the GPL.
+
+3. Templates derived from those sources
+   21 templates in web/src/catalog/seeds.ts have source "android" and 3 have
+   source "gnaural". They re-express published frequency and duration values
+   only (beat Hz, step lengths, noise use). They copy no GPLv3 source code and
+   no descriptive text. Template names and descriptions are original wording.
+   A beat frequency or a duration is a number, not expression.
+
+4. Lineage
+   Zonked resurrects the 1998 SBaGen sequence idea and the author's 2018
+   final-year web application, binaural beats research and yellow mask
+   mascot. The 2018 work was created after studying Giorgio Regni's GPLv3
+   Android app, which is credited here.
+
+Zonked is not a medical device.

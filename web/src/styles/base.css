@@ -1,0 +1,155 @@
+:root {
+  --bg: #0a0b0f;
+  --panel: #101218;
+  --line: rgba(255, 255, 255, 0.12);
+  --text: #f2f4f8;
+  --muted: #a9afbd;
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --gold: #ffe600;
+  --amber: #ffb800;
+  --mint: #00e5a8;
+  --danger: #ff6b6b;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+h1,
+h2 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+
+.btn {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.9rem;
+  font: inherit;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.btn:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn[aria-pressed='true'] {
+  border-color: var(--mint);
+  color: var(--mint);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--gold);
+  border-color: var(--amber);
+  color: #0a0b0f;
+  font-weight: 700;
+}
+
+.btn-primary:hover {
+  background: var(--amber);
+}
+
+select,
+input[type='text'],
+input[type='number'],
+input:not([type]),
+textarea {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--line);
+  padding: 0.5rem;
+  font: inherit;
+  min-height: 44px;
+}
+
+.skip {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--gold);
+  color: #0a0b0f;
+  padding: 0.5rem 1rem;
+  z-index: 20;
+}
+
+.skip:focus {
+  left: 0;
+}
+
+kbd {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 0 0.35rem;
+  font-family: var(--mono);
+}
+
+/* Sharp theme: no rounding anywhere, flat surfaces. */
+*,
+*::before,
+*::after {
+  border-radius: 0;
+}
+
+[role='tooltip'] {
+  border-radius: 0;
+}
+
+input[type='range']::-webkit-slider-thumb,
+input[type='range']::-moz-range-thumb,
+input[type='range']::-webkit-slider-runnable-track,
+input[type='range']::-moz-range-track {
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  border-radius: 0;
+}
+
+.btn[aria-pressed='true'] {
+  border-color: var(--mint);
+}
+
+.btn-primary,
+.btn-primary:hover {
+  border-color: var(--amber);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

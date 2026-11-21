@@ -1,0 +1,13 @@
+{
+  "name": "zonked",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "verify:all": "node scripts/verify-all.mjs",
+    "demo:crew": "node scripts/demo-crew.mjs",
+    "check:chars": "node scripts/check-chars.mjs",
+    "check:sizes": "node scripts/check-sizes.mjs",
+    "test:scripts": "node --test scripts/"
+  }
+}

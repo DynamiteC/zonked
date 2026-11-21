@@ -1,0 +1,22 @@
+[package]
+name = "dsp-core"
+version = "0.1.0"
+edition = "2021"
+description = "Zonked no_std binaural, monaural and isochronic DSP engine with a plain C ABI"
+license = "MIT"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+doctest = false
+
+[dependencies]
+
+[profile.release]
+panic = "abort"
+lto = true
+opt-level = 3
+codegen-units = 1
+
+[profile.test]
+opt-level = 2

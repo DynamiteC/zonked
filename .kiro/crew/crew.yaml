@@ -1,0 +1,94 @@
+# Zonked Kiro Crew workflow manifest.
+# Run these three agents next to your coding sessions. They talk only through
+# files in the project root, so no agent needs network access.
+#
+#   burnout-sentinel  --writes-->  .zonked-signals.json   (raw session signals + score)
+#   acoustic-sequencer --reads--> .zonked-signals.json, --writes--> .zonked-state.json
+#   crew-bridge (CLI)  --reads-->  .zonked-state.json, --serves--> http://127.0.0.1:43210
+#   dsp-verifier       --reads-->  crates/dsp-core, --writes--> .zonked-verify.json
+version: 1
+name: zonked
+description: Acoustic recovery companion that prevents AI-coding burnout.
+
+project:
+  root: .
+  state_file: .zonked-state.json
+  signals_file: .zonked-signals.json
+  verify_file: .zonked-verify.json
+
+bridge:
+  host: 127.0.0.1
+  port: 43210
+  # To allow a hosted copy of the page, add one --origin per site, for example:
+  #   --origin https://your-site.example
+  # Demo only: --min-transition 5 lowers the 30 s transition floor. Never use it in real sessions.
+  command: npx --prefix crew-bridge zonked-bridge --state .zonked-state.json --signals .zonked-signals.json
+
+agents:
+  burnout-sentinel:
+    instructions: agents/burnout-sentinel.md
+    role: Measure session intensity and compute a 0-100 burnout score.
+    trigger:
+      cron: "*/5 * * * *"        # every 5 minutes while a session is open
+    reads: [".git", "package.json", "crates/dsp-core/Cargo.toml"]
+    writes: [".zonked-signals.json"]
+    tools: [read, write, shell]
+    # Scoped write: exactly one output path plus its temp file. No other path is writable.
+    # Writes are direct (write tool, then runner-side rename if supported); the bridge
+    # tolerates a partial read through its validation and debounce.
+    write_allow:
+      - ".zonked-signals.json"
+      - ".zonked-signals.json.tmp"
+    # Exact commands only. No globs, no extra flags, no shell operators.
+    shell_allow:
+      - "git --no-pager log --no-ext-diff --no-textconv --since=60.minutes.ago --pretty=%ct"
+      - "git --no-pager log --no-ext-diff --no-textconv --since=12.hours.ago --pretty=%ct"
+      - "git --no-pager status --porcelain"
+      - "date -u +%s"
+
+  acoustic-sequencer:
+    instructions: agents/acoustic-sequencer.md
+    role: Turn the burnout score into a bounded .sbg transition plan.
+    trigger:
+      on_file_change: ".zonked-signals.json"
+    reads: [".zonked-signals.json", "web/src/sbg/presets/"]
+    writes: [".zonked-state.json"]
+    tools: [read, write]
+    write_allow:
+      - ".zonked-state.json"
+      - ".zonked-state.json.tmp"
+
+  dsp-verifier:
+    instructions: agents/dsp-verifier.md
+    role: Audit DSP code against the hearing-safety and no_std rules.
+    trigger:
+      on_file_change: "crates/dsp-core/**"
+    reads: ["crates/dsp-core/", ".kiro/steering/zonked-standards.md"]
+    writes: [".zonked-verify.json"]
+    tools: [read, write, shell]
+    write_allow:
+      - ".zonked-verify.json"
+      - ".zonked-verify.json.tmp"
+    # cargo test runs local code (build.rs, proc macros, tests). Guarded by
+    # scripts/check-no-buildrs.mjs; see docs/AUDIT-SECURITY.md M1.
+    shell_allow:
+      - "node scripts/check-no-buildrs.mjs"
+      - "cargo test --manifest-path crates/dsp-core/Cargo.toml"
+      - "cargo clippy --manifest-path crates/dsp-core/Cargo.toml --all-targets -- -D warnings"
+
+states:
+  # Burnout score bands map to acoustic targets. Thresholds are hysteretic:
+  # the sequencer leaves a band only after the score stays past the edge
+  # for 2 consecutive readings.
+  focus:      { score: [0, 39],   preset: deep-focus,        beat_hz: 40,  carrier_hz: 200 }
+  flow:       { score: [40, 59],  preset: flow-state,        beat_hz: 18,  carrier_hz: 220 }
+  recovery:   { score: [60, 79],  preset: burnout-reset,     beat_hz: 10,  carrier_hz: 200 }
+  decompress: { score: [80, 100], preset: burnout-reset,     beat_hz: 6,   carrier_hz: 180 }
+
+safety:
+  # Mirrors .kiro/steering/zonked-standards.md. Agents must never exceed these.
+  carrier_hz: [20, 1500]
+  beat_hz: [0.5, 40]
+  master_gain_max: 0.85
+  min_transition_seconds: 30   # enforced by the bridge (clamp 30-600); web keeps a hard floor of 5
+  max_state_writes_per_minute: 2
