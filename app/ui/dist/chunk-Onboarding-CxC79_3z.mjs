@@ -1,7 +1,7 @@
 import { jsxs as d, jsx as e, Fragment as A } from "react/jsx-runtime";
 import { useId as O, useMemo as _, useState as f, useRef as G, useEffect as R, Suspense as x, lazy as P } from "react";
-import { C as c, b as B, G as V, U as z, V as F } from "./chunk-crewLink-BlI22vqq.mjs";
-import { r as j, p as U, D as W, S as q, G as Q, T as Y, a as $ } from "./chunk-App-DWMtU3Ve.mjs";
+import { C as c, b as B, G as V, V as z, W as F } from "./chunk-crewLink-d4ILclVW.mjs";
+import { r as W, p as j, D as q, S as Q, G as U, T as Y, a as $ } from "./chunk-App-CWvqLQkf.mjs";
 function C({ legend: t, options: l, value: n, onChange: i }) {
   const o = O();
   return /* @__PURE__ */ d("fieldset", { className: "c-choices", children: [
@@ -18,7 +18,7 @@ function C({ legend: t, options: l, value: n, onChange: i }) {
 const H = 1e4, J = (t) => t.replace(/-\d+$/, ""), K = 5;
 function S(t, l = /* @__PURE__ */ new Date()) {
   const n = /* @__PURE__ */ new Set(), i = [];
-  for (const o of j(U(t, l), 12)) {
+  for (const o of W(j(t, l), 12)) {
     const a = J(o.template.id);
     if (!n.has(a) && (n.add(a), i.push({ template: o.template, reason: B(o.reasons[0] ?? o.template.reasonTemplate), score: o.score }), i.length === 3))
       break;
@@ -59,14 +59,14 @@ function Z({ profile: t, playing: l, onPreview: n, onStop: i, onStart: o }) {
     }, children: c.start }) })
   ] });
 }
-const ee = P(() => import("./chunk-mascot-CbzyLSRe.mjs").then((t) => ({ default: t.CalmMascot }))), y = (t, l) => t.map((n) => ({ value: n, label: l[n] })), te = { 1: c.goalTitle, 2: c.whenTitle, 3: c.listenTitle };
+const ee = P(() => import("./chunk-mascot-BLD5w-pT.mjs").then((t) => ({ default: t.CalmMascot }))), y = (t, l) => t.map((n) => ({ value: n, label: l[n] })), te = { 1: c.goalTitle, 2: c.whenTitle, 3: c.listenTitle };
 function E({ mood: t, size: l, reduced: n }) {
   return /* @__PURE__ */ e("div", { className: "c-hero", children: /* @__PURE__ */ e(x, { fallback: null, children: /* @__PURE__ */ e(ee, { mood: t, size: l, reducedMotion: n }) }) });
 }
 function ne({ step: t, answers: l, set: n, onBack: i, onNext: o, onSkip: a }) {
   return /* @__PURE__ */ d(A, { children: [
     /* @__PURE__ */ e("h1", { className: "c-h1", children: te[t] }),
-    t === 1 && /* @__PURE__ */ e(C, { legend: c.goalTitle, options: y(Q, V), value: l.goal, onChange: n.goal }),
+    t === 1 && /* @__PURE__ */ e(C, { legend: c.goalTitle, options: y(U, V), value: l.goal, onChange: n.goal }),
     t === 2 && /* @__PURE__ */ e(C, { legend: c.whenTitle, options: y(Y, z), value: l.when, onChange: n.when }),
     t === 3 && /* @__PURE__ */ e(C, { legend: c.listenTitle, options: y($, F), value: l.device, onChange: n.device }),
     t === 3 && /* @__PURE__ */ e("p", { className: "c-note", children: c.listenNote }),
@@ -78,7 +78,7 @@ function ne({ step: t, answers: l, set: n, onBack: i, onNext: o, onSkip: a }) {
   ] });
 }
 const L = ({ onClick: t }) => /* @__PURE__ */ e("button", { type: "button", className: "c-btn c-link", onClick: t, children: c.back });
-function ie({ playing: t, reduced: l, onAccept: n, onPreview: i, onStop: o, onFinish: a, initial: p = W }) {
+function ie({ playing: t, reduced: l, onAccept: n, onPreview: i, onStop: o, onFinish: a, initial: p = q }) {
   const [m, h] = f(1), [b, u] = f(!1), [T, N] = f(p.goal), [v, g] = f(p.timeOfDay), [s, D] = f(p.device), w = { ...p, goal: T, timeOfDay: v, device: s, createdAt: Date.now() }, I = () => {
     n();
     const k = b ? S(w)[0] : X(w);
@@ -104,7 +104,7 @@ function ie({ playing: t, reduced: l, onAccept: n, onPreview: i, onStop: o, onFi
       }
     ),
     m === 4 && /* @__PURE__ */ e(E, { mood: "idle", size: 120, reduced: l }),
-    m === 4 && /* @__PURE__ */ e(q, { onAccept: I }),
+    m === 4 && /* @__PURE__ */ e(Q, { onAccept: I }),
     m === 4 && /* @__PURE__ */ e(L, { onClick: M }),
     m === 5 && /* @__PURE__ */ e(Z, { profile: w, playing: t, onPreview: i, onStop: o, onStart: (k) => a(w, k) }),
     m === 5 && /* @__PURE__ */ e(L, { onClick: () => h(3) })

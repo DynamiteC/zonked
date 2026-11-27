@@ -429,7 +429,7 @@ back:  200+9/0.4 pink/10    # coming back up
     description: "A 15 minute SBaGen-style demo with timed ramps.",
     sbg: dn
   }
-], Vs = {
+], Ys = {
   brand: "Zonked",
   promise: "Free. Private. No account.",
   welcomeTitle: "Calm sound, made for you.",
@@ -616,30 +616,31 @@ back:  200+9/0.4 pink/10    # coming back up
   mineRemoveAll: "Remove all my sounds",
   mineAdded: "Added. It stays on this device.",
   offline: "Zonked works offline. Nothing to do.",
+  unsupported: "This browser cannot play Zonked sound. Try a recent Chrome, Edge, Firefox or Safari.",
   errorAudio: "Sound could not start. Tap Play to try again.",
   errorStorage: "We could not save this on your device. Your session still works.",
   loading: "Loading",
   nav: ["Today", "Sounds", "Crew", "You"],
   sounds: (t) => `${t} ${t === 1 ? "sound" : "sounds"}`
-}, Ys = {
+}, Gs = {
   focus: "Focus",
   calm: "Calm down",
   sleep: "Sleep",
   study: "Study",
   recover: "Recover after work",
   curious: "Just curious"
-}, Gs = {
+}, Zs = {
   morning: "Morning",
   afternoon: "Afternoon",
   evening: "Evening",
   night: "Night",
   anytime: "Anytime"
-}, Zs = {
+}, Xs = {
   headphones: "Headphones",
   speakers: "Speakers",
   bluetooth: "Bluetooth",
   unsure: "Not sure"
-}, Xs = [
+}, Js = [
   { id: "deep-work", label: "Focus", mood: "Steady and quiet", icon: "target" },
   { id: "adhd-focus", label: "Steady attention", mood: "Even and plain", icon: "wave" },
   { id: "ai-burnout", label: "Recover", mood: "Slow and soft", icon: "leaf" },
@@ -648,14 +649,14 @@ back:  200+9/0.4 pink/10    # coming back up
   { id: "lucid-dream", label: "Dream", mood: "Drifting", icon: "cloud" },
   { id: "meditate", label: "Meditate", mood: "Open and still", icon: "lotus" },
   { id: "quick-reset", label: "Quick reset", mood: "Short and light", icon: "bolt" }
-], Js = {
+], Qs = {
   strong: "Several studies exist.",
   mixed: "Studies disagree.",
   preliminary: "Early, small studies.",
   limited: "Very little research.",
   preference: "People simply like it."
 };
-function Qs(t) {
+function ei(t) {
   return t >= 5 && t < 12 ? "Good morning." : t >= 12 && t < 17 ? "Good afternoon." : t >= 17 && t < 21 ? "Good evening." : "Hello, night owl.";
 }
 const hn = {
@@ -664,12 +665,12 @@ const hn = {
   recovery: "Your load is high",
   decompress: "Your load is very high"
 }, De = (t) => Number.isInteger(t) ? String(t) : t.toFixed(1);
-function ei(t) {
+function ti(t) {
   if (t.why !== void 0) return t.why;
   const { level: e, score: n } = t.burnout, { beatHz: s, transitionSec: i } = t.target, r = i < 90 ? `${Math.round(i)} s` : `${Math.round(i / 60)} min`, o = e === "focus" ? `holds a steady ${De(s)} Hz beat` : `eases the beat to ${De(s)} Hz over about ${r}`;
   return `${hn[e]} (score ${Math.round(n)}), so the sound ${o}.`;
 }
-const ti = (t) => {
+const ni = (t) => {
   const e = t.indexOf(". ");
   return e < 0 ? t : t.slice(0, e + 1);
 }, me = "zonked.timer.v1", pn = 2.5, Fe = 0.1, $e = 6, O = { countdownMin: 30, sleepMin: 30, focusMin: 25, breakMin: 5 }, mn = 1, fn = 720, gn = 500, fe = ["none", "countdown", "sleep-fade", "pomodoro"], yn = { kind: "none", running: !1, remainingSec: 0, totalSec: 0 }, Q = (t, e) => typeof t == "number" && Number.isFinite(t) ? Math.min(fn, Math.max(mn, t)) : e;
@@ -1340,10 +1341,10 @@ function Dn(t, e) {
   const i = N(p(t, "createdAt"), 0, e + 864e5, e), r = N(p(t, "updatedAt"), 0, e + 864e5, i);
   return { ...s, v: 1, id: n, name: Pn(p(t, "name"), "My mix"), createdAt: i, updatedAt: r };
 }
-const ni = 3e4, Fn = 30 * 6e4, $n = { state: null, source: "none", changedAtMs: 0, snoozeUntilMs: 0, demoNextAtMs: null };
+const si = 3e4, Fn = 30 * 6e4, $n = { state: null, source: "none", changedAtMs: 0, snoozeUntilMs: 0, demoNextAtMs: null };
 let M = $n, K = null;
-const Le = /* @__PURE__ */ new Set(), si = () => M;
-function ii(t) {
+const Le = /* @__PURE__ */ new Set(), ii = () => M;
+function ri(t) {
   return Le.add(t), () => void Le.delete(t);
 }
 function le(t) {
@@ -1359,7 +1360,7 @@ function Kn(t, e, n = Date.now()) {
 function Un() {
   M.source === "bridge" && le({ ...M, state: null, source: "none", changedAtMs: 0 });
 }
-function ri(t, e = Date.now(), n = Fn) {
+function oi(t, e = Date.now(), n = Fn) {
   K !== null && clearTimeout(K), le({ ...M, snoozeUntilMs: e + n }), K = setTimeout(() => qn(t), n);
 }
 function qn(t) {
@@ -1409,20 +1410,20 @@ let dt = null;
 function Xn(t) {
   dt = t;
 }
-function oi() {
+function ai() {
   return dt;
 }
-const Ee = 0.85, ai = 2, ci = 0.3, li = 0.15, ui = 0.4, Jn = 0.6, qe = 0.95, X = (t, e, n) => t < e ? e : t > n ? n : t;
+const Ee = 0.85, ci = 2, li = 0.3, ui = 0.15, di = 0.4, Jn = 0.6, qe = 0.95, X = (t, e, n) => t < e ? e : t > n ? n : t;
 function Qn(t, e = 0) {
   return Number.isFinite(t) ? X(t, 0, Ee) : X(Number.isFinite(e) ? e : 0, 0, Ee);
 }
 function es(t, e = 0) {
   return Number.isFinite(t) ? X(t, 0, 1) : X(Number.isFinite(e) ? e : 0, 0, 1);
 }
-function di(t) {
+function hi(t) {
   return 1 - Jn * es(t);
 }
-function hi(t) {
+function pi(t) {
   return Qn(t) / Ee;
 }
 function ts(t = 2049) {
@@ -1458,7 +1459,7 @@ function ss() {
     return null;
   }
 }
-function pi() {
+function mi() {
   const [t, e] = Ie(() => Ne(je)), [n, s] = Ie(() => {
     var r;
     return ((r = window.matchMedia) == null ? void 0 : r.call(window, "(prefers-reduced-motion: reduce)").matches) ?? !1;
@@ -1473,7 +1474,7 @@ function pi() {
     Pe(je, r), e(r);
   }, t];
 }
-const is = "" + new URL("assets/worklet-CT8dHE_F.js", import.meta.url).href, rs = new URL(new URL("assets/dsp_core.wasm.json", import.meta.url).href).href, k = {
+const is = "" + new URL("assets/worklet-CT8dHE_F.js", import.meta.url).href, rs = new URL(new URL("assets/dsp_core.wasm.json", import.meta.url).href).href, os = "audio-unsupported", k = {
   carrierHz: { min: 20, max: 1500, def: 200 },
   beatHz: { min: 0.5, max: 40, def: 10 },
   gain: { min: 0, max: 0.85 },
@@ -1512,7 +1513,7 @@ const is = "" + new URL("assets/worklet-CT8dHE_F.js", import.meta.url).href, rs 
   stereoWidth: 29,
   panDepth: 30,
   panRateHz: 31
-}, os = 4 + ae * 4;
+}, as = 4 + ae * 4;
 function S(t, e, n, s) {
   return typeof t != "number" || !Number.isFinite(t) ? s : t < e ? e : t > n ? n : t;
 }
@@ -1547,11 +1548,11 @@ function bt(t) {
   };
 }
 const wt = { binaural: 0, monaural: 1, isochronic: 2 }, vt = { off: 0, white: 1, pink: 2, brown: 3, violet: 4 };
-function as(t, e) {
+function cs(t, e) {
   e[d.lofiLevel] = t.lofiLevel, e[d.lofiWarmth] = t.lofiWarmth, e[d.crackle] = t.crackle, e[d.instLevel] = t.instLevel, e[d.instKind] = t.instKind, e[d.instRootHz] = t.instRootHz, e[d.instScale] = t.instScale, e[d.instBpm] = t.instBpm, e[d.padLevel] = t.padLevel, e[d.padChord] = t.padChord, e[d.padRootHz] = t.padRootHz, e[d.chimeLevel] = t.chimeLevel, e[d.chimeRatePerMin] = t.chimeRatePerMin, e[d.percLevel] = t.percLevel, e[d.percBpm] = t.percBpm, e[d.percPattern] = t.percPattern, e[d.lofiProgression] = t.lofiProgression, e[d.tapeWow] = t.tapeWow, e[d.pianoPedal] = t.pianoPedal, e[d.breathDepth] = t.breathDepth, e[d.breathRateHz] = t.breathRateHz, e[d.stereoWidth] = t.stereoWidth, e[d.panDepth] = t.panDepth, e[d.panRateHz] = t.panRateHz;
 }
-function cs(t, e, n) {
-  return n[d.carrierHz] = pt(t.carrierHz), n[d.beatHz] = mt(t.beatHz), n[d.gain] = ft(t.gain), n[d.mode] = wt[t.mode] ?? 0, n[d.noiseKind] = vt[t.noise] ?? 0, n[d.noiseLevel] = gt(t.noiseLevel), n[d.rampSec] = yt(e), n[d.reserved] = 0, as(bt(t.layers), n), n;
+function ls(t, e, n) {
+  return n[d.carrierHz] = pt(t.carrierHz), n[d.beatHz] = mt(t.beatHz), n[d.gain] = ft(t.gain), n[d.mode] = wt[t.mode] ?? 0, n[d.noiseKind] = vt[t.noise] ?? 0, n[d.noiseLevel] = gt(t.noiseLevel), n[d.rampSec] = yt(e), n[d.reserved] = 0, cs(bt(t.layers), n), n;
 }
 function Ye(t, e) {
   return {
@@ -1564,7 +1565,7 @@ function Ye(t, e) {
     ...t.layers !== void 0 ? { layers: bt(t.layers) } : {}
   };
 }
-class ls {
+class us {
   constructor(e) {
     c(this, "seq");
     c(this, "data");
@@ -1576,11 +1577,11 @@ class ls {
     Atomics.add(this.seq, 0, 1);
   }
 }
-const G = 8192, us = G - 1, St = 8, ds = St + G * 2 * 4;
-function hs(t) {
-  return new SharedArrayBuffer(ds);
+const G = 8192, ds = G - 1, St = 8, hs = St + G * 2 * 4;
+function ps(t) {
+  return new SharedArrayBuffer(hs);
 }
-class ps {
+class ms {
   constructor(e) {
     c(this, "idx");
     c(this, "ring");
@@ -1594,14 +1595,14 @@ class ps {
     const r = Math.min(i, e.length >> 1);
     let o = n - r | 0;
     for (let a = 0; a < r; a++) {
-      const u = (o & us) * 2;
+      const u = (o & ds) * 2;
       e[a * 2] = this.ring[u] ?? 0, e[a * 2 + 1] = this.ring[u + 1] ?? 0, o = o + 1 | 0;
     }
     return Atomics.store(this.idx, 1, n), r;
   }
 }
-const Ge = { read: () => 0 }, te = 2, Ze = 0.3, ms = 1e3;
-class fs {
+const Ge = { read: () => 0 }, te = 2, Ze = 0.3, fs = 1e3;
+class gs {
   constructor() {
     c(this, "_status");
     c(this, "listeners", /* @__PURE__ */ new Set());
@@ -1662,10 +1663,11 @@ class fs {
   }
   async build() {
     const e = new AudioContext({ latencyHint: "interactive" });
-    this.ctx = e, await e.audioWorklet.addModule(is);
+    if (this.ctx = e, typeof AudioWorkletNode > "u" || e.audioWorklet === void 0) throw new Error(os);
+    await e.audioWorklet.addModule(is);
     const n = await fetch(rs);
     if (!n.ok) throw new Error(`wasm fetch failed: ${n.status}`);
-    const s = await n.arrayBuffer(), i = typeof SharedArrayBuffer < "u" && this._status.crossOriginIsolated, r = i ? new SharedArrayBuffer(os) : void 0, o = i ? hs() : void 0, a = new AudioWorkletNode(e, "zonked-dsp", { numberOfInputs: 0, outputChannelCount: [2] }), u = new Promise((b, P) => {
+    const s = await n.arrayBuffer(), i = typeof SharedArrayBuffer < "u" && this._status.crossOriginIsolated, r = i ? new SharedArrayBuffer(as) : void 0, o = i ? ps() : void 0, a = new AudioWorkletNode(e, "zonked-dsp", { numberOfInputs: 0, outputChannelCount: [2] }), u = new Promise((b, P) => {
       a.port.onmessage = (z) => {
         const C = z.data;
         C.type === "ready" ? b() : C.type === "error" ? P(new Error(C.message ?? "worklet init failed")) : this.onWorkletMessage(z.data);
@@ -1675,7 +1677,7 @@ class fs {
     const m = e.createGain();
     m.gain.value = 0;
     const y = e.createGain(), f = e.createWaveShaper();
-    f.curve = ts(), a.connect(y).connect(m).connect(f).connect(e.destination), Xn({ ctx: e, input: m, duck: y }), this.node = a, this.master = m, this.writer = r ? new ls(r) : null, this.tele = o ? new ps(o) : Ge, this.setStatus({ sampleRate: e.sampleRate, usesSharedMemory: i });
+    f.curve = ts(), a.connect(y).connect(m).connect(f).connect(e.destination), Xn({ ctx: e, input: m, duck: y }), this.node = a, this.master = m, this.writer = r ? new us(r) : null, this.tele = o ? new ms(o) : Ge, this.setStatus({ sampleRate: e.sampleRate, usesSharedMemory: i });
   }
   onWorkletMessage(e) {
     if (e.type === "stats") {
@@ -1691,7 +1693,7 @@ class fs {
   }
   pushVoice(e, n) {
     var s;
-    cs(e, n, this.block), this.writer !== null ? this.writer.write(this.block) : (s = this.node) == null || s.port.postMessage({ type: "params", p: new Float32Array(this.block) });
+    ls(e, n, this.block), this.writer !== null ? this.writer.write(this.block) : (s = this.node) == null || s.port.postMessage({ type: "params", p: new Float32Array(this.block) });
   }
   setVoice(e, n) {
     this.voice = Ye(e, this.voice ?? void 0);
@@ -1742,18 +1744,18 @@ class fs {
     return n === null ? Promise.resolve(e) : new Promise((s) => {
       const i = ++this.statsId, r = setTimeout(() => {
         this.pending.delete(i), s(e);
-      }, ms);
+      }, fs);
       this.pending.set(i, { resolve: s, timer: r }), n.port.postMessage({ type: "stats-request", id: i });
     });
   }
 }
-function gs() {
-  return new fs();
+function ys() {
+  return new gs();
 }
 const Xe = 15, ue = (t) => {
   const e = t.mediaSession;
   return e ?? void 0;
-}, ys = [
+}, bs = [
   { src: "/pwa-512x512.png", sizes: "512x512", type: "image/png" },
   { src: "/pwa-192x192.png", sizes: "192x192", type: "image/png" }
 ], Je = [
@@ -1765,7 +1767,7 @@ const Xe = 15, ue = (t) => {
   "seekforward",
   "seekbackward"
 ];
-function bs(t, e) {
+function ws(t, e) {
   switch (t) {
     case "play":
       return () => e.play();
@@ -1805,7 +1807,7 @@ function Mt(t, e = navigator) {
         title: (t == null ? void 0 : t.name) ?? "Zonked",
         artist: "Zonked",
         album: (t == null ? void 0 : t.category) ?? "Acoustic recovery",
-        artwork: ys
+        artwork: bs
       });
     } catch {
     }
@@ -1823,14 +1825,14 @@ function Qe(t, e, n = navigator) {
     } catch {
     }
 }
-function ws(t, e = navigator) {
+function vs(t, e = navigator) {
   const n = ue(e);
   if (n === void 0) return () => {
   };
   Mt(null, e);
   for (const s of Je)
     try {
-      n.setActionHandler(s, bs(s, t));
+      n.setActionHandler(s, ws(s, t));
     } catch {
     }
   return () => {
@@ -1846,7 +1848,7 @@ function ws(t, e = navigator) {
     }
   };
 }
-function vs(t, e = navigator) {
+function Ss(t, e = navigator) {
   const n = ue(e);
   n !== void 0 && (n.playbackState = t ? "playing" : "paused");
 }
@@ -1861,7 +1863,7 @@ async function et(t) {
   }
   return !0;
 }
-function Ss(t) {
+function Ms(t) {
   const e = t.doc ?? (typeof document > "u" ? void 0 : document), n = t.win ?? (typeof window > "u" ? void 0 : window), s = () => {
     var o;
     const r = (e == null ? void 0 : e.hidden) === !0;
@@ -1872,7 +1874,7 @@ function Ss(t) {
   };
 }
 const tt = "zonked.wakeLock";
-class Ms {
+class ks {
   constructor(e = typeof navigator > "u" ? {} : navigator, n = null) {
     c(this, "sentinel", null);
     c(this, "enabled");
@@ -1951,18 +1953,18 @@ class Ms {
     }
   }
 }
-const ks = ["favorites", "milestones"], Ls = "zonked", I = "scripts", _ = "logs", A = "mixes", B = "records", Es = 2, Oe = 80, $ = (t) => typeof t == "number" && Number.isFinite(t);
+const Ls = ["favorites", "milestones"], Es = "zonked", I = "scripts", _ = "logs", A = "mixes", B = "records", Rs = 2, Oe = 80, $ = (t) => typeof t == "number" && Number.isFinite(t);
 function nt(t) {
   if (typeof t != "object" || t === null) return !1;
   const e = t;
   return $(e.id) && typeof e.name == "string" && e.name.length >= 1 && e.name.length <= Oe && typeof e.text == "string" && e.text.length <= T.maxBytes && $(e.updatedAt);
 }
-function Rs(t) {
+function As(t) {
   if (typeof t != "object" || t === null) return !1;
   const e = t;
   return $(e.id) && $(e.startedAt) && $(e.endedAt) && $(e.peakScore) && typeof e.presetId == "string" && e.presetId.length <= Oe;
 }
-function As(t) {
+function Ts(t) {
   const e = { id: t.id, startedAt: t.startedAt, endedAt: t.endedAt, peakScore: t.peakScore, presetId: t.presetId }, n = t, s = n.endKind, i = n.breaks;
   return {
     ...e,
@@ -1980,9 +1982,9 @@ function F(t) {
     t.oncomplete = () => e(), t.onerror = () => n(t.error ?? new Error("IndexedDB transaction failed")), t.onabort = () => n(t.error ?? new Error("IndexedDB transaction aborted"));
   });
 }
-function Ts(t) {
+function Hs(t) {
   return new Promise((e, n) => {
-    const s = t.open(Ls, Es);
+    const s = t.open(Es, Rs);
     s.onupgradeneeded = () => {
       const i = s.result, r = (o) => i.objectStoreNames.contains(o);
       r(I) || i.createObjectStore(I, { keyPath: "id", autoIncrement: !0 }), r(_) || i.createObjectStore(_, { keyPath: "id", autoIncrement: !0 }), r(A) || i.createObjectStore(A, { keyPath: "id" }), r(B) || i.createObjectStore(B);
@@ -1994,7 +1996,7 @@ function kt(t, e) {
   const n = t.trim().slice(0, Oe);
   return n.length > 0 ? n : "Untitled";
 }
-function Hs() {
+function zs() {
   let t = 1;
   const e = [], n = [], s = /* @__PURE__ */ new Map(), i = /* @__PURE__ */ new Map();
   return {
@@ -2029,11 +2031,11 @@ function Hs() {
     }
   };
 }
-function zs(t = globalThis.indexedDB) {
-  const e = Hs();
+function Cs(t = globalThis.indexedDB) {
+  const e = zs();
   if (t === void 0) return e;
   let n = null;
-  const s = () => (n ?? (n = Ts(t).catch(() => null)), n);
+  const s = () => (n ?? (n = Hs(t).catch(() => null)), n);
   return {
     persistent: async () => await s() !== null,
     async saveScript(i, r) {
@@ -2060,7 +2062,7 @@ function zs(t = globalThis.indexedDB) {
     },
     async listLogs(i = 50) {
       const r = await s();
-      return r === null ? e.listLogs(i) : (await x(r.transaction(_).objectStore(_).getAll())).filter(Rs).map(As).sort((a, u) => u.startedAt - a.startedAt).slice(0, i);
+      return r === null ? e.listLogs(i) : (await x(r.transaction(_).objectStore(_).getAll())).filter(As).map(Ts).sort((a, u) => u.startedAt - a.startedAt).slice(0, i);
     },
     async listMixes() {
       const i = await s();
@@ -2084,7 +2086,7 @@ function zs(t = globalThis.indexedDB) {
     },
     async getRecord(i) {
       const r = await s();
-      return r === null || !ks.includes(i) ? e.getRecord(i) : await x(r.transaction(B).objectStore(B).get(i));
+      return r === null || !Ls.includes(i) ? e.getRecord(i) : await x(r.transaction(B).objectStore(B).get(i));
     },
     async setRecord(i, r) {
       const o = await s();
@@ -2100,48 +2102,48 @@ function zs(t = globalThis.indexedDB) {
     }
   };
 }
-const Cs = 5, Ns = (t) => xt(t);
+const Ns = 5, Ps = (t) => xt(t);
 let ne = null;
-const Ps = () => Ne(ns);
-function Os(t, e, n) {
-  ws({
+const Os = () => Ne(ns);
+function xs(t, e, n) {
+  vs({
     // A lock-screen play only resumes after the notice was accepted once.
     play: () => {
-      Ps() && !t.snapshot().playing && t.play();
+      Os() && !t.snapshot().playing && t.play();
     },
     pause: () => void t.stop(),
     stop: () => void t.stop(),
     seekBy: (i) => t.seekBy(i)
-  }), Ss({
+  }), Ms({
     engine: e,
     isPlaying: () => t.snapshot().playing,
     onVisibility: (i) => void n.setHidden(i)
   });
   let s = "";
   t.subscribe((i) => {
-    const r = Math.floor(i.elapsedSec / Cs), o = `${String(i.playing)}|${i.templateId ?? ""}|${i.timer.kind}|${i.timer.phase}|${String(r)}`;
+    const r = Math.floor(i.elapsedSec / Ns), o = `${String(i.playing)}|${i.templateId ?? ""}|${i.timer.kind}|${i.timer.phase}|${String(r)}`;
     if (o === s) return;
-    s = o, vs(i.playing), Mt(i.templateName === null ? null : { name: i.templateName, category: i.templateCategory ?? "" });
+    s = o, Ss(i.playing), Mt(i.templateName === null ? null : { name: i.templateName, category: i.templateCategory ?? "" });
     const a = t.positionState();
     a === null ? Qe(0, 0) : Qe(a.durationSec, a.positionSec), n.setPlaying(i.playing);
   });
 }
 function de() {
   if (ne !== null) return ne;
-  const t = gs(), e = zs(), n = new An(t, wn, (i) => void e.addLog(i).catch(() => {
-  }), { toEvents: Ns }), s = new Ms(void 0, ss());
-  return Os(n, t, s), ne = { engine: t, player: n, store: e }, ne;
+  const t = ys(), e = Cs(), n = new An(t, wn, (i) => void e.addLog(i).catch(() => {
+  }), { toEvents: Ps }), s = new ks(void 0, ss());
+  return xs(n, t, s), ne = { engine: t, player: n, store: e }, ne;
 }
 let re = 0;
-const Re = /* @__PURE__ */ new Set(), mi = () => re > 0;
-function fi(t) {
+const Re = /* @__PURE__ */ new Set(), fi = () => re > 0;
+function gi(t) {
   return Re.add(t), () => void Re.delete(t);
 }
-function gi(t) {
+function yi(t) {
   re = Math.max(0, re + (t ? 1 : -1));
   for (const e of Re) e(re > 0);
 }
-const yi = () => de().engine.getStats(), bi = () => de().engine.status.state, xs = "http://localhost:43210/events", Is = 7e4, _s = 1e3, Bs = 3e4, Ae = "zonked.crew.v1", Te = /* @__PURE__ */ new Set();
+const bi = () => de().engine.getStats(), wi = () => de().engine.status.state, Is = "http://localhost:43210/events", _s = 7e4, Bs = 1e3, Ds = 3e4, Ae = "zonked.crew.v1", Te = /* @__PURE__ */ new Set();
 function Lt() {
   try {
     if (typeof location < "u" && new URLSearchParams(location.search).get("crew") === "1")
@@ -2150,7 +2152,7 @@ function Lt() {
   }
   return Ne(Ae);
 }
-function wi(t) {
+function vi(t) {
   Pe(Ae, t);
   for (const e of [...Te])
     try {
@@ -2163,14 +2165,14 @@ function Et(t) {
     Te.delete(t);
   };
 }
-function Ds(t) {
-  const e = Number.isFinite(t) ? Math.max(0, Math.floor(t)) : 0;
-  return Math.min(Bs, _s * 2 ** Math.min(e, 10));
-}
 function Fs(t) {
+  const e = Number.isFinite(t) ? Math.max(0, Math.floor(t)) : 0;
+  return Math.min(Ds, Bs * 2 ** Math.min(e, 10));
+}
+function $s(t) {
   return typeof EventSource > "u" ? null : new EventSource(t);
 }
-class vi {
+class Si {
   constructor(e) {
     c(this, "es", null);
     c(this, "timer", null);
@@ -2201,10 +2203,10 @@ class vi {
   }
   connect() {
     if (this.stopped) return;
-    const e = this.deps.create ?? Fs;
+    const e = this.deps.create ?? $s;
     let n = null;
     try {
-      n = e(this.deps.url ?? xs);
+      n = e(this.deps.url ?? Is);
     } catch {
       n = null;
     }
@@ -2221,7 +2223,7 @@ class vi {
     });
   }
   handleState(e) {
-    if (typeof e != "string" || e.length > Is) return;
+    if (typeof e != "string" || e.length > _s) return;
     let n;
     try {
       n = JSON.parse(e);
@@ -2237,7 +2239,7 @@ class vi {
   }
   scheduleRetry() {
     if (this.stopped) return;
-    const e = Ds(this.attempt);
+    const e = Fs(this.attempt);
     this.attempt += 1;
     const n = this.deps.setTimer ?? ((s, i) => setTimeout(s, i));
     this.timer = n(() => {
@@ -2266,17 +2268,17 @@ class vi {
     }
   }
 }
-const $s = "zonked.css";
-function Si(t) {
-  const e = new URL($s, t).href;
+const Ws = "zonked.css";
+function Mi(t) {
+  const e = new URL(Ws, t).href;
   if ([...document.querySelectorAll("link[data-zonked-css]")].some((i) => i.getAttribute("href") === e)) return;
   const s = document.createElement("link");
   s.rel = "stylesheet", s.href = e, s.setAttribute("data-zonked-css", "1"), document.head.appendChild(s);
 }
-const Ws = "/apps/zonked/api/state", Ks = 15e3;
+const Ks = "/apps/zonked/api/state", Us = 15e3;
 let He = null, st = null, ce = "standalone", ze = "";
-const Ce = /* @__PURE__ */ new Set(), Mi = () => ce;
-function ki(t) {
+const Ce = /* @__PURE__ */ new Set(), ki = () => ce;
+function Li(t) {
   return Ce.add(t), () => void Ce.delete(t);
 }
 function Rt(t) {
@@ -2291,7 +2293,7 @@ function we() {
 async function ve() {
   if (He === null || !Lt()) return we();
   try {
-    const t = await He.get(Ws), e = ut(t.crew);
+    const t = await He.get(Ks), e = ut(t.crew);
     if (e === null) return we();
     Rt("connected");
     const n = JSON.stringify([e.burnout, e.target, e.why ?? ""]);
@@ -2301,63 +2303,64 @@ async function ve() {
     we();
   }
 }
-function Us(t) {
-  He = t, st === null && (st = setInterval(() => void ve(), Ks), Et(() => void ve()), ve());
+function qs(t) {
+  He = t, st === null && (st = setInterval(() => void ve(), Us), Et(() => void ve()), ve());
 }
-function Li() {
+function Ei() {
   const t = Ht.useAppApi, e = t === void 0 ? null : t();
   it(() => {
-    e !== null && Us(e);
+    e !== null && qs(e);
   }, [e]);
 }
 export {
-  Si as A,
-  vi as B,
-  Vs as C,
-  ui as D,
-  Js as E,
-  ci as F,
-  Ys as G,
-  Li as H,
-  gi as I,
-  Mi as J,
-  mi as K,
-  li as L,
+  os as A,
+  Si as B,
+  Ys as C,
+  di as D,
+  Qs as E,
+  li as F,
+  Gs as G,
+  Mi as H,
+  Ei as I,
+  yi as J,
+  ki as K,
+  ui as L,
   Ee as M,
-  ki as N,
-  fi as O,
+  fi as N,
+  Li as O,
   Se as P,
-  wi as Q,
-  bi as R,
+  gi as Q,
+  vi as R,
   ns as S,
-  yi as T,
-  Gs as U,
+  wi as T,
+  bi as U,
   Zs as V,
   Xs as W,
-  De as X,
-  ei as Y,
-  ni as Z,
-  ai as a,
-  ti as b,
+  Js as X,
+  De as Y,
+  ti as Z,
+  si as _,
+  ci as a,
+  ni as b,
   Qn as c,
-  di as d,
-  hi as e,
+  hi as d,
+  pi as e,
   es as f,
-  Qs as g,
-  oi as h,
-  ri as i,
+  ei as g,
+  ai as h,
+  oi as i,
   de as j,
-  Ps as k,
+  Os as k,
   Lt as l,
-  ii as m,
-  si as n,
+  ri as m,
+  ii as n,
   Et as o,
   ut as p,
   Kn as q,
   qn as r,
   le as s,
   Un as t,
-  pi as u,
+  mi as u,
   D as v,
   Pe as w,
   p as x,
