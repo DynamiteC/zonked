@@ -78,7 +78,10 @@ export function StarterStep({ profile, playing, onPreview, onStop, onStart }: Pr
         {previewId !== null && playing ? CALM.previewing : ''}
       </p>
       <div className="c-actions">
-        <button type="button" className="c-btn c-primary" disabled={chosen === undefined} onClick={() => chosen !== undefined && onStart(chosen)}>
+        <button type="button" className="c-btn c-primary" disabled={chosen === undefined} onClick={() => {
+            if (timer.current !== null) window.clearTimeout(timer.current);
+            if (chosen !== undefined) onStart(chosen);
+          }}>
           {CALM.start}
         </button>
       </div>

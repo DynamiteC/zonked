@@ -111,7 +111,6 @@ try {
   await page.waitForSelector('[data-testid=calm-safety-accept]');
   if (shots) await page.screenshot({ path: join(shots, 'gate.png') });
   await page.click('[data-testid=calm-safety-accept]');
-  await page.getByRole('button', { name: 'Start', exact: true }).click();
   await page.waitForSelector('[data-testid=mini-stop], [data-playing=true]', { timeout: 15000 });
   await page.waitForFunction(() => document.querySelector('[data-testid=panel-stop]') !== null, null, { timeout: 15000 });
   await page.waitForTimeout(2600); // finish the 2 s ramp

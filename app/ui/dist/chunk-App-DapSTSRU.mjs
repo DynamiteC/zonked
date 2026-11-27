@@ -1,255 +1,6 @@
-import { jsxs as b, jsx as c } from "react/jsx-runtime";
-import { useRef as B, useEffect as T, useMemo as W, useState as S, useCallback as N, lazy as R, Suspense as he } from "react";
-import { g as fe, i as ze, u as Ee, w as Ce, S as Oe, a as De, o as He, B as Pe, b as oe, f as H, c as ye, n as Ie, d as je } from "./chunk-crewLink-CNIjqEIV.mjs";
-function Fe(e) {
-  const t = Math.max(0, Math.ceil(e)), n = Math.floor(t / 60), s = Math.floor(n / 60), i = (a) => String(a).padStart(2, "0");
-  return s > 0 ? `${s}:${i(n % 60)}:${i(t % 60)}` : `${i(n)}:${i(t % 60)}`;
-}
-const m = {
-  brand: "Zonked",
-  promise: "Free. Private. No account.",
-  skip: "Skip, just play",
-  back: "Back",
-  next: "Next",
-  start: "Start",
-  stop: "Stop",
-  play: "Play",
-  done: "Done",
-  notThisOne: "Not this one",
-  goalTitle: "What brings you here?",
-  whenTitle: "When do you need it most?",
-  listenTitle: "How do you listen?",
-  listenNote: "Headphones work best for two-tone beats. Speakers are fine for gentle pulses and noise. We will pick sounds that suit what you choose.",
-  starterTitle: "Pick a starter sound",
-  preview: "Preview",
-  previewing: "Playing a short preview",
-  safetyTitle: "Before you start",
-  safetyLines: [
-    "Use stereo headphones for the best effect.",
-    "Keep the volume low.",
-    "Zonked fades in slowly.",
-    "Zonked is not a medical device.",
-    "Stop any time.",
-    "Stop if anything feels uncomfortable."
-  ],
-  safetyAccept: "I understand, start",
-  dailyEyebrow: "Your session for today",
-  suggested: "Suggested for you",
-  forYou: "For you",
-  journeysTitle: "Journeys",
-  journeysEmpty: "Pick a journey to begin. Go at your own pace.",
-  restDay: "Rest day",
-  restart: "Restart journey",
-  startJourney: "Start this journey",
-  libraryTitle: "Library",
-  searchLabel: "Search sounds",
-  searchEmpty: "Nothing matched. Try fewer words.",
-  tabs: ["Feeling", "Sound", "Favorites", "My mixes", "Recent"],
-  emptyFavorites: "Tap the heart on any sound to keep it here.",
-  emptyMixes: "Make a mix in the player, then save it here.",
-  emptyRecent: "Your recent sessions show up here.",
-  welcomeBack: "Welcome back. Pick up where you like.",
-  firstWeek: "Your week starts here. Rest days count too.",
-  restCount: "Rest days count too.",
-  timerChips: ["15 min", "30 min", "60 min", "Until I stop", "Sleep fade"],
-  breathe: "Breathe in, breathe out",
-  whyTitle: "What the research says",
-  whyBody: "Some small studies suggest slow beats may help people relax. Results vary and may not happen for you. Zonked is not a medical device.",
-  volumeCapped: "Volume is capped for your safety.",
-  favorite: "Favorite",
-  saved: "Saved",
-  studio: "Studio mode",
-  studioHint: "For advanced controls.",
-  crewTitle: "Crew",
-  crewIntro: "Your coding session can watch itself and ease the sound. When you have been working hard, Zonked slowly moves toward calmer sound. You stay in control.",
-  crewSwitch: "Let Crew ease the sound",
-  crewOff: "Not connected",
-  crewOn: "Connected",
-  crewBreak: "Time for a break",
-  crewPrivacy: "Nothing leaves your computer.",
-  crewOptional: "Crew is optional. Zonked works fully without it.",
-  settingsTitle: "Settings",
-  gentle: "Keep sounds extra gentle",
-  gentleHint: "Picks softer sounds and keeps the screen still.",
-  reduceMotion: "Reduce motion",
-  forget: "Forget my answers",
-  offline: "Zonked works offline. Nothing to do.",
-  loading: "Loading",
-  nav: ["Today", "Journeys", "Library", "Crew", "Settings"]
-}, xe = {
-  focus: "Focus",
-  calm: "Calm down",
-  sleep: "Sleep",
-  study: "Study",
-  recover: "Recover after work",
-  curious: "Just curious"
-}, Vn = {
-  morning: "Morning",
-  afternoon: "Afternoon",
-  evening: "Evening",
-  night: "Night",
-  anytime: "Anytime"
-}, Un = {
-  headphones: "Headphones",
-  speakers: "Speakers",
-  bluetooth: "Bluetooth",
-  unsure: "Not sure"
-}, Zn = [
-  { id: "deep-work", label: "Focus" },
-  { id: "adhd-focus", label: "Steady attention" },
-  { id: "ai-burnout", label: "Recover" },
-  { id: "heal-stress", label: "Calm down" },
-  { id: "cant-sleep", label: "Sleep" },
-  { id: "lucid-dream", label: "Dream" },
-  { id: "meditate", label: "Meditate" },
-  { id: "quick-reset", label: "Quick reset" }
-], Qn = {
-  strong: "Several studies exist.",
-  mixed: "Studies disagree.",
-  preliminary: "Early, small studies.",
-  limited: "Very little research.",
-  preference: "People simply like it."
-};
-function Be(e) {
-  return e >= 5 && e < 12 ? "Good morning." : e >= 12 && e < 17 ? "Good afternoon." : e >= 17 && e < 21 ? "Good evening." : "Hello, night owl.";
-}
-const _e = [
-  { view: "today", label: m.nav[0] },
-  { view: "journeys", label: m.nav[1] },
-  { view: "library", label: m.nav[2] },
-  { view: "crew", label: m.nav[3] },
-  { view: "settings", label: m.nav[4] }
-];
-function Ge({ view: e, onGo: t }) {
-  const n = e === "journey" ? "journeys" : e;
-  return /* @__PURE__ */ c("nav", { className: "c-tabbar", "aria-label": "Main", children: _e.map((s) => /* @__PURE__ */ c("button", { type: "button", className: "c-nav", "aria-current": n === s.view ? "page" : void 0, onClick: () => t(s.view), children: s.label }, s.view)) });
-}
-function $e({ snap: e, onOpen: t, onStop: n }) {
-  if (!e.playing) return null;
-  const s = e.timer.kind !== "none" && e.timer.running ? ` ${Fe(e.timer.remainingSec)}` : "";
-  return /* @__PURE__ */ b("div", { className: "c-mini", role: "group", "aria-label": "Now playing", children: [
-    /* @__PURE__ */ c("button", { type: "button", className: "c-btn c-link c-mini-open", onClick: t, children: `${e.templateName ?? m.brand}${s}` }),
-    /* @__PURE__ */ c("button", { type: "button", className: "c-btn c-small", "data-testid": "mini-stop", onClick: n, children: m.stop })
-  ] });
-}
-const qe = ["focus", "calm", "sleep", "study", "recover", "curious"], We = ["morning", "afternoon", "evening", "night", "anytime"], Ke = ["headphones", "speakers", "bluetooth", "unsure"], Ye = {
-  "sleep-onset-delta": 6,
-  "sleep-drift-theta": 5,
-  "sleep-deep-delta": 5,
-  "recovery-lofi-unwind": 5,
-  "recovery-post-sprint": 4,
-  "recovery-micro-break": 4,
-  "focus-alpha-beta": 5,
-  "focus-sprint-pulse": 4,
-  "focus-deep-beta": 5,
-  "adhd-smr-steady": 5,
-  "adhd-beta-anchor": 5,
-  "vibe-warm-glow": 4,
-  "healing-soothe-glide": 4,
-  "meditation-alpha-sit": 5,
-  "meditation-breath-pacer": 4
-}, Je = Object.freeze({ kind: "rest", family: "", variants: Object.freeze([]) });
-function Ve(e) {
-  const t = Ye[e] ?? 0, n = [];
-  for (let s = 1; s <= t; s += 1) n.push(`${e}-${String(s).padStart(2, "0")}`);
-  return Object.freeze(n);
-}
-function Ue(e) {
-  return Object.freeze({ kind: "session", family: e, variants: Ve(e) });
-}
-function E(...e) {
-  return Object.freeze(e.map((t) => t === "rest" ? Je : Ue(t)));
-}
-const _ = (e, t) => Array.from({ length: t }, () => e), C = (e) => Object.freeze(e), Q = Object.freeze([
-  C({
-    id: "calm-evenings",
-    title: "7 Calm Evenings",
-    blurb: "7 short evenings of slow sound. About 20 minutes each.",
-    situation: "heal-stress",
-    vibe: "calm",
-    minutes: 20,
-    days: E(
-      "healing-soothe-glide",
-      "meditation-breath-pacer",
-      "vibe-warm-glow",
-      "rest",
-      "meditation-alpha-sit",
-      "recovery-lofi-unwind",
-      "healing-soothe-glide"
-    )
-  }),
-  C({
-    id: "focus-mornings",
-    title: "5 Focus Mornings",
-    blurb: "5 mornings of steady sound to start work. About 30 minutes each.",
-    situation: "deep-work",
-    vibe: "bright",
-    minutes: 30,
-    days: E("focus-alpha-beta", "focus-alpha-beta", "focus-sprint-pulse", "rest", "focus-deep-beta")
-  }),
-  C({
-    id: "easier-sleep",
-    title: "14 Nights of Wind-Down Sound",
-    blurb: "14 nights of slow sound for winding down. Rest nights included.",
-    situation: "cant-sleep",
-    vibe: "dreamy",
-    minutes: 45,
-    days: E(
-      ..._("sleep-drift-theta", 4),
-      "rest",
-      ..._("sleep-onset-delta", 4),
-      "rest",
-      ..._("sleep-deep-delta", 3),
-      "sleep-onset-delta"
-    )
-  }),
-  C({
-    id: "study-sprint",
-    title: "Study Sprint Week",
-    blurb: "A week of short study blocks with breaks. About 25 minutes each.",
-    situation: "deep-work",
-    vibe: "minimal",
-    minutes: 25,
-    days: E(
-      "focus-sprint-pulse",
-      "focus-alpha-beta",
-      "recovery-micro-break",
-      "focus-sprint-pulse",
-      "rest",
-      "focus-alpha-beta",
-      "meditation-alpha-sit"
-    )
-  }),
-  C({
-    id: "after-work-reset",
-    title: "After-Work Reset",
-    blurb: "5 evenings to step out of work mode. About 20 minutes each.",
-    situation: "ai-burnout",
-    vibe: "warm",
-    minutes: 20,
-    days: E("recovery-post-sprint", "recovery-lofi-unwind", "recovery-micro-break", "rest", "recovery-lofi-unwind")
-  }),
-  C({
-    id: "gentle-routine",
-    title: "Gentle Routine",
-    blurb: "Gentle routine for steady attention. About 25 minutes each.",
-    situation: "adhd-focus",
-    vibe: "grounded",
-    minutes: 25,
-    days: E(
-      "adhd-smr-steady",
-      "recovery-micro-break",
-      "adhd-smr-steady",
-      "rest",
-      "adhd-beta-anchor",
-      "recovery-micro-break",
-      "adhd-smr-steady"
-    )
-  })
-]);
-function Xn(e) {
-  return Q.find((t) => t.id === e);
-}
+import { jsxs as g, jsx as l, Fragment as De } from "react/jsx-runtime";
+import { useRef as z, useState as k, useEffect as T, useCallback as M, useMemo as H, lazy as C, Suspense as pe } from "react";
+import { g as he, i as Oe, u as Ie, w as Pe, S as He, a as je, o as Fe, B as Be, b as ie, f as j, c as fe, n as _e, d as xe } from "./chunk-crewLink-CNIjqEIV.mjs";
 function u(e) {
   return {
     modes: ["binaural"],
@@ -262,7 +13,7 @@ function u(e) {
     ...e
   };
 }
-const d = (e, t) => e[(t % e.length + e.length) % e.length], Ze = [98, 110, 123.5, 87.3, 103.8, 130.8], Qe = [196, 220, 247, 175, 165, 262], Xe = {
+const h = (e, t) => e[(t % e.length + e.length) % e.length], Ge = [98, 110, 123.5, 87.3, 103.8, 130.8], $e = [196, 220, 247, 175, 165, 262], qe = {
   calm: [4, 3],
   warm: [6, 2],
   dreamy: [4, 3],
@@ -273,96 +24,96 @@ const d = (e, t) => e[(t % e.length + e.length) % e.length], Ze = [98, 110, 123.
   ethereal: [4, 3],
   lofi: [1, 2, 5],
   minimal: [7, 4]
-}, et = (e) => [...e].reduce((t, n) => (t * 31 + n.charCodeAt(0)) % 9973, 7);
-function tt(e, t, n) {
-  const s = et(e) + n;
-  return { prog: d(Xe[t], s), key: d(Ze, s), pianoRoot: d(Qe, s >> 1) };
+}, We = (e) => [...e].reduce((t, n) => (t * 31 + n.charCodeAt(0)) % 9973, 7);
+function Ke(e, t, n) {
+  const s = We(e) + n;
+  return { prog: h(qe[t], s), key: h(Ge, s), pianoRoot: h($e, s >> 1) };
 }
-function nt(e, t, n) {
+function Ye(e, t, n) {
   const s = e === "dreamy" || e === "ethereal" || e === "calm";
   return {
-    breathDepth: d([0.45, 0.4, 0.3, 0.2, 0.1], t - 1),
+    breathDepth: h([0.45, 0.4, 0.3, 0.2, 0.1], t - 1),
     breathRateHz: 0.06 + 0.02 * (n % 5),
     stereoWidth: 0.3 + 0.1 * (n % 4),
     panDepth: s ? 0.15 : 0,
     panRateHz: 0.03 + 0.01 * (n % 4)
   };
 }
-const st = {
+const Je = {
   lofi: (e, t) => ({
     lofiLevel: 0.45,
-    lofiWarmth: d([0.5, 0.6, 0.7], e),
+    lofiWarmth: h([0.5, 0.6, 0.7], e),
     lofiProgression: t.prog,
-    tapeWow: d([0.25, 0.35, 0.45], e),
+    tapeWow: h([0.25, 0.35, 0.45], e),
     padRootHz: t.key
   }),
   piano: (e, t) => ({
     instLevel: 0.35,
     instKind: 3,
     instRootHz: t.pianoRoot,
-    instScale: d([2, 0, 1, 4, 3], e),
-    instBpm: d([40, 46, 52], e),
-    pianoPedal: d([0.4, 0.55, 0.7], e)
+    instScale: h([2, 0, 1, 4, 3], e),
+    instBpm: h([40, 46, 52], e),
+    pianoPedal: h([0.4, 0.55, 0.7], e)
   }),
   crackle: () => ({ crackle: 0.12 }),
-  drone: (e) => ({ instLevel: 0.35, instKind: 1, instRootHz: d([55, 62, 73, 82], e), instScale: 7, instBpm: 40 }),
+  drone: (e) => ({ instLevel: 0.35, instKind: 1, instRootHz: h([55, 62, 73, 82], e), instScale: 7, instBpm: 40 }),
   pluck: (e) => ({
     instLevel: 0.3,
     instKind: 0,
-    instRootHz: d([196, 220, 247, 262], e),
-    instScale: d([0, 2, 4, 1], e),
-    instBpm: d([48, 56, 64, 72], e)
+    instRootHz: h([196, 220, 247, 262], e),
+    instScale: h([0, 2, 4, 1], e),
+    instBpm: h([48, 56, 64, 72], e)
   }),
   bell: (e) => ({
     instLevel: 0.28,
     instKind: 2,
-    instRootHz: d([262, 294, 330, 349], e),
+    instRootHz: h([262, 294, 330, 349], e),
     instScale: 4,
     instBpm: 40
   }),
-  pad: (e, t) => ({ padLevel: 0.4, padChord: d([0, 2, 4, 6], e), padRootHz: t.key }),
-  chimes: (e) => ({ chimeLevel: 0.25, chimeRatePerMin: d([3, 4, 6, 8], e) }),
+  pad: (e, t) => ({ padLevel: 0.4, padChord: h([0, 2, 4, 6], e), padRootHz: t.key }),
+  chimes: (e) => ({ chimeLevel: 0.25, chimeRatePerMin: h([3, 4, 6, 8], e) }),
   perc: (e) => ({
     percLevel: 0.2,
-    percBpm: d([64, 72, 80, 92], e),
-    percPattern: d([0, 3, 4, 7], e)
+    percBpm: h([64, 72, 80, 92], e),
+    percPattern: h([0, 3, 4, 7], e)
   })
 };
-function at(e, t, n = { prog: 0, key: 110, pianoRoot: 220 }) {
-  return e.reduce((s, i) => ({ ...s, ...st[i](t, n) }), {});
+function Ve(e, t, n = { prog: 0, key: 110, pianoRoot: 220 }) {
+  return e.reduce((s, i) => ({ ...s, ...Je[i](t, n) }), {});
 }
-const re = (e) => Math.round(e * 1e3) / 1e3, G = (e) => Math.min(40, Math.max(0.5, e));
-function it(e, t, n, s, i) {
+const oe = (e) => Math.round(e * 1e3) / 1e3, x = (e) => Math.min(40, Math.max(0.5, e));
+function Ue(e, t, n, s, i) {
   const a = Math.min(5, Math.max(1, t * 0.15));
   if (e === "plateau") {
-    const l = [{ t: 0, beat: n, ramp: !0 }, { t: a, beat: s, ramp: i !== void 0 }];
-    return i !== void 0 && l.push({ t: t - a, beat: s, ramp: !0 }, { t, beat: i, ramp: !1 }), l;
+    const c = [{ t: 0, beat: n, ramp: !0 }, { t: a, beat: s, ramp: i !== void 0 }];
+    return i !== void 0 && c.push({ t: t - a, beat: s, ramp: !0 }, { t, beat: i, ramp: !1 }), c;
   }
   if (e === "ramp-down" || e === "ramp-up")
     return [{ t: 0, beat: n, ramp: !0 }, { t: t * 0.7, beat: s, ramp: !1 }];
   if (e === "wave")
-    return Array.from({ length: 7 }, (l, r) => ({ t: t * r / 6, beat: r % 2 === 0 ? n : s, ramp: r < 6 }));
+    return Array.from({ length: 7 }, (c, r) => ({ t: t * r / 6, beat: r % 2 === 0 ? n : s, ramp: r < 6 }));
   const o = t / 4;
-  return Array.from({ length: 4 }, (l, r) => {
-    const y = n + (s - n) * r / 3;
-    return r < 3 ? [{ t: r * o, beat: y, ramp: !1 }, { t: r * o + o * 0.75, beat: y, ramp: !0 }] : [{ t: r * o, beat: y, ramp: !1 }];
+  return Array.from({ length: 4 }, (c, r) => {
+    const d = n + (s - n) * r / 3;
+    return r < 3 ? [{ t: r * o, beat: d, ramp: !1 }, { t: r * o + o * 0.75, beat: d, ramp: !0 }] : [{ t: r * o, beat: d, ramp: !1 }];
   }).flat();
 }
-function ot(e, t, n, s, i) {
-  const a = (t % 3 - 1) * e.jitter, o = G(e.to + a), l = d(e.noises, t >> 1), r = d(e.layers, t * 2 + (t >> 1)), y = d(e.vibes, t), L = at(r, t, tt(e.slug, y, t)), A = Object.keys(L).length > 0, g = A ? { ...L, ...nt(y, e.intensity, t) } : L;
-  return it(e.shape, n, G(e.from), o, e.ret).map((v) => ({
-    atMin: re(v.t),
-    beatHz: re(G(v.beat)),
+function Ze(e, t, n, s, i) {
+  const a = (t % 3 - 1) * e.jitter, o = x(e.to + a), c = h(e.noises, t >> 1), r = h(e.layers, t * 2 + (t >> 1)), d = h(e.vibes, t), y = Ve(r, t, Ke(e.slug, d, t)), w = Object.keys(y).length > 0, L = w ? { ...y, ...Ye(d, e.intensity, t) } : y;
+  return Ue(e.shape, n, x(e.from), o, e.ret).map((v) => ({
+    atMin: oe(v.t),
+    beatHz: oe(x(v.beat)),
     carrierHz: s,
     gain: e.gain,
     mode: i,
-    noise: l[0],
-    noiseLevel: l[1],
-    ...A ? { layers: g } : {},
+    noise: c[0],
+    noiseLevel: c[1],
+    ...w ? { layers: L } : {},
     ramp: v.ramp
   }));
 }
-function X(e) {
+function Z(e) {
   const t = /* @__PURE__ */ new Set();
   for (const n of e) {
     t.add(n.mode);
@@ -371,46 +122,46 @@ function X(e) {
   }
   return [...t];
 }
-function ee(e, t) {
+function Q(e, t) {
   if (t > 3) return !1;
   const n = e.every((a, o) => {
-    var l;
-    return o === 0 || Math.abs(a.beatHz - (((l = e[o - 1]) == null ? void 0 : l.beatHz) ?? a.beatHz)) <= 4;
+    var c;
+    return o === 0 || Math.abs(a.beatHz - (((c = e[o - 1]) == null ? void 0 : c.beatHz) ?? a.beatHz)) <= 4;
   }), s = e.every((a) => a.mode === "isochronic" || a.beatHz >= 12 && a.beatHz <= 20), i = e.every((a) => {
-    var o, l;
-    return (((o = a.layers) == null ? void 0 : o.crackle) ?? 0) === 0 && (((l = a.layers) == null ? void 0 : l.percBpm) ?? 0) <= 100;
+    var o, c;
+    return (((o = a.layers) == null ? void 0 : o.crackle) ?? 0) === 0 && (((c = a.layers) == null ? void 0 : c.percBpm) ?? 0) <= 100;
   });
   return n && s && i;
 }
-function rt(e, t) {
+function Qe(e, t) {
   const n = e.adjectives.length, s = t * 7 % (n * e.nouns.length);
-  return `${d(e.adjectives, s)} ${d(e.nouns, Math.floor(s / n))}`;
+  return `${h(e.adjectives, s)} ${h(e.nouns, Math.floor(s / n))}`;
 }
-const lt = (e) => String(e).padStart(2, "0");
-function ct(e, t, n, s) {
-  const i = d(t.mins, n), a = d(t.carriers, n * 3 + 1), o = d(t.modes, n + (n >> 2)), l = ot(t, n, i, a, o), r = t.to < 4 ? "delta" : t.to < 8 ? "theta" : t.to < 12 ? "alpha" : t.to < 30 ? "beta" : "gamma";
+const Xe = (e) => String(e).padStart(2, "0");
+function et(e, t, n, s) {
+  const i = h(t.mins, n), a = h(t.carriers, n * 3 + 1), o = h(t.modes, n + (n >> 2)), c = Ze(t, n, i, a, o), r = t.to < 4 ? "delta" : t.to < 8 ? "theta" : t.to < 12 ? "alpha" : t.to < 30 ? "beta" : "gamma";
   return {
-    id: `${e.prefix}-${t.slug}-${lt(n + 1)}`,
-    name: rt(e, s),
+    id: `${e.prefix}-${t.slug}-${Xe(n + 1)}`,
+    name: Qe(e, s),
     category: e.category,
-    vibe: d(t.vibes, n),
+    vibe: h(t.vibes, n),
     tags: [t.slug, r, o, ...t.tags],
-    layerTags: X(l),
+    layerTags: Z(c),
     situations: t.situations,
     recommendedMinutes: i,
     intensity: t.intensity,
-    adhdFriendly: ee(l, t.intensity),
-    stages: l,
+    adhdFriendly: Q(c, t.intensity),
+    stages: c,
     reasonTemplate: t.reason,
     source: "original",
     ...t.breath !== void 0 ? { breath: t.breath } : {}
   };
 }
-function ut(e) {
+function tt(e) {
   let t = 0;
-  return e.archs.flatMap((n) => Array.from({ length: n.count }, (s, i) => ct(e, n, i, t++)));
+  return e.archs.flatMap((n) => Array.from({ length: n.count }, (s, i) => et(e, n, i, t++)));
 }
-const dt = {
+const nt = {
   category: "adhd-control",
   prefix: "adhd",
   adjectives: ["Steady", "Anchored", "Level", "Even", "Tidy", "Calm", "Focused", "Plain", "Settled", "Patient", "Smooth", "Constant"],
@@ -524,7 +275,7 @@ const dt = {
       reason: "Four small, announced steps through the beta band for a structured work block."
     })
   ]
-}, mt = {
+}, st = {
   category: "focus",
   prefix: "focus",
   adjectives: ["Sharp", "Deep", "Clear", "Lucid", "Bright", "Keen", "Locked", "Precise", "Crisp", "Direct", "Tuned", "Honed"],
@@ -633,7 +384,7 @@ const dt = {
       reason: "Four rising steps with soft percussion for a focused sprint."
     })
   ]
-}, pt = {
+}, at = {
   category: "healing",
   prefix: "healing",
   adjectives: ["Mending", "Tender", "Restoring", "Kind", "Balmy", "Soothing", "Renewing", "Warming", "Settled", "Easing", "Gentle", "Whole"],
@@ -744,7 +495,7 @@ const dt = {
       reason: "A brightening ramp that lifts mood without pushing alertness."
     })
   ]
-}, ht = {
+}, it = {
   category: "lucid-dreams",
   prefix: "lucid",
   adjectives: ["Waking", "Silver", "Nebula", "Astral", "Twilight", "Aware", "Hollow", "Starlit", "Liminal", "Vivid", "Opal", "Drifting"],
@@ -837,7 +588,7 @@ const dt = {
       reason: "Relaxed theta with a slow instrument drone, a calm body-aware launch pad."
     })
   ]
-}, ft = {
+}, ot = {
   category: "meditation",
   prefix: "meditation",
   adjectives: ["Open", "Rooted", "Sacred", "Luminous", "Patient", "Clear", "Boundless", "Inner", "Mindful", "Sunlit", "Hallowed", "Silent"],
@@ -950,7 +701,7 @@ const dt = {
       reason: "A long fall into delta for dissolving, open awareness."
     })
   ]
-}, yt = {
+}, rt = {
   category: "sleep",
   prefix: "sleep",
   adjectives: ["Quiet", "Slow", "Velvet", "Hushed", "Moonlit", "Soft", "Drowsy", "Still", "Dim", "Gentle", "Fading", "Lulled"],
@@ -1062,7 +813,7 @@ const dt = {
       reason: "A soft noise bed with a faint low-end hum, easy to sleep under."
     })
   ]
-}, gt = {
+}, lt = {
   category: "vibes",
   prefix: "vibe",
   adjectives: ["Neon", "Cozy", "Mellow", "Golden", "Hazy", "Crisp", "Cloudy", "Dusty", "Amber", "Breezy", "Sleepy", "Plush"],
@@ -1172,7 +923,7 @@ const dt = {
       reason: "A light groove with soft percussion for a bright, steady lift."
     })
   ]
-}, bt = {
+}, ct = {
   category: "work-recovery",
   prefix: "recovery",
   adjectives: ["Unplugged", "Offline", "Cooled", "Rested", "Idle", "Paused", "Unwound", "Mellow", "Eased", "Reset", "Spare", "Soft"],
@@ -1283,47 +1034,47 @@ const dt = {
       reason: "Closes the work day with a calm descent that works over speakers."
     })
   ]
-}, j = (e) => Math.round(e * 1e3) / 1e3, F = (e) => Math.min(40, Math.max(0.5, e)), ge = (e) => e.segs.reduce((t, n) => t + n[0], 0) * (e.scale ?? 1);
-function le(e, t) {
+}, F = (e) => Math.round(e * 1e3) / 1e3, B = (e) => Math.min(40, Math.max(0.5, e)), ye = (e) => e.segs.reduce((t, n) => t + n[0], 0) * (e.scale ?? 1);
+function re(e, t) {
   const n = e.carrier ?? 200;
-  return e.carrierEnd === void 0 ? n : Math.round(n + (e.carrierEnd - n) * t / Math.max(ge(e), 1));
+  return e.carrierEnd === void 0 ? n : Math.round(n + (e.carrierEnd - n) * t / Math.max(ye(e), 1));
 }
-function vt(e) {
+function ut(e) {
   const t = [], [n, s] = e.noise ?? ["off", 0];
   let i = 0;
   return e.segs.forEach((a, o) => {
-    const l = a[1] !== a[2], r = e.segs[o + 1];
+    const c = a[1] !== a[2], r = e.segs[o + 1];
     t.push({
-      atMin: j(i / 60),
-      beatHz: j(F(a[1])),
-      carrierHz: le(e, i),
+      atMin: F(i / 60),
+      beatHz: F(B(a[1])),
+      carrierHz: re(e, i),
       gain: e.gain ?? 0.5,
       mode: e.mode ?? "binaural",
       noise: n,
       noiseLevel: s,
-      ramp: l
-    }), i += a[0] * (e.scale ?? 1), l && (r === void 0 || F(r[1]) !== F(a[2])) && t.push({ ...t[t.length - 1], atMin: j(i / 60), beatHz: j(F(a[2])), carrierHz: le(e, i), ramp: !1 });
+      ramp: c
+    }), i += a[0] * (e.scale ?? 1), c && (r === void 0 || B(r[1]) !== B(a[2])) && t.push({ ...t[t.length - 1], atMin: F(i / 60), beatHz: F(B(a[2])), carrierHz: re(e, i), ramp: !1 });
   }), t;
 }
-function wt(e) {
-  const t = vt(e);
+function dt(e) {
+  const t = ut(e);
   return {
     id: e.id,
     name: e.name,
     category: e.category,
     vibe: e.vibe,
     tags: [...e.tags, e.source],
-    layerTags: X(t),
+    layerTags: Z(t),
     situations: e.situations,
-    recommendedMinutes: Math.max(1, Math.round(ge(e) / 60)),
+    recommendedMinutes: Math.max(1, Math.round(ye(e) / 60)),
     intensity: e.intensity,
-    adhdFriendly: ee(t, e.intensity),
+    adhdFriendly: Q(t, e.intensity),
     stages: t,
     reasonTemplate: e.reason,
     source: e.source
   };
 }
-const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
+const _ = ["white", 0.3], W = ["pink", 0.3], K = ["brown", 0.3], le = [
   [60, 10, 8],
   [60, 8, 8],
   [60, 8, 6],
@@ -1346,7 +1097,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
   [10, 8, 5],
   [360, 5, 5],
   [480, 5, 12]
-], kt = [
+], mt = [
   [120, 10, 8],
   [120, 8, 8],
   [120, 8, 6],
@@ -1363,7 +1114,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
   [900, 5, 5],
   [360, 5, 5],
   [360, 5, 12]
-], St = [
+], pt = [
   [15, 10, 8],
   [240, 8, 8],
   [15, 8, 6],
@@ -1374,7 +1125,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
   [75, 6, 6],
   [15, 6, 8],
   [45, 8, 8]
-], At = [
+], ht = [
   [333, 8, 8],
   [333, 8, 10],
   [333, 10, 12],
@@ -1382,11 +1133,11 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
   [333, 12, 10],
   [333, 10, 8],
   [333, 8, 10]
-], Mt = [
+], ft = [
   [120, 20, 40],
   ...Array.from({ length: 8 }, () => [[20, 40, 40], [10, 8, 8]]).flat(),
   [120, 40, 10]
-], f = (e) => ({ ...e, source: "android", carrier: 200 }), Lt = [
+], f = (e) => ({ ...e, source: "android", carrier: 200 }), yt = [
   f({
     id: "android-self-hypnosis",
     name: "Mind Bridge",
@@ -1395,7 +1146,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     situations: ["meditate", "heal-stress"],
     intensity: 2,
     segs: [[300, 12, 4], [600, 4, 4], [300, 4, 12]],
-    noise: x,
+    noise: _,
     tags: ["theta", "hypnosis"],
     reason: "Five minutes down to 4 Hz, ten minutes holding there, five minutes back up."
   }),
@@ -1407,7 +1158,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     situations: ["deep-work"],
     intensity: 5,
     segs: [[120, 12, 40], [600, 40, 40], [120, 40, 12]],
-    noise: x,
+    noise: _,
     tags: ["gamma", "boost"],
     reason: "Two minutes up to the 40 Hz ceiling, a ten minute hold, two minutes back to 12 Hz."
   }),
@@ -1419,7 +1170,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     situations: ["meditate", "cant-sleep"],
     intensity: 1,
     segs: [[3600, 3.7, 3.7]],
-    noise: Y,
+    noise: K,
     gain: 0.45,
     tags: ["delta", "long"],
     reason: "A flat 3.7 Hz hour under brown noise for a wide, quiet mind."
@@ -1432,7 +1183,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     situations: ["heal-stress"],
     intensity: 2,
     segs: [[3600, 10, 10]],
-    noise: K,
+    noise: W,
     tags: ["alpha", "pain"],
     reason: "An hour at a steady 10 Hz under pink noise to loosen the body."
   }),
@@ -1455,7 +1206,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     vibe: "bright",
     situations: ["quick-reset", "deep-work"],
     intensity: 2,
-    segs: St,
+    segs: pt,
     noise: ["white", 0.4],
     tags: ["alpha", "theta", "creative"],
     reason: "Twenty minutes that drift back and forth between 10 and 6 Hz for loose ideas."
@@ -1503,7 +1254,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     vibe: "energized",
     situations: ["deep-work"],
     intensity: 5,
-    segs: Mt,
+    segs: ft,
     tags: ["beta", "gamma", "interval"],
     reason: "Eight short high and low rounds between a warm up and a cool down."
   }),
@@ -1527,7 +1278,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     situations: ["cant-sleep"],
     intensity: 1,
     segs: [[360, 9.7, 3.4], [1620, 3.4, 2.4], [1620, 2.4, 3.4]],
-    noise: Y,
+    noise: K,
     gain: 0.5,
     tags: ["delta", "induction"],
     reason: "A six minute fall to delta, then a long gentle rise and dip for the rest of the hour."
@@ -1539,7 +1290,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     vibe: "dreamy",
     situations: ["lucid-dream"],
     intensity: 2,
-    segs: ce,
+    segs: le,
     gain: 0.5,
     tags: ["theta", "lucid"],
     reason: "A theta bed with brief alpha lifts and a soft ending."
@@ -1563,7 +1314,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     vibe: "minimal",
     situations: ["cant-sleep", "heal-stress"],
     intensity: 2,
-    segs: At,
+    segs: ht,
     tags: ["alpha", "smr"],
     reason: "Forty minutes of beats crossing between alpha and the low SMR band."
   }),
@@ -1574,8 +1325,8 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     vibe: "deep",
     situations: ["lucid-dream", "cant-sleep"],
     intensity: 2,
-    segs: [[600, 9.7, 3.4], [5400, 3.4, 2.4], ...kt],
-    noise: K,
+    segs: [[600, 9.7, 3.4], [5400, 3.4, 2.4], ...mt],
+    noise: W,
     gain: 0.5,
     tags: ["delta", "theta", "lucid"],
     reason: "A delta fall followed by a long night plan with timed theta pulses."
@@ -1588,7 +1339,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     situations: ["adhd-focus", "deep-work"],
     intensity: 3,
     segs: [[300, 40, 12], [300, 20, 20], [300, 12, 12], [300, 20, 20], [300, 12, 12], [300, 20, 20]],
-    noise: x,
+    noise: _,
     tags: ["beta", "cycle"],
     reason: "Five minute blocks that swap between 12 and 20 Hz after a 40 Hz opener."
   }),
@@ -1601,7 +1352,7 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     situations: ["meditate", "quick-reset"],
     intensity: 2,
     segs: [[300, 12, 4], [600, 4, 4], [300, 4, 12]],
-    noise: x,
+    noise: _,
     scale: 0.5,
     tags: ["theta", "short"],
     reason: "The Mind Bridge shape squeezed into ten minutes."
@@ -1639,13 +1390,13 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     vibe: "dreamy",
     situations: ["lucid-dream", "cant-sleep"],
     intensity: 2,
-    segs: ce.slice(0, 12),
+    segs: le.slice(0, 12),
     gain: 0.5,
     tags: ["theta", "lucid", "short"],
     reason: "The opening stretch of the Lucid Dream Cycle, sized for naps."
   })
-], $ = (e) => ({ ...e, source: "gnaural" }), Nt = [
-  $({
+], G = (e) => ({ ...e, source: "gnaural" }), gt = [
+  G({
     id: "gnaural-power-nap",
     name: "Midday Nap",
     category: "sleep",
@@ -1655,12 +1406,12 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     segs: [[13, 11, 8.8], [17, 8.8, 7], [29, 7, 5.2], [38, 5.2, 4.4], [50, 4.4, 4.2], [68, 4.2, 4], [877, 4, 4], [37, 4, 4.2], [32, 4.2, 5.1], [20, 5.1, 6.8], [15, 6.8, 9.8], [4, 9.8, 9.8]],
     carrier: 164,
     carrierEnd: 110,
-    noise: K,
+    noise: W,
     gain: 0.5,
     tags: ["delta", "nap", "schedule"],
     reason: "A fast fall to 4 Hz, a long hold, then a slow climb. Twenty minutes in all."
   }),
-  $({
+  G({
     id: "gnaural-airplane-aid",
     name: "Long Haul Calm",
     category: "meditation",
@@ -1670,12 +1421,12 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     segs: [[9, 0.5, 12], [45, 12, 8], [60, 8, 6], [120, 6, 5], [180, 5, 4.3], [180, 4.3, 4], [900, 4, 4], [900, 4, 4.2], [900, 4.2, 3.9], [900, 3.9, 3.9], [400, 3.9, 4.3]],
     carrier: 280,
     carrierEnd: 140,
-    noise: Y,
+    noise: K,
     gain: 0.5,
     tags: ["theta", "travel", "schedule"],
     reason: "A falling carrier tone over theta beats, built for long seated trips."
   }),
-  $({
+  G({
     id: "gnaural-arrive-sharp",
     name: "Arrive Sharp",
     category: "focus",
@@ -1689,10 +1440,10 @@ const x = ["white", 0.3], K = ["pink", 0.3], Y = ["brown", 0.3], ce = [
     reason: "Five steps from alpha up to a 28.5 Hz middle, then back down, in twenty two minutes."
   })
 ];
-function Rt() {
-  return [...Lt, ...Nt].map(wt);
+function bt() {
+  return [...yt, ...gt].map(dt);
 }
-const Tt = [
+const vt = [
   { id: "lofi", name: "Lo-fi", blurb: "Warm, slow chords with a tape and vinyl feel, like a quiet study radio.", mood: "warm", defaultLevel: 0.5, layerKeys: ["lofiLevel", "lofiProgression", "tapeWow", "crackle"], templateId: "starter-lofi", evidence: "preference" },
   { id: "piano", name: "Soft piano", blurb: "A soft piano playing gentle, slow phrases with long ringing notes.", mood: "calm", defaultLevel: 0.45, layerKeys: ["instLevel", "instKind", "pianoPedal"], templateId: "starter-piano", evidence: "preference" },
   { id: "violet", name: "Violet hiss", blurb: "A thin, bright hiss, like gentle static. Keep it quiet.", mood: "bright", defaultLevel: 0.3, layerKeys: [], templateId: "starter-violet", evidence: "limited" },
@@ -1700,9 +1451,9 @@ const Tt = [
   { id: "deep", name: "Deep rumble", blurb: "A deep, low rumble like distant thunder or a big waterfall (brown noise).", mood: "deep", defaultLevel: 0.4, layerKeys: [], templateId: "starter-deep", evidence: "preference" },
   { id: "chimes", name: "Soft chimes", blurb: "Soft bells that ring now and then at uneven gaps.", mood: "dreamy", defaultLevel: 0.3, layerKeys: ["chimeLevel", "chimeRatePerMin"], templateId: "starter-chimes", evidence: "preference" },
   { id: "beats", name: "Beats only", blurb: "A soft pulse you hear as two slightly different tones, one per ear. Use headphones.", mood: "neutral", defaultLevel: 0, layerKeys: [], templateId: "starter-beats", evidence: "mixed" }
-], zt = (e) => Number.isFinite(e) ? Math.min(1, Math.max(0, e)) : 0;
-function Et(e, t) {
-  const n = zt(t);
+], wt = (e) => Number.isFinite(e) ? Math.min(1, Math.max(0, e)) : 0;
+function kt(e, t) {
+  const n = wt(t);
   switch (e) {
     case "lofi":
       return { noise: "off", noiseLevel: 0, layers: { lofiLevel: n, lofiWarmth: 0.6, lofiProgression: 2, tapeWow: 0.35, crackle: 0.12, breathDepth: 0.4, breathRateHz: 0.08, stereoWidth: 0.5 } };
@@ -1720,9 +1471,9 @@ function Et(e, t) {
       return { noise: "off", noiseLevel: 0, layers: {} };
   }
 }
-const Ct = { warm: "warm", calm: "calm", bright: "bright", deep: "deep", dreamy: "dreamy", neutral: "minimal" };
-function Ot(e) {
-  const t = Et(e.id, e.defaultLevel), n = Object.keys(t.layers).length > 0, i = [{
+const St = { warm: "warm", calm: "calm", bright: "bright", deep: "deep", dreamy: "dreamy", neutral: "minimal" };
+function At(e) {
+  const t = kt(e.id, e.defaultLevel), n = Object.keys(t.layers).length > 0, i = [{
     atMin: 0,
     beatHz: 8,
     carrierHz: 200,
@@ -1737,31 +1488,31 @@ function Ot(e) {
     id: e.templateId,
     name: e.name,
     category: "vibes",
-    vibe: Ct[e.mood] ?? "calm",
+    vibe: St[e.mood] ?? "calm",
     tags: ["starter", "sound-first", e.id],
-    layerTags: X(i),
+    layerTags: Z(i),
     situations: ["quick-reset", "heal-stress"],
     recommendedMinutes: 20,
     intensity: 1,
-    adhdFriendly: ee(i, 1),
+    adhdFriendly: Q(i, 1),
     stages: i,
     reasonTemplate: e.blurb,
     source: "original"
   };
 }
-function Dt() {
-  return Tt.map(Ot);
+function Mt() {
+  return vt.map(At);
 }
-function Ht() {
+function Lt() {
   return [
-    ...Dt(),
-    ...Rt(),
-    ...[gt, pt, ht, ft, yt, dt, mt, bt].flatMap(ut)
+    ...Mt(),
+    ...bt(),
+    ...[lt, at, it, ot, rt, nt, st, ct].flatMap(tt)
   ];
 }
-let ue;
+let ce;
 function P() {
-  return ue ?? (ue = Ht()), ue;
+  return ce ?? (ce = Lt()), ce;
 }
 new Proxy([], {
   get: (e, t) => Reflect.get(P(), t),
@@ -1772,22 +1523,22 @@ new Proxy([], {
     return n === void 0 || t === "length" ? n : { ...n, configurable: !0 };
   }
 });
-function Pt(e) {
+function Nt(e) {
   return e.stages.some((t) => {
     var n;
     return (((n = t.layers) == null ? void 0 : n.percLevel) ?? 0) > 0;
   });
 }
-function It(e) {
+function Tt(e) {
   return e.stages.some((t) => {
     var n;
     return (((n = t.layers) == null ? void 0 : n.crackle) ?? 0) > 0;
   });
 }
-function de(e) {
+function ue(e) {
   return e.stages.some((t) => t.mode === "binaural");
 }
-const jt = {
+const Et = {
   focus: [1, 1, 0.5, 0.1],
   "adhd-control": [1, 1, 0.5, 0.1],
   vibes: [0.5, 0.8, 1, 0.5],
@@ -1796,102 +1547,367 @@ const jt = {
   meditation: [1, 0.6, 1, 0.6],
   sleep: [0, 0.2, 0.7, 1],
   "lucid-dreams": [0, 0.1, 0.6, 1]
-}, Ft = { morning: 0, afternoon: 1, evening: 2, night: 3 }, xt = (e) => Math.round(e * 10) / 10;
-function Bt(e, t, n) {
+}, Ct = { morning: 0, afternoon: 1, evening: 2, night: 3 }, Rt = (e) => Math.round(e * 10) / 10;
+function zt(e, t, n) {
   const s = Math.max(1, t);
   if (e <= s)
     return n.push(`Fits your ${s} minutes (${e} min).`), 15 * (0.6 + 0.4 * (e / s));
   const i = (e - s) / s;
   return n.push(`Runs ${e} min, longer than your ${s}; you can stop any time.`), Math.max(0, 15 * (1 - i * 1.5)) - (i > 0.5 ? 5 : 0);
 }
-function _t(e, t, n) {
-  return t.deviceType === "speaker" ? de(e) ? (n.push("Warning: binaural beats need headphones. A speaker will not deliver the effect; pick an isochronic or monaural template if you can."), -8) : (n.push("Isochronic or monaural beats work over speakers."), 10) : (n.push(t.deviceType === "bluetooth" ? "Good over Bluetooth headphones." : "Headphones suit every beat type."), de(e) ? 10 : 8);
+function Dt(e, t, n) {
+  return t.deviceType === "speaker" ? ue(e) ? (n.push("Warning: binaural beats need headphones. A speaker will not deliver the effect; pick an isochronic or monaural template if you can."), -8) : (n.push("Isochronic or monaural beats work over speakers."), 10) : (n.push(t.deviceType === "bluetooth" ? "Good over Bluetooth headphones." : "Headphones suit every beat type."), ue(e) ? 10 : 8);
 }
-function Gt(e, t, n) {
-  const s = e.intensity > 3 || Pt(e) || It(e), i = t.sensorySensitivity;
+function Ot(e, t, n) {
+  const s = e.intensity > 3 || Nt(e) || Tt(e), i = t.sensorySensitivity;
   return i === "low" ? { pts: 10, sensitive: !1 } : i === "medium" ? { pts: e.intensity <= 3 ? s ? 7 : 10 : 4, sensitive: !1 } : s ? (n.push("Relaxed filter: this one is stronger or has percussion or crackle, shown because too few gentle matches exist."), { pts: 0, sensitive: !0 }) : (n.push("Gentle: low intensity, no percussion or crackle."), { pts: e.intensity <= 2 ? 10 : 7, sensitive: !1 });
 }
-function $t(e, t) {
+function It(e, t) {
   const n = [e.reasonTemplate.replace("{minutes}", String(e.recommendedMinutes))], s = e.situations.includes(t.situation);
   let i = 0;
-  s ? (i += 40, n.push(`Made for: ${t.situation}.`)) : n.push(`Related option: not built for ${t.situation}, but close in mood.`), t.vibe === void 0 ? i += 7 : t.vibe === e.vibe && (i += 15, n.push(`Matches your ${t.vibe} vibe.`)), i += Bt(e.recommendedMinutes, t.availableMinutes, n);
-  const a = (jt[e.category][Ft[t.timeOfDay]] ?? 0) * 10;
-  i += a, a >= 8 && n.push(`Suits the ${t.timeOfDay}.`), e.intensity >= 4 && t.timeOfDay === "night" && (i -= 5), i += _t(e, t, n);
-  const o = Gt(e, t, n);
-  return i += o.pts, { template: e, score: Math.max(0, xt(i)), reasons: n, sensitive: o.sensitive, onSituation: s };
+  s ? (i += 40, n.push(`Made for: ${t.situation}.`)) : n.push(`Related option: not built for ${t.situation}, but close in mood.`), t.vibe === void 0 ? i += 7 : t.vibe === e.vibe && (i += 15, n.push(`Matches your ${t.vibe} vibe.`)), i += zt(e.recommendedMinutes, t.availableMinutes, n);
+  const a = (Et[e.category][Ct[t.timeOfDay]] ?? 0) * 10;
+  i += a, a >= 8 && n.push(`Suits the ${t.timeOfDay}.`), e.intensity >= 4 && t.timeOfDay === "night" && (i -= 5), i += Dt(e, t, n);
+  const o = Ot(e, t, n);
+  return i += o.pts, { template: e, score: Math.max(0, Rt(i)), reasons: n, sensitive: o.sensitive, onSituation: s };
 }
-const qt = (e, t) => t.score - e.score || (e.template.id < t.template.id ? -1 : e.template.id > t.template.id ? 1 : 0);
-function Wt(e, t = 5, n = P()) {
-  const s = Math.max(1, Math.floor(t)), i = n.map((r) => $t(r, e)).sort(qt), a = [
+const Pt = (e, t) => t.score - e.score || (e.template.id < t.template.id ? -1 : e.template.id > t.template.id ? 1 : 0);
+function Ht(e, t = 5, n = P()) {
+  const s = Math.max(1, Math.floor(t)), i = n.map((r) => It(r, e)).sort(Pt), a = [
     i.filter((r) => r.onSituation && !r.sensitive),
     i.filter((r) => !r.sensitive),
     i
-  ], o = a.find((r) => r.length >= s) ?? i, l = o.slice(0, s);
-  return o !== a[0] && l.forEach((r) => {
+  ], o = a.find((r) => r.length >= s) ?? i, c = o.slice(0, s);
+  return o !== a[0] && c.forEach((r) => {
     r.onSituation || r.reasons.push("Filters relaxed: too few exact matches, so close alternatives are included.");
-  }), l.map((r) => ({ template: r.template, score: r.score, reasons: r.reasons }));
+  }), c.map((r) => ({ template: r.template, score: r.score, reasons: r.reasons }));
 }
-const Kt = {
+function jt(e) {
+  const t = Math.max(0, Math.ceil(e)), n = Math.floor(t / 60), s = Math.floor(n / 60), i = (a) => String(a).padStart(2, "0");
+  return s > 0 ? `${s}:${i(n % 60)}:${i(t % 60)}` : `${i(n)}:${i(t % 60)}`;
+}
+const m = {
+  brand: "Zonked",
+  promise: "Free. Private. No account.",
+  welcomeTitle: "Calm sound, made for you.",
+  welcomeBody: "A few quick questions. Then your first sound.",
+  skip: "Skip, just play",
+  back: "Back",
+  next: "Next",
+  start: "Start",
+  stop: "Stop",
+  pause: "Pause",
+  play: "Play",
+  done: "Done",
+  notThisOne: "Not this one",
+  goalTitle: "What brings you here?",
+  whenTitle: "When do you need it most?",
+  listenTitle: "How do you listen?",
+  listenNote: "Headphones suit two-tone beats best, and speakers suit gentle pulses and noise.",
+  stepOf: (e) => `${e} of 3`,
+  selected: "Selected",
+  playAgain: "Play again",
+  close: "Close",
+  endTitle: "Done for now.",
+  endLine: (e, t) => `${e} played for ${t < 1 ? "under a minute" : t === 1 ? "1 minute" : `${t} minutes`}.`,
+  endNote: "Go at your own pace.",
+  starterTitle: "Pick a starter sound",
+  preview: "Preview",
+  previewing: "Playing a short preview",
+  safetyTitle: "Before you start",
+  safetyLines: [
+    "Use stereo headphones for the best effect.",
+    "Keep the volume low.",
+    "Zonked fades in slowly.",
+    "Zonked is not a medical device.",
+    "Stop any time.",
+    "Stop if anything feels uncomfortable."
+  ],
+  safetyAccept: "I understand, start",
+  notMedical: "Zonked is not a medical device.",
+  dailyEyebrow: "Your session for today",
+  suggested: "Suggested for you",
+  forYou: "For you",
+  journeysTitle: "Journeys",
+  journeysEmpty: "Pick a journey to begin. Go at your own pace.",
+  restDay: "Rest day",
+  restart: "Restart journey",
+  startJourney: "Start this journey",
+  libraryTitle: "Library",
+  searchLabel: "Search sounds",
+  searchEmpty: "Nothing matched. Try fewer words.",
+  tabs: ["Feeling", "Sound", "Favorites", "My mixes", "Recent"],
+  emptyFavorites: "Tap the heart on any sound to keep it here.",
+  emptyMixes: "Make a mix in the player, then save it here.",
+  emptyRecent: "Your recent sessions show up here.",
+  welcomeBack: "Welcome back. Pick up where you like.",
+  firstWeek: "Your week starts here. Rest days count too.",
+  restCount: "Rest days count too.",
+  timerChips: ["15 min", "30 min", "60 min", "Until I stop", "Sleep fade"],
+  breathe: "Breathe in, breathe out",
+  breatheIn: "Breathe in",
+  breatheOut: "Breathe out",
+  whyTitle: "What the research says",
+  whyBody: "Some small studies suggest slow beats may help people relax. Results vary and may not happen for you. Zonked is not a medical device.",
+  volumeCapped: "Volume is capped for your safety.",
+  favorite: "Favorite",
+  saved: "Saved",
+  studio: "Studio mode",
+  studioHint: "For advanced controls.",
+  backToCalm: "Back to Calm",
+  crewTitle: "Crew",
+  crewIntro: "Your coding session can watch itself and ease the sound. When you have been working hard, Zonked slowly moves toward calmer sound. You stay in control.",
+  crewSwitch: "Let Crew ease the sound",
+  crewOff: "Not connected",
+  crewOn: "Connected",
+  crewBreak: "Time for a break",
+  crewPrivacy: "Nothing leaves your computer.",
+  crewOptional: "Crew is optional. Zonked works fully without it.",
+  settingsTitle: "Settings",
+  gentle: "Keep sounds extra gentle",
+  gentleHint: "Picks softer sounds and keeps the screen still.",
+  reduceMotion: "Reduce motion",
+  forget: "Forget my answers",
+  offline: "Zonked works offline. Nothing to do.",
+  errorAudio: "Sound could not start. Tap Play to try again.",
+  errorStorage: "We could not save this on your device. Your session still works.",
+  loading: "Loading",
+  nav: ["Today", "Journeys", "Library", "Crew", "Settings"]
+}, Ft = {
+  focus: "Focus",
+  calm: "Calm down",
+  sleep: "Sleep",
+  study: "Study",
+  recover: "Recover after work",
+  curious: "Just curious"
+}, cs = {
+  morning: "Morning",
+  afternoon: "Afternoon",
+  evening: "Evening",
+  night: "Night",
+  anytime: "Anytime"
+}, us = {
+  headphones: "Headphones",
+  speakers: "Speakers",
+  bluetooth: "Bluetooth",
+  unsure: "Not sure"
+}, ds = [
+  { id: "deep-work", label: "Focus" },
+  { id: "adhd-focus", label: "Steady attention" },
+  { id: "ai-burnout", label: "Recover" },
+  { id: "heal-stress", label: "Calm down" },
+  { id: "cant-sleep", label: "Sleep" },
+  { id: "lucid-dream", label: "Dream" },
+  { id: "meditate", label: "Meditate" },
+  { id: "quick-reset", label: "Quick reset" }
+], ms = {
+  strong: "Several studies exist.",
+  mixed: "Studies disagree.",
+  preliminary: "Early, small studies.",
+  limited: "Very little research.",
+  preference: "People simply like it."
+};
+function Bt(e) {
+  return e >= 5 && e < 12 ? "Good morning." : e >= 12 && e < 17 ? "Good afternoon." : e >= 17 && e < 21 ? "Good evening." : "Hello, night owl.";
+}
+const _t = [
+  { view: "today", label: m.nav[0] },
+  { view: "journeys", label: m.nav[1] },
+  { view: "library", label: m.nav[2] },
+  { view: "crew", label: m.nav[3] },
+  { view: "settings", label: m.nav[4] }
+];
+function xt({ view: e, onGo: t }) {
+  const n = e === "journey" ? "journeys" : e;
+  return /* @__PURE__ */ l("nav", { className: "c-tabbar", "aria-label": "Main", children: _t.map((s) => /* @__PURE__ */ l("button", { type: "button", className: "c-nav", "aria-current": n === s.view ? "page" : void 0, onClick: () => t(s.view), children: s.label }, s.view)) });
+}
+function Gt({ snap: e, onOpen: t, onStop: n }) {
+  if (!e.playing) return null;
+  const s = e.timer.kind !== "none" && e.timer.running ? ` ${jt(e.timer.remainingSec)}` : "";
+  return /* @__PURE__ */ g("div", { className: "c-mini", role: "group", "aria-label": "Now playing", children: [
+    /* @__PURE__ */ l("button", { type: "button", className: "c-btn c-link c-mini-open", onClick: t, children: `${e.templateName ?? m.brand}${s}` }),
+    /* @__PURE__ */ l("button", { type: "button", className: "c-btn c-small", "data-testid": "mini-stop", onClick: n, children: m.stop })
+  ] });
+}
+const $t = ["focus", "calm", "sleep", "study", "recover", "curious"], qt = ["morning", "afternoon", "evening", "night", "anytime"], Wt = ["headphones", "speakers", "bluetooth", "unsure"], Kt = {
+  "sleep-onset-delta": 6,
+  "sleep-drift-theta": 5,
+  "sleep-deep-delta": 5,
+  "recovery-lofi-unwind": 5,
+  "recovery-post-sprint": 4,
+  "recovery-micro-break": 4,
+  "focus-alpha-beta": 5,
+  "focus-sprint-pulse": 4,
+  "focus-deep-beta": 5,
+  "adhd-smr-steady": 5,
+  "adhd-beta-anchor": 5,
+  "vibe-warm-glow": 4,
+  "healing-soothe-glide": 4,
+  "meditation-alpha-sit": 5,
+  "meditation-breath-pacer": 4
+}, Yt = Object.freeze({ kind: "rest", family: "", variants: Object.freeze([]) });
+function Jt(e) {
+  const t = Kt[e] ?? 0, n = [];
+  for (let s = 1; s <= t; s += 1) n.push(`${e}-${String(s).padStart(2, "0")}`);
+  return Object.freeze(n);
+}
+function Vt(e) {
+  return Object.freeze({ kind: "session", family: e, variants: Jt(e) });
+}
+function O(...e) {
+  return Object.freeze(e.map((t) => t === "rest" ? Yt : Vt(t)));
+}
+const $ = (e, t) => Array.from({ length: t }, () => e), I = (e) => Object.freeze(e), X = Object.freeze([
+  I({
+    id: "calm-evenings",
+    title: "7 Calm Evenings",
+    blurb: "7 short evenings of slow sound. About 20 minutes each.",
+    situation: "heal-stress",
+    vibe: "calm",
+    minutes: 20,
+    days: O(
+      "healing-soothe-glide",
+      "meditation-breath-pacer",
+      "vibe-warm-glow",
+      "rest",
+      "meditation-alpha-sit",
+      "recovery-lofi-unwind",
+      "healing-soothe-glide"
+    )
+  }),
+  I({
+    id: "focus-mornings",
+    title: "5 Focus Mornings",
+    blurb: "5 mornings of steady sound to start work. About 30 minutes each.",
+    situation: "deep-work",
+    vibe: "bright",
+    minutes: 30,
+    days: O("focus-alpha-beta", "focus-alpha-beta", "focus-sprint-pulse", "rest", "focus-deep-beta")
+  }),
+  I({
+    id: "easier-sleep",
+    title: "14 Nights of Wind-Down Sound",
+    blurb: "14 nights of slow sound for winding down. Rest nights included.",
+    situation: "cant-sleep",
+    vibe: "dreamy",
+    minutes: 45,
+    days: O(
+      ...$("sleep-drift-theta", 4),
+      "rest",
+      ...$("sleep-onset-delta", 4),
+      "rest",
+      ...$("sleep-deep-delta", 3),
+      "sleep-onset-delta"
+    )
+  }),
+  I({
+    id: "study-sprint",
+    title: "Study Sprint Week",
+    blurb: "A week of short study blocks with breaks. About 25 minutes each.",
+    situation: "deep-work",
+    vibe: "minimal",
+    minutes: 25,
+    days: O(
+      "focus-sprint-pulse",
+      "focus-alpha-beta",
+      "recovery-micro-break",
+      "focus-sprint-pulse",
+      "rest",
+      "focus-alpha-beta",
+      "meditation-alpha-sit"
+    )
+  }),
+  I({
+    id: "after-work-reset",
+    title: "After-Work Reset",
+    blurb: "5 evenings to step out of work mode. About 20 minutes each.",
+    situation: "ai-burnout",
+    vibe: "warm",
+    minutes: 20,
+    days: O("recovery-post-sprint", "recovery-lofi-unwind", "recovery-micro-break", "rest", "recovery-lofi-unwind")
+  }),
+  I({
+    id: "gentle-routine",
+    title: "Gentle Routine",
+    blurb: "Gentle routine for steady attention. About 25 minutes each.",
+    situation: "adhd-focus",
+    vibe: "grounded",
+    minutes: 25,
+    days: O(
+      "adhd-smr-steady",
+      "recovery-micro-break",
+      "adhd-smr-steady",
+      "rest",
+      "adhd-beta-anchor",
+      "recovery-micro-break",
+      "adhd-smr-steady"
+    )
+  })
+]);
+function ps(e) {
+  return X.find((t) => t.id === e);
+}
+const Ut = {
   focus: { situation: "deep-work", vibe: "bright", minutes: 25 },
   calm: { situation: "heal-stress", vibe: "calm", minutes: 15 },
   sleep: { situation: "cant-sleep", vibe: "dreamy", minutes: 45 },
   study: { situation: "deep-work", vibe: "minimal", minutes: 30 },
   recover: { situation: "ai-burnout", vibe: "warm", minutes: 15 },
   curious: { situation: "quick-reset", minutes: 10 }
-}, Yt = {
+}, Zt = {
   headphones: "headphones",
   bluetooth: "bluetooth",
   speakers: "speaker",
   unsure: "headphones"
 };
-function Jt(e) {
+function Qt(e) {
   return e < 12 ? "morning" : e >= 12 && e < 17 ? "afternoon" : e >= 17 && e < 21 ? "evening" : "night";
 }
-function Vt(e, t = /* @__PURE__ */ new Date()) {
-  const n = Kt[e.goal], s = e.timeOfDay === "anytime" ? Jt(t.getHours()) : e.timeOfDay, i = {
+function Xt(e, t = /* @__PURE__ */ new Date()) {
+  const n = Ut[e.goal], s = e.timeOfDay === "anytime" ? Qt(t.getHours()) : e.timeOfDay, i = {
     situation: n.situation,
     availableMinutes: n.minutes,
     timeOfDay: s,
     sensorySensitivity: e.extraGentle ? "high" : "medium",
-    deviceType: Yt[e.device]
+    deviceType: Zt[e.device]
   };
   return Object.freeze(n.vibe === void 0 ? i : { ...i, vibe: n.vibe });
 }
-const Ut = 3, Zt = 864e5, be = 4;
-function te(e) {
+const en = 3, tn = 864e5, ge = 4;
+function ee(e) {
   if (!Number.isFinite(e)) return 0;
   const t = new Date(e).getTimezoneOffset() * 6e4;
-  return Math.floor((e - t) / Zt);
+  return Math.floor((e - t) / tn);
 }
-const ve = (e) => Number.isInteger(e) && e >= 0 && e < 1e7;
-function Qt(e) {
-  return Number.isFinite(e) ? Math.min(7, Math.max(1, Math.floor(e))) : be;
+const be = (e) => Number.isInteger(e) && e >= 0 && e < 1e7;
+function nn(e) {
+  return Number.isFinite(e) ? Math.min(7, Math.max(1, Math.floor(e))) : ge;
 }
-function Xt(e) {
+function sn(e) {
   return e - (e + 3) % 7;
 }
-function en(e, t, n) {
+function an(e, t, n) {
   const s = /* @__PURE__ */ new Map();
   for (const a of e) {
-    if (!ve(a.day) || a.day < t || a.day > n) continue;
+    if (!be(a.day) || a.day < t || a.day > n) continue;
     const o = Number.isFinite(a.minutes) && a.minutes > 0 ? a.minutes : 0;
     s.set(a.day, (s.get(a.day) ?? 0) + o);
   }
   const i = /* @__PURE__ */ new Set();
   return s.forEach((a, o) => {
-    a >= Ut && i.add(o);
+    a >= en && i.add(o);
   }), i;
 }
-function tn(e, t, n) {
+function on(e, t, n) {
   return n.has(e) ? "listened" : e === t ? "today" : e > t ? "upcoming" : "rest";
 }
-function nn(e, t, n = be) {
-  const s = Qt(n);
-  if (!ve(t)) {
-    const l = Object.freeze(Array.from({ length: 7 }, () => "upcoming"));
-    return Object.freeze({ daysListened: 0, goalDays: s, goalMet: !1, quietWeek: !0, dots: l });
+function rn(e, t, n = ge) {
+  const s = nn(n);
+  if (!be(t)) {
+    const c = Object.freeze(Array.from({ length: 7 }, () => "upcoming"));
+    return Object.freeze({ daysListened: 0, goalDays: s, goalMet: !1, quietWeek: !0, dots: c });
   }
-  const i = Xt(t), a = en(e, i, t), o = Object.freeze(Array.from({ length: 7 }, (l, r) => tn(i + r, t, a)));
+  const i = sn(t), a = an(e, i, t), o = Object.freeze(Array.from({ length: 7 }, (c, r) => on(i + r, t, a)));
   return Object.freeze({
     daysListened: a.size,
     goalDays: s,
@@ -1900,84 +1916,84 @@ function nn(e, t, n = be) {
     dots: o
   });
 }
-const ne = "zonked.profile.v1", se = "zonked.journeys.v1", we = 32 * 1024, ke = 1, sn = 1e7, an = /^[a-z0-9-]{1,64}$/, Se = Object.freeze({
+const te = "zonked.profile.v1", ne = "zonked.journeys.v1", se = "zonked.last.v1", ve = 32 * 1024, we = 1, ln = 1e7, cn = /^[a-z0-9-]{1,64}$/, ke = Object.freeze({
   goal: "curious",
   timeOfDay: "anytime",
   device: "unsure",
   extraGentle: !1,
   createdAt: 0
-}), on = Object.freeze({}), ae = (e) => typeof e == "object" && e !== null && !Array.isArray(e), J = (e, t) => typeof e == "number" && Number.isInteger(e) && e >= 0 && e <= t, q = (e, t) => e.some((n) => n === t);
-function Ae(e, t) {
+}), un = Object.freeze({}), ae = (e) => typeof e == "object" && e !== null && !Array.isArray(e), Y = (e, t) => typeof e == "number" && Number.isInteger(e) && e >= 0 && e <= t, q = (e, t) => e.some((n) => n === t);
+function Se(e, t) {
   try {
     const n = e.get(t);
-    if (n === null || n.length > we) return;
+    if (n === null || n.length > ve) return;
     const s = JSON.parse(n);
-    return ae(s) && s.v === ke ? s : void 0;
+    return ae(s) && s.v === we ? s : void 0;
   } catch {
     return;
   }
 }
-function Me(e, t, n) {
+function Ae(e, t, n) {
   try {
-    const s = JSON.stringify({ v: ke, ...n });
-    return s.length > we ? !1 : (e.set(t, s), !0);
+    const s = JSON.stringify({ v: we, ...n });
+    return s.length > ve ? !1 : (e.set(t, s), !0);
   } catch {
     return !1;
   }
 }
-function Le(e) {
+function Me(e) {
   const { goal: t, timeOfDay: n, device: s, extraGentle: i, createdAt: a } = e;
-  if (!(!q(qe, t) || !q(We, n) || !q(Ke, s)) && !(typeof i != "boolean" || !J(a, Number.MAX_SAFE_INTEGER)))
+  if (!(!q($t, t) || !q(qt, n) || !q(Wt, s)) && !(typeof i != "boolean" || !Y(a, Number.MAX_SAFE_INTEGER)))
     return Object.freeze({ goal: t, timeOfDay: n, device: s, extraGentle: i, createdAt: a });
 }
-function rn(e) {
-  const t = Ae(e, ne);
-  return (t && Le(t)) ?? Se;
+function dn(e) {
+  const t = Se(e, te);
+  return (t && Me(t)) ?? ke;
 }
-function ln(e, t) {
-  const n = Le({ ...t });
-  return n !== void 0 && Me(e, ne, { ...n });
+function mn(e, t) {
+  const n = Me({ ...t });
+  return n !== void 0 && Ae(e, te, { ...n });
 }
-function Ne(e, t) {
-  const n = Q.find((r) => r.id === e);
-  if (n === void 0 || !ae(t) || !J(t.startedAt, sn)) return;
+function Le(e, t) {
+  const n = X.find((r) => r.id === e);
+  if (n === void 0 || !ae(t) || !Y(t.startedAt, ln)) return;
   const { doneDays: s, pickedIds: i } = t;
   if (!Array.isArray(s) || !Array.isArray(i) || i.length > n.days.length) return;
   const a = s, o = i;
-  if (!a.every((r) => J(r, n.days.length) && r >= 1) || !o.every((r) => typeof r == "string" && an.test(r))) return;
-  const l = [...new Set(a)].sort((r, y) => r - y);
+  if (!a.every((r) => Y(r, n.days.length) && r >= 1) || !o.every((r) => typeof r == "string" && cn.test(r))) return;
+  const c = [...new Set(a)].sort((r, d) => r - d);
   return Object.freeze({
     startedAt: t.startedAt,
-    doneDays: Object.freeze(l),
+    doneDays: Object.freeze(c),
     pickedIds: Object.freeze([...o])
   });
 }
-function cn(e) {
-  const t = Ae(e, se), n = t == null ? void 0 : t.journeys;
-  if (!ae(n)) return on;
+function pn(e) {
+  const t = Se(e, ne), n = t == null ? void 0 : t.journeys;
+  if (!ae(n)) return un;
   const s = {};
   for (const [i, a] of Object.entries(n)) {
-    const o = Ne(i, a);
+    const o = Le(i, a);
     o !== void 0 && (s[i] = o);
   }
   return Object.freeze(s);
 }
-function un(e, t) {
+function hn(e, t) {
   const n = {};
   for (const [s, i] of Object.entries(t)) {
-    const a = Ne(s, i);
+    const a = Le(s, i);
     a !== void 0 && (n[s] = a);
   }
-  return Me(e, se, { journeys: n });
+  return Ae(e, ne, { journeys: n });
 }
-function dn(e) {
-  for (const t of [ne, se])
+function fn(e) {
+  for (const t of [te, ne, se])
     try {
       e.remove(t);
     } catch {
     }
 }
-function me() {
+function de() {
   const e = /* @__PURE__ */ new Map();
   return {
     get: (t) => e.get(t) ?? null,
@@ -1985,10 +2001,10 @@ function me() {
     remove: (t) => void e.delete(t)
   };
 }
-function mn(e) {
+function yn(e) {
   try {
     const t = e ?? globalThis.localStorage;
-    if (t === void 0) return me();
+    if (t === void 0) return de();
     const n = "zonked.probe";
     return t.setItem(n, "1"), t.removeItem(n), {
       get: (s) => t.getItem(s),
@@ -1996,331 +2012,408 @@ function mn(e) {
       remove: (s) => t.removeItem(s)
     };
   } catch {
-    return me();
+    return de();
   }
 }
-function pn({ onAccept: e, onCancel: t }) {
-  const n = B(null), s = B(null);
+const Ne = /^[a-z0-9-]{1,80}$/;
+function gn(e) {
+  try {
+    const t = e.get(se);
+    return t !== null && Ne.test(t) ? t : null;
+  } catch {
+    return null;
+  }
+}
+function bn(e, t) {
+  try {
+    Ne.test(t) && e.set(se, t);
+  } catch {
+  }
+}
+const vn = 60, wn = 400;
+function kn(e, t) {
+  const n = z(null), [s, i] = k(null);
+  T(() => {
+    if (e.playing) {
+      i(null), n.current = e.templateId === null ? null : { id: e.templateId, name: e.templateName ?? m.brand, minutes: e.elapsedSec / 60 };
+      return;
+    }
+    const o = n.current;
+    if (n.current = null, !t || o === null || o.minutes * 60 < vn) return;
+    const c = window.setTimeout(() => i({ ...o, minutes: Math.round(o.minutes) }), wn);
+    return () => window.clearTimeout(c);
+  }, [e.playing, e.templateId, e.templateName, e.elapsedSec, t]);
+  const a = M(() => i(null), []);
+  return H(() => ({ card: s, dismiss: a }), [s, a]);
+}
+function Sn({ info: e, onAgain: t, onClose: n }) {
+  const s = z(null);
+  return T(() => {
+    var i;
+    return (i = s.current) == null ? void 0 : i.focus();
+  }, []), /* @__PURE__ */ l("div", { className: "c-overlay", onKeyDown: (i) => i.key === "Escape" && n(), children: /* @__PURE__ */ g("div", { className: "c-dialog c-end", role: "dialog", "aria-modal": "true", "aria-labelledby": "c-end-title", "data-testid": "end-card", children: [
+    /* @__PURE__ */ l("h2", { id: "c-end-title", className: "c-h1", children: m.endTitle }),
+    /* @__PURE__ */ l("p", { children: m.endLine(e.name, e.minutes) }),
+    /* @__PURE__ */ l("p", { className: "c-muted", children: m.endNote }),
+    /* @__PURE__ */ g("div", { className: "c-actions", children: [
+      /* @__PURE__ */ l("button", { ref: s, type: "button", className: "c-btn c-primary", "data-testid": "end-again", onClick: t, children: m.playAgain }),
+      /* @__PURE__ */ l("button", { type: "button", className: "c-btn", "data-testid": "end-close", onClick: n, children: m.close })
+    ] })
+  ] }) });
+}
+function An({ onAccept: e, onCancel: t }) {
+  const n = z(null), s = z(null);
   T(() => {
     var o;
     return (o = n.current) == null ? void 0 : o.focus();
   }, []);
-  const a = /* @__PURE__ */ b("div", { className: "c-safety", onKeyDown: (o) => {
-    var l;
+  const a = /* @__PURE__ */ g("div", { className: "c-safety", onKeyDown: (o) => {
+    var c;
     if (t !== void 0) {
       if (o.key === "Escape")
         o.stopPropagation(), t();
       else if (o.key === "Tab") {
         const r = o.shiftKey ? s.current : n.current;
-        document.activeElement === r && (o.preventDefault(), (l = o.shiftKey ? n.current : s.current) == null || l.focus());
+        document.activeElement === r && (o.preventDefault(), (c = o.shiftKey ? n.current : s.current) == null || c.focus());
       }
     }
   }, children: [
-    /* @__PURE__ */ c("h2", { id: "c-safety-title", children: m.safetyTitle }),
-    /* @__PURE__ */ c("ul", { className: "c-safe-list", children: m.safetyLines.map((o) => /* @__PURE__ */ c("li", { children: o }, o)) }),
-    /* @__PURE__ */ b("div", { className: "c-actions c-row", children: [
-      t !== void 0 && /* @__PURE__ */ c("button", { ref: s, type: "button", className: "c-btn", onClick: t, children: m.back }),
-      /* @__PURE__ */ c("button", { ref: n, type: "button", className: "c-btn c-primary", "data-testid": "calm-safety-accept", onClick: e, children: m.safetyAccept })
+    /* @__PURE__ */ l("h2", { id: "c-safety-title", children: m.safetyTitle }),
+    /* @__PURE__ */ l("ul", { className: "c-safe-list", children: m.safetyLines.map((o) => /* @__PURE__ */ l("li", { children: o }, o)) }),
+    /* @__PURE__ */ g("div", { className: "c-actions c-row", children: [
+      t !== void 0 && /* @__PURE__ */ l("button", { ref: s, type: "button", className: "c-btn", onClick: t, children: m.back }),
+      /* @__PURE__ */ l("button", { ref: n, type: "button", className: "c-btn c-primary", "data-testid": "calm-safety-accept", onClick: e, children: m.safetyAccept })
     ] })
   ] });
-  return t === void 0 ? a : /* @__PURE__ */ c("div", { className: "c-overlay", children: /* @__PURE__ */ c("div", { className: "c-dialog", role: "dialog", "aria-modal": "true", "aria-labelledby": "c-safety-title", children: a }) });
+  return t === void 0 ? a : /* @__PURE__ */ l("div", { className: "c-overlay", children: /* @__PURE__ */ l("div", { className: "c-dialog", role: "dialog", "aria-modal": "true", "aria-labelledby": "c-safety-title", children: a }) });
 }
-const hn = 1, fn = 720;
-function yn(e) {
+const Mn = 1, Ln = 720;
+function Nn(e) {
   const t = (e.endedAt - e.startedAt) / 6e4;
-  return Number.isFinite(t) && t >= hn ? Math.min(fn, t) : 0;
+  return Number.isFinite(t) && t >= Mn ? Math.min(Ln, t) : 0;
 }
-const gn = 200, V = (e = Date.now) => te(e());
-function bn(e, t) {
-  const n = W(() => mn(), []), [s, i] = S(() => rn(n)), [a, o] = S(() => cn(n)), [l, r] = S([]), [y, L] = S(0);
+const Tn = 200, J = (e = Date.now) => ee(e());
+function En(e, t) {
+  const n = H(() => yn(), []), [s, i] = k(() => dn(n)), [a, o] = k(() => pn(n)), [c, r] = k([]), [d, y] = k(0);
   T(() => {
-    let h = !0;
-    return e.listLogs(gn).then((M) => h && r(M)).catch(() => {
+    let p = !0;
+    return e.listLogs(Tn).then((b) => p && r(b)).catch(() => {
     }), () => {
-      h = !1;
+      p = !1;
     };
-  }, [e, y, t]);
-  const A = W(() => {
-    const h = l.map((M) => ({ day: te(M.startedAt), minutes: yn(M) }));
-    return nn(h, V());
-  }, [l]), g = N(
-    (h) => {
-      i(h), ln(n, h);
+  }, [e, d, t]);
+  const w = H(() => {
+    const p = c.map((b) => ({ day: ee(b.startedAt), minutes: Nn(b) }));
+    return rn(p, J());
+  }, [c]), L = M(
+    (p) => {
+      i(p), mn(n, p);
     },
     [n]
-  ), v = N(
-    (h, M) => {
-      o((w) => {
-        const { [h]: O, ...z } = w, I = M === null ? z : { ...z, [h]: M };
-        return un(n, I), I;
+  ), v = M(
+    (p, b) => {
+      o((R) => {
+        const { [p]: A, ...E } = R, D = b === null ? E : { ...E, [p]: b };
+        return hn(n, D), D;
       });
     },
     [n]
-  ), p = N(() => L((h) => h + 1), []);
-  return { storage: n, profile: s, progress: a, week: A, logs: l, setProfile: g, setJourney: v, refresh: p };
+  ), S = M(() => y((p) => p + 1), []);
+  return { storage: n, profile: s, progress: a, week: w, logs: c, setProfile: L, setJourney: v, refresh: S };
 }
-const vn = ["M", "T", "W", "T", "F", "S", "S"], pe = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], wn = { listened: "listened", rest: "rest day", today: "today", upcoming: "coming up" };
-function kn(e, t = !0) {
+const Cn = ["M", "T", "W", "T", "F", "S", "S"], me = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], Rn = { listened: "listened", rest: "rest day", today: "today", upcoming: "coming up" };
+function zn(e, t = !0) {
   if (e.quietWeek) return t ? m.welcomeBack : m.firstWeek;
   const n = e.daysListened;
   return `${n} ${n === 1 ? "day" : "days"} this week. ${m.restCount}`;
 }
-function Sn({ week: e, hasHistory: t = !0 }) {
-  return /* @__PURE__ */ b("div", { className: "c-week", children: [
-    /* @__PURE__ */ c("ul", { className: "c-dots", "aria-label": "This week", children: e.dots.map((n, s) => /* @__PURE__ */ b("li", { className: `c-dot c-dot-${n}`, "data-state": n, children: [
-      /* @__PURE__ */ c("span", { className: "c-mark", "aria-hidden": "true", children: vn[s] }),
-      /* @__PURE__ */ c("span", { className: "c-sr", children: `${pe[s]}, ${wn[n]}` })
-    ] }, pe[s])) }),
-    /* @__PURE__ */ c("p", { className: "c-muted", "data-testid": "week-text", children: kn(e, t) })
+function Dn({ week: e, hasHistory: t = !0 }) {
+  return /* @__PURE__ */ g("div", { className: "c-week", children: [
+    /* @__PURE__ */ l("ul", { className: "c-dots", "aria-label": "This week", children: e.dots.map((n, s) => /* @__PURE__ */ g("li", { className: `c-dot c-dot-${n}`, "data-state": n, children: [
+      /* @__PURE__ */ l("span", { className: "c-mark", "aria-hidden": "true", children: Cn[s] }),
+      /* @__PURE__ */ l("span", { className: "c-sr", children: `${me[s]}, ${Rn[n]}` })
+    ] }, me[s])) }),
+    /* @__PURE__ */ l("p", { className: "c-muted", "data-testid": "week-text", children: zn(e, t) })
   ] });
 }
-const An = R(() => import("./chunk-mascot-BtlVTBkR.mjs").then((e) => ({ default: e.CalmMascot }))), Mn = () => /* @__PURE__ */ new Date();
-function Ln(e, t, n) {
+const On = C(() => import("./chunk-mascot-BtlVTBkR.mjs").then((e) => ({ default: e.CalmMascot }))), In = () => /* @__PURE__ */ new Date();
+function Pn(e, t, n) {
   var i;
   const s = ((i = e[t]) == null ? void 0 : i.doneDays.length) ?? 0;
   return s === 0 ? "Not started" : `Day ${Math.min(n, s + 1)} of ${n}`;
 }
-function Nn({ profile: e, week: t, progress: n, reduced: s, crewConnected: i, hasHistory: a = !0, now: o = Mn, onPlay: l, onOpenJourney: r, onGo: y }) {
-  const [L, A] = S(0), g = W(() => Wt(Vt(e, o()), 5), [e, o]), v = g[L % Math.max(1, g.length)];
-  return /* @__PURE__ */ b("div", { className: "c-today", children: [
-    /* @__PURE__ */ c("div", { className: "c-hero c-hero-sm", children: /* @__PURE__ */ c(he, { fallback: null, children: /* @__PURE__ */ c(An, { mood: "idle", size: 128, reducedMotion: s }) }) }),
-    /* @__PURE__ */ c("h1", { className: "c-greet", "data-testid": "greeting", children: Be(o().getHours()) }),
-    v !== void 0 && /* @__PURE__ */ b("section", { className: "c-card c-daily", "aria-labelledby": "c-daily-h", children: [
-      /* @__PURE__ */ c("p", { className: "c-eyebrow", children: m.dailyEyebrow }),
-      /* @__PURE__ */ c("h2", { id: "c-daily-h", children: v.template.name }),
-      /* @__PURE__ */ c("p", { className: "c-muted", children: `${v.template.recommendedMinutes} min. ${v.reasons[0] ?? m.suggested}` }),
-      /* @__PURE__ */ b("div", { className: "c-actions", children: [
-        /* @__PURE__ */ c("button", { type: "button", className: "c-btn c-primary", "data-testid": "today-play", onClick: () => l(v.template), children: m.start }),
-        /* @__PURE__ */ c("button", { type: "button", className: "c-btn c-link", onClick: () => A((p) => p + 1), children: m.notThisOne })
+function Hn({ profile: e, week: t, progress: n, reduced: s, crewConnected: i, hasHistory: a = !0, now: o = In, last: c = null, onPlay: r, onOpenJourney: d, onGo: y }) {
+  const [w, L] = k(0), v = H(() => Ht(Xt(e, o()), 5), [e, o]), S = v[w % Math.max(1, v.length)];
+  return /* @__PURE__ */ g("div", { className: "c-today", children: [
+    /* @__PURE__ */ l("div", { className: "c-hero c-hero-sm", children: /* @__PURE__ */ l(pe, { fallback: null, children: /* @__PURE__ */ l(On, { mood: "idle", size: 128, reducedMotion: s }) }) }),
+    /* @__PURE__ */ l("h1", { className: "c-greet", "data-testid": "greeting", children: Bt(o().getHours()) }),
+    c !== null && /* @__PURE__ */ l("button", { type: "button", className: "c-btn c-primary c-wide c-again", "data-testid": "play-again", onClick: () => r(c), children: `${m.playAgain}: ${c.name}` }),
+    S !== void 0 && /* @__PURE__ */ g("section", { className: "c-card c-daily", "aria-labelledby": "c-daily-h", children: [
+      /* @__PURE__ */ l("p", { className: "c-eyebrow", children: m.dailyEyebrow }),
+      /* @__PURE__ */ l("h2", { id: "c-daily-h", children: S.template.name }),
+      /* @__PURE__ */ l("p", { className: "c-muted", children: `${S.template.recommendedMinutes} min. ${S.reasons[0] ?? m.suggested}` }),
+      /* @__PURE__ */ g("div", { className: "c-actions", children: [
+        /* @__PURE__ */ l("button", { type: "button", className: "c-btn c-primary", "data-testid": "today-play", onClick: () => r(S.template), children: m.start }),
+        /* @__PURE__ */ l("button", { type: "button", className: "c-btn c-link", onClick: () => L((p) => p + 1), children: m.notThisOne })
       ] })
     ] }),
-    /* @__PURE__ */ b("section", { className: "c-card", "aria-labelledby": "c-goal-h", children: [
-      /* @__PURE__ */ c("h2", { id: "c-goal-h", className: "c-h3", children: `Your goal: ${xe[e.goal]}` }),
-      /* @__PURE__ */ c(Sn, { week: t, hasHistory: a })
+    /* @__PURE__ */ g("section", { className: "c-card", "aria-labelledby": "c-goal-h", children: [
+      /* @__PURE__ */ l("h2", { id: "c-goal-h", className: "c-h3", children: `Your goal: ${Ft[e.goal]}` }),
+      /* @__PURE__ */ l(Dn, { week: t, hasHistory: a })
     ] }),
-    /* @__PURE__ */ b("section", { "aria-labelledby": "c-for-h", children: [
-      /* @__PURE__ */ c("h2", { id: "c-for-h", className: "c-h3", children: m.forYou }),
-      /* @__PURE__ */ c("ul", { className: "c-hscroll", children: g.map((p, h) => /* @__PURE__ */ c("li", { children: /* @__PURE__ */ b("button", { type: "button", className: `c-mini-card c-g${h % 6 + 1}`, onClick: () => l(p.template), children: [
-        /* @__PURE__ */ c("b", { children: p.template.name }),
-        /* @__PURE__ */ c("small", { children: p.reasons[0] ?? m.suggested }),
-        /* @__PURE__ */ c("em", { children: `${p.template.recommendedMinutes} min` })
+    /* @__PURE__ */ g("section", { "aria-labelledby": "c-for-h", children: [
+      /* @__PURE__ */ l("h2", { id: "c-for-h", className: "c-h3", children: m.forYou }),
+      /* @__PURE__ */ l("ul", { className: "c-hscroll", children: v.map((p, b) => /* @__PURE__ */ l("li", { children: /* @__PURE__ */ g("button", { type: "button", className: `c-mini-card c-g${b % 6 + 1}`, onClick: () => r(p.template), children: [
+        /* @__PURE__ */ l("b", { children: p.template.name }),
+        /* @__PURE__ */ l("small", { children: p.reasons[0] ?? m.suggested }),
+        /* @__PURE__ */ l("em", { children: `${p.template.recommendedMinutes} min` })
       ] }) }, p.template.id)) })
     ] }),
-    /* @__PURE__ */ b("section", { "aria-labelledby": "c-jr-h", children: [
-      /* @__PURE__ */ c("h2", { id: "c-jr-h", className: "c-h3", children: m.journeysTitle }),
-      /* @__PURE__ */ c("ul", { className: "c-hscroll", children: Q.map((p, h) => /* @__PURE__ */ c("li", { children: /* @__PURE__ */ b("button", { type: "button", className: `c-journey-card c-j${h % 6 + 1}`, onClick: () => r(p.id), children: [
-        /* @__PURE__ */ c("b", { children: p.title }),
-        /* @__PURE__ */ c("small", { children: p.blurb }),
-        /* @__PURE__ */ c("em", { children: Ln(n, p.id, p.days.length) })
+    /* @__PURE__ */ g("section", { "aria-labelledby": "c-jr-h", children: [
+      /* @__PURE__ */ l("h2", { id: "c-jr-h", className: "c-h3", children: m.journeysTitle }),
+      /* @__PURE__ */ l("ul", { className: "c-hscroll", children: X.map((p, b) => /* @__PURE__ */ l("li", { children: /* @__PURE__ */ g("button", { type: "button", className: `c-journey-card c-j${b % 6 + 1}`, onClick: () => d(p.id), children: [
+        /* @__PURE__ */ l("b", { children: p.title }),
+        /* @__PURE__ */ l("small", { children: p.blurb }),
+        /* @__PURE__ */ l("em", { children: Pn(n, p.id, p.days.length) })
       ] }) }, p.id)) })
     ] }),
-    /* @__PURE__ */ b("button", { type: "button", className: "c-card c-link-card", onClick: () => y("library"), children: [
-      /* @__PURE__ */ c("b", { children: "Browse all sounds" }),
-      /* @__PURE__ */ c("span", { className: "c-muted", children: m.libraryTitle })
+    /* @__PURE__ */ g("button", { type: "button", className: "c-card c-link-card", onClick: () => y("library"), children: [
+      /* @__PURE__ */ l("b", { children: "Browse all sounds" }),
+      /* @__PURE__ */ l("span", { className: "c-muted", children: m.libraryTitle })
     ] }),
-    i && /* @__PURE__ */ c("p", { className: "c-card c-crew-chip", role: "status", children: "Crew connected: easing the sound" })
+    i && /* @__PURE__ */ l("p", { className: "c-card c-crew-chip", role: "status", children: "Crew connected: easing the sound" })
   ] });
 }
-const Rn = R(() => import("./chunk-Journeys-BREWWmFY.mjs").then((e) => ({ default: e.JourneyList }))), Tn = R(() => import("./chunk-Journeys-BREWWmFY.mjs").then((e) => ({ default: e.JourneyDetail }))), zn = R(() => import("./chunk-Library-GSkzZhQm.mjs").then((e) => ({ default: e.Library }))), En = R(() => import("./chunk-PlayerScreen-CBPNMcOI.mjs").then((e) => ({ default: e.PlayerScreen }))), Cn = R(() => import("./chunk-CrewScreen-DHMuZIU4.mjs").then((e) => ({ default: e.CrewScreen }))), On = R(() => import("./chunk-SettingsScreen-Cyq_PgQ5.mjs").then((e) => ({ default: e.SettingsScreen })));
-function Dn({ view: e, journeyId: t, s: n, data: s, crewInfo: i, still: a, fav: o, handlers: l }) {
+const jn = C(() => import("./chunk-Journeys-C-SGozK7.mjs").then((e) => ({ default: e.JourneyList }))), Fn = C(() => import("./chunk-Journeys-C-SGozK7.mjs").then((e) => ({ default: e.JourneyDetail }))), Bn = C(() => import("./chunk-Library-BX3c_pDq.mjs").then((e) => ({ default: e.Library }))), _n = C(() => import("./chunk-PlayerScreen-B__avaq8.mjs").then((e) => ({ default: e.PlayerScreen }))), xn = C(() => import("./chunk-CrewScreen-H9-jHgCL.mjs").then((e) => ({ default: e.CrewScreen }))), Gn = C(() => import("./chunk-SettingsScreen-CLqFGdu9.mjs").then((e) => ({ default: e.SettingsScreen })));
+function $n({ view: e, journeyId: t, s: n, data: s, crewInfo: i, still: a, fav: o, last: c, handlers: r }) {
   switch (e) {
     case "journeys":
-      return /* @__PURE__ */ c(Rn, { progress: s.progress, onOpen: l.openJourney });
+      return /* @__PURE__ */ l(jn, { progress: s.progress, onOpen: r.openJourney });
     case "journey":
-      return /* @__PURE__ */ c(
-        Tn,
+      return /* @__PURE__ */ l(
+        Fn,
         {
           id: t ?? "",
           profile: s.profile,
           progress: s.progress,
-          todayDay: V(),
-          onBack: () => l.go("journeys"),
+          todayDay: J(),
+          onBack: () => r.go("journeys"),
           onStartJourney: s.setJourney,
-          onRestart: (r) => s.setJourney(r, null),
-          onPlayDay: l.playDay
+          onRestart: (d) => s.setJourney(d, null),
+          onPlayDay: r.playDay
         }
       );
     case "library":
-      return /* @__PURE__ */ c(zn, { store: n.store, logs: s.logs, onPlay: l.play, onPlayMix: l.onMix });
+      return /* @__PURE__ */ l(Bn, { store: n.store, logs: s.logs, onPlay: r.play, onPlayMix: r.onMix });
     case "player":
-      return /* @__PURE__ */ c(En, { player: n.player, snap: n.snap, still: a, favorite: o.on, onToggle: n.toggle, onFavorite: o.toggle });
+      return /* @__PURE__ */ l(_n, { player: n.player, snap: n.snap, still: a, favorite: o.on, onToggle: n.toggle, onFavorite: o.toggle });
     case "crew":
-      return /* @__PURE__ */ c(Cn, { crew: i, burnout: n.snap.burnout });
+      return /* @__PURE__ */ l(xn, { crew: i, burnout: n.snap.burnout });
     case "settings":
-      return /* @__PURE__ */ c(
-        On,
+      return /* @__PURE__ */ l(
+        Gn,
         {
           gentle: s.profile.extraGentle,
           reduceMotion: n.userReduced,
-          onGentle: (r) => s.setProfile({ ...s.profile, extraGentle: r }),
+          onGentle: (d) => s.setProfile({ ...s.profile, extraGentle: d }),
           onReduceMotion: n.setReduced,
-          onStudio: l.onStudio,
-          onForget: l.forget
+          onStudio: r.onStudio,
+          onForget: r.forget
         }
       );
     default:
-      return /* @__PURE__ */ c(
-        Nn,
+      return /* @__PURE__ */ l(
+        Hn,
         {
           profile: s.profile,
           week: s.week,
           progress: s.progress,
           reduced: a,
-          hasHistory: s.logs.some((r) => te(r.startedAt) < V()),
+          hasHistory: s.logs.some((d) => ee(d.startedAt) < J()),
           crewConnected: i.enabled && i.status === "connected",
-          onPlay: l.play,
-          onOpenJourney: l.openJourney,
-          onGo: l.go
+          last: c,
+          onPlay: r.play,
+          onOpenJourney: r.openJourney,
+          onGo: r.go
         }
       );
   }
 }
-function Hn() {
-  const { player: e, store: t } = fe(), [n, s] = S(() => e.snapshot()), [i, a] = S(ze), [o, l] = S(!1), [r, y, L] = Ee(), A = B(null);
+function qn() {
+  const { player: e, store: t } = he(), [n, s] = k(() => e.snapshot()), [i, a] = k(Oe), [o, c] = k(!1), [r, d, y] = Ie(), w = z(null), L = z(i);
   T(() => (s(e.snapshot()), e.subscribe(s)), [e]);
-  const g = N(
-    (w) => {
-      i ? w() : (A.current = w, l(!0));
+  const v = M(
+    (A) => {
+      L.current ? A() : (w.current = A, c(!0));
     },
-    [i]
-  ), v = N(() => {
-    Ce(Oe, !0), a(!0), l(!1);
-    const w = A.current;
-    A.current = null, w == null || w();
-  }, []), p = N(() => {
-    A.current = null, l(!1);
-  }, []), h = N(
-    (w, O) => g(() => {
-      e.setQueue([w]), e.playTemplate(w).then((z) => {
-        z && O !== null && e.startTimer({ kind: "countdown", minutes: O });
+    []
+  ), S = M(() => {
+    Pe(He, !0), L.current = !0, a(!0), c(!1);
+    const A = w.current;
+    w.current = null, A == null || A();
+  }, []), p = M(() => {
+    w.current = null, c(!1);
+  }, []), b = M(
+    (A, E) => v(() => {
+      e.setQueue([A]), e.playTemplate(A).then((D) => {
+        D && E !== null && e.startTimer({ kind: "countdown", minutes: E });
       });
     }),
-    [e, g]
-  ), M = N(() => {
-    e.snapshot().playing ? e.stop() : g(() => void e.play());
-  }, [e, g]);
-  return { player: e, store: t, snap: n, accepted: i, gate: o, reduced: r, setReduced: y, userReduced: L, guarded: g, accept: v, cancelGate: p, playTemplate: h, toggle: M };
+    [e, v]
+  ), R = M(() => {
+    e.snapshot().playing ? e.stop() : v(() => void e.play());
+  }, [e, v]);
+  return { player: e, store: t, snap: n, accepted: i, gate: o, reduced: r, setReduced: d, userReduced: y, guarded: v, accept: S, cancelGate: p, playTemplate: b, toggle: R };
 }
-function Pn(e, t) {
-  const [n, s] = S("standalone"), [i, a] = S(() => De());
-  return T(() => He(a), []), T(() => {
-    const o = new Pe({
+function Wn(e, t) {
+  const [n, s] = k("standalone"), [i, a] = k(() => je());
+  return T(() => Fe(a), []), T(() => {
+    const o = new Be({
       ...t !== void 0 ? { create: t } : {},
-      onStatus: (l) => {
-        s(l), l === "standalone" && e.crewLost();
+      onStatus: (c) => {
+        s(c), c === "standalone" && e.crewLost();
       },
-      onState: (l) => e.applyCrew(l)
+      onState: (c) => e.applyCrew(c)
     });
     return o.start(), () => o.stop();
   }, [e, t]), { enabled: i, status: n };
 }
-const U = 500, Z = { v: 1, items: [] };
-function In(e, t) {
-  if (!oe(e) || H(e, "v") !== 1) return Z;
-  const n = H(e, "items");
-  if (!Array.isArray(n)) return Z;
+const V = 500, U = { v: 1, items: [] };
+function Kn(e, t) {
+  if (!ie(e) || j(e, "v") !== 1) return U;
+  const n = j(e, "items");
+  if (!Array.isArray(n)) return U;
   const s = [], i = /* @__PURE__ */ new Set();
-  for (const a of n.slice(0, U * 2)) {
-    if (!oe(a)) continue;
-    const o = H(a, "kind"), l = ye(H(a, "id"));
-    if (o !== "template" && o !== "mix" || l === null) continue;
-    const r = `${o}:${l}`;
-    if (!i.has(r) && (i.add(r), s.push({ kind: o, id: l, at: Ie(H(a, "at"), 0, t + 864e5, t) }), s.length >= U))
+  for (const a of n.slice(0, V * 2)) {
+    if (!ie(a)) continue;
+    const o = j(a, "kind"), c = fe(j(a, "id"));
+    if (o !== "template" && o !== "mix" || c === null) continue;
+    const r = `${o}:${c}`;
+    if (!i.has(r) && (i.add(r), s.push({ kind: o, id: c, at: _e(j(a, "at"), 0, t + 864e5, t) }), s.length >= V))
       break;
   }
   return { v: 1, items: s };
 }
-function Re(e, t, n) {
+function Te(e, t, n) {
   return e.items.some((s) => s.kind === t && s.id === n);
 }
-function jn(e, t, n, s) {
-  return Re(e, t, n) ? { v: 1, items: e.items.filter((i) => !(i.kind === t && i.id === n)) } : ye(n) === null || e.items.length >= U ? e : { v: 1, items: [{ kind: t, id: n, at: s }, ...e.items] };
+function Yn(e, t, n, s) {
+  return Te(e, t, n) ? { v: 1, items: e.items.filter((i) => !(i.kind === t && i.id === n)) } : fe(n) === null || e.items.length >= V ? e : { v: 1, items: [{ kind: t, id: n, at: s }, ...e.items] };
 }
-function Fn(e, t) {
-  const [n, s] = S(Z);
+function Jn(e, t) {
+  const [n, s] = k(U);
   T(() => {
     let a = !0;
-    return e.getRecord("favorites").then((o) => a && s(In(o, Date.now()))).catch(() => {
+    return e.getRecord("favorites").then((o) => a && s(Kn(o, Date.now()))).catch(() => {
     }), () => {
       a = !1;
     };
   }, [e]);
-  const i = N(() => {
+  const i = M(() => {
     if (t === null) return;
-    const a = jn(n, "template", t, Date.now());
+    const a = Yn(n, "template", t, Date.now());
     s(a), e.setRecord("favorites", a).catch(() => {
     });
   }, [n, t, e]);
-  return { on: t !== null && Re(n, "template", t), toggle: i };
+  return { on: t !== null && Te(n, "template", t), toggle: i };
 }
-const xn = R(() => import("./chunk-Onboarding-BxvbDVNe.mjs").then((e) => ({ default: e.Onboarding }))), Bn = (e) => Math.max(180, e * 60 * 0.8);
-function _n({ engine: e, clock: t, store: n, bridgeCreate: s, onStudio: i }) {
-  const a = Hn(), o = bn(a.store, a.snap.playing), l = Pn(a.player, s), [r, y] = S("today"), [L, A] = S(null), g = B(null), v = Fn(a.store, a.snap.templateId), p = o.profile.createdAt === 0, h = a.reduced || o.profile.extraGentle, M = N((k) => y(k), []), w = N(
-    (k, D = k.recommendedMinutes) => {
-      g.current = null, a.playTemplate(k, D), y("player");
-    },
-    [a]
-  ), O = (k, D, ie) => {
-    w(ie), g.current = { id: k, no: D, needSec: Bn(ie.recommendedMinutes) };
+const Vn = C(() => import("./chunk-Onboarding-158C0F1h.mjs").then((e) => ({ default: e.Onboarding }))), Un = (e) => Math.max(180, e * 60 * 0.8);
+function Zn({ engine: e, clock: t, store: n, bridgeCreate: s, onStudio: i }) {
+  const a = qn(), o = En(a.store, a.snap.playing), c = Wn(a.player, s), [r, d] = k("today"), [y, w] = k(null), L = z(null), v = Jn(a.store, a.snap.templateId), S = o.profile.createdAt === 0, p = es(o.storage), b = kn(a.snap, !S), R = a.reduced || o.profile.extraGentle, A = M((N) => d(N), []), { play: E, playDay: D, finish: Ce } = Qn({ s: a, data: o, last: p, end: b, active: L, setView: d });
+  ns(a.snap.playing, a.snap.elapsedSec, L, o.progress, o.setJourney);
+  const Re = (N) => {
+    w(N), d("journey");
+  }, ze = () => {
+    fn(o.storage), o.setProfile(ke), d("today");
   };
-  Gn(a.snap.playing, a.snap.elapsedSec, g, o.progress, o.setJourney);
-  const z = (k, D) => {
-    o.setProfile(k), w(D);
-  }, I = (k) => {
-    A(k), y("journey");
-  }, Te = () => {
-    dn(o.storage), o.setProfile(Se), y("today");
-  };
-  return /* @__PURE__ */ b("div", { className: "c-app", "data-theme": "auto", "data-motion": h ? "off" : "on", "data-playing": a.snap.playing ? "true" : "false", children: [
-    /* @__PURE__ */ c("a", { className: "c-skip", href: "#c-main", children: "Skip to content" }),
-    /* @__PURE__ */ b("header", { className: "c-topbar", children: [
-      /* @__PURE__ */ c("span", { className: "c-brand", children: m.brand }),
-      /* @__PURE__ */ c("button", { type: "button", className: "c-chip-btn", "data-testid": "studio-top", "aria-pressed": "false", onClick: i, children: m.studio })
-    ] }),
-    /* @__PURE__ */ c("main", { id: "c-main", className: "c-main", tabIndex: -1, children: /* @__PURE__ */ c(he, { fallback: /* @__PURE__ */ c("p", { className: "c-loading", role: "status", children: m.loading }), children: p ? /* @__PURE__ */ c(
-      xn,
+  return /* @__PURE__ */ g("div", { className: "c-app", "data-theme": "auto", "data-motion": R ? "off" : "on", "data-playing": a.snap.playing ? "true" : "false", children: [
+    /* @__PURE__ */ l(ts, { onStudio: i }),
+    /* @__PURE__ */ l("main", { id: "c-main", className: "c-main", tabIndex: -1, children: /* @__PURE__ */ l(pe, { fallback: /* @__PURE__ */ l("p", { className: "c-loading", role: "status", children: m.loading }), children: S ? /* @__PURE__ */ l(
+      Vn,
       {
         playing: a.snap.playing,
-        reduced: h,
+        reduced: R,
         initial: o.profile,
         onAccept: a.accept,
-        onPreview: (k) => a.playTemplate(k, null),
+        onPreview: (N) => a.playTemplate(N, null),
         onStop: () => void a.player.stop(),
-        onFinish: z
+        onFinish: Ce
       }
-    ) : /* @__PURE__ */ c(
-      Dn,
+    ) : /* @__PURE__ */ l(
+      $n,
       {
         view: r,
-        journeyId: L,
+        journeyId: y,
         s: a,
         data: o,
-        crewInfo: l,
-        still: h,
+        crewInfo: c,
+        still: R,
         fav: v,
-        handlers: { go: M, play: w, playDay: O, openJourney: I, forget: Te, onStudio: i, onMix: (k) => a.guarded(() => a.player.playMix(k)) }
+        last: p.template,
+        handlers: { go: A, play: E, playDay: D, openJourney: Re, forget: ze, onStudio: i, onMix: (N) => a.guarded(() => a.player.playMix(N)) }
       }
     ) }) }),
-    !p && r !== "player" && /* @__PURE__ */ c($e, { snap: a.snap, onOpen: () => M("player"), onStop: () => void a.player.stop() }),
-    !p && /* @__PURE__ */ c(Ge, { view: r, onGo: M }),
-    /* @__PURE__ */ c("p", { className: "c-sr", role: "status", "data-testid": "play-status", children: a.snap.playing ? `Playing. ${m.volumeCapped}` : "Stopped." }),
-    a.gate && /* @__PURE__ */ c(pn, { onAccept: a.accept, onCancel: a.cancelGate })
+    !S && r !== "player" && /* @__PURE__ */ l(Gt, { snap: a.snap, onOpen: () => A("player"), onStop: () => void a.player.stop() }),
+    !S && /* @__PURE__ */ l(xt, { view: r, onGo: A }),
+    /* @__PURE__ */ l("p", { className: "c-sr", role: "status", "data-testid": "play-status", children: a.snap.playing ? `Playing. ${m.volumeCapped}` : "Stopped." }),
+    b.card !== null && !a.snap.playing && /* @__PURE__ */ l(Sn, { info: b.card, onAgain: () => {
+      var N;
+      return Xn(((N = b.card) == null ? void 0 : N.id) ?? null, E);
+    }, onClose: b.dismiss }),
+    a.gate && /* @__PURE__ */ l(An, { onAccept: a.accept, onCancel: a.cancelGate })
   ] });
 }
-function Gn(e, t, n, s, i) {
+function Qn({ s: e, data: t, last: n, end: s, active: i, setView: a }) {
+  const o = M(
+    (d, y = d.recommendedMinutes) => {
+      i.current = null, n.remember(d.id), s.dismiss(), e.playTemplate(d, y), a("player");
+    },
+    [e, n, s, i, a]
+  );
+  return { play: o, playDay: (d, y, w) => {
+    o(w), i.current = { id: d, no: y, needSec: Un(w.recommendedMinutes) };
+  }, finish: (d, y) => {
+    if (t.setProfile(d), !e.snap.playing || e.snap.templateId !== y.id) return o(y);
+    n.remember(y.id), e.player.startTimer({ kind: "countdown", minutes: y.recommendedMinutes }), a("player");
+  } };
+}
+const Ee = (e) => e === null ? null : P().find((t) => t.id === e) ?? null;
+function Xn(e, t) {
+  const n = Ee(e);
+  n !== null && t(n);
+}
+function es(e) {
+  const [t, n] = k(() => gn(e)), s = H(() => Ee(t), [t]), i = M(
+    (a) => {
+      bn(e, a), n(a);
+    },
+    [e]
+  );
+  return H(() => ({ template: s, remember: i }), [s, i]);
+}
+function ts({ onStudio: e }) {
+  return /* @__PURE__ */ g(De, { children: [
+    /* @__PURE__ */ l("a", { className: "c-skip", href: "#c-main", children: "Skip to content" }),
+    /* @__PURE__ */ g("header", { className: "c-topbar", children: [
+      /* @__PURE__ */ l("span", { className: "c-brand", children: m.brand }),
+      /* @__PURE__ */ l("button", { type: "button", className: "c-chip-btn", "data-testid": "studio-top", "aria-pressed": "false", onClick: e, children: m.studio })
+    ] })
+  ] });
+}
+function ns(e, t, n, s, i) {
   T(() => {
     const a = n.current, o = a === null ? void 0 : s[a.id];
-    !e || a === null || o === void 0 || t < a.needSec || (n.current = null, o.doneDays.includes(a.no) || i(a.id, { ...o, doneDays: [...o.doneDays, a.no].sort((l, r) => l - r) }));
+    !e || a === null || o === void 0 || t < a.needSec || (n.current = null, o.doneDays.includes(a.no) || i(a.id, { ...o, doneDays: [...o.doneDays, a.no].sort((c, r) => c - r) }));
   }, [e, t, n, s, i]);
 }
-const $n = "zonked.css";
-function qn(e) {
-  const t = new URL($n, e).href;
+const ss = "zonked.css";
+function as(e) {
+  const t = new URL(ss, e).href;
   if ([...document.querySelectorAll("link[data-zonked-css]")].some((i) => i.getAttribute("href") === t)) return;
   const s = document.createElement("link");
   s.rel = "stylesheet", s.href = t, s.setAttribute("data-zonked-css", "1"), document.head.appendChild(s);
 }
-const Wn = {
+const is = {
   position: "fixed",
   left: 12,
   right: 12,
@@ -2333,34 +2426,34 @@ const Wn = {
   fontSize: 14,
   textAlign: "center"
 };
-function es() {
-  qn(import.meta.url), je();
-  const { engine: e, store: t } = fe(), [n, s] = S(!1);
-  return /* @__PURE__ */ b("div", { "data-testid": "zonked-app", style: { height: "100%", minHeight: 0, overflow: "hidden", position: "relative", transform: "translateZ(0)" }, children: [
-    /* @__PURE__ */ c("div", { style: { height: "100%", overflowY: "auto" }, children: /* @__PURE__ */ c(_n, { engine: e, store: t, onStudio: () => s(!0) }) }),
-    n && /* @__PURE__ */ c("p", { role: "status", style: Wn, "data-testid": "studio-note", onClick: () => s(!1), children: "Studio, the advanced mode, is not in the Kiro Crew app yet. Tap to close." })
+function hs() {
+  as(import.meta.url), xe();
+  const { engine: e, store: t } = he(), [n, s] = k(!1);
+  return /* @__PURE__ */ g("div", { "data-testid": "zonked-app", style: { height: "100%", minHeight: 0, overflow: "hidden", position: "relative", transform: "translateZ(0)" }, children: [
+    /* @__PURE__ */ l("div", { style: { height: "100%", overflowY: "auto" }, children: /* @__PURE__ */ l(Zn, { engine: e, store: t, onStudio: () => s(!0) }) }),
+    n && /* @__PURE__ */ l("p", { role: "status", style: is, "data-testid": "studio-note", onClick: () => s(!1), children: "Studio, the advanced mode, is not in the Kiro Crew app yet. Tap to close." })
   ] });
 }
 export {
   m as C,
-  Se as D,
-  Qn as E,
-  Zn as F,
-  xe as G,
-  Q as J,
-  Z as N,
-  pn as S,
-  Vn as T,
-  es as Z,
-  qe as a,
-  We as b,
-  Un as c,
-  Ke as d,
+  ke as D,
+  ms as E,
+  ds as F,
+  Ft as G,
+  X as J,
+  U as N,
+  An as S,
+  cs as T,
+  hs as Z,
+  $t as a,
+  qt as b,
+  us as c,
+  Wt as d,
   P as e,
-  In as f,
-  Xn as g,
-  Tt as h,
-  Fe as i,
-  Vt as p,
-  Wt as r
+  Kn as f,
+  ps as g,
+  vt as h,
+  jt as i,
+  Xt as p,
+  Ht as r
 };

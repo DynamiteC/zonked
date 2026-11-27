@@ -1,4 +1,4 @@
-// Calm front door checks (C1 to C6): safety before sound, onboarding, theme switch, week wording,
+// Calm front door checks (C1 to C7): safety before sound, onboarding, theme switch, week wording,
 // reduced motion, 375 px layout. Each check runs in its own browser context with no pre-set keys.
 import { newSession } from './e2e-helpers.mjs';
 
@@ -18,7 +18,7 @@ const open = async (h, opts = {}) => {
     };
   });
   await s.page.goto(`${h.origin}/`);
-  await s.page.getByText('Step 1 of 5').first().waitFor();
+  await s.page.getByText('1 of 3').first().waitFor();
   return s;
 };
 
@@ -54,6 +54,20 @@ export async function runCalmChecks(h) {
     } finally {
       await s.context.close();
     }
+    const k = await open(h);
+    try {
+      await k.page.getByRole('button', { name: 'Skip, just play' }).click();
+      await k.page.getByTestId('calm-safety-accept').waitFor();
+      await k.page.waitForTimeout(1500);
+      h.assert((await k.page.evaluate(() => window.__acCount)) === 0, 'sound before notice on skip path');
+      h.assert((await k.page.getByText(/of 3/).count()) === 0, 'notice is numbered');
+      await k.page.getByTestId('calm-safety-accept').click();
+      await k.page.getByTestId('player-toggle').waitFor();
+      h.assert((await k.page.getByRole('heading', { name: 'Pick a starter sound' }).count()) === 0, 'starter screen shown on skip path');
+      await k.page.waitForFunction(() => window.__acCount === 1);
+    } finally {
+      await k.context.close();
+    }
   });
 
   await h.check('C2 onboarding completes in 5 steps and lands on the player with sound', async () => {
@@ -65,7 +79,7 @@ export async function runCalmChecks(h) {
       await s.page.getByTestId('greeting').waitFor();
       await s.page.reload();
       await s.page.getByTestId('greeting').waitFor();
-      h.assert((await s.page.getByText('Step 1 of 5').count()) === 0, 'onboarding shown again after reload');
+      h.assert((await s.page.getByText('1 of 3').count()) === 0, 'onboarding shown again after reload');
     } finally {
       await s.context.close();
     }
@@ -127,6 +141,29 @@ export async function runCalmChecks(h) {
         await s.page.waitForTimeout(300);
         h.assert((await wide()) <= 0, `${n} overflows`);
       }
+    } finally {
+      await s.context.close();
+    }
+  });
+
+  await h.check('C7 done-for-now card after a session, Play again and Close work, Today has Play again', async () => {
+    const s = await open(h);
+    try {
+      await s.page.clock.install();
+      await s.page.getByRole('button', { name: 'Skip, just play' }).click();
+      await s.page.getByTestId('calm-safety-accept').click();
+      await s.page.getByTestId('player-toggle').waitFor();
+      await s.page.clock.runFor(90_000);
+      await s.page.getByTestId('player-toggle').click();
+      await s.page.clock.runFor(2000);
+      await s.page.getByTestId('end-card').waitFor();
+      const text = await s.page.getByTestId('end-card').innerText();
+      h.assert(/Done for now\./.test(text) && /played for/.test(text), `card text: ${text}`);
+      h.assert(!/tomorrow|streak|missed/i.test(text), 'pressure wording on end card');
+      await s.page.getByTestId('end-close').click();
+      h.assert((await s.page.getByTestId('end-card').count()) === 0, 'card still shown after Close');
+      await nav(s.page, 'Today').click();
+      await s.page.getByTestId('play-again').waitFor();
     } finally {
       await s.context.close();
     }

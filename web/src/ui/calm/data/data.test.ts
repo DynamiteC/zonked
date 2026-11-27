@@ -3,7 +3,7 @@ import { getTemplates } from '../../../catalog';
 import type { Template } from '../../../catalog/types';
 import {
   DEFAULT_PROFILE, JOURNEYS, MAX_PAYLOAD_BYTES, clearAll, createLocalStorage, createMemoryStorage,
-  getJourney, loadProfile, loadProgress, needsHeadphoneNotice, profileToRecommendation, resolveJourney,
+  getJourney, loadLast, saveLast, loadProfile, loadProgress, needsHeadphoneNotice, profileToRecommendation, resolveJourney,
   saveProfile, saveProgress, timeOfDayFromHour, toDayNumber, weekStats,
 } from './index';
 import type { Profile, SessionDay, StorageLike } from './index';
@@ -277,5 +277,18 @@ describe('storage', () => {
     expect(st.get('x')).toBe('1');
     st.remove('x');
     expect(data.has('x')).toBe(false);
+  });
+});
+
+describe('last session id', () => {
+  it('round trips a valid id and rejects a bad one', () => {
+    const st = createMemoryStorage();
+    expect(loadLast(st)).toBeNull();
+    saveLast(st, 'deep-work-1');
+    expect(loadLast(st)).toBe('deep-work-1');
+    saveLast(st, '<script>');
+    expect(loadLast(st)).toBe('deep-work-1');
+    clearAll(st);
+    expect(loadLast(st)).toBeNull();
   });
 });

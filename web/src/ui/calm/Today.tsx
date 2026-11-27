@@ -19,6 +19,8 @@ interface Props {
   /** True once at least one session is logged; gates the welcome-back line. */
   readonly hasHistory?: boolean;
   readonly now?: () => Date;
+  /** Last session played on this device, if any. */
+  readonly last?: Template | null;
   readonly onPlay: (t: Template) => void;
   readonly onOpenJourney: (id: string) => void;
   readonly onGo: (view: 'journeys' | 'library') => void;
@@ -29,7 +31,7 @@ function dayLine(progress: ProgressMap, id: string, total: number): string {
   return done === 0 ? 'Not started' : `Day ${Math.min(total, done + 1)} of ${total}`;
 }
 
-export function Today({ profile, week, progress, reduced, crewConnected, hasHistory = true, now = realNow, onPlay, onOpenJourney, onGo }: Props): React.JSX.Element {
+export function Today({ profile, week, progress, reduced, crewConnected, hasHistory = true, now = realNow, last = null, onPlay, onOpenJourney, onGo }: Props): React.JSX.Element {
   const [skip, setSkip] = useState(0);
   const recs = useMemo(() => recommendTemplates(profileToRecommendation(profile, now()), 5), [profile, now]);
   const pick = recs[skip % Math.max(1, recs.length)];
@@ -43,6 +45,11 @@ export function Today({ profile, week, progress, reduced, crewConnected, hasHist
       <h1 className="c-greet" data-testid="greeting">
         {greeting(now().getHours())}
       </h1>
+      {last !== null && (
+        <button type="button" className="c-btn c-primary c-wide c-again" data-testid="play-again" onClick={() => onPlay(last)}>
+          {`${CALM.playAgain}: ${last.name}`}
+        </button>
+      )}
       {pick !== undefined && (
         <section className="c-card c-daily" aria-labelledby="c-daily-h">
           <p className="c-eyebrow">{CALM.dailyEyebrow}</p>

@@ -9,6 +9,8 @@ import type { Profile } from './data';
 import { MODE_KEY, readMode } from './mode';
 import { ModeRoot } from './ModeRoot';
 import { BreathRing } from './PlayerScreen';
+import { getTemplates } from '../../catalog';
+import { EndCard } from './EndCard';
 import { WeekDots, weekText } from './WeekDots';
 import { CALM, greeting } from './copy';
 
@@ -54,22 +56,55 @@ describe('onboarding order', () => {
     expect(eng.start).toHaveBeenCalledTimes(1);
   });
 
-  it('skip jumps to the safety notice and plays nothing', async () => {
+  it('skip shows the unnumbered notice, plays nothing, then starts a default session on accept', async () => {
     const eng = engine();
     render(<ModeRoot engine={eng} store={createStore(undefined)} />);
     await screen.findByText(CALM.goalTitle, { selector: 'h2' });
+    expect(screen.getByText('1 of 3')).toBeTruthy();
     click(CALM.skip);
     expect(screen.getByText(CALM.safetyTitle)).toBeTruthy();
+    expect(screen.queryByText(/of 3/)).toBeNull();
+    expect(screen.getByText('Stop if anything feels uncomfortable.')).toBeTruthy();
+    expect(localStorage.getItem(SAFETY_KEY)).toBeNull();
+    await act(async () => void (await new Promise((r) => setTimeout(r, 50))));
     expect(eng.start).not.toHaveBeenCalled();
+    await act(async () => fireEvent.click(screen.getByTestId('calm-safety-accept')));
+    expect(eng.start).toHaveBeenCalledTimes(1);
+    expect(screen.queryByText(CALM.starterTitle)).toBeNull();
+    expect(screen.queryByRole('dialog')).toBeNull();
+    await screen.findByTestId('player-toggle');
+  });
+
+  it('marks the pre-picked goal as Selected and keeps the note to one sentence', async () => {
+    render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
+    await screen.findByText(CALM.goalTitle, { selector: 'h2' });
+    expect(screen.getByText(CALM.selected)).toBeTruthy();
+    expect(CALM.listenNote.match(/[.!?]/g)).toHaveLength(1);
+  });
+
+  it('Start keeps a running preview going: one engine start, no restart', async () => {
+    const eng = engine();
+    render(<ModeRoot engine={eng} store={createStore(undefined)} />);
+    await screen.findByText(CALM.goalTitle, { selector: 'h2' });
+    click(CALM.next);
+    click(CALM.next);
+    click(CALM.next);
+    await act(async () => fireEvent.click(screen.getByTestId('calm-safety-accept')));
+    const previews = await screen.findAllByRole('button', { name: CALM.preview });
+    await act(async () => fireEvent.click(previews[0] as HTMLElement));
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: CALM.start })));
+    await screen.findByTestId('player-toggle');
+    expect(eng.start).toHaveBeenCalledTimes(1);
+    expect(eng.stop).not.toHaveBeenCalled();
   });
 
   it('Back keeps earlier answers', async () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     await screen.findByText(CALM.goalTitle, { selector: 'h2' });
-    fireEvent.click(screen.getByLabelText('Sleep'));
+    fireEvent.click(screen.getByLabelText(/^Sleep/));
     click(CALM.next);
     click(CALM.back);
-    expect((screen.getByLabelText('Sleep') as HTMLInputElement).checked).toBe(true);
+    expect((screen.getByLabelText(/^Sleep/) as HTMLInputElement).checked).toBe(true);
   });
 });
 
@@ -103,6 +138,40 @@ describe('studio switch', () => {
     expect(eng.start).not.toHaveBeenCalled();
     await act(async () => fireEvent.click(screen.getByTestId('calm-safety-accept')));
     expect(eng.start).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('play again and end card', () => {
+  beforeEach(() => {
+    saveProfile(createLocalStorage(), PROFILE);
+    localStorage.setItem(SAFETY_KEY, '1');
+  });
+
+  it('shows no Play again before any session', async () => {
+    render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
+    await screen.findByTestId('greeting');
+    expect(screen.queryByTestId('play-again')).toBeNull();
+  });
+
+  it('replays the last session from Today in one tap', async () => {
+    const eng = engine();
+    localStorage.setItem('zonked.last.v1', getTemplates()[0]?.id ?? '');
+    render(<ModeRoot engine={eng} store={createStore(undefined)} />);
+    await act(async () => fireEvent.click(await screen.findByTestId('play-again')));
+    expect(eng.start).toHaveBeenCalledTimes(1);
+  });
+
+  it('end card has one calm line and two buttons, with no pressure words', () => {
+    const onAgain = vi.fn();
+    const onClose = vi.fn();
+    render(<EndCard info={{ id: 'x', name: 'Soft Rain', minutes: 12 }} onAgain={onAgain} onClose={onClose} />);
+    expect(screen.getByText('Soft Rain played for 12 minutes.')).toBeTruthy();
+    fireEvent.click(screen.getByTestId('end-again'));
+    fireEvent.click(screen.getByTestId('end-close'));
+    expect(onAgain).toHaveBeenCalledTimes(1);
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(document.body.textContent).not.toMatch(/tomorrow|streak|missed|lost|don't|do not break/i);
+    expect(CALM.endLine('A', 0)).toBe('A played for under a minute.');
   });
 });
 

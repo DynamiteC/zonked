@@ -8,6 +8,6 @@ export { resolveJourney } from './resolve';
 export { profileToRecommendation, needsHeadphoneNotice, timeOfDayFromHour } from './recommendation';
 export { weekStats, toDayNumber, MIN_DAY_MINUTES } from './week';
 export {
-  loadProfile, saveProfile, loadProgress, saveProgress, clearAll,
+  loadProfile, saveProfile, loadLast, saveLast, loadProgress, saveProgress, clearAll,
   createLocalStorage, createMemoryStorage, DEFAULT_PROFILE, MAX_PAYLOAD_BYTES,
 } from './storage';

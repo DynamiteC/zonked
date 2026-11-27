@@ -1,6 +1,6 @@
 import { jsxs as d, jsx as t } from "react/jsx-runtime";
 import { useState as p, useEffect as f, Suspense as b, lazy as N } from "react";
-import { C as i, i as y, h as k, E as C } from "./chunk-App-ldvDWDBH.mjs";
+import { C as i, i as y, h as k, E as C } from "./chunk-App-DapSTSRU.mjs";
 const E = 5.5;
 function g(n) {
   const e = 60 / E / 2;

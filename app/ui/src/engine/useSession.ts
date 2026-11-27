@@ -18,6 +18,8 @@ export function useCalmSession(): CalmSession {
   const [gate, setGate] = useState(false);
   const [reduced, setReduced, userReduced] = useReducedMotion();
   const pending = useRef<(() => void) | null>(null);
+  /** Set the moment the notice is accepted, so a play in the same tick passes the gate. */
+  const acceptedNow = useRef(accepted);
 
   useEffect(() => {
     setSnap(player.snapshot());
@@ -26,16 +28,17 @@ export function useCalmSession(): CalmSession {
 
   const guarded = useCallback(
     (fn: () => void) => {
-      if (accepted) fn();
+      if (acceptedNow.current) fn();
       else {
         pending.current = fn;
         setGate(true);
       }
     },
-    [accepted],
+    [],
   );
   const accept = useCallback(() => {
     writeFlag(SAFETY_KEY, true);
+    acceptedNow.current = true;
     setAccepted(true);
     setGate(false);
     const fn = pending.current;

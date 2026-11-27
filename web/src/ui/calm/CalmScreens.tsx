@@ -34,11 +34,12 @@ interface Props {
   readonly crewInfo: CrewInfo;
   readonly still: boolean;
   readonly fav: { readonly on: boolean; readonly toggle: () => void };
+  readonly last: Template | null;
   readonly handlers: Handlers;
 }
 
 /** Picks the screen for the current view. Only Today is in the first chunk. */
-export function Screens({ view, journeyId, s, data, crewInfo, still, fav, handlers: h }: Props): React.JSX.Element {
+export function Screens({ view, journeyId, s, data, crewInfo, still, fav, last, handlers: h }: Props): React.JSX.Element {
   switch (view) {
     case 'journeys':
       return <JourneyList progress={data.progress} onOpen={h.openJourney} />;
@@ -81,6 +82,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, still, fav, handle
           reduced={still}
           hasHistory={data.logs.some((l) => toDayNumber(l.startedAt) < today())}
           crewConnected={crewInfo.enabled && crewInfo.status === 'connected'}
+          last={last}
           onPlay={h.play}
           onOpenJourney={h.openJourney}
           onGo={h.go}

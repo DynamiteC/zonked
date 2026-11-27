@@ -4,6 +4,7 @@ import type { JourneyProgress, ProgressMap, Profile, StorageLike } from './types
 
 export const PROFILE_KEY = 'zonked.profile.v1';
 export const PROGRESS_KEY = 'zonked.journeys.v1';
+export const LAST_KEY = 'zonked.last.v1';
 export const MAX_PAYLOAD_BYTES = 32 * 1024;
 const VERSION = 1;
 const MAX_DAY = 10_000_000;
@@ -104,7 +105,7 @@ export function saveProgress(storage: StorageLike, progress: ProgressMap): boole
 
 /** Removes everything this folder stores. Never throws. */
 export function clearAll(storage: StorageLike): void {
-  for (const key of [PROFILE_KEY, PROGRESS_KEY]) {
+  for (const key of [PROFILE_KEY, PROGRESS_KEY, LAST_KEY]) {
     try {
       storage.remove(key);
     } catch {
@@ -137,5 +138,25 @@ export function createLocalStorage(ls?: Storage): StorageLike {
     };
   } catch {
     return createMemoryStorage();
+  }
+}
+
+const LAST_RE = /^[a-z0-9-]{1,80}$/;
+
+/** Id of the last template played, or null. The caller checks it against the catalog. */
+export function loadLast(storage: StorageLike): string | null {
+  try {
+    const v = storage.get(LAST_KEY);
+    return v !== null && LAST_RE.test(v) ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveLast(storage: StorageLike, id: string): void {
+  try {
+    if (LAST_RE.test(id)) storage.set(LAST_KEY, id);
+  } catch {
+    // Storage may be full or blocked. Play again then falls back to the Daily card.
   }
 }

@@ -1,5 +1,5 @@
 import { jsxs as n, jsx as e } from "react/jsx-runtime";
-import { C as t } from "./chunk-App-ldvDWDBH.mjs";
+import { C as t } from "./chunk-App-DapSTSRU.mjs";
 function o({ label: i, hint: c, checked: s, onChange: a, testId: l }) {
   return /* @__PURE__ */ n("label", { className: "c-switch", children: [
     /* @__PURE__ */ e("input", { type: "checkbox", role: "switch", "data-testid": l, checked: s, onChange: (d) => a(d.currentTarget.checked) }),

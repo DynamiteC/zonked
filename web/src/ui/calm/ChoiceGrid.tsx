@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import { CALM } from './copy';
 
 export interface ChoiceOption<T extends string> {
   readonly value: T;
@@ -21,7 +22,10 @@ export function ChoiceGrid<T extends string>({ legend, options, value, onChange 
       {options.map((o) => (
         <label key={o.value} className="c-choice">
           <input type="radio" name={name} value={o.value} checked={value === o.value} onChange={() => onChange(o.value)} />
-          <span>{o.label}</span>
+          <span>
+            {o.label}
+            {value === o.value && <i className="c-sel">{CALM.selected}</i>}
+          </span>
         </label>
       ))}
     </fieldset>
