@@ -34,18 +34,22 @@ async function shim(name, code, external = []) {
     bundle: true, format: 'esm', external, outfile: join(shimDir, `${name}.mjs`), define: { 'process.env.NODE_ENV': '"production"' },
   });
 }
-await shim('all', "import R from 'react'; import * as J from 'react/jsx-runtime'; import * as C from 'react-dom/client'; export default R; export const {useState,useEffect,useRef,useMemo,useCallback,createElement,Fragment,StrictMode}=R; export const {jsx,jsxs}=J; export const {createRoot}=C;");
+const reactNames = Object.keys(reactRequire('react')).filter((k) => /^[A-Za-z_$][\w$]*$/.test(k) && k !== 'default');
+await shim('all', `import R from 'react'; import * as J from 'react/jsx-runtime'; import * as C from 'react-dom/client'; export default R; export const {${reactNames.join(',')}}=R; export const {jsx,jsxs}=J; export const {createRoot}=C;`);
 
 const HOST = `<!doctype html><html><head><meta charset="utf-8"><title>host</title>
 <script type="importmap">{"imports":{"react":"/shims/all.mjs","react/jsx-runtime":"/shims/all.mjs","react-dom/client":"/shims/all.mjs"}}</script>
-</head><body><div id="root"></div>
+</head><body><div id="root" style="height:640px;overflow:auto"></div><div id="panel" style="border-top:1px solid #888"></div>
 <script type="module">
   const mod = await import('/apps/zonked/ui/dist/index.mjs');
+  const panel = await import('/apps/zonked/ui/dist/panel.mjs');
   const { createRoot } = await import('react-dom/client');
   const { jsx } = await import('react/jsx-runtime');
   window.__root = createRoot(document.getElementById('root'));
+  window.__panelRoot = createRoot(document.getElementById('panel'));
   window.__mount = () => window.__root.render(jsx(mod.default, {}));
   window.__unmount = () => window.__root.render(null);
+  window.__panelRoot.render(jsx(panel.default, {}));
   window.__mount();
 </script></body></html>`;
 
@@ -82,31 +86,45 @@ page.on('pageerror', (e) => logs.push(`pageerror: ${e.message}`));
 const failed = [];
 page.on('response', (r) => { if (r.status() >= 400) failed.push(`${r.status()} ${r.url()}`); });
 
+// Reads engine stats through the page's own singleton (same module instance the panel uses).
+async function measure(pg) {
+  return pg.evaluate(async () => {
+    const m = await import('/apps/zonked/ui/dist/panel.mjs');
+    return { ...(await m.engineStats()), state: m.engineState() };
+  });
+}
 const out = { ok: false };
 try {
   await page.goto(`http://127.0.0.1:${port}/`);
-  await page.waitForSelector('[data-testid=start]');
-  await page.click('[data-testid=start]');
-  await page.waitForSelector('[data-testid=safety]');
+  await page.getByRole('button', { name: 'Skip, just play' }).click();
+  await page.waitForSelector('[data-testid=calm-safety-accept]');
   if (shots) await page.screenshot({ path: join(shots, 'gate.png') });
-  await page.click('[data-testid=safety-accept]');
-  await page.waitForFunction(() => /"state": "(running|error)"/.test(document.querySelector('[data-testid=status]')?.textContent ?? ''), null, { timeout: 15000 });
+  await page.click('[data-testid=calm-safety-accept]');
+  await page.getByRole('button', { name: 'Start', exact: true }).click();
+  await page.waitForSelector('[data-testid=mini-stop], [data-playing=true]', { timeout: 15000 });
+  await page.waitForFunction(() => document.querySelector('[data-testid=panel-stop]') !== null, null, { timeout: 15000 });
   await page.waitForTimeout(2600); // finish the 2 s ramp
-  await page.click('[data-testid=measure]');
-  await page.waitForFunction(() => /peak=/.test(document.querySelector('[data-testid=stats]')?.textContent ?? ''));
-  out.status = JSON.parse(await page.textContent('[data-testid=status]'));
-  out.stats = (await page.textContent('[data-testid=stats]')).trim();
-  out.caps = await page.evaluate(() => Object.fromEntries([...document.querySelectorAll('[data-testid=caps] tr')].map((tr) => [tr.children[0].textContent, tr.children[1].textContent])));
-  if (shots) await page.screenshot({ path: join(shots, 'running.png') });
-  // Unmount the page (route change) and check the engine singleton keeps running.
+  out.panelWhilePlaying = (await page.textContent('[data-testid=panel-hint]'))?.trim();
+  out.statsPlaying = await measure(page);
+  if (shots) await page.screenshot({ path: join(shots, 'calm-playing.png') });
+  // Leave the page (route change). The sound must keep playing, the panel must still say so.
   await page.evaluate(() => window.__unmount());
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(1200);
+  out.afterUnmountPanel = (await page.textContent('[data-testid=panel-hint]'))?.trim();
+  out.statsAfterUnmount = await measure(page);
   await page.evaluate(() => window.__mount());
-  await page.waitForSelector('[data-testid=status]');
-  out.afterRemount = JSON.parse(await page.textContent('[data-testid=status]')).state;
-  await page.click('[data-testid=measure]');
-  await page.waitForTimeout(400);
-  out.statsAfterRemount = (await page.textContent('[data-testid=stats]')).trim();
+  await page.waitForSelector('[data-testid=play-status]');
+  out.afterRemountStatus = (await page.textContent('[data-testid=play-status]'))?.trim();
+  // Panel stop ends the sound, panel play restarts it.
+  await page.click('[data-testid=panel-stop]');
+  await page.waitForSelector('[data-testid=panel-play]');
+  await page.waitForTimeout(600);
+  out.afterPanelStop = (await measure(page)).state;
+  await page.click('[data-testid=panel-play]');
+  await page.waitForSelector('[data-testid=panel-stop]');
+  out.stylesheet = await page.evaluate(() => document.querySelectorAll('link[data-zonked-css]').length);
+  out.noSAB = await page.evaluate(() => typeof SharedArrayBuffer === 'undefined' || !self.crossOriginIsolated);
+  if (shots) await page.screenshot({ path: join(shots, 'after-remount.png') });
   // Blob URL worklet under this CSP (script-src has no blob:).
   out.blobWorklet = await page.evaluate(async () => {
     try {
@@ -121,7 +139,7 @@ try {
     try { await fetch('data:application/wasm;base64,AGFzbQEAAAA='); return 'allowed'; } catch (e) { return `blocked: ${e.name}`; }
   });
   out.wasmDirect = await page.evaluate(async () => (await fetch('/apps/zonked/ui/dist/assets/dsp_core.wasm')).status);
-  out.ok = out.status.state === 'running';
+  out.ok = out.statsPlaying.peak > 0 && out.statsPlaying.peak <= 0.95 && out.statsAfterUnmount.peak > 0 && out.afterPanelStop !== 'running';
 } catch (e) {
   out.error = String(e);
   if (shots) await page.screenshot({ path: join(shots, 'error.png') }).catch(() => {});

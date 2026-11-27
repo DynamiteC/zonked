@@ -33,11 +33,11 @@ async function mobileLayout(h) {
         const box = (id) => document.querySelector(`[data-testid=${id}]`)?.getBoundingClientRect();
         const mascot = box('mascot');
         const scope = box('scope-canvas');
-        return { sw: document.documentElement.scrollWidth, mascot, scopeW: scope?.width ?? 0 };
+        return { sw: document.documentElement.scrollWidth, mascot, scrollY: window.scrollY, scopeW: scope?.width ?? 0 };
       });
       h.assert(m.sw <= 390, `scrollWidth ${m.sw}`);
       h.assert(m.mascot && m.mascot.x >= 0 && m.mascot.x + m.mascot.width <= 390, `mascot box ${JSON.stringify(m.mascot)}`);
-      h.assert(m.mascot.y >= 0, `mascot above viewport ${m.mascot.y}`);
+      h.assert(m.mascot.y + m.scrollY >= 0, `mascot above the page top ${m.mascot.y + m.scrollY}`);
       h.assert(m.scopeW > 0, 'scope canvas width 0');
       for (const id of ['play-button', 'advanced-toggle']) {
         const loc = page.getByTestId(id);
@@ -117,6 +117,7 @@ async function tooltipChecks(h) {
 async function quickStartChecks(h) {
   // No ?e2e=1 and no INIT script: flags unset, safety gate not yet accepted.
   const context = await h.browser.newContext({ viewport: MOBILE });
+  await context.addInitScript(() => localStorage.setItem('zonked.theme.v1', 'studio'));
   const page = await context.newPage();
   try {
     await page.goto(`${h.origin}/`);

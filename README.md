@@ -27,7 +27,7 @@ npm run build
 npm run preview        # http://localhost:4173
 ```
 
-Click the mask or press Space and accept the safety notice once. See "Requirements" below for the toolchain.
+The app opens on the Calm front door: five short questions, the hearing-safety notice, then a starter sound. No sound plays before you accept the notice. Today, Journeys, Library, Player, Crew and Settings sit in a tab bar, and Settings has a switch to Studio mode, the full control panel. Your choice is kept in this browser. In Studio, click the mask or press Space and accept the safety notice once. See "Requirements" below for the toolchain.
 
 Zonked resurrects two old things. One is SBaGen (1998), the `.sbg` brainwave sequence idea. The other is the author's own 2018 final-year web application, binaural beats research and yellow mask mascot, which were inspired by Giorgio Regni's GPLv3 Android app "Binaural Beats Therapy". That Android app is credited and kept in `legacy/` as reference only. The sequence idea and the mascot now run as a Rust `no_std` WebAssembly synth inside an `AudioWorklet`, in an offline-first PWA. A three-agent Kiro Crew watches your coding session and eases the sound from Beta/Gamma focus, to Alpha recovery, to Theta decompression. A library of 232 templates, a recommender, five synthesized sound layers, timers and lock-screen controls make it usable on its own all day.
 
@@ -69,6 +69,7 @@ Use stereo headphones for binaural beats. Zonked is not a medical device. The en
 |---|---|
 | `crates/dsp-core` | `#![no_std]` DSP: u64 phase oscillators, isochronic/monaural, Xoshiro256** noise, smoothing, limiter, five synthesized layers |
 | `crew-bridge` | Zero-dependency TypeScript CLI. Serves `.zonked-state.json` over SSE on `127.0.0.1:43210` |
+| `app` | Kiro Crew app port: the Calm screens with one persistent audio engine and a Now Playing side-panel tab |
 | `web` | React + TypeScript PWA, `.sbg` parser, AudioWorklet, template catalog, recommender, timers, static host config (host config file, `_headers`) |
 | `.kiro` | Steering, hook, spec, Kiro Crew manifest and agent instructions |
 | `docs`, `media` | Design docs, deck, demo video |

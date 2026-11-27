@@ -5,7 +5,11 @@
   "description": "Acoustic recovery companion: binaural beats, noise and lo-fi layers made by a no_std Rust WASM engine, with hearing safety limits built in.",
   "author": "Zonked contributors",
   "iconPath": "assets/icon.png",
-  "tags": ["audio", "focus", "recovery"],
+  "tags": [
+    "audio",
+    "focus",
+    "recovery"
+  ],
   "ui": {
     "entry": "dist/index.mjs",
     "pages": [
@@ -16,5 +20,17 @@
       }
     ]
   },
-  "permissions": {}
+  "permissions": {},
+  "contributes": {
+    "panelTabs": [
+      {
+        "id": "now-playing",
+        "title": "Zonked",
+        "menuLabel": "Zonked: Now Playing",
+        "menuDescription": "Play or stop your calm sound from the side panel.",
+        "icon": "AudioLines",
+        "entry": "dist/panel.mjs"
+      }
+    ]
+  }
 }

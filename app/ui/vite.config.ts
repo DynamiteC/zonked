@@ -32,16 +32,39 @@ function wasmAsFile(): Plugin {
   };
 }
 
+// The app build swaps the Calm session hook for one backed by the module singleton, so the
+// player, timers and MediaSession outlive the page. web/ itself is not touched.
+const calmHook = fileURLToPath(new URL('../../web/src/ui/calm/useCalmSession.ts', import.meta.url));
+const appHook = fileURLToPath(new URL('./src/engine/useSession.ts', import.meta.url));
+function swapSessionHook(): Plugin {
+  return {
+    name: 'zonked-swap-session-hook',
+    enforce: 'pre',
+    async resolveId(id, importer, opts) {
+      if (!importer || !id.endsWith('useCalmSession')) return null;
+      const r = await this.resolve(id, importer, { ...opts, skipSelf: true });
+      return r?.id === calmHook ? appHook : null;
+    },
+  };
+}
+
 export default defineConfig({
   base: './',
-  plugins: [wasmAsFile(), react()],
+  plugins: [wasmAsFile(), swapSessionHook(), react()],
   resolve: { alias: { '@zonked-web': webSrc } },
   server: { fs: { allow: ['..', '../..'] } },
   build: {
-    lib: { entry: 'src/App.tsx', formats: ['es'], fileName: () => 'index.mjs' },
+    lib: {
+      // Two entries share one chunk (engine singleton), so page and panel tab see the same player.
+      entry: { index: 'src/App.tsx', panel: 'src/Panel.tsx' },
+      formats: ['es'],
+      fileName: (_fmt, name) => `${name}.mjs`,
+    },
+    cssCodeSplit: false,
     outDir: 'dist',
     assetsInlineLimit: 0,
     rollupOptions: {
+      output: { chunkFileNames: 'chunk-[name]-[hash].mjs', assetFileNames: (a) => (a.name?.endsWith('.css') ? 'zonked.css' : 'assets/[name]-[hash][extname]') },
       external: ['react', 'react-dom', 'react/jsx-runtime', '@kirocrew/app-sdk', '@kirocrew/app-sdk/ui', 'lucide-react', '@tanstack/react-query'],
     },
   },

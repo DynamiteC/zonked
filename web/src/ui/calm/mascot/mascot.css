@@ -1,0 +1,34 @@
+.cm-stage{position:relative;perspective:700px;display:inline-block;--rx:0deg;--ry:0deg;font-family:system-ui,sans-serif}
+.cm-defs{position:absolute;width:0;height:0}
+.cm-body{position:absolute;inset:0;transform-style:preserve-3d}
+.cm-head{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .25s ease-out;filter:drop-shadow(0 6px 10px rgba(42,36,51,.25))}
+.cm-layer{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.cm-shadow{transform:translateZ(-40px)}
+.cm-ears{transform:translateZ(-12px)}
+.cm-face{transform:translateZ(0)}
+.cm-eyes{transform:translateZ(16px)}
+.cm-plates{transform:translateZ(8px)}
+.cm-motes{transform:translateZ(46px);pointer-events:none}
+.cm-eye{transform-box:fill-box;transform-origin:center;animation:cm-blink 5s infinite}
+.cm-mote{animation:cm-drift 7s ease-in-out infinite;opacity:.8}
+.cm-z{position:absolute;right:6%;top:6%;font-size:1.6em;font-weight:700;color:#5E5668;opacity:0;font-size:calc(var(--cm-s,1) * 28px)}
+.cm-idle .cm-body{animation:cm-float 5s ease-in-out infinite}
+.cm-happy .cm-body{animation:cm-bounce 1.1s ease-in-out infinite}
+.cm-sleepy .cm-body{animation:cm-float 8s ease-in-out infinite}
+.cm-sleepy .cm-eye{animation:none;transform:scaleY(.3)}
+.cm-sleepy .cm-z{animation:cm-zee 4s ease-in infinite}
+.cm-listening .cm-body{animation:cm-float 6s ease-in-out infinite}
+.cm-listening .cm-ear-glow{animation:cm-glow 3s ease-in-out infinite;filter:drop-shadow(0 0 8px #00E5A8)}
+.cm-breathing .cm-body{animation:cm-breathe 10s ease-in-out infinite}
+.cm-still .cm-body,.cm-still .cm-eye,.cm-still .cm-mote,.cm-still .cm-z,.cm-still .cm-ear-glow{animation:none}
+.cm-still .cm-head{transition:none;transform:none}
+.cm-still.cm-sleepy .cm-eye{transform:scaleY(.3)}
+.cm-still .cm-mote{opacity:.5}
+@keyframes cm-blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
+@keyframes cm-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3%)}}
+@keyframes cm-bounce{0%,100%{transform:translateY(0) scale(1,1)}30%{transform:translateY(-7%) scale(.98,1.03)}60%{transform:translateY(0) scale(1.03,.97)}}
+@keyframes cm-drift{0%,100%{transform:translate(0,0);opacity:.3}50%{transform:translate(6px,-14px);opacity:.9}}
+@keyframes cm-glow{0%,100%{opacity:.75}50%{opacity:1}}
+@keyframes cm-zee{0%{opacity:0;transform:translate(0,10px)}30%{opacity:.8}100%{opacity:0;transform:translate(10px,-30px)}}
+@keyframes cm-breathe{0%,100%{transform:scale(1);filter:brightness(1)}40%{transform:scale(1.06);filter:brightness(1.03)}}
+@media (prefers-reduced-motion:reduce){.cm-body,.cm-eye,.cm-mote,.cm-z,.cm-ear-glow{animation:none}.cm-head{transition:none;transform:none}}
