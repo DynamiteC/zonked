@@ -21,6 +21,6 @@ html, body { font-family: 'Atkinson Hyperlegible Next', system-ui, -apple-system
 .btn-primary { border-color: #000; box-shadow: 3px 3px 0 var(--mint); }
 .btn-primary:hover { background: #ffd966; }
 .btn[aria-pressed='true'] { background: #000; border-color: var(--mint); color: var(--mint); }
-h2 { font-family: var(--px); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.95rem; border-bottom: 2px dotted var(--line); padding-bottom: 4px; }
+.app h2 { font-family: var(--px); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.95rem; border-bottom: 2px dotted var(--line); padding-bottom: 4px; }
 :focus-visible { outline: 3px solid var(--mint); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .btn:active { transform: none; } }
