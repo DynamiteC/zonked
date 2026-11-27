@@ -122,6 +122,11 @@ describe('nature sounds', () => {
   it('has a credit row for every shipped sample', () => {
     for (const s of SAMPLES.filter((x) => x.kind !== 'synth')) expect(credits.some((c) => c.id === s.id), s.id).toBe(true);
   });
+
+  it('has no credit row for synth sounds, which say Made by Zonked', () => {
+    for (const s of SAMPLES.filter((x) => x.kind === 'synth')) expect(credits.some((c) => c.id === s.id), s.id).toBe(false);
+    expect(CALM.natureMade).toMatch(/^Made by Zonked/);
+  });
 });
 
 describe('my sounds screen', () => {
