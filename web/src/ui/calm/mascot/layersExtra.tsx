@@ -15,17 +15,18 @@ export function BodyLayer({ id }: IdProps): JSX.Element {
       <defs>
         <linearGradient id={`${id}-cloth`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#86A5B3" />
-          <stop offset="1" stopColor="#5A7886" />
+          <stop offset="0.55" stopColor="#5F7D8B" />
+          <stop offset="1" stopColor="#5A7886" stopOpacity="0" />
         </linearGradient>
       </defs>
       <g className="cm-chest" filter={`url(#${id}-paint)`}>
-        <path d="M-14 540C-14 440 34 388 128 366C186 352 220 374 256 374C292 374 326 352 384 366C478 388 526 440 526 540Z" fill={`url(#${id}-cloth)`} stroke="#3F5662" strokeWidth="5" strokeLinejoin="round" />
-        <path d="M-14 540C-14 460 28 410 92 384C70 440 74 490 82 540Z" fill="#E7B36A" opacity="0.22" />
-        <path d="M526 540C526 450 484 404 420 380C444 440 440 490 432 540Z" fill="#2A3F4B" opacity="0.32" />
+        <path d="M-14 512C-14 440 34 388 128 366C186 352 220 374 256 374C292 374 326 352 384 366C478 388 526 440 526 512Z" fill={`url(#${id}-cloth)`} />
+        <path d="M-14 470C-14 440 34 388 128 366C186 352 220 374 256 374C292 374 326 352 384 366C478 388 526 440 526 470" fill="none" stroke="#3F5662" strokeWidth="5" strokeLinejoin="round" />
+        <path d="M-14 512C-14 460 28 410 92 384C70 440 74 490 82 512Z" fill="#E7B36A" opacity="0.22" />
+        <path d="M526 512C526 450 484 404 420 380C444 440 440 490 432 512Z" fill="#2A3F4B" opacity="0.3" />
         <path d="M188 372Q256 450 324 372" fill="#4A6573" stroke="#3F5662" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M132 470Q150 500 146 540M380 470Q362 500 366 540" fill="none" stroke="#3F5662" strokeWidth="4" strokeLinecap="round" opacity="0.5" />
       </g>
-      <ellipse cx="256" cy="452" rx="176" ry="30" fill="#1F2F38" opacity="0.38" filter={`url(#${id}-paint)`} />
+      <ellipse cx="256" cy="456" rx="150" ry="24" fill="#1F2F38" opacity="0.26" filter={`url(#${id}-paint)`} />
     </svg>
   );
 }

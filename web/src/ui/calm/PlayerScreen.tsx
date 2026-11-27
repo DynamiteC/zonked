@@ -37,7 +37,7 @@ export function Stage({ still, playing, situation, theme, level }: StageProps): 
           <div className="c-stage-mascot">
             <CalmMascot
               mood={playing ? 'breathing' : 'idle'}
-              size={150}
+              size={190}
               reducedMotion={still}
               situation={situation}
               breathPhase={moving ? breath.phase : undefined}
