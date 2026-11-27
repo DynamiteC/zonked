@@ -78,6 +78,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   return (
     <div className="c-app" data-theme={look.theme} data-contrast={look.highContrast ? 'high' : 'normal'} data-view={view} data-motion={still ? 'off' : 'on'} data-playing={s.snap.playing ? 'true' : 'false'}>
       <TopBar />
+      {crew.view.source === 'demo' && <p className="c-badge-sim" role="status" data-testid="demo-badge">{CALM.crewDemoBadge}</p>}
       <main id="c-main" className="c-main" tabIndex={-1}>
         <Suspense fallback={<p className="c-loading" role="status">{CALM.loading}</p>}>
           {onboarding ? (

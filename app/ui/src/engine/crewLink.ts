@@ -1,6 +1,7 @@
 import * as sdk from '@kirocrew/app-sdk';
 import { useEffect } from 'react';
 import { parseCrewState } from '@zonked-web/app/crew';
+import { ingestCrew, lostCrew } from '@zonked-web/app/crewFeed';
 import { isCrewEnabled, onCrewChange } from '@zonked-web/ui/bridgeClient';
 import { getSession } from './session';
 
@@ -36,6 +37,7 @@ function setStatus(next: CrewLinkStatus): void {
 
 function drop(): void {
   if (status === 'connected') getSession().player.crewLost();
+  lostCrew();
   lastKey = '';
   setStatus('standalone');
 }
@@ -47,10 +49,10 @@ async function tick(): Promise<void> {
     const state = parseCrewState(body.crew);
     if (state === null) return drop();
     setStatus('connected');
-    const key = JSON.stringify([state.burnout, state.target]);
+    const key = JSON.stringify([state.burnout, state.target, state.why ?? '']);
     if (key === lastKey) return;
     lastKey = key;
-    getSession().player.applyCrew(state);
+    ingestCrew(getSession().player, state);
   } catch {
     drop();
   }

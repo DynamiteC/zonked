@@ -1,23 +1,24 @@
 import { setCrewEnabled } from '../bridgeClient';
 import { CALM } from './copy';
+import { CrewPanel } from './CrewPanel';
 import type { CrewInfo } from './useCrewBridge';
 
-const STEPS = ['Fresh', 'Warming up', CALM.crewBreak] as const;
-
-/** Burnout score is 0 to 100. Under 40 is fresh, under 60 warming up, else time for a break. */
-export function meterStep(score: number | null): 0 | 1 | 2 {
-  if (score === null || !Number.isFinite(score) || score < 40) return 0;
-  return score < 60 ? 1 : 2;
-}
+export { meterStep } from './CrewPanel';
 
 interface Props {
   readonly crew: CrewInfo;
-  readonly burnout: number | null;
+  /** True when the person picked a sound themselves, so the Crew does not steer it. */
+  readonly overridden: boolean;
+  readonly onDemo: () => void;
+  readonly onStopDemo: () => void;
+  readonly onNotNow: () => void;
+  readonly onResume: () => void;
+  readonly onFollow: () => void;
 }
 
-export function CrewScreen({ crew, burnout }: Props): React.JSX.Element {
-  const connected = crew.enabled && crew.status === 'connected';
-  const step = meterStep(burnout);
+export function CrewScreen({ crew, overridden, onDemo, onStopDemo, onNotNow, onResume, onFollow }: Props): React.JSX.Element {
+  const live = crew.view.state !== null;
+  const demo = crew.view.source === 'demo';
   return (
     <div>
       <h1 className="c-h1">{CALM.crewTitle}</h1>
@@ -27,25 +28,23 @@ export function CrewScreen({ crew, burnout }: Props): React.JSX.Element {
         <span className="c-track" aria-hidden="true" />
         <span>{CALM.crewSwitch}</span>
       </label>
-      <p className="c-status" role="status" data-testid="crew-status">
-        {connected ? CALM.crewOn : CALM.crewOff}
-      </p>
-      {connected ? (
-        <ol className="c-meter" aria-label="Session load">
-          {STEPS.map((s, i) => (
-            <li key={s} className={i === step ? 'c-seg c-on' : 'c-seg'} aria-current={i === step ? 'step' : undefined}>
-              {s}
-            </li>
-          ))}
-        </ol>
+      {live ? (
+        <CrewPanel view={crew.view} overridden={overridden} onNotNow={onNotNow} onResume={onResume} onFollow={onFollow} onStopDemo={onStopDemo} />
       ) : (
         <div data-testid="crew-why-off">
+          <p className="c-status" role="status" data-testid="crew-status">{CALM.crewOff}</p>
           <p className="c-why-off">{crew.enabled ? CALM.crewDisabled : CALM.crewWhyOff}</p>
           <ol className="c-steps">
             <li>{CALM.crewStep1}</li>
             <li>{CALM.crewStep2}</li>
           </ol>
           <p className="c-note">{CALM.crewOptional}</p>
+        </div>
+      )}
+      {!demo && (
+        <div className="c-demo">
+          <button type="button" className={live ? 'c-btn' : 'c-btn c-primary'} data-testid="crew-demo" onClick={onDemo}>{CALM.crewDemo}</button>
+          <p className="c-muted">{CALM.crewDemoHint}</p>
         </div>
       )}
       <p className="c-muted">{CALM.crewPrivacy}</p>

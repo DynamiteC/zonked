@@ -86,3 +86,12 @@
 .c-why-off { border-left: 3px solid var(--c-caution); padding: 4px 0 4px 14px; margin: 16px 0; }
 @media (min-width: 900px) { .c-tiles { grid-template-columns: repeat(3, 1fr); } .c-nature-tiles { grid-template-columns: repeat(3, 1fr); } }
 @media (max-height: 780px) { .c-stage { height: 200px; } }
+.c-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+.c-stats div { border-top: 1px solid var(--c-line); padding-top: 8px; }
+.c-stats dt { color: var(--c-soft); font-size: 0.875rem; }
+.c-stats dd { margin: 0; font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.c-next { margin: 12px 0; }
+.c-why { border-left: 3px solid var(--c-edge); padding-left: 14px; margin: 16px 0; }
+.c-why p { margin: 0; font-size: 1.125rem; }
+.c-demo { margin: 20px 0 8px; }
+.c-badge-sim { display: inline-block; border: 2px solid var(--c-edge); border-radius: 999px; padding: 2px 12px; font-weight: 700; font-size: 0.875rem; margin: 4px 0; }

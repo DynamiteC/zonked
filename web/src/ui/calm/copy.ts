@@ -1,4 +1,5 @@
 /** Single source of Calm text. Wording follows docs/UX-SPEC.md section i (copy deck). */
+import type { CrewState } from '../../app/crew';
 import type { Device, Goal, TimeOfDay } from './data';
 
 export const CALM = {
@@ -101,6 +102,25 @@ export const CALM = {
   crewBreak: 'Time for a break',
   crewPrivacy: 'Nothing leaves your computer.',
   crewOptional: 'Crew is optional. Zonked works fully without it.',
+  crewScore: 'Load score',
+  crewBeat: 'Beat now',
+  crewNext: 'Next change',
+  crewWhyTitle: 'Why',
+  crewReads: 'Reads only git log and git status counts. Never file names, messages or paths.',
+  crewNotNow: 'Not now',
+  crewFollowAgain: 'Follow again',
+  crewPaused: (clock: string) => `Paused until ${clock}`,
+  crewFollowing: 'Following the Crew',
+  crewOverridden: 'You picked a sound yourself, so the Crew is not steering it.',
+  crewFollowNow: 'Let the Crew steer',
+  crewNextReal: (clock: string) => `Not before ${clock}, and only if your load moves to another band.`,
+  crewNextWait: 'Waiting for the first change.',
+  crewNextDemo: (sec: number) => `Next step in ${sec} s`,
+  crewNextDemoLast: (sec: number) => `Demo ends in ${sec} s`,
+  crewDemo: 'Watch the crew work',
+  crewDemoHint: 'A 60 second pretend session. Nothing is read from your computer.',
+  crewDemoStop: 'Stop the demo',
+  crewDemoBadge: 'Simulated session',
   settingsTitle: 'Settings',
   gentle: 'Keep sounds extra gentle',
   gentleHint: 'Picks softer sounds and keeps the screen still.',
@@ -199,4 +219,24 @@ export function greeting(hour: number): string {
   if (hour >= 12 && hour < 17) return 'Good afternoon.';
   if (hour >= 17 && hour < 21) return 'Good evening.';
   return 'Hello, night owl.';
+}
+
+const LEVEL_LINE: Readonly<Record<CrewState['burnout']['level'], string>> = {
+  focus: 'Your load looks light',
+  flow: 'Your load is building',
+  recovery: 'Your load is high',
+  decompress: 'Your load is very high',
+};
+
+/** Beat as a short string: 10, 7.5. */
+export const hzText = (hz: number): string => (Number.isInteger(hz) ? String(hz) : hz.toFixed(1));
+
+/** The sentence under Why: the sender's own text when present, else one built from level, score, beat and transition. */
+export function crewWhy(state: CrewState): string {
+  if (state.why !== undefined) return state.why;
+  const { level, score } = state.burnout;
+  const { beatHz, transitionSec } = state.target;
+  const over = transitionSec < 90 ? `${Math.round(transitionSec)} s` : `${Math.round(transitionSec / 60)} min`;
+  const move = level === 'focus' ? `holds a steady ${hzText(beatHz)} Hz beat` : `eases the beat to ${hzText(beatHz)} Hz over about ${over}`;
+  return `${LEVEL_LINE[level]} (score ${Math.round(score)}), so the sound ${move}.`;
 }

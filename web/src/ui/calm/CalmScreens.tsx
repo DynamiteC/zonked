@@ -7,6 +7,8 @@ import { today } from './useCalmData';
 import { toDayNumber } from './data';
 import type { CalmSession } from './useCalmSession';
 import type { CrewInfo } from './useCrewBridge';
+import { resumeCrew, snoozeCrew } from '../../app/crewFeed';
+import { startDemo, stopDemo } from '../../app/demoFeed';
 import type { Look } from './look';
 import type { Nature } from './nature/useNature';
 import { Today } from './Today';
@@ -69,7 +71,17 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
     case 'player':
       return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} theme={look.theme} />;
     case 'crew':
-      return <CrewScreen crew={crewInfo} burnout={s.snap.burnout} />;
+      return (
+        <CrewScreen
+          crew={crewInfo}
+          overridden={s.snap.overridden}
+          onDemo={() => s.guarded(() => startDemo(s.player))}
+          onStopDemo={() => stopDemo(s.player)}
+          onNotNow={() => snoozeCrew(s.player)}
+          onResume={() => resumeCrew(s.player)}
+          onFollow={() => s.player.followCrew()}
+        />
+      );
     case 'settings':
       return (
         <SettingsScreen
