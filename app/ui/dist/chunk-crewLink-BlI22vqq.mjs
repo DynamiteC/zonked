@@ -669,7 +669,10 @@ function ei(t) {
   const { level: e, score: n } = t.burnout, { beatHz: s, transitionSec: i } = t.target, r = i < 90 ? `${Math.round(i)} s` : `${Math.round(i / 60)} min`, o = e === "focus" ? `holds a steady ${De(s)} Hz beat` : `eases the beat to ${De(s)} Hz over about ${r}`;
   return `${hn[e]} (score ${Math.round(n)}), so the sound ${o}.`;
 }
-const me = "zonked.timer.v1", pn = 2.5, Fe = 0.1, $e = 6, O = { countdownMin: 30, sleepMin: 30, focusMin: 25, breakMin: 5 }, mn = 1, fn = 720, gn = 500, fe = ["none", "countdown", "sleep-fade", "pomodoro"], yn = { kind: "none", running: !1, remainingSec: 0, totalSec: 0 }, Q = (t, e) => typeof t == "number" && Number.isFinite(t) ? Math.min(fn, Math.max(mn, t)) : e;
+const ti = (t) => {
+  const e = t.indexOf(". ");
+  return e < 0 ? t : t.slice(0, e + 1);
+}, me = "zonked.timer.v1", pn = 2.5, Fe = 0.1, $e = 6, O = { countdownMin: 30, sleepMin: 30, focusMin: 25, breakMin: 5 }, mn = 1, fn = 720, gn = 500, fe = ["none", "countdown", "sleep-fade", "pomodoro"], yn = { kind: "none", running: !1, remainingSec: 0, totalSec: 0 }, Q = (t, e) => typeof t == "number" && Number.isFinite(t) ? Math.min(fn, Math.max(mn, t)) : e;
 class bn {
   constructor(e, n = null) {
     c(this, "listeners", /* @__PURE__ */ new Set());
@@ -1337,10 +1340,10 @@ function Dn(t, e) {
   const i = N(p(t, "createdAt"), 0, e + 864e5, e), r = N(p(t, "updatedAt"), 0, e + 864e5, i);
   return { ...s, v: 1, id: n, name: Pn(p(t, "name"), "My mix"), createdAt: i, updatedAt: r };
 }
-const ti = 3e4, Fn = 30 * 6e4, $n = { state: null, source: "none", changedAtMs: 0, snoozeUntilMs: 0, demoNextAtMs: null };
+const ni = 3e4, Fn = 30 * 6e4, $n = { state: null, source: "none", changedAtMs: 0, snoozeUntilMs: 0, demoNextAtMs: null };
 let M = $n, K = null;
-const Le = /* @__PURE__ */ new Set(), ni = () => M;
-function si(t) {
+const Le = /* @__PURE__ */ new Set(), si = () => M;
+function ii(t) {
   return Le.add(t), () => void Le.delete(t);
 }
 function le(t) {
@@ -1356,7 +1359,7 @@ function Kn(t, e, n = Date.now()) {
 function Un() {
   M.source === "bridge" && le({ ...M, state: null, source: "none", changedAtMs: 0 });
 }
-function ii(t, e = Date.now(), n = Fn) {
+function ri(t, e = Date.now(), n = Fn) {
   K !== null && clearTimeout(K), le({ ...M, snoozeUntilMs: e + n }), K = setTimeout(() => qn(t), n);
 }
 function qn(t) {
@@ -1406,20 +1409,20 @@ let dt = null;
 function Xn(t) {
   dt = t;
 }
-function ri() {
+function oi() {
   return dt;
 }
-const Ee = 0.85, oi = 2, ai = 0.3, ci = 0.15, li = 0.4, Jn = 0.6, qe = 0.95, X = (t, e, n) => t < e ? e : t > n ? n : t;
+const Ee = 0.85, ai = 2, ci = 0.3, li = 0.15, ui = 0.4, Jn = 0.6, qe = 0.95, X = (t, e, n) => t < e ? e : t > n ? n : t;
 function Qn(t, e = 0) {
   return Number.isFinite(t) ? X(t, 0, Ee) : X(Number.isFinite(e) ? e : 0, 0, Ee);
 }
 function es(t, e = 0) {
   return Number.isFinite(t) ? X(t, 0, 1) : X(Number.isFinite(e) ? e : 0, 0, 1);
 }
-function ui(t) {
+function di(t) {
   return 1 - Jn * es(t);
 }
-function di(t) {
+function hi(t) {
   return Qn(t) / Ee;
 }
 function ts(t = 2049) {
@@ -1455,7 +1458,7 @@ function ss() {
     return null;
   }
 }
-function hi() {
+function pi() {
   const [t, e] = Ie(() => Ne(je)), [n, s] = Ie(() => {
     var r;
     return ((r = window.matchMedia) == null ? void 0 : r.call(window, "(prefers-reduced-motion: reduce)").matches) ?? !1;
@@ -2130,15 +2133,15 @@ function de() {
   return Os(n, t, s), ne = { engine: t, player: n, store: e }, ne;
 }
 let re = 0;
-const Re = /* @__PURE__ */ new Set(), pi = () => re > 0;
-function mi(t) {
+const Re = /* @__PURE__ */ new Set(), mi = () => re > 0;
+function fi(t) {
   return Re.add(t), () => void Re.delete(t);
 }
-function fi(t) {
+function gi(t) {
   re = Math.max(0, re + (t ? 1 : -1));
   for (const e of Re) e(re > 0);
 }
-const gi = () => de().engine.getStats(), yi = () => de().engine.status.state, xs = "http://localhost:43210/events", Is = 7e4, _s = 1e3, Bs = 3e4, Ae = "zonked.crew.v1", Te = /* @__PURE__ */ new Set();
+const yi = () => de().engine.getStats(), bi = () => de().engine.status.state, xs = "http://localhost:43210/events", Is = 7e4, _s = 1e3, Bs = 3e4, Ae = "zonked.crew.v1", Te = /* @__PURE__ */ new Set();
 function Lt() {
   try {
     if (typeof location < "u" && new URLSearchParams(location.search).get("crew") === "1")
@@ -2147,7 +2150,7 @@ function Lt() {
   }
   return Ne(Ae);
 }
-function bi(t) {
+function wi(t) {
   Pe(Ae, t);
   for (const e of [...Te])
     try {
@@ -2167,7 +2170,7 @@ function Ds(t) {
 function Fs(t) {
   return typeof EventSource > "u" ? null : new EventSource(t);
 }
-class wi {
+class vi {
   constructor(e) {
     c(this, "es", null);
     c(this, "timer", null);
@@ -2264,7 +2267,7 @@ class wi {
   }
 }
 const $s = "zonked.css";
-function vi(t) {
+function Si(t) {
   const e = new URL($s, t).href;
   if ([...document.querySelectorAll("link[data-zonked-css]")].some((i) => i.getAttribute("href") === e)) return;
   const s = document.createElement("link");
@@ -2272,8 +2275,8 @@ function vi(t) {
 }
 const Ws = "/apps/zonked/api/state", Ks = 15e3;
 let He = null, st = null, ce = "standalone", ze = "";
-const Ce = /* @__PURE__ */ new Set(), Si = () => ce;
-function Mi(t) {
+const Ce = /* @__PURE__ */ new Set(), Mi = () => ce;
+function ki(t) {
   return Ce.add(t), () => void Ce.delete(t);
 }
 function Rt(t) {
@@ -2301,62 +2304,63 @@ async function ve() {
 function Us(t) {
   He = t, st === null && (st = setInterval(() => void ve(), Ks), Et(() => void ve()), ve());
 }
-function ki() {
+function Li() {
   const t = Ht.useAppApi, e = t === void 0 ? null : t();
   it(() => {
     e !== null && Us(e);
   }, [e]);
 }
 export {
-  ki as A,
-  wi as B,
+  Si as A,
+  vi as B,
   Vs as C,
-  li as D,
+  ui as D,
   Js as E,
-  ai as F,
+  ci as F,
   Ys as G,
-  fi as H,
-  Si as I,
-  pi as J,
-  Mi as K,
-  ci as L,
+  Li as H,
+  gi as I,
+  Mi as J,
+  mi as K,
+  li as L,
   Ee as M,
-  mi as N,
-  bi as O,
+  ki as N,
+  fi as O,
   Se as P,
-  yi as Q,
-  gi as R,
+  wi as Q,
+  bi as R,
   ns as S,
-  Gs as T,
-  Zs as U,
-  Xs as V,
-  De as W,
-  ei as X,
-  ti as Y,
-  oi as a,
-  di as b,
+  yi as T,
+  Gs as U,
+  Zs as V,
+  Xs as W,
+  De as X,
+  ei as Y,
+  ni as Z,
+  ai as a,
+  ti as b,
   Qn as c,
-  ui as d,
-  es as e,
-  ri as f,
+  di as d,
+  hi as e,
+  es as f,
   Qs as g,
-  ii as h,
-  de as i,
-  Ps as j,
-  Lt as k,
-  si as l,
-  ni as m,
-  Kn as n,
+  oi as h,
+  ri as i,
+  de as j,
+  Ps as k,
+  Lt as l,
+  ii as m,
+  si as n,
   Et as o,
   ut as p,
-  Un as q,
+  Kn as q,
   qn as r,
   le as s,
-  D as t,
-  hi as u,
-  p as v,
+  Un as t,
+  pi as u,
+  D as v,
   Pe as w,
-  lt as x,
-  N as y,
-  vi as z
+  p as x,
+  lt as y,
+  N as z
 };

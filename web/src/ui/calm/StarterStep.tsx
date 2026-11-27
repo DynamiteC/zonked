@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { recommendTemplates } from '../../catalog';
 import type { Template } from '../../catalog/types';
-import { CALM } from './copy';
+import { CALM, briefReason } from './copy';
 import { profileToRecommendation } from './data';
 import type { Profile } from './data';
 
@@ -25,7 +25,7 @@ export function pickStarters(profile: Profile, now: Date = new Date()): readonly
     const fam = familyOf(r.template.id);
     if (seen.has(fam)) continue;
     seen.add(fam);
-    out.push({ template: r.template, reason: r.reasons[0] ?? r.template.reasonTemplate, score: r.score });
+    out.push({ template: r.template, reason: briefReason(r.reasons[0] ?? r.template.reasonTemplate), score: r.score });
     if (out.length === 3) break;
   }
   return out;

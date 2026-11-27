@@ -276,3 +276,9 @@ export function crewWhy(state: CrewState): string {
   const move = level === 'focus' ? `holds a steady ${hzText(beatHz)} Hz beat` : `eases the beat to ${hzText(beatHz)} Hz over about ${over}`;
   return `${LEVEL_LINE[level]} (score ${Math.round(score)}), so the sound ${move}.`;
 }
+
+/** First sentence only. The detail line (tone, carrier, layers) stays in the catalog. */
+export const briefReason = (text: string): string => {
+  const i = text.indexOf('. ');
+  return i < 0 ? text : text.slice(0, i + 1);
+};

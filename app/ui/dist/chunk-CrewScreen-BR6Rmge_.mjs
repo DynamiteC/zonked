@@ -1,6 +1,6 @@
 import { jsxs as r, jsx as t } from "react/jsx-runtime";
 import { useState as f, useEffect as y, useRef as x } from "react";
-import { C as e, W as S, X as M, Y as k, O as C } from "./chunk-crewLink-CU32qOP4.mjs";
+import { C as e, X as S, Y as M, Z as k, Q as C } from "./chunk-crewLink-BlI22vqq.mjs";
 const D = ["Fresh", "Warming up", e.crewBreak];
 function v(c) {
   return c === null || !Number.isFinite(c) || c < 40 ? 0 : c < 60 ? 1 : 2;
@@ -15,7 +15,7 @@ function A(c) {
   }, [c]), s;
 }
 const g = (c) => new Date(c).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-function W(c, s) {
+function E(c, s) {
   var n;
   if (c.source === "demo" && c.demoNextAtMs !== null) {
     const d = Math.max(0, Math.ceil((c.demoNextAtMs - s) / 1e3));
@@ -23,7 +23,7 @@ function W(c, s) {
   }
   return c.changedAtMs === 0 ? e.crewNextWait : e.crewNextReal(g(Math.max(s, c.changedAtMs + k)));
 }
-function E({ view: c, overridden: s, onNotNow: n, onResume: d, onFollow: w, onStopDemo: N }) {
+function F({ view: c, overridden: s, onNotNow: n, onResume: d, onFollow: w, onStopDemo: N }) {
   const h = A(c.state !== null), l = c.state;
   if (l === null) return null;
   const a = c.source === "demo", i = !a && h < c.snoozeUntilMs, m = a ? e.crewDemoBadge : i ? e.crewPaused(g(c.snoozeUntilMs)) : e.crewFollowing, o = v(l.burnout.score), u = !a && s && !i;
@@ -47,7 +47,7 @@ function E({ view: c, overridden: s, onNotNow: n, onResume: d, onFollow: w, onSt
     /* @__PURE__ */ t("ol", { className: "c-meter", "aria-label": "Session load", children: D.map((p, b) => /* @__PURE__ */ t("li", { className: b === o ? "c-seg c-on" : "c-seg", "aria-current": b === o ? "step" : void 0, children: p }, p)) }),
     /* @__PURE__ */ r("p", { className: "c-next", "data-testid": "crew-next", children: [
       /* @__PURE__ */ t("b", { children: `${e.crewNext}: ` }),
-      W(c, h)
+      E(c, h)
     ] }),
     /* @__PURE__ */ r("div", { className: "c-actions c-row", children: [
       a ? /* @__PURE__ */ t("button", { type: "button", className: "c-btn", "data-testid": "crew-demo-stop", onClick: N, children: e.crewDemoStop }) : i ? /* @__PURE__ */ t("button", { type: "button", className: "c-btn", "data-testid": "crew-resume", onClick: d, children: e.crewFollowAgain }) : /* @__PURE__ */ t("button", { type: "button", className: "c-btn", "data-testid": "crew-not-now", onClick: n, children: e.crewNotNow }),
@@ -70,7 +70,7 @@ function H({ crew: c, overridden: s, onDemo: n, onStopDemo: d, onNotNow: w, onRe
       /* @__PURE__ */ t("span", { children: a ? e.demoSteering : e.crewSwitch })
     ] }),
     a && /* @__PURE__ */ t("p", { id: "c-crew-demo-note", className: "c-muted", "data-testid": "crew-demo-note", children: e.demoSteeringHint }),
-    l ? /* @__PURE__ */ t(E, { view: c.view, overridden: s, onNotNow: w, onResume: N, onFollow: h, onStopDemo: d }) : /* @__PURE__ */ r("div", { "data-testid": "crew-why-off", children: [
+    l ? /* @__PURE__ */ t(F, { view: c.view, overridden: s, onNotNow: w, onResume: N, onFollow: h, onStopDemo: d }) : /* @__PURE__ */ r("div", { "data-testid": "crew-why-off", children: [
       /* @__PURE__ */ t("p", { className: "c-status", role: "status", "data-testid": "crew-status", children: i ? e.crewDemoEnd : e.crewOff }),
       /* @__PURE__ */ t("p", { className: "c-why-off", children: c.enabled ? e.crewDisabled : e.crewWhyOff }),
       /* @__PURE__ */ r("ol", { className: "c-steps", children: [

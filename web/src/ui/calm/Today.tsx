@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { recommendTemplates } from '../../catalog';
 import type { Template } from '../../catalog/types';
-import { CALM, GOAL_LABEL, greeting } from './copy';
+import { CALM, GOAL_LABEL, briefReason, greeting } from './copy';
 import { nudgeRecs, profileToRecommendation } from './data';
 import type { FeelEntry, Goal, Profile, ProgressMap, WeekStats } from './data';
 import { Mascot } from './MascotView';
@@ -60,7 +60,7 @@ export function Today({ profile, week, reduced, crewConnected, hasHistory = true
         <section className="c-daily" aria-labelledby="c-daily-h">
           <p className="c-eyebrow">{CALM.dailyEyebrow}</p>
           <h2 id="c-daily-h">{pick.template.name}</h2>
-          <p className="c-muted">{`${pick.template.recommendedMinutes} min. ${pick.reasons[0] ?? CALM.suggested}`}</p>
+          <p className="c-muted">{`${pick.template.recommendedMinutes} min. ${briefReason(pick.reasons[0] ?? CALM.suggested)}`}</p>
           <div className="c-actions">
             <button type="button" className="c-btn c-primary" data-testid="today-play" onClick={() => onPlay(pick.template)}>
               {CALM.start}
@@ -100,7 +100,7 @@ export function Today({ profile, week, reduced, crewConnected, hasHistory = true
             <li key={r.template.id}>
               <button type="button" className="c-mini-card" onClick={() => onPlay(r.template)}>
                 <b>{r.template.name}</b>
-                <small>{r.reasons[0] ?? CALM.suggested}</small>
+                <small>{briefReason(r.reasons[0] ?? CALM.suggested)}</small>
                 <em>{`${r.template.recommendedMinutes} min`}</em>
               </button>
             </li>

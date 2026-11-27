@@ -118,7 +118,10 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
           crewConnected={crewInfo.enabled && crewInfo.status === 'connected'}
           last={last}
           feel={feel}
-          onSprint={sprint.start}
+          onSprint={(t) => {
+            sprint.start(t);
+            h.go('player');
+          }}
           onPlay={h.play}
           onOpenJourney={h.openJourney}
           onGo={h.go}
