@@ -14,7 +14,7 @@ import type { Look, Prefs } from './look';
 import type { Nature } from './nature/useNature';
 import { Today } from './Today';
 import type { Sprint } from './useSprint';
-import { ResetScreen } from './ResetScreen';
+import { BREATHE_PLAN, ResetScreen } from './ResetScreen';
 
 const JourneyList = lazy(() => import('./Journeys').then((m) => ({ default: m.JourneyList })));
 const JourneyDetail = lazy(() => import('./Journeys').then((m) => ({ default: m.JourneyDetail })));
@@ -71,13 +71,15 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
         />
       );
     case 'library':
-      return <Library store={s.store} logs={data.logs} reduced={still} onNature={() => h.go('nature')} onPlay={h.play} onPlayMix={h.onMix} />;
+      return <Library store={s.store} logs={data.logs} reduced={still} onNature={() => h.go('nature')} onPlay={h.play} onPlayMix={h.onMix} onBreathe={() => h.go('breathe')} />;
     case 'nature':
       return <NatureScreen nature={nature} reduced={still} onBack={() => h.go('library')} />;
     case 'player':
       return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} theme={look.theme} announce={prefs.announce} sprint={sprint} />;
     case 'reset':
       return <ResetScreen s={s} still={still} theme={look.theme} announce={prefs.announce} onBack={() => h.go('today')} />;
+    case 'breathe':
+      return <ResetScreen s={s} still={still} theme={look.theme} announce={prefs.announce} onBack={() => h.go('today')} plan={BREATHE_PLAN} />;
     case 'crew':
       return (
         <CrewScreen
@@ -121,6 +123,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
           onOpenJourney={h.openJourney}
           onGo={h.go}
           onReset={() => h.go('reset')}
+          onBreathe={() => h.go('breathe')}
         />
       );
   }

@@ -62,7 +62,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   const sprint = useSprint(s);
   const onboarding = data.profile.createdAt === 0;
   const last = useLastPlayed(data.storage);
-  const end = useEndCard(s.snap, !onboarding && view !== 'reset', sprint.focus === null ? null : { id: sprint.focus.id, name: CALM.sprintName });
+  const end = useEndCard(s.snap, !onboarding && view !== 'reset' && view !== 'breathe', sprint.focus === null ? null : { id: sprint.focus.id, name: CALM.sprintName });
   const still = s.reduced || data.profile.extraGentle;
   const { look, prefs, dim, setPrefs } = useLook();
 
@@ -120,7 +120,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
           )}
         </Suspense>
       </main>
-      {!onboarding && view !== 'player' && view !== 'reset' && <MiniPlayer snap={s.snap} crewPresetId={crew.view.state?.target.presetId ?? null} onOpen={() => go('player')} onStop={() => void s.player.stop()} />}
+      {!onboarding && view !== 'player' && view !== 'reset' && view !== 'breathe' && <MiniPlayer snap={s.snap} crewPresetId={crew.view.state?.target.presetId ?? null} onOpen={() => go('player')} onStop={() => void s.player.stop()} />}
       {!onboarding && <TabBar view={view} onGo={go} reduced={still} />}
       <p className="c-sr" role="status" data-testid="play-status">
         {s.snap.playing ? `Playing. ${CALM.volumeCapped}` : 'Stopped.'}

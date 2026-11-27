@@ -97,7 +97,7 @@
   .c-nav[aria-current="page"] { border-bottom-color: var(--c-ink); }
   .c-topbar { display: none; }
   .c-main { padding-bottom: 96px; }
-  .c-app[data-playing="true"]:not([data-view="player"]):not([data-view="reset"]) .c-main { padding-bottom: calc(64px + 32px); }
+  .c-app[data-playing="true"]:not([data-view="player"]):not([data-view="reset"]):not([data-view="breathe"]) .c-main { padding-bottom: calc(64px + 32px); }
   .c-mini { bottom: 0; }
 }
 @media (max-width: 899px) { .c-rail-brand { display: none; } .c-app[data-playing="true"]:not([data-view="player"]) .c-main { padding-bottom: calc(80px + 64px + 24px + env(safe-area-inset-bottom, 0px)); } }

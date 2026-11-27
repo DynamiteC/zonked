@@ -111,7 +111,8 @@
 
 /* Dim screen while playing: lower brightness on the player only. High contrast stays at full strength. */
 .c-app[data-dim="true"][data-playing="true"][data-view="player"]:not([data-contrast="high"]) .c-player,
-.c-app[data-dim="true"][data-playing="true"][data-view="reset"]:not([data-contrast="high"]) .c-reset { filter: brightness(0.75); }
+.c-app[data-dim="true"][data-playing="true"][data-view="reset"]:not([data-contrast="high"]) .c-reset,
+.c-app[data-dim="true"][data-playing="true"][data-view="breathe"]:not([data-contrast="high"]) .c-reset { filter: brightness(0.75); }
 
 /* Reset screen reuses the player layout. */
 .c-reset .c-lead { margin: 0 0 8px; }

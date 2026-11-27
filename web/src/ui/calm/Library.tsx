@@ -16,6 +16,8 @@ interface Props {
   readonly reduced?: boolean;
   /** Opens the Nature and My sounds screen. */
   readonly onNature?: () => void;
+  /** Opens the 5 minute breathing session. */
+  readonly onBreathe?: () => void;
   readonly onPlay: (t: Template) => void;
   readonly onPlayMix: (m: Mix) => void;
 }
@@ -77,10 +79,18 @@ function Feeling({ onPlay }: { readonly onPlay: (t: Template) => void }): React.
   );
 }
 
-function Sounds({ onPlay }: { readonly onPlay: (t: Template) => void }): React.JSX.Element {
+function Sounds({ onPlay, onBreathe }: { readonly onPlay: (t: Template) => void; readonly onBreathe?: () => void }): React.JSX.Element {
   const pool = getTemplates();
   return (
     <ul className="c-list">
+      {onBreathe !== undefined && (
+        <li>
+          <button type="button" className="c-row-card" data-testid="sounds-breathe" onClick={onBreathe}>
+            <b>{CALM.breatheEntry}</b>
+            <small>{CALM.breatheEntryHint}</small>
+          </button>
+        </li>
+      )}
       {SOUND_MENU.map((s) => {
         const t = pool.find((x) => x.id === s.templateId);
         return (
@@ -111,7 +121,7 @@ function useStored(store: Store): { readonly favs: Favorites; readonly mixes: re
   return { favs, mixes };
 }
 
-export function Library({ store, logs, reduced = false, onNature, onPlay, onPlayMix }: Props): React.JSX.Element {
+export function Library({ store, logs, reduced = false, onNature, onBreathe, onPlay, onPlayMix }: Props): React.JSX.Element {
   const [tab, setTab] = useState(0);
   const [q, setQ] = useState('');
   const { favs, mixes } = useStored(store);
@@ -148,7 +158,7 @@ export function Library({ store, logs, reduced = false, onNature, onPlay, onPlay
           </div>
           <div id="c-tabpanel" role="tabpanel" aria-labelledby={`c-tab-${tab}`}>
             {tab === 0 && <Feeling onPlay={onPlay} />}
-            {tab === 1 && <Sounds onPlay={onPlay} />}
+            {tab === 1 && <Sounds onPlay={onPlay} {...(onBreathe !== undefined ? { onBreathe } : {})} />}
             {tab === 2 && (favTemplates.length === 0 ? <Empty text={CALM.emptyFavorites} /> : <TemplateRows list={favTemplates} onPlay={onPlay} />)}
             {tab === 3 &&
               (mixes.length === 0 ? (

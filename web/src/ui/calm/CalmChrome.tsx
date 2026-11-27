@@ -5,7 +5,7 @@ import { CALM } from './copy';
 import { Icon } from './icons';
 import { Mascot } from './MascotView';
 
-export type View = 'today' | 'journeys' | 'journey' | 'library' | 'player' | 'crew' | 'settings' | 'nature' | 'reset';
+export type View = 'today' | 'journeys' | 'journey' | 'library' | 'player' | 'crew' | 'settings' | 'nature' | 'reset' | 'breathe';
 
 const TABS: readonly { readonly view: View; readonly label: string; readonly icon: string }[] = [
   { view: 'today', label: CALM.nav[0], icon: 'today' },
@@ -21,7 +21,7 @@ interface TabProps {
 }
 
 export function TabBar({ view, onGo, reduced = false }: TabProps): React.JSX.Element {
-  const current: View = view === 'journey' || view === 'journeys' ? 'today' : view === 'nature' ? 'library' : view === 'reset' ? 'today' : view;
+  const current: View = view === 'journey' || view === 'journeys' ? 'today' : view === 'nature' ? 'library' : view === 'reset' || view === 'breathe' ? 'today' : view;
   return (
     <nav className="c-tabbar" aria-label="Main">
       <div className="c-rail-brand" aria-hidden="true">

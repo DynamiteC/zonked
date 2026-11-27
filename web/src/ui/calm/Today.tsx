@@ -32,9 +32,11 @@ interface Props {
   readonly onOpenJourney: (id: string) => void;
   readonly onGo: (view: 'journeys' | 'library') => void;
   readonly onReset: () => void;
+  /** Opens the 5 minute breathing session. Shown for the Calm goal. */
+  readonly onBreathe?: () => void;
 }
 
-export function Today({ profile, week, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, feel = NO_FEEL, onSprint, onPlay, onGo, onReset }: Props): React.JSX.Element {
+export function Today({ profile, week, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, feel = NO_FEEL, onSprint, onPlay, onGo, onReset, onBreathe }: Props): React.JSX.Element {
   const [skip, setSkip] = useState(0);
   const recs = useMemo(() => {
     const ctx = profileToRecommendation(profile, now());
@@ -79,6 +81,12 @@ export function Today({ profile, week, reduced, crewConnected, hasHistory = true
         <b>{CALM.resetEntry}</b>
         <small>{CALM.resetEntryHint}</small>
       </button>
+      {onBreathe !== undefined && profile.goal === 'calm' && (
+        <button type="button" className="c-link-card c-breathe-entry" data-testid="today-breathe" onClick={onBreathe}>
+          <b>{CALM.breatheEntry}</b>
+          <small>{CALM.breatheEntryHint}</small>
+        </button>
+      )}
       <section aria-labelledby="c-goal-h">
         <h2 id="c-goal-h" className="c-h3">{`Your goal: ${GOAL_LABEL[profile.goal]}`}</h2>
         <WeekDots week={week} hasHistory={hasHistory} joinedToday={joinedToday} />
