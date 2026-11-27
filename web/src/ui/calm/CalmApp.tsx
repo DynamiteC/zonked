@@ -122,7 +122,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
           )}
         </Suspense>
       </main>
-      {!onboarding && view !== 'player' && view !== 'reset' && view !== 'breathe' && <MiniPlayer snap={s.snap} crewPresetId={crew.view.state?.target.presetId ?? null} onOpen={() => go('player')} onStop={() => void s.player.stop()} />}
+      {!onboarding && view !== 'player' && view !== 'reset' && view !== 'breathe' && view !== 'crew' && <MiniPlayer snap={s.snap} crewPresetId={crew.view.state?.target.presetId ?? null} onOpen={() => go('player')} onStop={() => void s.player.stop()} />}
       {!onboarding && <TabBar view={view} onGo={go} reduced={still} />}
       <p className="c-sr" role="status" data-testid="play-status">
         {s.snap.playing ? `Playing. ${CALM.volumeCapped}` : 'Stopped.'}

@@ -97,12 +97,22 @@ describe('nature sounds', () => {
   it('shows author and licence from shipped data, with no link', async () => {
     localStorage.setItem(SAFETY_KEY, '1');
     await openNature(engine());
-    fireEvent.click(screen.getByRole('button', { name: `${CALM.natureCredits}: Rain` }));
+    fireEvent.change(screen.getByRole('combobox', { name: CALM.natureCredits }), { target: { value: 'rain' } });
     const box = await screen.findByTestId('credit-rain');
     expect(box.textContent).toMatch(/ezwa/);
     expect(box.textContent).toMatch(/Public domain/);
     expect(box.querySelector('a')).toBeNull();
     expect(screen.getAllByText(CALM.natureFree).length).toBeGreaterThan(1);
+  });
+
+  it('groups the picker, keeps the sliders sticky on top and shows one credits footer', async () => {
+    await openNature(engine());
+    expect(screen.getByRole('heading', { name: 'Water' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Rain' })).toBeTruthy();
+    const sticky = screen.getByTestId('nature-sticky');
+    expect(sticky.querySelector('#c-blend')).not.toBeNull();
+    expect(screen.queryAllByRole('button', { name: new RegExp(`^${CALM.natureCredits}:`) })).toHaveLength(0);
+    expect(screen.getAllByRole('combobox', { name: CALM.natureCredits })).toHaveLength(1);
   });
 
   it('keeps honest copy: no medical claims', async () => {

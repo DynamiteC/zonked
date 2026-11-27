@@ -1,4 +1,4 @@
-// Calm front door checks (C1 to C7): safety before sound, onboarding, theme switch, week wording,
+// Calm front door checks (C1 to C7, L1): safety before sound, onboarding, theme switch, week wording,
 // reduced motion, 375 px layout. Each check runs in its own browser context with no pre-set keys.
 import { newSession } from './e2e-helpers.mjs';
 
@@ -171,6 +171,51 @@ export async function runCalmChecks(h) {
       h.assert(again === 0 || !label.includes(pick ?? '?'), `two buttons for one session: ${label} / ${pick}`);
     } finally {
       await s.context.close();
+    }
+  });
+
+  await h.check('L1 walk 2 layout: Skip above the fold, Add nature clears the tab bar, Why box readable on Crew, Nature sliders on top', async () => {
+    const top = async (loc) => (await loc.boundingBox())?.y ?? -1;
+    const bottom = async (loc) => {
+      const b = await loc.boundingBox();
+      return b === null ? 1e9 : b.y + b.height;
+    };
+    const a = await open(h, { viewport: { width: 390, height: 844 } });
+    try {
+      h.assert((await bottom(a.page.getByRole('button', { name: 'Skip, just play' }))) <= 844, 'Skip below the fold at 390x844');
+    } finally {
+      await a.context.close();
+    }
+    const b = await open(h, { viewport: { width: 360, height: 740 } });
+    try {
+      await b.page.getByRole('button', { name: 'Skip, just play' }).click();
+      await b.page.getByTestId('calm-safety-accept').click();
+      await b.page.getByTestId('player-nature').waitFor();
+      const tab = await top(b.page.locator('.c-tabbar'));
+      h.assert((await bottom(b.page.getByTestId('player-nature'))) <= tab, 'Add nature sound sits under the tab bar at 360x740');
+      h.assert((await b.page.getByRole('button', { name: '30 min' }).getAttribute('aria-pressed')) === 'false', 'timer chip has no aria-pressed');
+      await nav(b.page, 'Sounds').click();
+      await b.page.getByTestId('open-nature').click();
+      await b.page.getByTestId('nature-rain').waitFor();
+      await b.page.mouse.wheel(0, 900);
+      await b.page.waitForTimeout(200);
+      h.assert((await top(b.page.locator('#c-blend'))) < 200, 'blend slider scrolled away');
+      h.assert((await b.page.getByRole('combobox', { name: 'Credits' }).count()) === 1, 'not one credits footer');
+    } finally {
+      await b.context.close();
+    }
+    const c = await open(h, { viewport: { width: 1280, height: 720 } });
+    try {
+      await c.page.getByRole('button', { name: 'Skip, just play' }).click();
+      await c.page.getByTestId('calm-safety-accept').click();
+      await c.page.getByTestId('player-toggle').waitFor();
+      await nav(c.page, 'Crew').click();
+      await c.page.getByTestId('crew-demo').click();
+      await c.page.getByTestId('crew-why').waitFor();
+      h.assert((await c.page.locator('.c-mini').count()) === 0, 'mini player shown on Crew');
+      h.assert((await bottom(c.page.getByTestId('crew-why'))) <= 720, 'Why box cut at 1280x720');
+    } finally {
+      await c.context.close();
     }
   });
 }

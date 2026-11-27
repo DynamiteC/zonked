@@ -53,8 +53,8 @@
 .c-tile-name { font-weight: 700; font-size: 1.125rem; }
 .c-tile-mood, .c-tile-count { font-size: 0.875rem; color: var(--c-soft); }
 .c-tchip { min-height: 44px; padding: 0 16px; border-radius: 8px; border: var(--c-bw) solid var(--c-edge); background: none; color: var(--c-text); font: inherit; cursor: pointer; }
-.c-tchip[aria-checked="true"]::before { content: ""; display: inline-block; width: 0.35em; height: 0.7em; margin-right: 0.5em; border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg) translateY(-0.15em); }
-.c-tchip[aria-checked="true"] { background: var(--c-text); color: var(--c-bg); border: 2px solid var(--c-text); font-weight: 700; }
+.c-tchip[aria-pressed="true"]::before { content: ""; display: inline-block; width: 0.35em; height: 0.7em; margin-right: 0.5em; border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg) translateY(-0.15em); }
+.c-tchip[aria-pressed="true"] { background: var(--c-text); color: var(--c-bg); border: 2px solid var(--c-text); font-weight: 700; }
 
 /* Player: scene behind the mascot, one big button. */
 .c-player { text-align: center; }
@@ -87,6 +87,8 @@
 .c-why-off { border-left: 3px solid var(--c-caution); padding: 4px 0 4px 14px; margin: 16px 0; }
 @media (min-width: 900px) { .c-tiles { grid-template-columns: repeat(3, 1fr); } .c-nature-tiles { grid-template-columns: repeat(3, 1fr); } }
 @media (max-height: 780px) { .c-stage { height: 200px; } }
+@media (max-height: 760px) { .c-player .c-h1 { font-size: 1.625rem; margin: 0; } .c-stage { height: 150px; margin: 4px auto; } .c-controls { margin: 6px 0; } .c-player .c-chips { gap: 6px; margin: 6px 0; } .c-player .c-tchip { padding: 0 10px; } }
+.c-onb .c-choice span { min-height: 52px; }
 .c-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
 .c-stats div { border-top: 1px solid var(--c-line); padding-top: 8px; }
 .c-stats dt { color: var(--c-soft); font-size: 0.875rem; }
@@ -119,3 +121,10 @@
 .c-feel { margin-top: 12px; }
 .c-feel .c-chips { margin: 6px 0 0; }
 .c-sprint-entry small { white-space: normal; }
+
+.c-sticky { position: sticky; top: 0; z-index: 5; background: var(--c-bg); padding: 4px 0 8px; border-bottom: 1px solid var(--c-line); }
+@media (min-width: 900px) { .c-sticky { top: 64px; } }
+.c-credits-foot { display: grid; gap: 6px; margin: 16px 0; }
+.c-credits-foot select { min-height: 44px; font: inherit; color: var(--c-text); background: var(--c-bg); border: var(--c-bw) solid var(--c-edge); border-radius: 8px; padding: 0 8px; }
+.c-skip-now { margin: 0 0 4px; }
+.c-limits { color: var(--c-soft); margin: 8px 0 0; }

@@ -34,9 +34,9 @@ export function TimerChips({ timer, player, onSprint, onSprintEnd }: Props): Rea
   const on = chipIndex(timer);
   return (
     <div>
-      <div className="c-chips" role="radiogroup" aria-label="Timer">
+      <div className="c-chips" role="group" aria-label="Timer">
         {CALM.timerChips.map((name, i) => (i === 5 && onSprint === undefined ? null : (
-          <button key={name} type="button" role="radio" aria-checked={on === i} className="c-tchip" onClick={() => pick(i)}>
+          <button key={name} type="button" aria-pressed={on === i} className="c-tchip" onClick={() => pick(i)}>
             {name}
           </button>
         )))}

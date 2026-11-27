@@ -44,7 +44,7 @@ export async function runGrowthChecks(h) {
   await h.check('C15 a focus sprint switches to a quieter break and then ends', async () => {
     const s = await playing(h);
     try {
-      await s.page.getByRole('radio', { name: 'Focus sprint' }).click();
+      await s.page.getByRole('button', { name: 'Focus sprint' }).click();
       const focusId = await s.page.evaluate(() => window.__zonked.templateId);
       const t0 = await s.page.evaluate(() => window.__zonked.timer);
       h.assert(t0.kind === 'pomodoro' && t0.phase === 'focus', `timer: ${JSON.stringify(t0)}`);

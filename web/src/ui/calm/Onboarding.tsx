@@ -52,6 +52,11 @@ function Question({ step, answers: a, set, onBack, onNext, onSkip }: QuestionPro
   return (
     <>
       <h1 className="c-h1">{TITLES[step]}</h1>
+      {step === 1 && (
+        <button type="button" className="c-btn c-link c-skip-now" onClick={onSkip}>
+          {CALM.skip}
+        </button>
+      )}
       {step === 1 && <ChoiceGrid legend={CALM.goalTitle} options={opts(GOALS, GOAL_LABEL)} value={a.goal} onChange={set.goal} />}
       {step === 2 && <ChoiceGrid legend={CALM.whenTitle} options={opts(TIMES_OF_DAY, TIME_LABEL)} value={a.when} onChange={set.when} />}
       {step === 3 && <ChoiceGrid legend={CALM.listenTitle} options={opts(DEVICES, DEVICE_LABEL)} value={a.device} onChange={set.device} />}
@@ -66,11 +71,6 @@ function Question({ step, answers: a, set, onBack, onNext, onSkip }: QuestionPro
           {CALM.next}
         </button>
       </div>
-      {step === 1 && (
-        <button type="button" className="c-btn c-wide" onClick={onSkip}>
-          {CALM.skip}
-        </button>
-      )}
     </>
   );
 }
@@ -104,7 +104,7 @@ export function Onboarding({ playing, reduced, onAccept, onPreview, onStop, onFi
   return (
     <section className="c-onb" aria-label={q !== null ? CALM.stepOf(q) : CALM.safetyTitle}>
       {q !== null && <p className="c-step">{CALM.stepOf(q)}</p>}
-      {q === 1 && <Mascot mood="happy" size={120} reduced={reduced} />}
+      {q === 1 && <Mascot mood="happy" size={96} reduced={reduced} />}
       {q === 1 && <p className="c-promise">{CALM.promise}</p>}
       {q !== null && (
         <Question

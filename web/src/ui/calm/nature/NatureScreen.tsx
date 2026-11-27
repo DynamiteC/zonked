@@ -3,6 +3,7 @@ import { listSamples } from '../../../audio/samples';
 import { CALM } from '../copy';
 import { Icon } from '../icons';
 import { PageHead } from '../MascotView';
+import { NATURE_GROUPS, groupOf } from './groups';
 import { MAX_NATURE_LEVEL } from './prefs';
 import type { Nature } from './useNature';
 
@@ -30,40 +31,73 @@ export function NatureControls({ nature }: { readonly nature: Nature }): React.J
   );
 }
 
+type Sample = ReturnType<typeof listSamples>[number];
+
+function Tile({ s, i, nature }: { readonly s: Sample; readonly i: number; readonly nature: Nature }): React.JSX.Element {
+  return (
+    <li>
+      <button type="button" className={`c-tile c-g${(i % 6) + 1}`} data-testid={`nature-${s.id}`} aria-pressed={nature.on === s.id} onClick={() => nature.start(s.id)}>
+        <Icon name={ICON[s.id] ?? s.id} />
+        <span className="c-tile-name">{s.label}</span>
+        <span className="c-tile-mood">{s.note ?? (s.kind === 'synth' ? CALM.natureMade : CALM.natureFree)}</span>
+        {nature.on === s.id && <span className="c-tile-count">{CALM.natureOn}</span>}
+      </button>
+    </li>
+  );
+}
+
+/** One footer for every credit: pick a sound, read its author and licence. */
+function CreditsFooter({ samples }: { readonly samples: readonly Sample[] }): React.JSX.Element {
+  const [id, setId] = useState('');
+  const pick = samples.find((s) => s.id === id);
+  return (
+    <section className="c-credits-foot" aria-label={CALM.natureCredits}>
+      <label htmlFor="c-credit-pick">{CALM.natureCredits}</label>
+      <select id="c-credit-pick" value={id} onChange={(e) => setId(e.currentTarget.value)}>
+        <option value="">{CALM.natureCreditsPick}</option>
+        {samples.map((s) => (
+          <option key={s.id} value={s.id}>{s.label}</option>
+        ))}
+      </select>
+      {pick !== undefined && (
+        <Suspense fallback={null}>
+          <Credits id={pick.id} synth={pick.kind === 'synth'} />
+        </Suspense>
+      )}
+    </section>
+  );
+}
+
 export function NatureScreen({ nature, reduced, onBack }: { readonly nature: Nature; readonly reduced: boolean; readonly onBack: () => void }): React.JSX.Element {
-  const [credit, setCredit] = useState<string | null>(null);
+  const samples = listSamples();
   return (
     <div className="c-nature">
       <PageHead title={CALM.natureHead} reduced={reduced} />
       <p className="c-lead">{CALM.natureIntro}</p>
-      <ul className="c-tiles c-nature-tiles">
-        {listSamples().map((s, i) => (
-          <li key={s.id}>
-            <button type="button" className={`c-tile c-g${(i % 6) + 1}`} data-testid={`nature-${s.id}`} aria-pressed={nature.on === s.id} onClick={() => nature.start(s.id)}>
-              <Icon name={ICON[s.id] ?? s.id} />
-              <span className="c-tile-name">{s.label}</span>
-              <span className="c-tile-mood">{s.kind === 'synth' ? (s.note ?? CALM.natureMade) : CALM.natureFree}</span>
-              {nature.on === s.id && <span className="c-tile-count">{CALM.natureOn}</span>}
-            </button>
-            <button type="button" className="c-btn c-link c-small" aria-expanded={credit === s.id} onClick={() => setCredit(credit === s.id ? null : s.id)}>
-              {`${CALM.natureCredits}: ${s.label}`}
-            </button>
-            {credit === s.id && (
-              <Suspense fallback={null}>
-                <Credits id={s.id} synth={s.kind === 'synth'} />
-              </Suspense>
-            )}
-          </li>
-        ))}
-      </ul>
-      <NatureControls nature={nature} />
-      {nature.on !== null && (
-        <button type="button" className="c-btn c-wide" data-testid="nature-stop" onClick={nature.stop}>
-          {CALM.natureOff}
-        </button>
-      )}
+      <div className="c-sticky" data-testid="nature-sticky">
+        <NatureControls nature={nature} />
+        {nature.on !== null && (
+          <button type="button" className="c-btn c-wide" data-testid="nature-stop" onClick={nature.stop}>
+            {CALM.natureOff}
+          </button>
+        )}
+      </div>
+      {NATURE_GROUPS.map((g) => {
+        const list = samples.filter((s) => groupOf(s) === g);
+        return list.length === 0 ? null : (
+          <section key={g} aria-labelledby={`c-ng-${g.replaceAll(' ', '-')}`}>
+            <h2 className="c-h3" id={`c-ng-${g.replaceAll(' ', '-')}`}>{g}</h2>
+            <ul className="c-tiles c-nature-tiles">
+              {list.map((s) => (
+                <Tile key={s.id} s={s} i={samples.indexOf(s)} nature={nature} />
+              ))}
+            </ul>
+          </section>
+        );
+      })}
       <p className="c-status" role="status" data-testid="nature-message">{nature.message}</p>
       <p className="c-note">{CALM.natureNote}</p>
+      <CreditsFooter samples={samples} />
       <Suspense fallback={null}>
         <MySounds nature={nature} />
       </Suspense>

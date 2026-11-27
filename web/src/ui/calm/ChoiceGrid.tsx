@@ -21,8 +21,8 @@ export function ChoiceGrid<T extends string>({ legend, options, value, onChange 
       <legend className="c-sr">{legend}</legend>
       {options.map((o) => (
         <label key={o.value} className="c-choice">
-          <input type="radio" name={name} value={o.value} checked={value === o.value} onChange={() => onChange(o.value)} />
-          <span>
+          <input type="radio" name={name} value={o.value} aria-label={o.label} checked={value === o.value} onChange={() => onChange(o.value)} />
+          <span aria-hidden="true">
             {o.label}
             {value === o.value && <i className="c-sel" aria-hidden="true">{CALM.selected}</i>}
           </span>

@@ -35,6 +35,7 @@ export function SafetyNotice({ onAccept, onCancel }: Props): React.JSX.Element {
           <li key={l}>{l}</li>
         ))}
       </ul>
+      <p className="c-limits" data-testid="safety-limits">{CALM.safetyLimits}</p>
       <div className="c-actions c-row">
         {onCancel !== undefined && (
           <button ref={cancel} type="button" className="c-btn" onClick={onCancel}>
