@@ -71,6 +71,9 @@ function blend(a: Voice, b: Voice, f: number): Voice {
     noiseLevel: clamp(lerp(a.noiseLevel, b.noiseLevel, f), BOUNDS.noiseMin, BOUNDS.noiseMax),
     mode: a.mode,
     gain: clamp(lerp(a.gain, b.gain, f), BOUNDS.gainMin, BOUNDS.gainMax),
+    ...(a.beatLevel !== undefined || b.beatLevel !== undefined
+      ? { beatLevel: clamp(lerp(a.beatLevel ?? 1, b.beatLevel ?? 1, f), 0, 1) }
+      : {}),
     ...(layers !== undefined ? { layers } : {}),
   };
 }

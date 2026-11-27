@@ -8,6 +8,7 @@ export const BOUNDS = {
   beatHz: { min: 0.5, max: 40, def: 10 },
   gain: { min: 0, max: 0.85, def: 0 },
   noiseLevel: { min: 0, max: 1, def: 0 },
+  beatLevel: { min: 0, max: 1, def: 1 },
   rampSec: { min: 0.05, max: 30, def: 0.05 },
 } as const;
 
@@ -23,7 +24,8 @@ export const SLOT = {
   noiseKind: 4,
   noiseLevel: 5,
   rampSec: 6,
-  reserved: 7,
+  /** Beat voice level, 0..1, default 1. Slot 7 was reserved (always 0) before the tone-off flag. */
+  beatLevel: 7,
   lofiLevel: 8,
   lofiWarmth: 9,
   crackle: 10,
@@ -66,6 +68,8 @@ export const clampGain = (v: number, fb: number = 0): number =>
   clampFinite(v, BOUNDS.gain.min, BOUNDS.gain.max, fb);
 export const clampNoiseLevel = (v: number, fb: number = 0): number =>
   clampFinite(v, BOUNDS.noiseLevel.min, BOUNDS.noiseLevel.max, fb);
+export const clampBeatLevel = (v: number | undefined, fb: number = BOUNDS.beatLevel.def): number =>
+  v === undefined ? fb : clampFinite(v, BOUNDS.beatLevel.min, BOUNDS.beatLevel.max, fb);
 export const clampRamp = (v: number, fb: number = BOUNDS.rampSec.def): number =>
   clampFinite(v, BOUNDS.rampSec.min, BOUNDS.rampSec.max, fb);
 
@@ -147,7 +151,7 @@ export function voiceToParams(voice: Voice, rampSec: number, out: Float32Array):
   out[SLOT.noiseKind] = NOISE_INDEX[voice.noise] ?? 0;
   out[SLOT.noiseLevel] = clampNoiseLevel(voice.noiseLevel);
   out[SLOT.rampSec] = clampRamp(rampSec);
-  out[SLOT.reserved] = 0;
+  out[SLOT.beatLevel] = clampBeatLevel(voice.beatLevel);
   writeLayers(clampLayers(voice.layers), out);
   return out;
 }
@@ -161,6 +165,7 @@ export function clampVoice(voice: Voice, prev?: Voice): Voice {
     noiseLevel: clampNoiseLevel(voice.noiseLevel, prev?.noiseLevel),
     mode: voice.mode in MODE_INDEX ? voice.mode : (prev?.mode ?? 'binaural'),
     gain: clampGain(voice.gain, prev?.gain),
+    ...(voice.beatLevel !== undefined ? { beatLevel: clampBeatLevel(voice.beatLevel, prev?.beatLevel) } : {}),
     ...(voice.layers !== undefined ? { layers: clampLayers(voice.layers) } : {}),
   };
 }

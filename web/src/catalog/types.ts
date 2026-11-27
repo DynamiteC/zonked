@@ -50,6 +50,8 @@ export interface Stage {
   readonly mode: ToneMode;
   readonly noise: NoiseKind;
   readonly noiseLevel: number;
+  /** Beat voice level 0..1. Absent means 1. 0 silences the binaural voice (noise and layers stay). */
+  readonly beatLevel?: number;
   readonly layers?: Partial<Layers>;
   readonly ramp: boolean;
 }

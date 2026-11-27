@@ -10,6 +10,8 @@ export interface Voice {
   readonly noiseLevel: number;
   readonly mode: ToneMode;
   readonly gain: number;
+  /** Beat voice level 0..1 (param slot 7). Absent means 1, the full binaural voice. */
+  readonly beatLevel?: number;
   /** Optional synthesized layers. Absent means all layers off. */
   readonly layers?: Layers;
 }

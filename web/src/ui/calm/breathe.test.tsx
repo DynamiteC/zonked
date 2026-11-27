@@ -3,6 +3,8 @@ import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { AudioEngine, EngineStatus } from '../../audio/types';
 import { templateToEvents } from '../../catalog';
+import { PARAM_COUNT, SLOT, voiceToParams } from '../../audio/params';
+import { TEMPLATES } from '../../catalog';
 import { createStore } from '../../storage/db';
 import { BREATHE_ID, BREATHE_TEMPLATE, hasBeat } from './breathe';
 import { CALM } from './copy';
@@ -50,9 +52,12 @@ describe('breathing sound', () => {
       expect(e.voice.beatHz).toBe(0.5);
       expect(e.voice.carrierHz).toBe(20);
       expect(e.voice.noise).toBe('pink');
+      expect(e.voice.beatLevel).toBe(0);
+      expect(voiceToParams(e.voice, 1, new Float32Array(PARAM_COUNT))[SLOT.beatLevel]).toBe(0);
       expect(e.voice.gain).toBeLessThanOrEqual(0.85);
       expect(e.voice.layers?.instLevel ?? 0).toBe(0);
     }
+    for (const t of TEMPLATES) for (const e of templateToEvents(t)) expect(e.voice.beatLevel).toBeUndefined();
     expect(BREATHE_TEMPLATE.tags).toContain('no-beat');
     expect(BREATHE_TEMPLATE.recommendedMinutes).toBe(5);
     expect(BREATHE_TEMPLATE.breath).toEqual({ inSec: 4, outSec: 4 });
@@ -81,8 +86,9 @@ describe('breathing session screen', () => {
     await act(async () => fireEvent.click(screen.getByTestId('calm-safety-accept')));
     await flush();
     expect(eng.start).toHaveBeenCalledTimes(1);
-    const voice = eng.start.mock.calls[0]?.[0] as { beatHz: number; noise: string };
+    const voice = eng.start.mock.calls[0]?.[0] as { beatHz: number; noise: string; beatLevel?: number };
     expect(voice.beatHz).toBe(0.5);
+    expect(voice.beatLevel).toBe(0);
     expect(voice.noise).toBe('pink');
     expect(screen.getByTestId('breath-counter')).toBeTruthy();
     expect(screen.getByTestId('reset-left').textContent).toBe('5:00 left');

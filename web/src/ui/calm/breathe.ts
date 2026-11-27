@@ -8,9 +8,8 @@ const BEAT_FLOOR_HZ = 0.5;
 const CARRIER_FLOOR_HZ = 20;
 
 /**
- * Soft pink noise and nothing to follow. The engine has no tone-off, so the tone sits at its floor:
- * a 20 Hz carrier with a 0.5 Hz offset, below the beat bands and below what most headphones play.
- * shortcut: a true tone-off needs a dsp-core flag, add one if a listener hears the floor tone.
+ * Soft pink noise and nothing to follow. beatLevel 0 silences the binaural voice in dsp-core
+ * (param slot 7), so no tone plays. The carrier and beat stay at the engine floor and are never heard.
  */
 const STAGE: Stage = {
   atMin: 0,
@@ -20,6 +19,7 @@ const STAGE: Stage = {
   mode: 'binaural',
   noise: 'pink',
   noiseLevel: 0.45,
+  beatLevel: 0,
   ramp: false,
 };
 
