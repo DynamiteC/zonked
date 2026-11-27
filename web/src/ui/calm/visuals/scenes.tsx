@@ -45,12 +45,17 @@ export function FocusScene({ id }: SceneProps): JSX.Element {
 }
 
 /** Rolling hills, drifting clouds, swaying grass. */
-export function CalmScene(): JSX.Element {
+export function CalmScene({ id }: SceneProps): JSX.Element {
   const blades = [20, 52, 84, 116, 148, 180, 212, 244, 276, 300];
   return (
     <>
+      <defs>
+        <radialGradient id={`${id}-cg`} cx="0.5" cy="0.5" r="0.5"><stop offset="0" stopColor="var(--e)" stopOpacity="0.55" /><stop offset="1" stopColor="var(--e)" stopOpacity="0" /></radialGradient>
+        <radialGradient id={`${id}-cd`} cx="0.38" cy="0.34" r="0.8"><stop offset="0" stopColor="#FFFFFF" stopOpacity="0.9" /><stop offset="0.45" stopColor="var(--e)" /><stop offset="1" stopColor="var(--e)" stopOpacity="0.7" /></radialGradient>
+      </defs>
       <rect width="320" height="200" className="va" />
-      <circle className="ve" cx="238" cy="62" r="26" opacity="0.7" />
+      <circle className="vl-halo" cx="238" cy="62" r="60" fill={`url(#${id}-cg)`} />
+      <circle cx="238" cy="62" r="22" fill={`url(#${id}-cd)`} />
       <g className="vf vl-cloud" style={d(0)}><ellipse cx="70" cy="48" rx="34" ry="9" opacity="0.7" /><ellipse cx="92" cy="42" rx="22" ry="8" opacity="0.7" /></g>
       <g className="vf vl-cloud" style={d(-1.5)}><ellipse cx="190" cy="30" rx="28" ry="7" opacity="0.6" /><ellipse cx="206" cy="26" rx="16" ry="6" opacity="0.6" /></g>
       <path className="vb" d="M0 132Q70 96 150 122T320 108V200H0Z" />

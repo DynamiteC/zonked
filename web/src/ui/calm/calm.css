@@ -14,6 +14,8 @@
 .c-skip:focus { left: 8px; }
 .c-loading { padding: 24px; color: var(--c-soft); }
 .c-app time, .c-time, .c-dot, .c-step { font-variant-numeric: tabular-nums; }
+/* Timer digits only: the brand face draws a slashed zero, so clocks use the system face. */
+.c-time, .c-digits { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-variant-numeric: tabular-nums; }
 
 .c-topbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; gap: 8px; border-bottom: 1px solid var(--c-line); }
 .c-brand { font-weight: 700; font-size: 1.125rem; }
@@ -75,8 +77,8 @@
 .c-switch > span:last-child { flex: 1; order: 0; }
 .c-track { order: 1; width: 52px; height: 30px; border-radius: 999px; border: var(--c-bw) solid var(--c-edge); position: relative; flex: none; margin-left: auto; }
 .c-track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--c-soft); transition: transform 120ms; }
-.c-switch input:checked + .c-track { background: var(--c-accent); border-color: var(--c-accent-edge); }
-.c-switch input:checked + .c-track::after { transform: translateX(22px); background: var(--c-on-accent); }
+.c-switch input:checked + .c-track { background: var(--c-text); border-color: var(--c-text); }
+.c-switch input:checked + .c-track::after { transform: translateX(22px); background: var(--c-bg); }
 .c-switch input:focus-visible + .c-track { outline: 3px solid var(--c-focus); outline-offset: 3px; }
 .c-switch small { display: block; }
 
@@ -97,7 +99,7 @@
   .c-main { padding-bottom: 96px; }
   .c-mini { left: auto; right: 24px; bottom: 24px; width: 360px; }
 }
-@media (max-width: 899px) { .c-rail-brand { display: none; } }
+@media (max-width: 899px) { .c-rail-brand { display: none; } .c-app[data-playing="true"]:not([data-view="player"]) .c-main { padding-bottom: calc(80px + 56px + 24px + env(safe-area-inset-bottom, 0px)); } }
 @media (prefers-reduced-motion: reduce) {
   .c-app, .c-app *, .c-app *::before, .c-app *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

@@ -113,7 +113,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
       <p className="c-sr" role="status" data-testid="play-status">
         {s.snap.playing ? `Playing. ${CALM.volumeCapped}` : 'Stopped.'}
       </p>
-      {end.card !== null && !s.snap.playing && <EndCard info={end.card} onAgain={() => replay(end.card?.id ?? null, play)} onClose={end.dismiss} />}
+      {end.card !== null && !s.snap.playing && <EndCard info={end.card} onAgain={() => replay(end.card?.id ?? null, play)} onClose={end.dismiss} firstRun={toDayNumber(data.profile.createdAt) === today()} />}
       {s.gate && <SafetyNotice onAccept={s.accept} onCancel={s.cancelGate} />}
     </div>
   );

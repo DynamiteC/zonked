@@ -15,7 +15,7 @@ export function BodyLayer({ id }: IdProps): JSX.Element {
       <defs>
         <linearGradient id={`${id}-cloth`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#86A5B3" />
-          <stop offset="0.55" stopColor="#5F7D8B" />
+          <stop offset="0.82" stopColor="#5C7A88" />
           <stop offset="1" stopColor="#5A7886" stopOpacity="0" />
         </linearGradient>
       </defs>

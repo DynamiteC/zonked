@@ -46,11 +46,12 @@ interface MiniProps {
 /** Visible on every tab while a session runs. Stop is one tap. On desktop it docks to the rail bottom. */
 export function MiniPlayer({ snap, onOpen, onStop }: MiniProps): React.JSX.Element | null {
   if (!snap.playing) return null;
-  const left = snap.timer.kind !== 'none' && snap.timer.running ? ` ${formatClock(snap.timer.remainingSec)}` : '';
+  const left = snap.timer.kind !== 'none' && snap.timer.running ? formatClock(snap.timer.remainingSec) : '';
   return (
     <div className="c-mini" role="group" aria-label="Now playing">
       <button type="button" className="c-btn c-link c-mini-open" onClick={onOpen}>
-        {`${snap.templateName ?? CALM.brand}${left}`}
+        {snap.templateName ?? CALM.brand}
+        {left !== '' && <span className="c-digits">{` ${left}`}</span>}
       </button>
       <button type="button" className="c-btn c-small" data-testid="mini-stop" onClick={onStop}>
         {CALM.stop}

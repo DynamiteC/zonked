@@ -37,7 +37,7 @@ export function SceneLoop({ situation, reducedMotion, theme }: SceneLoopProps): 
   return (
     <svg className={cls} data-vl={theme} data-situation={situation} viewBox={VIEW} preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
       {situation === 'focus' && <FocusScene id={id} />}
-      {situation === 'calm' && <CalmScene />}
+      {situation === 'calm' && <CalmScene id={id} />}
       {situation === 'sleep' && <SleepScene id={id} />}
       {situation === 'nature' && <NatureScene />}
     </svg>

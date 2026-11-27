@@ -44,8 +44,7 @@ export function Today({ profile, week, progress, reduced, crewConnected, hasHist
           {greeting(now().getHours())}
         </h1>
       </header>
-      {joinedToday && <p className="c-note" data-testid="first-run-note">{CALM.studioNote}</p>}
-      {last !== null && (
+      {last !== null && last.id !== pick?.template.id && (
         <button type="button" className="c-btn c-wide c-again" data-testid="play-again" onClick={() => onPlay(last)}>
           {`${CALM.playAgain}: ${last.name}`}
         </button>

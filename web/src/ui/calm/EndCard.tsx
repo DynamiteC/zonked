@@ -36,10 +36,12 @@ interface Props {
   readonly info: EndInfo;
   readonly onAgain: () => void;
   readonly onClose: () => void;
+  /** True on the day the person joined: names Studio once. */
+  readonly firstRun?: boolean;
 }
 
 /** One calm line, what played, how long. No streaks and no pressure to return. */
-export function EndCard({ info, onAgain, onClose }: Props): React.JSX.Element {
+export function EndCard({ info, onAgain, onClose, firstRun = false }: Props): React.JSX.Element {
   const again = useRef<HTMLButtonElement>(null);
   useEffect(() => again.current?.focus(), []);
   return (
@@ -50,6 +52,7 @@ export function EndCard({ info, onAgain, onClose }: Props): React.JSX.Element {
         </h2>
         <p>{CALM.endLine(info.name, info.minutes)}</p>
         <p className="c-muted">{CALM.endNote}</p>
+        {firstRun && <p className="c-note" data-testid="first-run-note">{CALM.studioNote}</p>}
         <div className="c-actions">
           <button ref={again} type="button" className="c-btn c-primary" data-testid="end-again" onClick={onAgain}>
             {CALM.playAgain}
