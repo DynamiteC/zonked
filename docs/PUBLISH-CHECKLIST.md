@@ -1,6 +1,6 @@
 # Publish checklist: Kiro Crew App Kit
 
-This walks the App Kit publishing guide (`docs/app-kit/publishing-guide.md` in the Kiro Crew repo, section 14 review checklist plus the asset and trust rules) against `app/`. It lists facts only. It has no deploy steps.
+This walks the App Kit publishing guide (`docs/app-kit/publishing-guide.md` in the Kiro Crew repo, section 14 review checklist plus the asset and trust rules) against `app/`. It lists facts only. It has no steps for putting the app online.
 
 Guide read on 2026-11-28 against `app/app.json` at the commit that adds this file.
 
