@@ -25,8 +25,8 @@ describe('catalog copy', () => {
   });
 
   it('has no outcome wording in Calm text or journeys', () => {
-    const strings = Object.values(CALM).filter((v): v is string => typeof v === 'string');
-    const flat = [...strings, ...Object.values(CALM).filter(Array.isArray).flat().filter((v): v is string => typeof v === 'string')];
+    const values: readonly unknown[] = Object.values(CALM);
+    const flat = values.flatMap((v) => (Array.isArray(v) ? (v as unknown[]) : [v])).filter((v): v is string => typeof v === 'string');
     expect(flat.filter((s) => BANNED.test(s))).toEqual([]);
     expect(JOURNEYS.flatMap((j) => [j.title, j.blurb]).filter((x) => BANNED.test(x))).toEqual([]);
   });
