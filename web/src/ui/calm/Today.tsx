@@ -3,12 +3,13 @@ import { recommendTemplates } from '../../catalog';
 import type { Template } from '../../catalog/types';
 import { CALM, GOAL_LABEL, greeting } from './copy';
 import { nudgeRecs, profileToRecommendation } from './data';
-import type { FeelEntry, Profile, ProgressMap, WeekStats } from './data';
+import type { FeelEntry, Goal, Profile, ProgressMap, WeekStats } from './data';
 import { Mascot } from './MascotView';
 import { WeekDots } from './WeekDots';
 
 const realNow = (): Date => new Date();
 const NO_FEEL: readonly FeelEntry[] = [];
+const SPRINT_GOALS: readonly Goal[] = ['focus', 'study'];
 
 interface Props {
   readonly profile: Profile;
@@ -25,13 +26,15 @@ interface Props {
   readonly last?: Template | null;
   /** Saved "How was that?" answers. They nudge the order of For you and the daily pick. */
   readonly feel?: readonly FeelEntry[];
+  /** Starts a focus sprint on a sound. Shown for Focus and Study goals. */
+  readonly onSprint?: (t: Template) => void;
   readonly onPlay: (t: Template) => void;
   readonly onOpenJourney: (id: string) => void;
   readonly onGo: (view: 'journeys' | 'library') => void;
   readonly onReset: () => void;
 }
 
-export function Today({ profile, week, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, feel = NO_FEEL, onPlay, onGo, onReset }: Props): React.JSX.Element {
+export function Today({ profile, week, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, feel = NO_FEEL, onSprint, onPlay, onGo, onReset }: Props): React.JSX.Element {
   const [skip, setSkip] = useState(0);
   const recs = useMemo(() => {
     const ctx = profileToRecommendation(profile, now());
@@ -65,6 +68,12 @@ export function Today({ profile, week, reduced, crewConnected, hasHistory = true
             </button>
           </div>
         </section>
+      )}
+      {onSprint !== undefined && pick !== undefined && SPRINT_GOALS.includes(profile.goal) && (
+        <button type="button" className="c-link-card c-sprint-entry" data-testid="today-sprint" onClick={() => onSprint(pick.template)}>
+          <b>{CALM.sprintTitle}</b>
+          <small>{CALM.sprintLine}</small>
+        </button>
       )}
       <button type="button" className="c-link-card c-reset-entry" data-testid="today-reset" onClick={onReset}>
         <b>{CALM.resetEntry}</b>

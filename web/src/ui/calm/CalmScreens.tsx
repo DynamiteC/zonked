@@ -13,6 +13,7 @@ import { startDemo, stopDemo } from '../../app/demoFeed';
 import type { Look, Prefs } from './look';
 import type { Nature } from './nature/useNature';
 import { Today } from './Today';
+import type { Sprint } from './useSprint';
 import { ResetScreen } from './ResetScreen';
 
 const JourneyList = lazy(() => import('./Journeys').then((m) => ({ default: m.JourneyList })));
@@ -47,11 +48,12 @@ interface Props {
   readonly prefs: Prefs;
   readonly onPrefs: (p: Prefs) => void;
   readonly feel: readonly FeelEntry[];
+  readonly sprint: Sprint;
   readonly handlers: Handlers;
 }
 
 /** Picks the screen for the current view. Only Today is in the first chunk. */
-export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav, last, look, prefs, onPrefs, feel, handlers: h }: Props): React.JSX.Element {
+export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav, last, look, prefs, onPrefs, feel, sprint, handlers: h }: Props): React.JSX.Element {
   switch (view) {
     case 'journeys':
       return <JourneyList progress={data.progress} onOpen={h.openJourney} reduced={still} />;
@@ -73,7 +75,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
     case 'nature':
       return <NatureScreen nature={nature} reduced={still} onBack={() => h.go('library')} />;
     case 'player':
-      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} theme={look.theme} announce={prefs.announce} />;
+      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} theme={look.theme} announce={prefs.announce} sprint={sprint} />;
     case 'reset':
       return <ResetScreen s={s} still={still} theme={look.theme} announce={prefs.announce} onBack={() => h.go('today')} />;
     case 'crew':
@@ -114,6 +116,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
           crewConnected={crewInfo.enabled && crewInfo.status === 'connected'}
           last={last}
           feel={feel}
+          onSprint={sprint.start}
           onPlay={h.play}
           onOpenJourney={h.openJourney}
           onGo={h.go}

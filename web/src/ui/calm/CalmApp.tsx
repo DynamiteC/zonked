@@ -26,6 +26,7 @@ import { today, useCalmData } from './useCalmData';
 import { useCalmSession } from './useCalmSession';
 import { useCrewBridge } from './useCrewBridge';
 import { useFeel } from './useFeel';
+import { useSprint } from './useSprint';
 import { useFavorite } from './useFavorite';
 import './calm.css';
 
@@ -58,9 +59,10 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   const active = useRef<ActiveDay | null>(null);
   const fav = useFavorite(s.store, s.snap.templateId);
   const feel = useFeel(data.storage);
+  const sprint = useSprint(s);
   const onboarding = data.profile.createdAt === 0;
   const last = useLastPlayed(data.storage);
-  const end = useEndCard(s.snap, !onboarding && view !== 'reset');
+  const end = useEndCard(s.snap, !onboarding && view !== 'reset', sprint.focus === null ? null : { id: sprint.focus.id, name: CALM.sprintName });
   const still = s.reduced || data.profile.extraGentle;
   const { look, prefs, dim, setPrefs } = useLook();
 
@@ -112,6 +114,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
               prefs={prefs}
               onPrefs={setPrefs}
               feel={feel.entries}
+              sprint={sprint}
               handlers={{ go, play, playDay, openJourney, forget, onStudio, onMix: (m: Mix) => s.guarded(() => s.player.playMix(m)) }}
             />
           )}

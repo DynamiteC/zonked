@@ -1,6 +1,7 @@
 import { Suspense, lazy, useState } from 'react';
 import type { Player, PlayerSnapshot } from '../../app/player';
 import type { AudioEngine } from '../../audio/types';
+import { getTemplates } from '../../catalog';
 import { SOUND_MENU } from '../../catalog/soundMenu';
 import { CALM, EVIDENCE } from './copy';
 import { BreathLive, counterText, useBreathCounter } from './BreathLive';
@@ -10,6 +11,7 @@ import { NatureControls } from './nature/NatureScreen';
 import { loadPrefs } from './nature/prefs';
 import type { Nature } from './nature/useNature';
 import { sceneFor, useLevel } from './playerScene';
+import type { Sprint } from './useSprint';
 import type { SceneSituation } from './visuals';
 
 const CalmMascot = lazy(() => import('./mascot').then((m) => ({ default: m.CalmMascot })));
@@ -77,14 +79,17 @@ interface Props {
   readonly engine: AudioEngine;
   readonly theme: 'light' | 'dark';
   readonly announce?: boolean;
+  readonly sprint?: Sprint;
 }
 
-export function PlayerScreen({ engine, theme, announce = true, player, snap, still, favorite, onToggle, onFavorite, nature }: Props): React.JSX.Element {
+export function PlayerScreen({ engine, theme, announce = true, sprint, player, snap, still, favorite, onToggle, onFavorite, nature }: Props): React.JSX.Element {
   const [why, setWhy] = useState(false);
   const level = useLevel(engine, snap.playing);
   const sound = SOUND_MENU.find((s) => s.templateId === snap.templateId);
   const evidence = sound?.evidence ?? 'mixed';
-  const situation = sceneFor(snap.templateId, nature.on !== null);
+  // The scene follows the focus sound for the whole sprint, so the switch to the break changes nothing on screen.
+  const situation = sceneFor(sprint?.focus?.id ?? snap.templateId, nature.on !== null);
+  const current = getTemplates().find((t) => t.id === (sprint?.focus?.id ?? snap.templateId));
   return (
     <div className="c-player">
       <h1 className="c-h1">{snap.templateName ?? CALM.brand}</h1>
@@ -97,7 +102,11 @@ export function PlayerScreen({ engine, theme, announce = true, player, snap, sti
           {favorite ? CALM.saved : CALM.favorite}
         </button>
       </div>
-      <TimerChips timer={snap.timer} player={player} />
+      <TimerChips
+        timer={snap.timer}
+        player={player}
+        {...(sprint !== undefined && current !== undefined ? { onSprint: () => sprint.start(current), onSprintEnd: sprint.cancel } : {})}
+      />
       <NatureQuick nature={nature} />
       <p className="c-muted">{CALM.volumeCapped}</p>
       <section className="c-why">

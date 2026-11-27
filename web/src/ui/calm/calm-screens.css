@@ -115,3 +115,6 @@
 
 /* Reset screen reuses the player layout. */
 .c-reset .c-lead { margin: 0 0 8px; }
+.c-feel { margin-top: 12px; }
+.c-feel .c-chips { margin: 6px 0 0; }
+.c-sprint-entry small { white-space: normal; }
