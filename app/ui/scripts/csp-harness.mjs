@@ -156,16 +156,16 @@ try {
   // Crew link: off by default, standalone while the backend has no report, steering after one.
   const crewStatus = async () => (await page.textContent('[data-testid=panel-crew-status]'))?.trim();
   out.crewDefault = await crewStatus();
-  await page.check('[data-testid=panel-crew]');
+  await page.check('[data-testid=panel-crew]', { force: true });
   await page.waitForFunction(() => /not reachable/.test(document.querySelector('[data-testid=panel-crew-status]')?.textContent ?? ''), null, { timeout: 5000 });
   out.crewNoReport = await crewStatus();
   const sent = await fetch(`http://127.0.0.1:${port}/apps/zonked/api/intensity`, { method: 'POST', body: JSON.stringify({ version: 1, at: 1790000000, score: 70 }) });
   out.crewReportStatus = sent.status;
-  await page.uncheck('[data-testid=panel-crew]');
-  await page.check('[data-testid=panel-crew]');
+  await page.uncheck('[data-testid=panel-crew]', { force: true });
+  await page.check('[data-testid=panel-crew]', { force: true });
   await page.waitForFunction(() => /steering/.test(document.querySelector('[data-testid=panel-crew-status]')?.textContent ?? ''), null, { timeout: 5000 });
   out.crewSteering = await crewStatus();
-  await page.uncheck('[data-testid=panel-crew]');
+  await page.uncheck('[data-testid=panel-crew]', { force: true });
   out.crewOff = await crewStatus();
   out.crewOk = out.crewDefault === 'Crew is off.' && /not reachable/.test(out.crewNoReport) && out.crewSteering === 'Crew is steering.' && out.crewOff === 'Crew is off.';
   out.ok = out.crewOk && out.statsPlaying.peak > 0 && out.statsPlaying.peak <= 0.95 && out.statsAfterUnmount.peak > 0 && out.afterPanelStop !== 'running';

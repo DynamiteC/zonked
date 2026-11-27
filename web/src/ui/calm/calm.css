@@ -213,3 +213,10 @@
 .c-own-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
 .c-own-row .c-row-card { min-height: 56px; }
 @media (min-width: 900px) { .c-nature-tiles { grid-template-columns: repeat(3, 1fr); } }
+.c-link-card { display: grid; gap: 4px; }
+.c-status:empty { display: none; }
+.c-info { grid-template-columns: minmax(0, 1fr); }
+.c-info .c-btn { width: 100%; }
+.c-week-compact .c-dots { gap: 2px; }
+.c-week-compact .c-mark { width: 24px; height: 24px; font-size: 0.875rem; border-width: 1px; }
+.c-actions .c-btn.c-link { align-self: flex-start; }

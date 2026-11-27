@@ -1,4 +1,5 @@
 import { CALM } from './copy';
+import { Icon } from './icons';
 import type { DayState, WeekStats } from './data';
 
 const LETTERS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'] as const;
@@ -31,7 +32,7 @@ export function WeekDots({ week, hasHistory = true, joinedToday = false, compact
           return (
             <li key={NAMES[i]} className={`c-dot c-dot-${d}${fill ? ' c-dot-joined' : ''}`} data-state={d}>
               <span className="c-mark" aria-hidden="true">
-                {fill ? '\u2713' : LETTERS[i]}
+                {fill ? <Icon name="check" size={16} /> : LETTERS[i]}
               </span>
               <span className="c-sr">{`${NAMES[i]}, ${fill ? CALM.joinedToday : WORD[d]}`}</span>
             </li>

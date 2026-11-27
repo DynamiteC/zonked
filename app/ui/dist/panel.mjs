@@ -1,51 +1,47 @@
-import { jsxs as d, jsx as a } from "react/jsx-runtime";
-import { useState as i, useEffect as c } from "react";
-import { d as m, g as k, a as b, e as w, h as C, i as p, s as S } from "./chunk-crewLink-CNIjqEIV.mjs";
-import { j as E, k as I } from "./chunk-crewLink-CNIjqEIV.mjs";
-const x = {
-  display: "flex",
-  flexDirection: "column",
-  gap: 10,
-  padding: 16,
-  fontFamily: "system-ui, sans-serif",
-  fontSize: 14,
-  lineHeight: 1.4
-}, u = { alignSelf: "flex-start", minHeight: 44, minWidth: 96, padding: "0 16px", font: "inherit", cursor: "pointer", borderRadius: 10 };
-function L(e) {
-  const t = e.timer;
-  return t.kind !== "countdown" || !t.running ? null : Math.ceil(t.remainingSec / 60);
+import { jsx as a, jsxs as p } from "react/jsx-runtime";
+import { useState as l, useEffect as r } from "react";
+import { e as k, h as w, a as C, b as y, j as S, k as N, l as O, m as L, i as o, C as t, p as P } from "./chunk-crewLink-Cq0htOCx.mjs";
+import { q as $, r as q } from "./chunk-crewLink-Cq0htOCx.mjs";
+function x(e) {
+  const n = e.timer;
+  return n.kind !== "countdown" || !n.running ? null : Math.ceil(n.remainingSec / 60);
 }
-function j() {
-  m();
-  const { player: e } = k(), [t, f] = i(b), [h, g] = i(w);
-  c(() => C(g), []);
-  const [n, l] = i(() => e.snapshot());
-  c(() => (l(e.snapshot()), e.subscribe(l)), [e]);
-  const y = p() && n.templateId !== null, o = L(n);
-  let s = "Stopped.";
-  return n.playing ? s = o === null ? "Playing." : `Playing. About ${String(o)} min left.` : p() ? n.templateId === null && (s = "Open Zonked and pick a sound first.") : s = "Open Zonked once to read the headphone note.", /* @__PURE__ */ d("div", { style: x, "data-testid": "zonked-panel", children: [
-    /* @__PURE__ */ a("strong", { "data-testid": "panel-title", children: n.templateName ?? "Zonked" }),
-    /* @__PURE__ */ a("span", { "data-testid": "panel-hint", role: "status", children: s }),
-    n.playing ? /* @__PURE__ */ a("button", { type: "button", style: u, "data-testid": "panel-stop", onClick: () => void e.stop(), children: "Stop" }) : /* @__PURE__ */ a("button", { type: "button", style: u, "data-testid": "panel-play", disabled: !y, onClick: () => void e.play(), children: "Play" }),
-    /* @__PURE__ */ d("label", { style: { display: "flex", gap: 8, alignItems: "center" }, children: [
+function v(e) {
+  const n = x(e);
+  return e.playing ? n === null ? t.panelPlaying : `${t.panelPlaying} About ${String(n)} min left.` : o() ? e.templateId === null ? t.panelPickFirst : t.panelStopped : t.panelOpenFirst;
+}
+function F() {
+  k(import.meta.url), w();
+  const { player: e } = C(), [n, d] = l(y), [u, m] = l(S), [h, f] = l(N);
+  r(() => O(m), []), r(() => L(f), []);
+  const [s, i] = l(() => e.snapshot());
+  r(() => (i(e.snapshot()), e.subscribe(i)), [e]);
+  const g = o() && s.templateId !== null, b = n ? u === "connected" ? t.panelCrewOn : t.panelCrewLost : t.panelCrewOff;
+  return /* @__PURE__ */ a("div", { className: "c-app c-panel", "data-testid": "zonked-panel", "data-theme": "auto", children: /* @__PURE__ */ p("div", { className: "c-card", children: [
+    /* @__PURE__ */ a("strong", { "data-testid": "panel-title", children: s.templateName ?? t.brand }),
+    /* @__PURE__ */ a("p", { className: "c-muted", "data-testid": "panel-hint", role: "status", children: v(s) }),
+    h ? null : s.playing ? /* @__PURE__ */ a("button", { type: "button", className: "c-btn c-small", "data-testid": "panel-stop", onClick: () => void e.stop(), children: t.stop }) : /* @__PURE__ */ a("button", { type: "button", className: "c-btn c-small", "data-testid": "panel-play", disabled: !g, onClick: () => void e.play(), children: t.play }),
+    /* @__PURE__ */ p("label", { className: "c-switch", children: [
       /* @__PURE__ */ a(
         "input",
         {
           type: "checkbox",
+          role: "switch",
           "data-testid": "panel-crew",
-          checked: t,
-          onChange: (r) => {
-            f(r.target.checked), S(r.target.checked);
+          checked: n,
+          onChange: (c) => {
+            d(c.target.checked), P(c.target.checked);
           }
         }
       ),
-      "Let the Crew steer my sound"
+      /* @__PURE__ */ a("span", { className: "c-track", "aria-hidden": "true" }),
+      /* @__PURE__ */ a("span", { children: t.panelCrewLabel })
     ] }),
-    /* @__PURE__ */ a("span", { "data-testid": "panel-crew-status", role: "status", children: t ? h === "connected" ? "Crew is steering." : "Crew backend not reachable. Playing on your own." : "Crew is off." })
-  ] });
+    /* @__PURE__ */ a("p", { className: "c-muted", "data-testid": "panel-crew-status", role: "status", children: b })
+  ] }) });
 }
 export {
-  j as default,
-  E as engineState,
-  I as engineStats
+  F as default,
+  $ as engineState,
+  q as engineStats
 };

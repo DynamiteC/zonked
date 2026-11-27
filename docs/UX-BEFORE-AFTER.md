@@ -169,3 +169,49 @@ Values marked "check when built" are proposals, not measured results.
 - Dark theme, 200 percent text and reduced motion were not captured here.
 - Shots are headless Chromium, not Chrome. The app page was shown through the CSP harness, not the real dashboard.
 - Contrast numbers were computed from token values, not sampled from pixels.
+
+## After: what was built
+
+Shots: `docs/ux-shots/after-*` with the same names as the before set (suffix d for 1280x800, m for 375x812), plus `after-calm-nature` and `after-calm-mysounds`. Made with `web/scripts/take-ux-shots.mjs`. I opened 12 of them: first-d, first-m, today-d (twice), today-m, library-d, library-m, nature-d, nature-m, mysounds-d, player-d, settings-d. The rest were captured by the same script and not read one by one. The app-page shots (`after-app-*`) were not retaken; the harness checks the panel by text instead.
+
+### Re-scored first impression
+
+| Surface | Before | After | Why |
+|---|---|---|---|
+| Calm web, desktop | 4 | 5 | Next and Skip sit at y 517 and 569 of 800 (answers in two columns, mascot 120). Rail has brand and mascot, mini player docked in the rail, right card shows today's session and the week. |
+| Calm web, phone | 4 | 4 | Same single column. Nav now has icons and a filled current tab. |
+| Calm in the Kiro Crew app | 3 | 4 | The panel uses `c-card`, `c-btn` and the shared copy. One Stop only (see below). Not seen in the real dashboard. |
+
+Scores are my own reading of the shots, not a user test.
+
+### Changes 2 to 8 and the 14 inconsistencies
+
+| Item | Result |
+|---|---|
+| 2 Next above the fold at 1280x800 | Done. Two answer columns from 900 px wide. |
+| 3 Desktop frame | Done. Brand and 40 px mascot in the rail, mini player at rail bottom, right info card from 1180 px wide. |
+| 4 App panel | Done. Shared classes. Stop shows only when no page is mounted (`stopButtonsWhilePageOpen: 0` in the CSP harness, Stop returns after unmount). |
+| 5 Library tiles | Done. Inline SVG icon, mood line, sound count. No "Popular now" row (skipped: no usage data on this device to rank by). |
+| 6 Nav icons | Done. Filled pill on the current tab. |
+| 7 Endowed progress | Done. First dot filled, "You joined today", no streak words (checks C3 and unit test). Journeys say "Day 0 of N, you are ready". |
+| 8 Quieter Studio switch | Done. Text link in Settings, Alt+Shift+S, stated in the first-run note on Today. The top bar chip is gone. |
+| Inconsistencies 1 to 14 | 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 14 done. 7 done in part: Studio gets the mascot and the system body font in a thin bar, its sharp look is unchanged. 11 skipped: one shared motion flag across Calm and Studio was not built. |
+
+Token values as built: radius 12, 20, 999. Type 0.875, 1, 1.125, 1.375, 1.75, 2.125 rem. `--c-edge` is #857B6B on light and #7C7596 on dark, measured 4.16 on white and 3.9 on the dark surface. Teal is #1A645F, 5.1 on the pink end of the gradient.
+
+### Added: Nature and My sounds
+
+Nature screen from Library, one tap from the player, Blend slider "More nature, softer beats", level capped at 0.85, choice kept under `zonked.nature.v1`. Credits come from `credits.json` made from the licence table by `web/scripts/make-credits.mjs`. Synth sounds show a "made in code" line. My sounds: file input only, decode check on an offline context, 8 MB, 10 minutes, mono, 2 s crossfade loop or play once under 20 s, peak set to 0.45 like the shipped loops, IndexedDB `zonked.mysounds.v1`, 5 sounds and 20 MB, Remove and Remove all, included in Forget my data.
+
+### Metrics
+
+| Metric | Before | After |
+|---|---|---|
+| Taps to first sound, Skip path | 2 | 2 |
+| Taps to first sound, full path | 5 | 5 |
+| Words before first sound | not counted | not counted |
+| First load, gzip | 79.9 KB | 79.45 KB |
+| Lazy chunks added (gzip) | n/a | Nature 1.25 KB, My sounds 1.09 KB, Credits 0.71 KB |
+| Two Stop buttons in the app | 1 | 0 |
+
+Skipped: the 2-tap start (brief change 1) was not in this item. Words before first sound were not measured.

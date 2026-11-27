@@ -20,6 +20,7 @@ const PATHS: Readonly<Record<string, string>> = {
   forest: 'M12 3 6 12h4l-4 6h12l-4-6h4ZM12 18v3',
   birds: 'M3 11c3-3 6-3 9 1 3-4 6-4 9-1M8 16l2 3M16 16l-2 3',
   breeze: 'M3 9h10a3 3 0 1 0-3-3M3 14h14a3 3 0 1 1-3 3M3 19h6',
+  check: 'M5 12.5l4.5 4.5L19 7',
   file: 'M6 3h8l4 4v14H6zM14 3v4h4M9 14l2 2 4-4',
 };
 
