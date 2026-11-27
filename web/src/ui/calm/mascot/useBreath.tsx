@@ -35,9 +35,9 @@ export function useBreath(running: boolean): BreathState {
 }
 
 /** Visible text cue. Screen readers hear it only when the phase changes. */
-export function BreathCue({ label, className }: { readonly label: BreathLabel; readonly className?: string }): JSX.Element {
+export function BreathCue({ label, className, live = true }: { readonly label: BreathLabel; readonly className?: string; readonly live?: boolean }): JSX.Element {
   return (
-    <p className={className ?? 'cm-cue'} aria-live="polite" role="status">
+    <p className={className ?? 'cm-cue'} {...(live ? { 'aria-live': 'polite' as const, role: 'status' } : {})}>
       {label}
     </p>
   );

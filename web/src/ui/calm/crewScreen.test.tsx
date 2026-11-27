@@ -6,6 +6,7 @@ import type { CrewView } from '../../app/crewFeed';
 import { getTemplates } from '../../catalog';
 import { CrewScreen } from './CrewScreen';
 import { DEFAULT_PROFILE } from './data';
+import { sessionName } from './CalmChrome';
 import { Today } from './Today';
 import type { CrewInfo } from './useCrewBridge';
 
@@ -55,10 +56,46 @@ describe('Crew screen', () => {
     expect(screen.queryByTestId('crew-demo')).toBeNull();
     expect(screen.getByTestId('crew-demo-stop')).toBeTruthy();
   });
+
+  it('demo: the Crew switch is disabled and says the demo steers the sound', () => {
+    render(<CrewScreen crew={info({ state: st, source: 'demo', demoNextAtMs: Date.now() + 9000 }, false)} overridden={false} onDemo={noop} onStopDemo={noop} onNotNow={noop} onResume={noop} onFollow={noop} />);
+    const sw = screen.getByTestId('calm-crew-toggle') as HTMLInputElement;
+    expect(sw.disabled).toBe(true);
+    expect(sw.checked).toBe(true);
+    expect(screen.getByText('Demo is steering the sound')).toBeTruthy();
+    expect(screen.getByTestId('crew-demo-note')).toBeTruthy();
+  });
+
+  it('explains Beat now in one plain line', () => {
+    render(<CrewScreen crew={info({ state: st, source: 'bridge', changedAtMs: Date.now() })} overridden={false} onDemo={noop} onStopDemo={noop} onNotNow={noop} onResume={noop} onFollow={noop} />);
+    expect(screen.getByTestId('crew-beat-hint').textContent).toBe('Higher beats feel alert, lower beats feel calm.');
+  });
+});
+
+describe('mini player name', () => {
+  const snap = (o: object): never => ({ templateName: null, presetId: 'flow-state', source: 'preset', ...o }) as never;
+  it('uses the template, the Crew preset or the Studio preset, never a bare brand', () => {
+    expect(sessionName(snap({ templateName: 'Rain hush' }))).toBe('Rain hush');
+    expect(sessionName(snap({ source: 'crew' }), 'burnout-reset')).toBe('Crew: AI Burnout Reset');
+    expect(sessionName(snap({}))).toBe('Flow State');
+    expect(sessionName(snap({ presetId: 'nope' }))).toBe('Zonked');
+  });
+});
+
+describe('Today reset entry', () => {
+  it('offers one secondary entry that opens the reset', () => {
+    const onReset = vi.fn();
+    render(<Today profile={DEFAULT_PROFILE} week={{ daysListened: 0, goalDays: 3, goalMet: false, quietWeek: true, dots: ['rest', 'rest', 'rest', 'rest', 'rest', 'rest', 'rest'] } as never} progress={{}} reduced crewConnected={false} onPlay={noop} onOpenJourney={noop} onGo={noop} onReset={onReset} />);
+    const b = screen.getByTestId('today-reset');
+    expect(b.textContent).toContain('A short pause, 90 seconds');
+    expect(b.className).not.toContain('c-primary');
+    fireEvent.click(b);
+    expect(onReset).toHaveBeenCalled();
+  });
 });
 
 describe('Today play again', () => {
-  const props = { profile: DEFAULT_PROFILE, week: { daysListened: 0, goalDays: 3, goalMet: false, quietWeek: true, dots: ['rest','rest','rest','rest','rest','rest','rest'] } as never, progress: {}, reduced: true, crewConnected: false, onPlay: noop, onOpenJourney: noop, onGo: noop };
+  const props = { profile: DEFAULT_PROFILE, week: { daysListened: 0, goalDays: 3, goalMet: false, quietWeek: true, dots: ['rest','rest','rest','rest','rest','rest','rest'] } as never, progress: {}, reduced: true, crewConnected: false, onPlay: noop, onOpenJourney: noop, onGo: noop, onReset: noop };
   it('shows Play again only when the last session differs from the pick', () => {
     const { container } = render(<Today {...props} last={null} />);
     const name = container.querySelector('#c-daily-h')?.textContent;

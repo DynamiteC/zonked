@@ -3,6 +3,7 @@ import type { Player, PlayerSnapshot } from '../../app/player';
 import type { AudioEngine } from '../../audio/types';
 import { SOUND_MENU } from '../../catalog/soundMenu';
 import { CALM, EVIDENCE } from './copy';
+import { BreathLive, counterText, useBreathCounter } from './BreathLive';
 import { useBreath } from './mascot/useBreath';
 import { TimerChips } from './TimerChips';
 import { NatureControls } from './nature/NatureScreen';
@@ -21,11 +22,14 @@ interface StageProps {
   readonly situation: SceneSituation;
   readonly theme: 'light' | 'dark';
   readonly level: number;
+  /** Speak the phase to screen readers. On by default. */
+  readonly announce?: boolean;
 }
 
 /** Scene behind the mascot. Breath is 4 s in and 4 s out. Reduced motion shows still frames. */
-export function Stage({ still, playing, situation, theme, level }: StageProps): React.JSX.Element {
+export function Stage({ still, playing, situation, theme, level, announce = true }: StageProps): React.JSX.Element {
   const breath = useBreath(playing && !still);
+  const counter = useBreathCounter(playing && still);
   const moving = playing && !still;
   return (
     <>
@@ -49,11 +53,14 @@ export function Stage({ still, playing, situation, theme, level }: StageProps): 
       <div className="c-cue">
         {moving ? (
           <Suspense fallback={null}>
-            <BreathCue label={breath.label} className="c-cue-text" />
+            <BreathCue label={breath.label} className="c-cue-text" live={false} />
           </Suspense>
+        ) : playing ? (
+          <p className="c-cue-text" data-testid="breath-counter">{counterText(counter)}</p>
         ) : (
           <p className="c-cue-text">{CALM.breathe}</p>
         )}
+        <BreathLive label={moving ? breath.label : counter.label} on={playing} announce={announce} />
       </div>
     </>
   );
@@ -69,9 +76,10 @@ interface Props {
   readonly nature: Nature;
   readonly engine: AudioEngine;
   readonly theme: 'light' | 'dark';
+  readonly announce?: boolean;
 }
 
-export function PlayerScreen({ engine, theme, player, snap, still, favorite, onToggle, onFavorite, nature }: Props): React.JSX.Element {
+export function PlayerScreen({ engine, theme, announce = true, player, snap, still, favorite, onToggle, onFavorite, nature }: Props): React.JSX.Element {
   const [why, setWhy] = useState(false);
   const level = useLevel(engine, snap.playing);
   const sound = SOUND_MENU.find((s) => s.templateId === snap.templateId);
@@ -80,7 +88,7 @@ export function PlayerScreen({ engine, theme, player, snap, still, favorite, onT
   return (
     <div className="c-player">
       <h1 className="c-h1">{snap.templateName ?? CALM.brand}</h1>
-      <Stage still={still} playing={snap.playing} situation={situation} theme={theme} level={level} />
+      <Stage still={still} playing={snap.playing} situation={situation} theme={theme} level={level} announce={announce} />
       <div className="c-controls">
         <button type="button" className="c-btn c-round c-big" data-testid="player-toggle" onClick={onToggle}>
           {snap.playing ? CALM.stop : CALM.play}

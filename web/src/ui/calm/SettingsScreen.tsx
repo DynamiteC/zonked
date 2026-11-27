@@ -1,5 +1,6 @@
 import { CALM } from './copy';
-import type { Look } from './look';
+import { dimOn } from './look';
+import type { Prefs, ThemeChoice } from './look';
 import { PageHead } from './MascotView';
 
 interface Props {
@@ -10,8 +11,8 @@ interface Props {
   readonly onReduceMotion: (v: boolean) => void;
   readonly onStudio: () => void;
   readonly onForget: () => void;
-  readonly look: Look;
-  readonly onLook: (l: Look) => void;
+  readonly prefs: Prefs;
+  readonly onPrefs: (p: Prefs) => void;
 }
 
 function Switch({ label, hint, checked, onChange, testId }: { readonly label: string; readonly hint?: string; readonly checked: boolean; readonly onChange: (v: boolean) => void; readonly testId: string }): React.JSX.Element {
@@ -27,14 +28,31 @@ function Switch({ label, hint, checked, onChange, testId }: { readonly label: st
   );
 }
 
-export function SettingsScreen({ gentle, reduceMotion, reduced = false, onGentle, onReduceMotion, onStudio, onForget, look, onLook }: Props): React.JSX.Element {
+const CHOICES: readonly ThemeChoice[] = ['system', 'light', 'dark', 'contrast'];
+
+function ThemePicker({ value, onChange }: { readonly value: ThemeChoice; readonly onChange: (c: ThemeChoice) => void }): React.JSX.Element {
+  return (
+    <fieldset className="c-themes" data-testid="theme-picker">
+      <legend>{CALM.themeTitle}</legend>
+      {CHOICES.map((c) => (
+        <label key={c} className="c-theme-opt">
+          <input type="radio" name="c-theme" value={c} data-testid={`theme-${c}`} checked={value === c} onChange={() => onChange(c)} />
+          <span>{CALM.themeChoices[c]}</span>
+        </label>
+      ))}
+    </fieldset>
+  );
+}
+
+export function SettingsScreen({ gentle, reduceMotion, reduced = false, onGentle, onReduceMotion, onStudio, onForget, prefs, onPrefs }: Props): React.JSX.Element {
   return (
     <div>
       <PageHead title={CALM.settingsTitle} reduced={reduced} />
       <Switch label={CALM.gentle} hint={CALM.gentleHint} checked={gentle} onChange={onGentle} testId="gentle-switch" />
       <Switch label={CALM.reduceMotion} checked={reduceMotion} onChange={onReduceMotion} testId="motion-switch" />
-      <Switch label={CALM.themeLight} hint={CALM.themeLabel} checked={look.theme === 'light'} onChange={(v) => onLook({ ...look, theme: v ? 'light' : 'dark' })} testId="theme-switch" />
-      <Switch label={CALM.contrast} hint={CALM.contrastHint} checked={look.highContrast} onChange={(v) => onLook({ ...look, highContrast: v })} testId="contrast-switch" />
+      <ThemePicker value={prefs.choice} onChange={(choice) => onPrefs({ ...prefs, choice })} />
+      <Switch label={CALM.dimLabel} hint={CALM.dimHint} checked={dimOn(prefs)} onChange={(dim) => onPrefs({ ...prefs, dim })} testId="dim-switch" />
+      <Switch label={CALM.announceLabel} hint={CALM.announceHint} checked={prefs.announce} onChange={(announce) => onPrefs({ ...prefs, announce })} testId="announce-switch" />
       <div className="c-actions">
         <button type="button" className="c-btn c-link" data-testid="studio-switch" onClick={onStudio}>
           {CALM.studioLink}

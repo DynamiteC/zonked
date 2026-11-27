@@ -55,9 +55,9 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   const fav = useFavorite(s.store, s.snap.templateId);
   const onboarding = data.profile.createdAt === 0;
   const last = useLastPlayed(data.storage);
-  const end = useEndCard(s.snap, !onboarding);
+  const end = useEndCard(s.snap, !onboarding && view !== 'reset');
   const still = s.reduced || data.profile.extraGentle;
-  const { look, setLook } = useLook();
+  const { look, prefs, dim, setPrefs } = useLook();
 
   useStudioShortcut(onStudio);
   const go = useCallback((v: View) => setView(v), []);
@@ -76,7 +76,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   };
 
   return (
-    <div className="c-app" data-theme={look.theme} data-contrast={look.highContrast ? 'high' : 'normal'} data-view={view} data-motion={still ? 'off' : 'on'} data-playing={s.snap.playing ? 'true' : 'false'}>
+    <div className="c-app" data-theme={look.theme} data-contrast={look.highContrast ? 'high' : 'normal'} data-view={view} data-dim={dim ? 'true' : 'false'} data-motion={still ? 'off' : 'on'} data-playing={s.snap.playing ? 'true' : 'false'}>
       <TopBar />
       {crew.view.source === 'demo' && <p className="c-badge-sim" role="status" data-testid="demo-badge">{CALM.crewDemoBadge}</p>}
       <main id="c-main" className="c-main" tabIndex={-1}>
@@ -103,13 +103,14 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
               fav={fav}
               last={last.template}
               look={look}
-              onLook={setLook}
+              prefs={prefs}
+              onPrefs={setPrefs}
               handlers={{ go, play, playDay, openJourney, forget, onStudio, onMix: (m: Mix) => s.guarded(() => s.player.playMix(m)) }}
             />
           )}
         </Suspense>
       </main>
-      {!onboarding && view !== 'player' && <MiniPlayer snap={s.snap} onOpen={() => go('player')} onStop={() => void s.player.stop()} />}
+      {!onboarding && view !== 'player' && view !== 'reset' && <MiniPlayer snap={s.snap} crewPresetId={crew.view.state?.target.presetId ?? null} onOpen={() => go('player')} onStop={() => void s.player.stop()} />}
       {!onboarding && <TabBar view={view} onGo={go} reduced={still} />}
       <p className="c-sr" role="status" data-testid="play-status">
         {s.snap.playing ? `Playing. ${CALM.volumeCapped}` : 'Stopped.'}

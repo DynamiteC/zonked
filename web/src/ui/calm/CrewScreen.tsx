@@ -24,10 +24,11 @@ export function CrewScreen({ crew, overridden, onDemo, onStopDemo, onNotNow, onR
       <h1 className="c-h1">{CALM.crewTitle}</h1>
       <p className="c-lead">{CALM.crewIntro}</p>
       <label className="c-switch">
-        <input type="checkbox" role="switch" data-testid="calm-crew-toggle" checked={crew.enabled} onChange={(e) => setCrewEnabled(e.currentTarget.checked)} />
+        <input type="checkbox" role="switch" data-testid="calm-crew-toggle" checked={crew.enabled || demo} disabled={demo} aria-describedby={demo ? 'c-crew-demo-note' : undefined} onChange={(e) => setCrewEnabled(e.currentTarget.checked)} />
         <span className="c-track" aria-hidden="true" />
-        <span>{CALM.crewSwitch}</span>
+        <span>{demo ? CALM.demoSteering : CALM.crewSwitch}</span>
       </label>
+      {demo && <p id="c-crew-demo-note" className="c-muted" data-testid="crew-demo-note">{CALM.demoSteeringHint}</p>}
       {live ? (
         <CrewPanel view={crew.view} overridden={overridden} onNotNow={onNotNow} onResume={onResume} onFollow={onFollow} onStopDemo={onStopDemo} />
       ) : (

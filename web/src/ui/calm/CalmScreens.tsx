@@ -9,9 +9,10 @@ import type { CalmSession } from './useCalmSession';
 import type { CrewInfo } from './useCrewBridge';
 import { resumeCrew, snoozeCrew } from '../../app/crewFeed';
 import { startDemo, stopDemo } from '../../app/demoFeed';
-import type { Look } from './look';
+import type { Look, Prefs } from './look';
 import type { Nature } from './nature/useNature';
 import { Today } from './Today';
+import { ResetScreen } from './ResetScreen';
 
 const JourneyList = lazy(() => import('./Journeys').then((m) => ({ default: m.JourneyList })));
 const JourneyDetail = lazy(() => import('./Journeys').then((m) => ({ default: m.JourneyDetail })));
@@ -42,12 +43,13 @@ interface Props {
   readonly fav: { readonly on: boolean; readonly toggle: () => void };
   readonly last: Template | null;
   readonly look: Look;
-  readonly onLook: (l: Look) => void;
+  readonly prefs: Prefs;
+  readonly onPrefs: (p: Prefs) => void;
   readonly handlers: Handlers;
 }
 
 /** Picks the screen for the current view. Only Today is in the first chunk. */
-export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav, last, look, onLook, handlers: h }: Props): React.JSX.Element {
+export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav, last, look, prefs, onPrefs, handlers: h }: Props): React.JSX.Element {
   switch (view) {
     case 'journeys':
       return <JourneyList progress={data.progress} onOpen={h.openJourney} reduced={still} />;
@@ -69,7 +71,9 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
     case 'nature':
       return <NatureScreen nature={nature} reduced={still} onBack={() => h.go('library')} />;
     case 'player':
-      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} theme={look.theme} />;
+      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} theme={look.theme} announce={prefs.announce} />;
+    case 'reset':
+      return <ResetScreen s={s} still={still} theme={look.theme} announce={prefs.announce} onBack={() => h.go('today')} />;
     case 'crew':
       return (
         <CrewScreen
@@ -92,8 +96,8 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
           onReduceMotion={s.setReduced}
           onStudio={h.onStudio}
           onForget={h.forget}
-          look={look}
-          onLook={onLook}
+          prefs={prefs}
+          onPrefs={onPrefs}
         />
       );
     default:
@@ -110,6 +114,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
           onPlay={h.play}
           onOpenJourney={h.openJourney}
           onGo={h.go}
+          onReset={() => h.go('reset')}
         />
       );
   }

@@ -95,3 +95,22 @@
 .c-why p { margin: 0; font-size: 1.125rem; }
 .c-demo { margin: 20px 0 8px; }
 .c-badge-sim { align-self: center; display: inline-block; border: 2px solid var(--c-edge); border-radius: 999px; padding: 2px 12px; font-weight: 700; font-size: 0.875rem; margin: 4px 0; }
+
+/* Theme picker: four radios in one row group, 44 px targets. */
+.c-themes { border: 0; padding: 12px 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--c-line); }
+.c-themes legend { padding: 0; font-weight: 700; margin-bottom: 8px; }
+.c-theme-opt { position: relative; display: inline-flex; }
+.c-theme-opt input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.c-theme-opt span { min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px; border: var(--c-bw) solid var(--c-edge); border-radius: 999px; }
+.c-theme-opt input:checked + span { background: var(--c-text); color: var(--c-bg); border-color: var(--c-text); }
+.c-theme-opt input:focus-visible + span { outline: 3px solid var(--c-focus); outline-offset: 3px; }
+
+/* Link card with a second line. */
+.c-link-card small { color: var(--c-soft); font-size: 0.9375rem; margin: 0; }
+
+/* Dim screen while playing: lower brightness on the player only. High contrast stays at full strength. */
+.c-app[data-dim="true"][data-playing="true"][data-view="player"]:not([data-contrast="high"]) .c-player,
+.c-app[data-dim="true"][data-playing="true"][data-view="reset"]:not([data-contrast="high"]) .c-reset { filter: brightness(0.75); }
+
+/* Reset screen reuses the player layout. */
+.c-reset .c-lead { margin: 0 0 8px; }

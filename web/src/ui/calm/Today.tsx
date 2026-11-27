@@ -25,6 +25,7 @@ interface Props {
   readonly onPlay: (t: Template) => void;
   readonly onOpenJourney: (id: string) => void;
   readonly onGo: (view: 'journeys' | 'library') => void;
+  readonly onReset: () => void;
 }
 
 function dayLine(progress: ProgressMap, id: string, total: number): string {
@@ -32,7 +33,7 @@ function dayLine(progress: ProgressMap, id: string, total: number): string {
   return done === 0 ? CALM.dayZero(total) : `Day ${Math.min(total, done + 1)} of ${total}`;
 }
 
-export function Today({ profile, week, progress, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, onPlay, onOpenJourney, onGo }: Props): React.JSX.Element {
+export function Today({ profile, week, progress, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, onPlay, onOpenJourney, onGo, onReset }: Props): React.JSX.Element {
   const [skip, setSkip] = useState(0);
   const recs = useMemo(() => recommendTemplates(profileToRecommendation(profile, now()), 5), [profile, now]);
   const pick = recs[skip % Math.max(1, recs.length)];
@@ -64,6 +65,10 @@ export function Today({ profile, week, progress, reduced, crewConnected, hasHist
           </div>
         </section>
       )}
+      <button type="button" className="c-link-card c-reset-entry" data-testid="today-reset" onClick={onReset}>
+        <b>{CALM.resetEntry}</b>
+        <small>{CALM.resetEntryHint}</small>
+      </button>
       <section aria-labelledby="c-goal-h">
         <h2 id="c-goal-h" className="c-h3">{`Your goal: ${GOAL_LABEL[profile.goal]}`}</h2>
         <WeekDots week={week} hasHistory={hasHistory} joinedToday={joinedToday} />

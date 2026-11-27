@@ -62,6 +62,7 @@ export function CrewPanel({ view, overridden, onNotNow, onResume, onFollow, onSt
         <div><dt>{CALM.crewScore}</dt><dd data-testid="crew-score">{Math.round(st.burnout.score)}</dd></div>
         <div><dt>{CALM.crewBeat}</dt><dd data-testid="crew-beat">{`${hzText(st.target.beatHz)} Hz`}</dd></div>
       </dl>
+      <p className="c-muted" data-testid="crew-beat-hint">{CALM.crewBeatHint}</p>
       <ol className="c-meter" aria-label="Session load">
         {STEPS.map((s, i) => (
           <li key={s} className={i === step ? 'c-seg c-on' : 'c-seg'} aria-current={i === step ? 'step' : undefined}>{s}</li>
