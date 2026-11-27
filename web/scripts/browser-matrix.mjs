@@ -263,8 +263,13 @@ function flowChecks(env) {
         throw new Error(`rain never started, nature-message: "${msg}", probe: ${probe}`);
       }
       await page().waitForTimeout(1500);
-      const msg = await page().getByTestId('nature-message').innerText();
-      assert(msg === '', `message: ${msg}`);
+      const msg = (await page().getByTestId('nature-message').innerText()).trim();
+      // Two valid paths: the MP3 decodes (no message), or the 8 s decode timeout fell back to the
+      // made-in-code sound and the note is shown. A hang with no sound or no note still fails.
+      assert((await engineState(page())) === 'running', 'engine not running');
+      const st = await page().evaluate(() => window.__zonked.getStats());
+      assert(st.peak > 0, `no sound, peak ${st.peak}, message: "${msg}"`);
+      return msg === '' ? 'path: mp3' : `path: fallback (note: ${msg.slice(0, 100)})`;
     }],
     ['synth-sound', async () => {
       await page().getByTestId('nature-waterfall').click();
@@ -419,7 +424,7 @@ export function renderBlock(combos) {
   const rows = Object.entries(CHECK_LABELS).map(([id, label]) => {
     const cells = cols.map((c) => {
       const r = c.results.find((x) => x.id === id);
-      return r ? (r.ok ? 'pass' : 'FAIL') : '-';
+      return r ? (r.ok ? (/^path: fallback/.test(r.note) ? 'pass (fallback)' : 'pass') : 'FAIL') : '-';
     });
     return `| ${label} | ${cells.join(' | ')} |`;
   });
