@@ -1,7 +1,7 @@
-import { jsx as i, jsxs as b, Fragment as Ce } from "react/jsx-runtime";
+import { jsx as i, jsxs as y, Fragment as Ce } from "react/jsx-runtime";
 import { lazy as z, Suspense as U, useRef as _, useState as N, useEffect as L, useCallback as T, useMemo as H, useSyncExternalStore as hn } from "react";
-import { C as d, P as fn, s as pt, p as pn, g as gn, b as Ge, G as yn, L as bn, F as We, d as gt, D as vn, c as fe, a as Ke, e as wn, f as kn, h as yt, E as Sn, r as Mn, i as An, j as bt, k as Nn, u as En, w as Tn, S as Ln, l as Cn, o as On, B as Rn, m as zn, n as pe, q as Dn, t as _n, v as qe, x as J, y as vt, z as In, A as Pn, H as Bn, I as Hn, J as Ue, M as Fn } from "./chunk-crewLink-d4ILclVW.mjs";
-function y(e) {
+import { C as d, P as fn, s as pt, p as pn, g as gn, b as Ge, G as bn, L as yn, F as We, d as gt, D as vn, c as fe, a as Ke, e as wn, f as kn, h as bt, E as Sn, r as Mn, i as An, j as yt, k as Nn, u as En, w as Tn, S as Ln, l as Cn, o as On, B as Rn, m as zn, n as pe, q as Dn, t as _n, v as qe, x as J, y as vt, z as In, A as Pn, H as Bn, I as Hn, J as Ue, M as Fn } from "./chunk-crewLink-Ciq_3_Yk.mjs";
+function b(e) {
   return {
     modes: ["binaural"],
     noises: [["off", 0]],
@@ -183,7 +183,7 @@ const sa = {
   adjectives: ["Steady", "Anchored", "Level", "Even", "Tidy", "Calm", "Focused", "Plain", "Settled", "Patient", "Smooth", "Constant"],
   nouns: ["Anchor", "Rail", "Tracks", "Rhythm", "Metronome", "Lane", "Thread", "Pulse", "Desk", "Checklist", "Runway", "Keel"],
   archs: [
-    y({
+    b({
       slug: "smr-steady",
       shape: "plateau",
       from: 12,
@@ -201,7 +201,7 @@ const sa = {
       jitter: 0.4,
       reason: "Steady SMR-range pulse with no changes to track, for {minutes} minutes."
     }),
-    y({
+    b({
       slug: "beta-anchor",
       shape: "plateau",
       from: 14,
@@ -219,7 +219,7 @@ const sa = {
       jitter: 0.5,
       reason: "A constant low-beta pulse that never changes."
     }),
-    y({
+    b({
       slug: "cadence-pulse",
       shape: "plateau",
       from: 14,
@@ -236,7 +236,7 @@ const sa = {
       count: 4,
       reason: "Gentle soft percussion at a fixed 60 to 100 bpm cadence keeps tempo without surprises."
     }),
-    y({
+    b({
       slug: "quiet-bed",
       shape: "plateau",
       from: 13,
@@ -254,7 +254,7 @@ const sa = {
       jitter: 0,
       reason: "A fixed warm bed with nothing that changes, so it fades into the background."
     }),
-    y({
+    b({
       slug: "start-ramp",
       shape: "ramp-up",
       from: 11,
@@ -272,7 +272,7 @@ const sa = {
       jitter: 0.2,
       reason: "A slow climb from 4 Hz with no sudden steps."
     }),
-    y({
+    b({
       slug: "sprint-steps",
       shape: "ladder",
       from: 13,
@@ -297,7 +297,7 @@ const sa = {
   adjectives: ["Sharp", "Deep", "Clear", "Lucid", "Bright", "Keen", "Locked", "Precise", "Crisp", "Direct", "Tuned", "Honed"],
   nouns: ["Beam", "Signal", "Compass", "Engine", "Vector", "Prism", "Forge", "Spire", "Circuit", "Current", "Summit", "Scope"],
   archs: [
-    y({
+    b({
       slug: "alpha-beta",
       shape: "plateau",
       from: 11,
@@ -314,7 +314,7 @@ const sa = {
       count: 5,
       reason: "A pulse on the alpha-beta border for {minutes} minutes."
     }),
-    y({
+    b({
       slug: "deep-beta",
       shape: "plateau",
       from: 15,
@@ -331,7 +331,7 @@ const sa = {
       count: 5,
       reason: "A steady beta-band pulse for long work blocks."
     }),
-    y({
+    b({
       slug: "gamma-edge",
       shape: "ramp-up",
       from: 18,
@@ -348,7 +348,7 @@ const sa = {
       count: 4,
       reason: "A short climb to the high-beta and low-gamma edge."
     }),
-    y({
+    b({
       slug: "flow-ramp",
       shape: "ramp-up",
       from: 10,
@@ -365,7 +365,7 @@ const sa = {
       count: 4,
       reason: "A slow glide from alpha into beta."
     }),
-    y({
+    b({
       slug: "reading-calm",
       shape: "plateau",
       from: 10,
@@ -382,7 +382,7 @@ const sa = {
       count: 4,
       reason: "Gentle alpha for reading and study."
     }),
-    y({
+    b({
       slug: "sprint-pulse",
       shape: "ladder",
       from: 12,
@@ -406,7 +406,7 @@ const sa = {
   adjectives: ["Mending", "Tender", "Restoring", "Kind", "Balmy", "Soothing", "Renewing", "Warming", "Settled", "Easing", "Gentle", "Whole"],
   nouns: ["Balm", "Spring", "Embrace", "Garden", "Shelter", "Glow", "Rain", "Hearth", "Sunrise", "Quilt", "Oasis", "Haven"],
   archs: [
-    y({
+    b({
       slug: "tension-release",
       shape: "ramp-down",
       from: 14,
@@ -423,7 +423,7 @@ const sa = {
       count: 5,
       reason: "Slides from beta down to alpha over {minutes} minutes."
     }),
-    y({
+    b({
       slug: "restore-theta",
       shape: "plateau",
       from: 9,
@@ -440,7 +440,7 @@ const sa = {
       count: 5,
       reason: "Steady theta with a soft drone."
     }),
-    y({
+    b({
       slug: "heart-calm",
       shape: "plateau",
       from: 10,
@@ -459,7 +459,7 @@ const sa = {
       breath: { inSec: 5, outSec: 5 },
       reason: "A slow rhythm of 6 breaths per minute to follow."
     }),
-    y({
+    b({
       slug: "ache-ease",
       shape: "wave",
       from: 10,
@@ -476,7 +476,7 @@ const sa = {
       count: 4,
       reason: "Slow alpha-theta swells that feel like a rocking tide."
     }),
-    y({
+    b({
       slug: "soothe-glide",
       shape: "ramp-down",
       from: 12,
@@ -493,7 +493,7 @@ const sa = {
       count: 4,
       reason: "A soft pad with a gliding beat."
     }),
-    y({
+    b({
       slug: "sunrise-lift",
       shape: "ramp-up",
       from: 7,
@@ -517,7 +517,7 @@ const sa = {
   adjectives: ["Waking", "Silver", "Nebula", "Astral", "Twilight", "Aware", "Hollow", "Starlit", "Liminal", "Vivid", "Opal", "Drifting"],
   nouns: ["Gate", "Compass", "Mirror", "Skyway", "Threshold", "Door", "Voyage", "Lens", "Bridge", "Beacon", "Garden", "Orbit"],
   archs: [
-    y({
+    b({
       slug: "wbtb-theta",
       shape: "plateau",
       from: 9,
@@ -535,7 +535,7 @@ const sa = {
       count: 6,
       reason: "Theta plateau with a light return, built for wake-back-to-bed lucid practice."
     }),
-    y({
+    b({
       slug: "rem-ladder",
       shape: "ladder",
       from: 8,
@@ -552,7 +552,7 @@ const sa = {
       count: 5,
       reason: "Steps down through theta in four stages."
     }),
-    y({
+    b({
       slug: "aware-wave",
       shape: "wave",
       from: 5,
@@ -569,7 +569,7 @@ const sa = {
       count: 5,
       reason: "Slow swings between theta and alpha."
     }),
-    y({
+    b({
       slug: "dream-drift",
       shape: "ramp-down",
       from: 10,
@@ -586,7 +586,7 @@ const sa = {
       count: 5,
       reason: "A slow descent over {minutes} minutes."
     }),
-    y({
+    b({
       slug: "astral-calm",
       shape: "plateau",
       from: 10,
@@ -610,7 +610,7 @@ const sa = {
   adjectives: ["Open", "Rooted", "Sacred", "Luminous", "Patient", "Clear", "Boundless", "Inner", "Mindful", "Sunlit", "Hallowed", "Silent"],
   nouns: ["Cushion", "Temple", "Breath", "Mountain", "Lotus", "Stillpoint", "Horizon", "Sanctuary", "River", "Candle", "Grove", "Bowl"],
   archs: [
-    y({
+    b({
       slug: "alpha-sit",
       shape: "plateau",
       from: 12,
@@ -628,7 +628,7 @@ const sa = {
       count: 5,
       reason: "Wakeful alpha for a {minutes} minute seated sit."
     }),
-    y({
+    b({
       slug: "theta-descent",
       shape: "ramp-down",
       from: 10,
@@ -645,7 +645,7 @@ const sa = {
       count: 5,
       reason: "Glides from alpha to theta."
     }),
-    y({
+    b({
       slug: "schumann-hold",
       shape: "plateau",
       from: 12,
@@ -664,7 +664,7 @@ const sa = {
       jitter: 0,
       reason: "Rests on the 7.83 Hz Schumann resonance, then returns to wakefulness."
     }),
-    y({
+    b({
       slug: "breath-pacer",
       shape: "plateau",
       from: 9,
@@ -682,7 +682,7 @@ const sa = {
       breath: { inSec: 5.45, outSec: 5.45 },
       reason: "Pair the 5.5 breaths per minute pacer with a slow theta pulse."
     }),
-    y({
+    b({
       slug: "bell-silence",
       shape: "plateau",
       from: 10,
@@ -699,7 +699,7 @@ const sa = {
       count: 4,
       reason: "Sparse chimes over a quiet alpha-theta border."
     }),
-    y({
+    b({
       slug: "delta-glide",
       shape: "ramp-down",
       from: 6,
@@ -723,7 +723,7 @@ const sa = {
   adjectives: ["Quiet", "Slow", "Velvet", "Hushed", "Moonlit", "Soft", "Drowsy", "Still", "Dim", "Gentle", "Fading", "Lulled"],
   nouns: ["Harbor", "Tide", "Pillow", "Lantern", "Blanket", "Meadow", "Lullaby", "Cabin", "Drift", "Hearth", "Cove", "Evening"],
   archs: [
-    y({
+    b({
       slug: "onset-delta",
       shape: "ramp-down",
       from: 9,
@@ -740,7 +740,7 @@ const sa = {
       count: 6,
       reason: "Glides from alpha to delta over {minutes} minutes."
     }),
-    y({
+    b({
       slug: "drift-theta",
       shape: "ramp-down",
       from: 8,
@@ -757,7 +757,7 @@ const sa = {
       count: 5,
       reason: "A slow theta drift with a soft pad."
     }),
-    y({
+    b({
       slug: "deep-delta",
       shape: "plateau",
       from: 6,
@@ -775,7 +775,7 @@ const sa = {
       jitter: 0.2,
       reason: "Holds steady delta."
     }),
-    y({
+    b({
       slug: "nap-reset",
       shape: "plateau",
       from: 10,
@@ -793,7 +793,7 @@ const sa = {
       count: 4,
       reason: "A short nap sound that sinks to theta and returns after {minutes} minutes."
     }),
-    y({
+    b({
       slug: "breath-down",
       shape: "ramp-down",
       from: 7,
@@ -811,7 +811,7 @@ const sa = {
       breath: { inSec: 4, outSec: 6 },
       reason: "Pair slow 4-in, 6-out breathing with a falling beat."
     }),
-    y({
+    b({
       slug: "rain-bed",
       shape: "plateau",
       from: 5,
@@ -835,7 +835,7 @@ const sa = {
   adjectives: ["Neon", "Cozy", "Mellow", "Golden", "Hazy", "Crisp", "Cloudy", "Dusty", "Amber", "Breezy", "Sleepy", "Plush"],
   nouns: ["Cafe", "Rooftop", "Cassette", "Window", "Terrace", "Playlist", "Sunday", "Skyline", "Studio", "Porch", "Alley", "Lounge"],
   archs: [
-    y({
+    b({
       slug: "lofi-study",
       shape: "plateau",
       from: 12,
@@ -852,7 +852,7 @@ const sa = {
       count: 6,
       reason: "Warm lo-fi bed with a soft pluck for easy, steady company."
     }),
-    y({
+    b({
       slug: "warm-glow",
       shape: "plateau",
       from: 11,
@@ -869,7 +869,7 @@ const sa = {
       count: 4,
       reason: "A warm pad and a gentle alpha pulse for a soft landing."
     }),
-    y({
+    b({
       slug: "bright-air",
       shape: "plateau",
       from: 13,
@@ -886,7 +886,7 @@ const sa = {
       count: 4,
       reason: "Airy bells over a light alpha-beta border."
     }),
-    y({
+    b({
       slug: "ether-float",
       shape: "wave",
       from: 10,
@@ -903,7 +903,7 @@ const sa = {
       count: 4,
       reason: "Slow swells with chimes for a floating, spacious mood."
     }),
-    y({
+    b({
       slug: "minimal-hum",
       shape: "plateau",
       from: 10,
@@ -921,7 +921,7 @@ const sa = {
       jitter: 0,
       reason: "Just a pulse and a noise bed, nothing to attend to."
     }),
-    y({
+    b({
       slug: "spark-groove",
       shape: "plateau",
       from: 14,
@@ -945,7 +945,7 @@ const sa = {
   adjectives: ["Unplugged", "Offline", "Cooled", "Rested", "Idle", "Paused", "Unwound", "Mellow", "Eased", "Reset", "Spare", "Soft"],
   nouns: ["Break", "Commit", "Cooldown", "Terminal", "Standup", "Branch", "Window", "Stretch", "Merge", "Buffer", "Release", "Cache"],
   archs: [
-    y({
+    b({
       slug: "screen-down",
       shape: "ramp-down",
       from: 18,
@@ -962,7 +962,7 @@ const sa = {
       count: 5,
       reason: "Steps down from beta to alpha after a long review or generation run."
     }),
-    y({
+    b({
       slug: "micro-break",
       shape: "plateau",
       from: 11,
@@ -980,7 +980,7 @@ const sa = {
       count: 4,
       reason: "A {minutes} minute reset between tasks."
     }),
-    y({
+    b({
       slug: "post-sprint",
       shape: "ramp-down",
       from: 20,
@@ -997,7 +997,7 @@ const sa = {
       count: 4,
       reason: "A long fall from high beta to theta after an intense push."
     }),
-    y({
+    b({
       slug: "eye-rest",
       shape: "plateau",
       from: 10,
@@ -1015,7 +1015,7 @@ const sa = {
       breath: { inSec: 4, outSec: 6 },
       reason: "Close your eyes and follow a slow 4-in, 6-out breath."
     }),
-    y({
+    b({
       slug: "lofi-unwind",
       shape: "plateau",
       from: 10,
@@ -1032,7 +1032,7 @@ const sa = {
       count: 5,
       reason: "Slow lo-fi bed to decompress while you do something light."
     }),
-    y({
+    b({
       slug: "commute-decompress",
       shape: "ramp-down",
       from: 14,
@@ -1142,7 +1142,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
   [75, 6, 6],
   [15, 6, 8],
   [45, 8, 8]
-], ya = [
+], ba = [
   [333, 8, 8],
   [333, 8, 10],
   [333, 10, 12],
@@ -1150,7 +1150,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
   [333, 12, 10],
   [333, 10, 8],
   [333, 8, 10]
-], ba = [
+], ya = [
   [120, 20, 40],
   ...Array.from({ length: 8 }, () => [[20, 40, 40], [10, 8, 8]]).flat(),
   [120, 40, 10]
@@ -1271,7 +1271,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     vibe: "energized",
     situations: ["deep-work"],
     intensity: 5,
-    segs: ba,
+    segs: ya,
     tags: ["beta", "gamma", "interval"],
     reason: "Eight short high and low rounds between a warm up and a cool down."
   }),
@@ -1331,7 +1331,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     vibe: "minimal",
     situations: ["cant-sleep", "heal-stress"],
     intensity: 2,
-    segs: ya,
+    segs: ba,
     tags: ["alpha", "smr"],
     reason: "{duration} of beats crossing between alpha and the low SMR band."
   }),
@@ -1412,8 +1412,8 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     tags: ["theta", "lucid", "short"],
     reason: "The opening stretch of the Lucid Dream Cycle, sized for naps."
   })
-], ye = (e) => ({ ...e, source: "gnaural" }), wa = [
-  ye({
+], be = (e) => ({ ...e, source: "gnaural" }), wa = [
+  be({
     id: "gnaural-power-nap",
     name: "Midday Nap",
     category: "sleep",
@@ -1428,7 +1428,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     tags: ["delta", "nap", "schedule"],
     reason: "A fast fall to 4 Hz, a long hold, then a slow climb. {duration} in all."
   }),
-  ye({
+  be({
     id: "gnaural-airplane-aid",
     name: "Long Haul Calm",
     category: "meditation",
@@ -1443,7 +1443,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     tags: ["theta", "travel", "schedule"],
     reason: "A falling carrier tone over theta beats, built for long seated trips."
   }),
-  ye({
+  be({
     id: "gnaural-arrive-sharp",
     name: "Arrive Sharp",
     category: "focus",
@@ -1630,12 +1630,12 @@ const et = {
 function Oe({ name: e, size: t = 22 }) {
   return /* @__PURE__ */ i("svg", { className: "c-icon", width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", focusable: "false", children: /* @__PURE__ */ i("path", { d: et[e] ?? et.wave }) });
 }
-const Pa = z(() => import("./chunk-mascot-BLD5w-pT.mjs").then((e) => ({ default: e.CalmMascot })));
+const Pa = z(() => import("./chunk-mascot-CT3408M2.mjs").then((e) => ({ default: e.CalmMascot })));
 function Re({ size: e, mood: t = "idle", reduced: n }) {
   return /* @__PURE__ */ i(U, { fallback: /* @__PURE__ */ i("span", { className: "c-mascot-gap", style: { width: e, height: e } }), children: /* @__PURE__ */ i(Pa, { mood: t, size: e, reducedMotion: n }) });
 }
 function Ba({ title: e, reduced: t }) {
-  return /* @__PURE__ */ b("header", { className: "c-pagehead", children: [
+  return /* @__PURE__ */ y("header", { className: "c-pagehead", children: [
     /* @__PURE__ */ i(Re, { size: 72, reduced: t }),
     /* @__PURE__ */ i("h1", { className: "c-h1", children: e })
   ] });
@@ -1648,12 +1648,12 @@ const Ha = [
 ];
 function Fa({ view: e, onGo: t, reduced: n = !1 }) {
   const a = e === "journey" || e === "journeys" ? "today" : e === "nature" ? "library" : e === "reset" || e === "breathe" ? "today" : e;
-  return /* @__PURE__ */ b("nav", { className: "c-tabbar", "aria-label": "Main", children: [
-    /* @__PURE__ */ b("div", { className: "c-rail-brand", "aria-hidden": "true", children: [
+  return /* @__PURE__ */ y("nav", { className: "c-tabbar", "aria-label": "Main", children: [
+    /* @__PURE__ */ y("div", { className: "c-rail-brand", "aria-hidden": "true", children: [
       /* @__PURE__ */ i(Re, { size: 40, reduced: n }),
       /* @__PURE__ */ i("span", { className: "c-brand", children: d.brand })
     ] }),
-    Ha.map((o) => /* @__PURE__ */ b("button", { type: "button", className: "c-nav", "aria-current": a === o.view ? "page" : void 0, onClick: () => t(o.view), children: [
+    Ha.map((o) => /* @__PURE__ */ y("button", { type: "button", className: "c-nav", "aria-current": a === o.view ? "page" : void 0, onClick: () => t(o.view), children: [
       /* @__PURE__ */ i(Oe, { name: o.icon }),
       /* @__PURE__ */ i("span", { children: o.label })
     ] }, o.view))
@@ -1668,8 +1668,8 @@ function xa(e, t = null) {
 function ja({ snap: e, crewPresetId: t = null, onOpen: n, onStop: a }) {
   if (!e.playing) return null;
   const o = e.timer.kind !== "none" && e.timer.running ? St(e.timer.remainingSec) : "";
-  return /* @__PURE__ */ b("div", { className: "c-mini", role: "group", "aria-label": "Now playing", children: [
-    /* @__PURE__ */ b("button", { type: "button", className: "c-btn c-link c-mini-open", onClick: n, children: [
+  return /* @__PURE__ */ y("div", { className: "c-mini", role: "group", "aria-label": "Now playing", children: [
+    /* @__PURE__ */ y("button", { type: "button", className: "c-btn c-link c-mini-open", onClick: n, children: [
       xa(e, t),
       o !== "" && /* @__PURE__ */ i("span", { className: "c-digits", children: ` ${o}` })
     ] }),
@@ -1704,7 +1704,7 @@ function Ya(e) {
 function G(...e) {
   return Object.freeze(e.map((t) => t === "rest" ? qa : Ya(t)));
 }
-const be = (e, t) => Array.from({ length: t }, () => e), W = (e) => Object.freeze(e), Mt = Object.freeze([
+const ye = (e, t) => Array.from({ length: t }, () => e), W = (e) => Object.freeze(e), Mt = Object.freeze([
   W({
     id: "calm-evenings",
     title: "7 Calm Evenings",
@@ -1739,11 +1739,11 @@ const be = (e, t) => Array.from({ length: t }, () => e), W = (e) => Object.freez
     vibe: "dreamy",
     minutes: 45,
     days: G(
-      ...be("sleep-drift-theta", 4),
+      ...ye("sleep-drift-theta", 4),
       "rest",
-      ...be("sleep-onset-delta", 4),
+      ...ye("sleep-onset-delta", 4),
       "rest",
-      ...be("sleep-deep-delta", 3),
+      ...ye("sleep-deep-delta", 3),
       "sleep-onset-delta"
     )
   }),
@@ -1925,7 +1925,7 @@ function gs(e, t, n) {
   ).map((u, f) => ({ r: u, i: f, s: u.score + fs(n, u.template.id) }));
   return c.sort((u, f) => f.s - u.s || u.i - f.i), c.slice(0, e.length).map((u) => u.r);
 }
-const ze = "zonked.profile.v1", De = "zonked.journeys.v1", _e = "zonked.last.v1", Ct = 32 * 1024, Ot = 1, ys = 1e7, bs = /^[a-z0-9-]{1,64}$/, Rt = Object.freeze({
+const ze = "zonked.profile.v1", De = "zonked.journeys.v1", _e = "zonked.last.v1", Ct = 32 * 1024, Ot = 1, bs = 1e7, ys = /^[a-z0-9-]{1,64}$/, Rt = Object.freeze({
   goal: "curious",
   timeOfDay: "anytime",
   device: "unsure",
@@ -1965,11 +1965,11 @@ function ks(e, t) {
 }
 function It(e, t) {
   const n = Mt.find((c) => c.id === e);
-  if (n === void 0 || !Ie(t) || !Ne(t.startedAt, ys)) return;
+  if (n === void 0 || !Ie(t) || !Ne(t.startedAt, bs)) return;
   const { doneDays: a, pickedIds: o } = t;
   if (!Array.isArray(a) || !Array.isArray(o) || o.length > n.days.length) return;
   const s = a, r = o;
-  if (!s.every((c) => Ne(c, n.days.length) && c >= 1) || !r.every((c) => typeof c == "string" && bs.test(c))) return;
+  if (!s.every((c) => Ne(c, n.days.length) && c >= 1) || !r.every((c) => typeof c == "string" && ys.test(c))) return;
   const l = [...new Set(s)].sort((c, u) => c - u);
   return Object.freeze({
     startedAt: t.startedAt,
@@ -2062,7 +2062,7 @@ const Rs = [
 ];
 function zs({ onFeel: e }) {
   const [t, n] = N(!1);
-  return t ? /* @__PURE__ */ i("p", { className: "c-muted", role: "status", "data-testid": "feel-saved", children: d.feelSaved }) : /* @__PURE__ */ b("div", { role: "group", "aria-labelledby": "c-feel-q", className: "c-feel", "data-testid": "feel-row", children: [
+  return t ? /* @__PURE__ */ i("p", { className: "c-muted", role: "status", "data-testid": "feel-saved", children: d.feelSaved }) : /* @__PURE__ */ y("div", { role: "group", "aria-labelledby": "c-feel-q", className: "c-feel", "data-testid": "feel-row", children: [
     /* @__PURE__ */ i("p", { id: "c-feel-q", className: "c-muted", children: d.feelQuestion }),
     /* @__PURE__ */ i("div", { className: "c-chips", children: Rs.map(([a, o]) => /* @__PURE__ */ i("button", { type: "button", className: "c-tchip", "data-testid": `feel-${a}`, onClick: () => {
       e(a), n(!0);
@@ -2074,13 +2074,13 @@ function Ds({ info: e, onAgain: t, onClose: n, firstRun: a = !1, onFeel: o }) {
   return L(() => {
     var r;
     return (r = s.current) == null ? void 0 : r.focus();
-  }, []), /* @__PURE__ */ i("div", { className: "c-overlay", onKeyDown: (r) => r.key === "Escape" && n(), children: /* @__PURE__ */ b("div", { className: "c-dialog c-end", role: "dialog", "aria-modal": "true", "aria-labelledby": "c-end-title", "data-testid": "end-card", children: [
+  }, []), /* @__PURE__ */ i("div", { className: "c-overlay", onKeyDown: (r) => r.key === "Escape" && n(), children: /* @__PURE__ */ y("div", { className: "c-dialog c-end", role: "dialog", "aria-modal": "true", "aria-labelledby": "c-end-title", "data-testid": "end-card", children: [
     /* @__PURE__ */ i("h2", { id: "c-end-title", className: "c-h1", children: d.endTitle }),
     /* @__PURE__ */ i("p", { children: d.endLine(e.name, e.minutes) }),
     /* @__PURE__ */ i("p", { className: "c-muted", children: d.endNote }),
     o !== void 0 && /* @__PURE__ */ i(zs, { onFeel: o }),
     a && /* @__PURE__ */ i("p", { className: "c-note", "data-testid": "first-run-note", children: d.studioNote }),
-    /* @__PURE__ */ b("div", { className: "c-actions", children: [
+    /* @__PURE__ */ y("div", { className: "c-actions", children: [
       /* @__PURE__ */ i("button", { ref: s, type: "button", className: "c-btn c-primary", "data-testid": "end-again", onClick: t, children: d.playAgain }),
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn", "data-testid": "end-close", onClick: n, children: d.close })
     ] })
@@ -2099,9 +2099,9 @@ function Is({ timer: e, player: t, onSprint: n, onSprintEnd: a }) {
     if (r === 5) return e.kind === "pomodoro" ? a == null ? void 0 : a() : n == null ? void 0 : n();
     a == null || a(), r <= 2 ? t.startTimer({ kind: "countdown", minutes: [15, 30, 60][r] ?? 15 }) : r === 3 ? t.stopTimer() : t.startTimer({ kind: "sleep-fade", minutes: Bt });
   }, s = _s(e);
-  return /* @__PURE__ */ b("div", { children: [
+  return /* @__PURE__ */ y("div", { children: [
     /* @__PURE__ */ i("div", { className: "c-chips", role: "radiogroup", "aria-label": "Timer", children: d.timerChips.map((r, l) => l === 5 && n === void 0 ? null : /* @__PURE__ */ i("button", { type: "button", role: "radio", "aria-checked": s === l, className: "c-tchip", onClick: () => o(l), children: r }, r)) }),
-    e.kind !== "none" && e.running && /* @__PURE__ */ b("p", { className: "c-time", "data-testid": "time-left", children: [
+    e.kind !== "none" && e.running && /* @__PURE__ */ y("p", { className: "c-time", "data-testid": "time-left", children: [
       e.kind === "pomodoro" ? `${e.phase === "break" ? d.sprintBreakLeft : d.sprintFocusLeft} ` : "",
       St(e.remainingSec)
     ] })
@@ -2113,7 +2113,7 @@ function Ps({ onAccept: e, onCancel: t }) {
     var r;
     return (r = n.current) == null ? void 0 : r.focus();
   }, []);
-  const s = /* @__PURE__ */ b("div", { className: "c-safety", onKeyDown: (r) => {
+  const s = /* @__PURE__ */ y("div", { className: "c-safety", onKeyDown: (r) => {
     var l;
     if (t !== void 0) {
       if (r.key === "Escape")
@@ -2126,7 +2126,7 @@ function Ps({ onAccept: e, onCancel: t }) {
   }, children: [
     /* @__PURE__ */ i("h2", { id: "c-safety-title", children: d.safetyTitle }),
     /* @__PURE__ */ i("ul", { className: "c-safe-list", children: d.safetyLines.map((r) => /* @__PURE__ */ i("li", { children: r }, r)) }),
-    /* @__PURE__ */ b("div", { className: "c-actions c-row", children: [
+    /* @__PURE__ */ y("div", { className: "c-actions c-row", children: [
       t !== void 0 && /* @__PURE__ */ i("button", { ref: a, type: "button", className: "c-btn", onClick: t, children: d.back }),
       /* @__PURE__ */ i("button", { ref: n, type: "button", className: "c-btn c-primary", "data-testid": "calm-safety-accept", onClick: e, children: d.safetyAccept })
     ] })
@@ -2219,10 +2219,10 @@ function Us(e, t = !0, n = !1) {
 }
 function Ys({ week: e, hasHistory: t = !0, joinedToday: n = !1, compact: a = !1 }) {
   const o = n && !t && e.quietWeek;
-  return /* @__PURE__ */ b("div", { className: a ? "c-week c-week-compact" : "c-week", children: [
+  return /* @__PURE__ */ y("div", { className: a ? "c-week c-week-compact" : "c-week", children: [
     /* @__PURE__ */ i("ul", { className: "c-dots", "aria-label": "This week", children: e.dots.map((s, r) => {
       const l = o && s === "today";
-      return /* @__PURE__ */ b("li", { className: `c-dot c-dot-${s}${l ? " c-dot-joined" : ""}`, "data-state": s, children: [
+      return /* @__PURE__ */ y("li", { className: `c-dot c-dot-${s}${l ? " c-dot-joined" : ""}`, "data-state": s, children: [
         /* @__PURE__ */ i("span", { className: "c-mark", "aria-hidden": "true", children: l || s === "listened" ? /* @__PURE__ */ i(Oe, { name: "check", size: 16 }) : "" }),
         /* @__PURE__ */ i("span", { className: "c-dayname", "aria-hidden": "true", children: Ks[r] }),
         /* @__PURE__ */ i("span", { className: "c-sr", children: `${ot[r]}, ${l ? d.joinedToday : qs[s]}` })
@@ -2237,40 +2237,40 @@ function Zs({ profile: e, week: t, reduced: n, crewConnected: a, hasHistory: o =
     const p = Za(e, r());
     return gs(Qe(p, 5), c.length === 0 ? [] : Qe(p, 12), c);
   }, [e, r, c]), h = m[v % Math.max(1, m.length)];
-  return /* @__PURE__ */ b("div", { className: "c-today", children: [
-    /* @__PURE__ */ b("header", { className: "c-pagehead", children: [
+  return /* @__PURE__ */ y("div", { className: "c-today", children: [
+    /* @__PURE__ */ y("header", { className: "c-pagehead", children: [
       /* @__PURE__ */ i(Re, { size: 72, reduced: n }),
       /* @__PURE__ */ i("h1", { className: "c-greet", "data-testid": "greeting", children: gn(r().getHours()) })
     ] }),
     l !== null && l.id !== (h == null ? void 0 : h.template.id) && /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-wide c-again", "data-testid": "play-again", onClick: () => f(l), children: `${d.playAgain}: ${l.name}` }),
-    h !== void 0 && /* @__PURE__ */ b("section", { className: "c-daily", "aria-labelledby": "c-daily-h", children: [
+    h !== void 0 && /* @__PURE__ */ y("section", { className: "c-daily", "aria-labelledby": "c-daily-h", children: [
       /* @__PURE__ */ i("p", { className: "c-eyebrow", children: d.dailyEyebrow }),
       /* @__PURE__ */ i("h2", { id: "c-daily-h", children: h.template.name }),
       /* @__PURE__ */ i("p", { className: "c-muted", children: `${h.template.recommendedMinutes} min. ${Ge(h.reasons[0] ?? d.suggested)}` }),
-      /* @__PURE__ */ b("div", { className: "c-actions", children: [
+      /* @__PURE__ */ y("div", { className: "c-actions", children: [
         /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-primary", "data-testid": "today-play", onClick: () => f(h.template), children: d.start }),
         /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link", onClick: () => w((p) => p + 1), children: d.notThisOne })
       ] })
     ] }),
-    u !== void 0 && h !== void 0 && Xs.includes(e.goal) && /* @__PURE__ */ b("button", { type: "button", className: "c-link-card c-sprint-entry", "data-testid": "today-sprint", onClick: () => u(h.template), children: [
+    u !== void 0 && h !== void 0 && Xs.includes(e.goal) && /* @__PURE__ */ y("button", { type: "button", className: "c-link-card c-sprint-entry", "data-testid": "today-sprint", onClick: () => u(h.template), children: [
       /* @__PURE__ */ i("b", { children: d.sprintTitle }),
       /* @__PURE__ */ i("small", { children: d.sprintLine })
     ] }),
-    /* @__PURE__ */ b("button", { type: "button", className: "c-link-card c-reset-entry", "data-testid": "today-reset", onClick: S, children: [
+    /* @__PURE__ */ y("button", { type: "button", className: "c-link-card c-reset-entry", "data-testid": "today-reset", onClick: S, children: [
       /* @__PURE__ */ i("b", { children: d.resetEntry }),
       /* @__PURE__ */ i("small", { children: d.resetEntryHint })
     ] }),
-    M !== void 0 && e.goal === "calm" && /* @__PURE__ */ b("button", { type: "button", className: "c-link-card c-breathe-entry", "data-testid": "today-breathe", onClick: M, children: [
+    M !== void 0 && e.goal === "calm" && /* @__PURE__ */ y("button", { type: "button", className: "c-link-card c-breathe-entry", "data-testid": "today-breathe", onClick: M, children: [
       /* @__PURE__ */ i("b", { children: d.breatheEntry }),
       /* @__PURE__ */ i("small", { children: d.breatheEntryHint })
     ] }),
-    /* @__PURE__ */ b("section", { "aria-labelledby": "c-goal-h", children: [
-      /* @__PURE__ */ i("h2", { id: "c-goal-h", className: "c-h3", children: `Your goal: ${yn[e.goal]}` }),
+    /* @__PURE__ */ y("section", { "aria-labelledby": "c-goal-h", children: [
+      /* @__PURE__ */ i("h2", { id: "c-goal-h", className: "c-h3", children: `Your goal: ${bn[e.goal]}` }),
       /* @__PURE__ */ i(Ys, { week: t, hasHistory: o, joinedToday: s })
     ] }),
-    /* @__PURE__ */ b("section", { "aria-labelledby": "c-for-h", children: [
+    /* @__PURE__ */ y("section", { "aria-labelledby": "c-for-h", children: [
       /* @__PURE__ */ i("h2", { id: "c-for-h", className: "c-h3", children: d.forYou }),
-      /* @__PURE__ */ i("ul", { className: "c-rows", children: m.slice(0, 3).map((p) => /* @__PURE__ */ i("li", { children: /* @__PURE__ */ b("button", { type: "button", className: "c-mini-card", onClick: () => f(p.template), children: [
+      /* @__PURE__ */ i("ul", { className: "c-rows", children: m.slice(0, 3).map((p) => /* @__PURE__ */ i("li", { children: /* @__PURE__ */ y("button", { type: "button", className: "c-mini-card", onClick: () => f(p.template), children: [
         /* @__PURE__ */ i("b", { children: p.template.name }),
         /* @__PURE__ */ i("small", { children: Ge(p.reasons[0] ?? d.suggested) }),
         /* @__PURE__ */ i("em", { children: `${p.template.recommendedMinutes} min` })
@@ -2289,6 +2289,7 @@ const Qs = "calm-breathe-5", Wt = 5, eo = 0.5, to = 20, we = {
   mode: "binaural",
   noise: "pink",
   noiseLevel: 0.45,
+  beatLevel: 0,
   ramp: !1
 }, no = {
   id: Qs,
@@ -2352,8 +2353,8 @@ function ho(e) {
 function di({ label: e, className: t, live: n = !0 }) {
   return /* @__PURE__ */ i("p", { className: t ?? "cm-cue", ...n ? { "aria-live": "polite", role: "status" } : {}, children: e });
 }
-const Kt = 8 * 1024 * 1024, qt = 600, fo = 20, po = 2, go = 0.45, yo = 1e-4;
-function bo(e) {
+const Kt = 8 * 1024 * 1024, qt = 600, fo = 20, po = 2, go = 0.45, bo = 1e-4;
+function yo(e) {
   var o;
   const t = ((o = e[0]) == null ? void 0 : o.length) ?? 0, n = new Float32Array(t), a = Math.max(1, e.length);
   for (const s of e) {
@@ -2375,11 +2376,11 @@ function vo(e, t) {
 }
 function Ut(e, t) {
   if (!Number.isFinite(t) || t <= 0 || e.length === 0) return { ok: !1, error: "This file has no sound in it." };
-  const n = bo(e), a = n.length / t;
+  const n = yo(e), a = n.length / t;
   if (a > qt) return { ok: !1, error: "This file is longer than 10 minutes." };
   let o = 0;
   for (const l of n) o = Math.max(o, Math.abs(l));
-  if (o < yo) return { ok: !1, error: "This file is silent." };
+  if (o < bo) return { ok: !1, error: "This file is silent." };
   const s = go / o;
   for (let l = 0; l < n.length; l++) n[l] = (n[l] ?? 0) * s;
   if (a < fo) return { ok: !0, data: n, loop: !1 };
@@ -2551,7 +2552,7 @@ function No(e) {
       const h = e.getBus();
       if (h === null || a === null) return;
       const p = a.gain.gain;
-      p.cancelScheduledValues(h.ctx.currentTime), p.setTargetAtTime(o, h.ctx.currentTime, bn), u(h);
+      p.cancelScheduledValues(h.ctx.currentTime), p.setTargetAtTime(o, h.ctx.currentTime, yn), u(h);
     },
     setBlend(m) {
       s = kn(m, s ?? 0);
@@ -2572,13 +2573,13 @@ async function Eo(e) {
   return t.arrayBuffer();
 }
 const $ = No({
-  getBus: yt,
+  getBus: bt,
   fetchBytes: Eo,
   baseUrl: "./",
   origin: typeof location > "u" ? "" : location.href
 }), Yt = () => $.list(), To = (e, t) => $.start(e, t), Lo = (e) => $.setLevel(e), Co = () => $.stop(), Oo = (e) => $.setBlend(e), Ro = () => $.playing();
 async function zo(e, t, n) {
-  const a = yt();
+  const a = bt();
   if (a === null) return { ok: !1, error: "start the sound first" };
   try {
     const o = await a.ctx.decodeAudioData(t.slice(0)), s = Array.from({ length: o.numberOfChannels }, (c, u) => o.getChannelData(u)), r = Ut(s, o.sampleRate);
@@ -2634,26 +2635,26 @@ function _o() {
   } catch {
   }
 }
-const Io = { wind: "breeze", waterfall: "rapids", flute: "wave" }, Po = z(() => import("./chunk-MySounds-CQD2auaD.mjs").then((e) => ({ default: e.MySounds }))), Bo = z(() => import("./chunk-Credits-C9xZxVNZ.mjs").then((e) => ({ default: e.Credits })));
+const Io = { wind: "breeze", waterfall: "rapids", flute: "wave" }, Po = z(() => import("./chunk-MySounds-DqwYCvdJ.mjs").then((e) => ({ default: e.MySounds }))), Bo = z(() => import("./chunk-Credits-DPx8sHN3.mjs").then((e) => ({ default: e.Credits })));
 function Ee({ id: e, label: t, value: n, max: a, onChange: o }) {
-  return /* @__PURE__ */ b("div", { className: "c-slider", children: [
+  return /* @__PURE__ */ y("div", { className: "c-slider", children: [
     /* @__PURE__ */ i("label", { htmlFor: e, children: t }),
     /* @__PURE__ */ i("input", { id: e, type: "range", min: 0, max: a, step: 0.05, value: n, "aria-valuetext": `${Math.round(n / a * 100)} percent`, onChange: (s) => o(Number(s.currentTarget.value)) })
   ] });
 }
 function He({ nature: e }) {
-  return /* @__PURE__ */ b("div", { className: "c-nature-controls", children: [
+  return /* @__PURE__ */ y("div", { className: "c-nature-controls", children: [
     /* @__PURE__ */ i(Ee, { id: "c-blend", label: d.natureBlend, value: e.prefs.blend, max: 1, onChange: e.setBlend }),
     /* @__PURE__ */ i(Ee, { id: "c-nlevel", label: d.natureLevel, value: e.prefs.level, max: Zt, onChange: e.setLevel })
   ] });
 }
 function Ho({ nature: e, reduced: t, onBack: n }) {
   const [a, o] = N(null);
-  return /* @__PURE__ */ b("div", { className: "c-nature", children: [
+  return /* @__PURE__ */ y("div", { className: "c-nature", children: [
     /* @__PURE__ */ i(Ba, { title: d.natureHead, reduced: t }),
     /* @__PURE__ */ i("p", { className: "c-lead", children: d.natureIntro }),
-    /* @__PURE__ */ i("ul", { className: "c-tiles c-nature-tiles", children: Yt().map((s, r) => /* @__PURE__ */ b("li", { children: [
-      /* @__PURE__ */ b("button", { type: "button", className: `c-tile c-g${r % 6 + 1}`, "data-testid": `nature-${s.id}`, "aria-pressed": e.on === s.id, onClick: () => e.start(s.id), children: [
+    /* @__PURE__ */ i("ul", { className: "c-tiles c-nature-tiles", children: Yt().map((s, r) => /* @__PURE__ */ y("li", { children: [
+      /* @__PURE__ */ y("button", { type: "button", className: `c-tile c-g${r % 6 + 1}`, "data-testid": `nature-${s.id}`, "aria-pressed": e.on === s.id, onClick: () => e.start(s.id), children: [
         /* @__PURE__ */ i(Oe, { name: Io[s.id] ?? s.id }),
         /* @__PURE__ */ i("span", { className: "c-tile-name", children: s.label }),
         /* @__PURE__ */ i("span", { className: "c-tile-mood", children: s.kind === "synth" ? s.note ?? d.natureMade : d.natureFree }),
@@ -2702,11 +2703,11 @@ function tn(e, t) {
     };
   }, [e, t]), n;
 }
-const Go = z(() => import("./chunk-mascot-BLD5w-pT.mjs").then((e) => ({ default: e.CalmMascot }))), Wo = z(() => import("./chunk-visuals-B0CqKfY2.mjs").then((e) => ({ default: e.SceneLoop }))), Ko = z(() => import("./chunk-mascot-BLD5w-pT.mjs").then((e) => ({ default: e.BreathCue })));
+const Go = z(() => import("./chunk-mascot-CT3408M2.mjs").then((e) => ({ default: e.CalmMascot }))), Wo = z(() => import("./chunk-visuals-B0CqKfY2.mjs").then((e) => ({ default: e.SceneLoop }))), Ko = z(() => import("./chunk-mascot-CT3408M2.mjs").then((e) => ({ default: e.BreathCue })));
 function Fe({ still: e, playing: t, situation: n, theme: a, level: o, announce: s = !0 }) {
   const r = ho(t && !e), l = so(t && e), c = t && !e;
-  return /* @__PURE__ */ b(Ce, { children: [
-    /* @__PURE__ */ i("div", { className: "c-stage", "data-testid": "breath-ring", "data-still": e ? "true" : "false", "data-situation": n, children: /* @__PURE__ */ b(U, { fallback: null, children: [
+  return /* @__PURE__ */ y(Ce, { children: [
+    /* @__PURE__ */ i("div", { className: "c-stage", "data-testid": "breath-ring", "data-still": e ? "true" : "false", "data-situation": n, children: /* @__PURE__ */ y(U, { fallback: null, children: [
       /* @__PURE__ */ i("div", { className: "c-stage-scene", children: /* @__PURE__ */ i(Wo, { situation: n, reducedMotion: e, theme: a }) }),
       /* @__PURE__ */ i("div", { className: "c-stage-mascot", children: /* @__PURE__ */ i(
         Go,
@@ -2720,7 +2721,7 @@ function Fe({ still: e, playing: t, situation: n, theme: a, level: o, announce: 
         }
       ) })
     ] }) }),
-    /* @__PURE__ */ b("div", { className: "c-cue", children: [
+    /* @__PURE__ */ y("div", { className: "c-cue", children: [
       c ? /* @__PURE__ */ i(U, { fallback: null, children: /* @__PURE__ */ i(Ko, { label: r.label, className: "c-cue-text", live: !1 }) }) : t ? /* @__PURE__ */ i("p", { className: "c-cue-text", "data-testid": "breath-counter", children: oo(l) }) : /* @__PURE__ */ i("p", { className: "c-cue-text", children: d.breathe }),
       /* @__PURE__ */ i(ro, { label: c ? r.label : l.label, on: t, announce: s })
     ] })
@@ -2732,10 +2733,10 @@ function qo({ engine: e, theme: t, announce: n = !0, sprint: a, player: o, snap:
     var A;
     return g.id === (((A = a == null ? void 0 : a.focus) == null ? void 0 : A.id) ?? s.templateId);
   });
-  return /* @__PURE__ */ b("div", { className: "c-player", children: [
+  return /* @__PURE__ */ y("div", { className: "c-player", children: [
     /* @__PURE__ */ i("h1", { className: "c-h1", children: s.templateName ?? d.brand }),
     /* @__PURE__ */ i(Fe, { still: r, playing: s.playing, situation: m, theme: t, level: M, announce: n }),
-    /* @__PURE__ */ b("div", { className: "c-controls", children: [
+    /* @__PURE__ */ y("div", { className: "c-controls", children: [
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-round c-big", "data-testid": "player-toggle", onClick: c, children: s.playing ? d.stop : d.play }),
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-round", "aria-pressed": l, onClick: u, children: l ? d.saved : d.favorite })
     ] }),
@@ -2749,9 +2750,9 @@ function qo({ engine: e, theme: t, announce: n = !0, sprint: a, player: o, snap:
     ),
     /* @__PURE__ */ i(Uo, { nature: f }),
     /* @__PURE__ */ i("p", { className: "c-muted", children: d.volumeCapped }),
-    /* @__PURE__ */ b("section", { className: "c-why", children: [
+    /* @__PURE__ */ y("section", { className: "c-why", children: [
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link", "aria-expanded": k, "aria-controls": "c-why-box", onClick: () => S((g) => !g), children: d.whyTitle }),
-      /* @__PURE__ */ b("div", { id: "c-why-box", hidden: !k, children: [
+      /* @__PURE__ */ y("div", { id: "c-why-box", hidden: !k, children: [
         /* @__PURE__ */ i("p", { children: d.whyBody }),
         /* @__PURE__ */ i("p", { children: `Evidence: ${w}. ${Sn[w] ?? ""}` })
       ] })
@@ -2760,7 +2761,7 @@ function qo({ engine: e, theme: t, announce: n = !0, sprint: a, player: o, snap:
 }
 function Uo({ nature: e }) {
   const t = e.prefs.id ?? Qt().id ?? "rain";
-  return /* @__PURE__ */ b("section", { className: "c-card c-nature-quick", "aria-label": d.natureHead, children: [
+  return /* @__PURE__ */ y("section", { className: "c-card c-nature-quick", "aria-label": d.natureHead, children: [
     /* @__PURE__ */ i("button", { type: "button", className: "c-btn", "data-testid": "player-nature", "aria-pressed": e.on !== null, onClick: () => e.on === null ? e.start(t) : e.stop(), children: e.on === null ? `${d.natureAdd}: ${t.startsWith("own:") ? d.mineTitle : t}` : d.natureOff }),
     e.on !== null && /* @__PURE__ */ i(He, { nature: e }),
     /* @__PURE__ */ i("p", { className: "c-status", role: "status", children: e.message })
@@ -2816,14 +2817,14 @@ function Zo(e, t = nn) {
 }
 function dt({ s: e, still: t, theme: n, announce: a, onBack: o, plan: s = nn }) {
   const r = Zo(e, s), l = tn(e.engine, e.snap.playing), c = en(e.snap.templateId, !1);
-  return r.phase === "done" ? /* @__PURE__ */ i(Qo, { plan: s, onAgain: r.begin, onBack: o }) : /* @__PURE__ */ b("div", { className: "c-player c-reset", "data-testid": "reset-screen", "data-kind": s.kind, "data-phase": r.phase, children: [
+  return r.phase === "done" ? /* @__PURE__ */ i(Qo, { plan: s, onAgain: r.begin, onBack: o }) : /* @__PURE__ */ y("div", { className: "c-player c-reset", "data-testid": "reset-screen", "data-kind": s.kind, "data-phase": r.phase, children: [
     /* @__PURE__ */ i("h1", { className: "c-h1", children: s.title }),
     r.phase === "idle" && /* @__PURE__ */ i("p", { className: "c-lead", children: s.intro }),
     /* @__PURE__ */ i(Fe, { still: t, playing: r.phase === "running" && e.snap.playing, situation: c, theme: n, level: l, announce: a }),
-    r.phase === "running" ? /* @__PURE__ */ b(Ce, { children: [
+    r.phase === "running" ? /* @__PURE__ */ y(Ce, { children: [
       /* @__PURE__ */ i("p", { className: "c-muted c-digits", "data-testid": "reset-left", "aria-hidden": "true", children: s.left(r.left) }),
       /* @__PURE__ */ i("div", { className: "c-controls", children: /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-round c-big", "data-testid": "reset-stop", onClick: r.stop, children: d.stop }) })
-    ] }) : /* @__PURE__ */ b("div", { className: "c-actions", children: [
+    ] }) : /* @__PURE__ */ y("div", { className: "c-actions", children: [
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-primary", "data-testid": "reset-begin", onClick: r.begin, children: d.resetStart }),
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link", onClick: o, children: d.resetBack })
     ] }),
@@ -2835,17 +2836,17 @@ function Qo({ plan: e, onAgain: t, onBack: n }) {
   return L(() => {
     var o;
     return (o = a.current) == null ? void 0 : o.focus();
-  }, []), /* @__PURE__ */ b("div", { className: "c-end c-reset", "data-testid": "reset-end", children: [
+  }, []), /* @__PURE__ */ y("div", { className: "c-end c-reset", "data-testid": "reset-end", children: [
     /* @__PURE__ */ i("h1", { className: "c-h1", children: d.endTitle }),
     /* @__PURE__ */ i("p", { children: e.done }),
     /* @__PURE__ */ i("p", { className: "c-muted", children: d.endNote }),
-    /* @__PURE__ */ b("div", { className: "c-actions", children: [
+    /* @__PURE__ */ y("div", { className: "c-actions", children: [
       /* @__PURE__ */ i("button", { ref: a, type: "button", className: "c-btn c-primary", "data-testid": "reset-back", onClick: n, children: d.resetBack }),
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn", "data-testid": "reset-again", onClick: t, children: e.again })
     ] })
   ] });
 }
-const er = z(() => import("./chunk-Journeys-DbUNhU_l.mjs").then((e) => ({ default: e.JourneyList }))), tr = z(() => import("./chunk-Journeys-DbUNhU_l.mjs").then((e) => ({ default: e.JourneyDetail }))), nr = z(() => import("./chunk-Library-DQY52qUO.mjs").then((e) => ({ default: e.Library }))), ar = z(() => Promise.resolve().then(() => Yo).then((e) => ({ default: e.PlayerScreen }))), sr = z(() => import("./chunk-CrewScreen-BbLrDryZ.mjs").then((e) => ({ default: e.CrewScreen }))), or = z(() => Promise.resolve().then(() => Fo).then((e) => ({ default: e.NatureScreen }))), rr = z(() => import("./chunk-SettingsScreen-sjrtlv37.mjs").then((e) => ({ default: e.SettingsScreen })));
+const er = z(() => import("./chunk-Journeys-BzM3Bw1J.mjs").then((e) => ({ default: e.JourneyList }))), tr = z(() => import("./chunk-Journeys-BzM3Bw1J.mjs").then((e) => ({ default: e.JourneyDetail }))), nr = z(() => import("./chunk-Library-D-d_I5bX.mjs").then((e) => ({ default: e.Library }))), ar = z(() => Promise.resolve().then(() => Yo).then((e) => ({ default: e.PlayerScreen }))), sr = z(() => import("./chunk-CrewScreen-Bg9Zg21_.mjs").then((e) => ({ default: e.CrewScreen }))), or = z(() => Promise.resolve().then(() => Fo).then((e) => ({ default: e.NatureScreen }))), rr = z(() => import("./chunk-SettingsScreen-DJLEg2s-.mjs").then((e) => ({ default: e.SettingsScreen })));
 function ir({ view: e, journeyId: t, s: n, data: a, crewInfo: o, nature: s, still: r, fav: l, last: c, look: u, prefs: f, onPrefs: k, feel: S, sprint: M, handlers: v }) {
   switch (e) {
     case "journeys":
@@ -2955,7 +2956,7 @@ const hr = (e) => e.getHours() >= 19 || e.getHours() < 7, fr = (e, t = /* @__PUR
 function gr(e, t) {
   return e.choice === "contrast" ? { theme: t, highContrast: !0 } : { theme: e.choice === "system" ? t : e.choice, highContrast: !1 };
 }
-function yr() {
+function br() {
   try {
     const e = window.localStorage.getItem(an);
     return e !== null ? dr(e) : mr(window.localStorage.getItem(lr));
@@ -2963,8 +2964,8 @@ function yr() {
     return Q;
   }
 }
-function br() {
-  const [e, t] = N(yr), [n, a] = N(pr);
+function yr() {
+  const [e, t] = N(br), [n, a] = N(pr);
   L(() => {
     var l;
     if (typeof window.matchMedia != "function") return;
@@ -3112,7 +3113,7 @@ async function zr() {
   _o(), await Lr();
 }
 function Dr() {
-  const { player: e, store: t, engine: n } = bt(), [a, o] = N(() => e.snapshot()), [s, r] = N(Nn), [l, c] = N(!1), [u, f, k] = En(), S = _(null), M = _(s);
+  const { player: e, store: t, engine: n } = yt(), [a, o] = N(() => e.snapshot()), [s, r] = N(Nn), [l, c] = N(!1), [u, f, k] = En(), S = _(null), M = _(s);
   L(() => (o(e.snapshot()), e.subscribe(o)), [e]);
   const v = T(
     (g) => {
@@ -3258,10 +3259,10 @@ function Yr(e, t) {
   }, [n, t, e]);
   return { on: t !== null && rn(n, "template", t), toggle: o };
 }
-const Vr = z(() => import("./chunk-Onboarding-CxC79_3z.mjs").then((e) => ({ default: e.Onboarding }))), Jr = (e) => Math.max(180, e * 60 * 0.8);
+const Vr = z(() => import("./chunk-Onboarding-kJNSc7Mq.mjs").then((e) => ({ default: e.Onboarding }))), Jr = (e) => Math.max(180, e * 60 * 0.8);
 function Xr({ engine: e, clock: t, store: n, bridgeCreate: a, onStudio: o }) {
   var $e;
-  const s = Dr(), r = js(s.store, s.snap.playing), l = _r(s.player, a), c = Rr(s), [u, f] = N("today"), [k, S] = N(null), M = _(null), v = Yr(s.store, s.snap.templateId), w = Ir(r.storage), m = Kr(s), h = r.profile.createdAt === 0, p = ti(r.storage), g = Os(s.snap, !h && u !== "reset" && u !== "breathe", m.focus === null ? null : { id: m.focus.id, name: d.sprintName }), A = s.reduced || r.profile.extraGentle, { look: C, prefs: R, dim: F, setPrefs: x } = br();
+  const s = Dr(), r = js(s.store, s.snap.playing), l = _r(s.player, a), c = Rr(s), [u, f] = N("today"), [k, S] = N(null), M = _(null), v = Yr(s.store, s.snap.templateId), w = Ir(r.storage), m = Kr(s), h = r.profile.createdAt === 0, p = ti(r.storage), g = Os(s.snap, !h && u !== "reset" && u !== "breathe", m.focus === null ? null : { id: m.focus.id, name: d.sprintName }), A = s.reduced || r.profile.extraGentle, { look: C, prefs: R, dim: F, setPrefs: x } = yr();
   ni(o);
   const V = T((j) => f(j), []), { play: ae, playDay: cn, finish: un } = Qr({ s, data: r, last: p, end: g, active: M, setView: f });
   oi(s.snap.playing, s.snap.elapsedSec, M, r.progress, r.setJourney);
@@ -3270,7 +3271,7 @@ function Xr({ engine: e, clock: t, store: n, bridgeCreate: a, onStudio: o }) {
   }, mn = () => {
     As(r.storage), w.clear(), c.stop(), zr(), r.setProfile(Rt), f("today");
   };
-  return /* @__PURE__ */ b("div", { className: "c-app", "data-theme": C.theme, "data-contrast": C.highContrast ? "high" : "normal", "data-view": u, "data-dim": F ? "true" : "false", "data-motion": A ? "off" : "on", "data-playing": s.snap.playing ? "true" : "false", children: [
+  return /* @__PURE__ */ y("div", { className: "c-app", "data-theme": C.theme, "data-contrast": C.highContrast ? "high" : "normal", "data-view": u, "data-dim": F ? "true" : "false", "data-motion": A ? "off" : "on", "data-playing": s.snap.playing ? "true" : "false", children: [
     /* @__PURE__ */ i(si, {}),
     /* @__PURE__ */ i(ai, { engine: e }),
     l.view.source === "demo" && /* @__PURE__ */ i("p", { className: "c-badge-sim", role: "status", "data-testid": "demo-badge", children: d.crewDemoBadge }),
@@ -3359,7 +3360,7 @@ function ai({ engine: e }) {
   return L(() => e.onStatus((a) => n(a.state === "error" ? a.error ?? "" : null)), [e]), t === null ? null : /* @__PURE__ */ i("p", { className: "c-note", role: "status", "data-testid": "engine-notice", children: t === Pn ? d.unsupported : d.errorAudio });
 }
 function si() {
-  return /* @__PURE__ */ b(Ce, { children: [
+  return /* @__PURE__ */ y(Ce, { children: [
     /* @__PURE__ */ i("a", { className: "c-skip", href: "#c-main", children: "Skip to content" }),
     /* @__PURE__ */ i("header", { className: "c-topbar", children: /* @__PURE__ */ i("span", { className: "c-brand", children: d.brand }) })
   ] });
@@ -3385,10 +3386,10 @@ const ri = {
 };
 function gi() {
   Bn(import.meta.url), Hn();
-  const { engine: e, store: t } = bt();
+  const { engine: e, store: t } = yt();
   L(() => (Ue(!0), () => Ue(!1)), []);
   const [n, a] = N(!1);
-  return /* @__PURE__ */ b("div", { "data-testid": "zonked-app", style: { height: "100%", minHeight: 0, overflow: "hidden", position: "relative", transform: "translateZ(0)" }, children: [
+  return /* @__PURE__ */ y("div", { "data-testid": "zonked-app", style: { height: "100%", minHeight: 0, overflow: "hidden", position: "relative", transform: "translateZ(0)" }, children: [
     /* @__PURE__ */ i("div", { style: { height: "100%", overflowY: "auto" }, children: /* @__PURE__ */ i(Xr, { engine: e, store: t, onStudio: () => a(!0) }) }),
     n && /* @__PURE__ */ i("p", { role: "status", style: ri, "data-testid": "studio-note", onClick: () => a(!1), children: "Studio, the advanced mode, is not in the Kiro Crew app yet. Tap to close." })
   ] });

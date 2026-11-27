@@ -1,7 +1,7 @@
-var At = Object.defineProperty;
-var Tt = (t, e, n) => e in t ? At(t, e, { enumerable: !0, configurable: !0, writable: !0, value: n }) : t[e] = n;
-var c = (t, e, n) => Tt(t, typeof e != "symbol" ? e + "" : e, n);
-import * as Ht from "@kirocrew/app-sdk";
+var Tt = Object.defineProperty;
+var Ht = (t, e, n) => e in t ? Tt(t, e, { enumerable: !0, configurable: !0, writable: !0, value: n }) : t[e] = n;
+var c = (t, e, n) => Ht(t, typeof e != "symbol" ? e + "" : e, n);
+import * as zt from "@kirocrew/app-sdk";
 import { useState as Ie, useEffect as it } from "react";
 const Z = {
   level: { min: 0, max: 1 },
@@ -53,27 +53,27 @@ const Z = {
   noiseMax: 1,
   maxTimeSec: 86400,
   maxDiagnostics: 1e3
-}, zt = 200, Ct = 10, Nt = 0.5, Pt = 0.3, v = (t, e, n) => Number.isFinite(t) ? Math.min(n, Math.max(e, t)) : e, L = (t) => v(t, Z.level.min, Z.level.max), U = (t, e) => Math.round(v(t, 0, e));
-function Ot(t) {
+}, Ct = 200, Nt = 10, Pt = 0.5, Ot = 0.3, v = (t, e, n) => Number.isFinite(t) ? Math.min(n, Math.max(e, t)) : e, L = (t) => v(t, Z.level.min, Z.level.max), j = (t, e) => Math.round(v(t, 0, e));
+function xt(t) {
   const e = { ...H, ...t }, n = Z;
   return {
     lofiLevel: L(e.lofiLevel),
     lofiWarmth: L(e.lofiWarmth),
     crackle: L(e.crackle),
     instLevel: L(e.instLevel),
-    instKind: U(e.instKind, n.instKindMax),
+    instKind: j(e.instKind, n.instKindMax),
     instRootHz: v(e.instRootHz, n.instRootHz.min, n.instRootHz.max),
-    instScale: U(e.instScale, n.enumMax),
+    instScale: j(e.instScale, n.enumMax),
     instBpm: v(e.instBpm, n.bpm.min, n.bpm.max),
     padLevel: L(e.padLevel),
-    padChord: U(e.padChord, n.enumMax),
+    padChord: j(e.padChord, n.enumMax),
     padRootHz: v(e.padRootHz, n.padRootHz.min, n.padRootHz.max),
     chimeLevel: L(e.chimeLevel),
     chimeRatePerMin: v(e.chimeRatePerMin, n.chimeRatePerMin.min, n.chimeRatePerMin.max),
     percLevel: L(e.percLevel),
     percBpm: v(e.percBpm, n.bpm.min, n.bpm.max),
-    percPattern: U(e.percPattern, n.enumMax),
-    lofiProgression: U(e.lofiProgression, n.enumMax),
+    percPattern: j(e.percPattern, n.enumMax),
+    lofiProgression: j(e.lofiProgression, n.enumMax),
     tapeWow: L(e.tapeWow),
     pianoPedal: L(e.pianoPedal),
     breathDepth: L(e.breathDepth),
@@ -93,13 +93,14 @@ function _e(t, e, n) {
       noiseLevel: v(t.noiseLevel, l.noiseMin, l.noiseMax),
       mode: t.mode,
       gain: v(t.gain, l.gainMin, l.gainMax),
-      layers: Ot(t.layers)
+      ...t.beatLevel !== void 0 ? { beatLevel: v(t.beatLevel, 0, 1) } : {},
+      layers: xt(t.layers)
     },
     ramp: t.ramp,
     line: n
   };
 }
-function xt(t) {
+function It(t) {
   let n = 0;
   const s = t.stages.slice(0, 499).map((o, a) => {
     const u = Number.isFinite(o.atMin) ? o.atMin * 60 : 0;
@@ -109,7 +110,7 @@ function xt(t) {
   const r = v(Math.max(n, t.recommendedMinutes * 60), 0, l.maxTimeSec);
   return s.push(_e({ ...i, ramp: !1 }, r, s.length + 1)), s;
 }
-function It(t) {
+function _t(t) {
   let e = 0;
   for (let n = 0; n < t.length; n++) {
     const s = t.charCodeAt(n);
@@ -122,21 +123,21 @@ function It(t) {
   }
   return e;
 }
-function _t(t) {
+function Bt(t) {
   return t === 32 || t === 9 || t === 11 || t === 12 || t === 160;
 }
-function Bt(t) {
+function Dt(t) {
   const e = [];
   let n = -1;
   for (let s = 0; s < t.length; s++) {
     const i = t.charCodeAt(s);
     if (i === 35)
       return n >= 0 && e.push(t.slice(n, s)), e;
-    _t(i) ? (n >= 0 && e.push(t.slice(n, s)), n = -1) : n < 0 && (n = s);
+    Bt(i) ? (n >= 0 && e.push(t.slice(n, s)), n = -1) : n < 0 && (n = s);
   }
   return n >= 0 && e.push(t.slice(n)), e;
 }
-function Dt(t) {
+function Ft(t) {
   const e = [];
   let n = t.charCodeAt(0) === 65279 ? 1 : 0, s = 1, i = n;
   const r = (o) => {
@@ -144,7 +145,7 @@ function Dt(t) {
     if (a > T.maxLineLength)
       e.push({ line: s, tokens: [], tooLong: !0 });
     else if (a > 0) {
-      const u = Bt(t.slice(i, o));
+      const u = Dt(t.slice(i, o));
       u.length > 0 && e.push({ line: s, tokens: u, tooLong: !1 });
     }
   };
@@ -154,7 +155,7 @@ function Dt(t) {
   }
   return r(t.length), e;
 }
-const Ft = {
+const $t = {
   carrierHz: 200,
   beatHz: 10,
   noise: "off",
@@ -162,10 +163,10 @@ const Ft = {
   mode: "binaural",
   gain: 0
 };
-function V(t, e, n) {
+function W(t, e, n) {
   return t < e ? e : t > n ? n : t;
 }
-function $t(t, e) {
+function Wt(t, e) {
   const n = Number.isFinite(e) ? e : 0;
   let s = 0, i = t.length - 1, r = -1;
   for (; s <= i; ) {
@@ -178,46 +179,47 @@ function rt(t) {
   const e = t[t.length - 1];
   return e === void 0 ? 0 : e.tSec;
 }
-function Y(t, e, n) {
+function K(t, e, n) {
   return t + (e - t) * n;
 }
-const Wt = /* @__PURE__ */ new Set(["instKind", "instScale", "padChord", "percPattern", "lofiProgression"]);
-function Kt(t, e, n) {
+const Kt = /* @__PURE__ */ new Set(["instKind", "instScale", "padChord", "percPattern", "lofiProgression"]);
+function Ut(t, e, n) {
   if (t === void 0 && e === void 0) return;
   const s = t ?? H, i = e ?? H, r = {};
   for (const o of Object.keys(H))
-    r[o] = Wt.has(o) ? n >= 1 ? i[o] : s[o] : Y(s[o], i[o], n);
+    r[o] = Kt.has(o) ? n >= 1 ? i[o] : s[o] : K(s[o], i[o], n);
   return r;
 }
-function Ut(t, e, n) {
-  const s = Kt(t.layers, e.layers, n);
+function qt(t, e, n) {
+  const s = Ut(t.layers, e.layers, n);
   return {
-    carrierHz: V(Y(t.carrierHz, e.carrierHz, n), l.carrierMin, l.carrierMax),
-    beatHz: V(Y(t.beatHz, e.beatHz, n), l.beatMin, l.beatMax),
+    carrierHz: W(K(t.carrierHz, e.carrierHz, n), l.carrierMin, l.carrierMax),
+    beatHz: W(K(t.beatHz, e.beatHz, n), l.beatMin, l.beatMax),
     noise: t.noise === "off" ? e.noise : t.noise,
-    noiseLevel: V(Y(t.noiseLevel, e.noiseLevel, n), l.noiseMin, l.noiseMax),
+    noiseLevel: W(K(t.noiseLevel, e.noiseLevel, n), l.noiseMin, l.noiseMax),
     mode: t.mode,
-    gain: V(Y(t.gain, e.gain, n), l.gainMin, l.gainMax),
+    gain: W(K(t.gain, e.gain, n), l.gainMin, l.gainMax),
+    ...t.beatLevel !== void 0 || e.beatLevel !== void 0 ? { beatLevel: W(K(t.beatLevel ?? 1, e.beatLevel ?? 1, n), 0, 1) } : {},
     ...s !== void 0 ? { layers: s } : {}
   };
 }
 function he(t, e) {
-  const n = $t(t, e), s = t[Math.max(0, n)];
-  if (s === void 0) return Ft;
+  const n = Wt(t, e), s = t[Math.max(0, n)];
+  if (s === void 0) return $t;
   const i = t[n + 1];
   if (n < 0 || !s.ramp || i === void 0) return s.voice;
   const r = Number.isFinite(e) ? e : 0, o = i.tSec - s.tSec;
-  return o > 0 ? Ut(s.voice, i.voice, V((r - s.tSec) / o, 0, 1)) : i.voice;
+  return o > 0 ? qt(s.voice, i.voice, W((r - s.tSec) / o, 0, 1)) : i.voice;
 }
-const qt = /^[+-]?[0-9]{1,15}(?:\.[0-9]{1,15})?$/, jt = /^[0-9]{1,2}:[0-9]{1,2}(?::[0-9]{1,2})?$/, Vt = /^[A-Za-z_][A-Za-z0-9_-]{0,31}$/, Be = 24;
-function W(t) {
+const jt = /^[+-]?[0-9]{1,15}(?:\.[0-9]{1,15})?$/, Vt = /^[0-9]{1,2}:[0-9]{1,2}(?::[0-9]{1,2})?$/, Yt = /^[A-Za-z_][A-Za-z0-9_-]{0,31}$/, Be = 24;
+function U(t) {
   return t.length > Be ? `${t.slice(0, Be)}...` : t;
 }
 function g(t, e, n, s) {
   n === "error" && t.errors++, t.diags.length < l.maxDiagnostics ? t.diags.push({ line: e, severity: n, message: s }) : t.diags.length === l.maxDiagnostics && t.diags.push({ line: e, severity: "warning", message: "Too many diagnostics, further messages dropped" });
 }
 function se(t) {
-  if (!qt.test(t)) return null;
+  if (!jt.test(t)) return null;
   const e = Number(t);
   return Number.isFinite(e) ? e : null;
 }
@@ -241,11 +243,11 @@ function ot(t) {
       return null;
   }
 }
-function Yt(t) {
+function Gt(t) {
   const e = t.toLowerCase();
   return e === "pink" || e === "white" || e === "brown" || e === "violet" ? e : null;
 }
-function Gt(t, e, n, s) {
+function Zt(t, e, n, s) {
   const i = n.indexOf("/"), r = i < 0 ? n : n.slice(0, i);
   let o = -1;
   for (let C = 0; C < r.length && o < 0; C++) {
@@ -255,10 +257,10 @@ function Gt(t, e, n, s) {
   const a = o < 0 ? r : r.slice(0, o), u = o < 0 ? "" : r.slice(o + 1), m = a === "" ? null : se(a), y = u === "" ? null : se(u), f = i < 0 ? null : se(n.slice(i + 1)), b = a !== "" && m === null, P = o >= 0 && y === null, z = i >= 0 && f === null;
   return b || P || z || r === "" ? !1 : (m !== null && (s.carrier = ie(t, e, "carrier", m, l.carrierMin, l.carrierMax)), y !== null && (s.beat = ie(t, e, "beat", y, l.beatMin, l.beatMax)), f !== null && (s.gain = ie(t, e, "gain", f, l.gainMin, l.gainMax)), !0);
 }
-function Zt(t, e, n, s) {
-  const i = n.indexOf("/"), r = Yt(i < 0 ? n : n.slice(0, i));
+function Xt(t, e, n, s) {
+  const i = n.indexOf("/"), r = Gt(i < 0 ? n : n.slice(0, i));
   if (r === null) return !1;
-  let o = Pt;
+  let o = Ot;
   if (i >= 0) {
     const a = se(n.slice(i + 1));
     if (a === null) return !1;
@@ -266,68 +268,68 @@ function Zt(t, e, n, s) {
   }
   return s.noise = r, s.noiseLevel = o, !0;
 }
-function Xt(t, e, n, s) {
+function Jt(t, e, n, s) {
   const i = ot(n);
   if (i !== null) s.mode = i;
   else {
-    if (Zt(t, e, n, s)) return;
-    Gt(t, e, n, s) || g(t, e, "warning", `Unknown token "${W(n)}" skipped`);
+    if (Xt(t, e, n, s)) return;
+    Zt(t, e, n, s) || g(t, e, "warning", `Unknown token "${U(n)}" skipped`);
   }
 }
-function Jt(t, e) {
+function Qt(t, e) {
   const s = !(e.carrier !== void 0 || e.beat !== void 0 || e.gain !== void 0) && e.noise !== void 0;
   return {
-    carrierHz: e.carrier ?? zt,
-    beatHz: e.beat ?? Ct,
+    carrierHz: e.carrier ?? Ct,
+    beatHz: e.beat ?? Nt,
     noise: e.noise ?? "off",
     noiseLevel: e.noiseLevel ?? 0,
     mode: e.mode ?? t.mode,
-    gain: s ? 0 : e.gain ?? Nt
+    gain: s ? 0 : e.gain ?? Pt
   };
 }
-function Qt(t, e) {
+function en(t, e) {
   const n = e.tokens[0] ?? "", s = n.indexOf(":"), i = n.slice(0, s), r = e.tokens.slice(1);
   if (s < n.length - 1 && r.unshift(n.slice(s + 1)), i.toLowerCase() === "mode") {
     const a = r[0] === void 0 ? null : ot(r[0]);
     a === null ? g(t, e.line, "warning", "mode expects iso, mono or bin; ignored") : t.mode = a;
     return;
   }
-  if (!Vt.test(i)) {
-    g(t, e.line, "warning", `Invalid tone-set name "${W(i)}", line skipped`);
+  if (!Yt.test(i)) {
+    g(t, e.line, "warning", `Invalid tone-set name "${U(i)}", line skipped`);
     return;
   }
   const o = {};
-  for (const a of r) Xt(t, e.line, a, o);
-  r.length === 0 && g(t, e.line, "warning", `Tone-set "${i}" has no parameters, defaults used`), t.defs.set(i, Jt(t, o));
+  for (const a of r) Jt(t, e.line, a, o);
+  r.length === 0 && g(t, e.line, "warning", `Tone-set "${i}" has no parameters, defaults used`), t.defs.set(i, Qt(t, o));
 }
-function en(t) {
+function tn(t) {
   if (t === "NOW") return 0;
-  if (!jt.test(t)) return null;
+  if (!Vt.test(t)) return null;
   const e = t.split(":").map(Number), [n = 0, s = 0, i = 0] = e.length === 2 ? [e[0], e[1], 0] : e;
   return s > 59 || i > 59 ? null : n * 3600 + s * 60 + i;
 }
-function tn(t, e) {
-  const [n = "", s, ...i] = e.tokens, r = en(n);
-  if (r === null) return g(t, e.line, "error", `Invalid time "${W(n)}", expected HH:MM:SS`);
+function nn(t, e) {
+  const [n = "", s, ...i] = e.tokens, r = tn(n);
+  if (r === null) return g(t, e.line, "error", `Invalid time "${U(n)}", expected HH:MM:SS`);
   if (r > l.maxTimeSec) return g(t, e.line, "error", "Time exceeds 24 hours");
   if (r < t.lastT) return g(t, e.line, "error", "Times must not decrease");
   if (s === void 0) return g(t, e.line, "warning", "Sequence line has no tone-set name, skipped");
   let o = s, a = !1;
   o.endsWith("->") && (a = !0, o = o.slice(0, -2));
   for (const m of i)
-    m === "->" && !a ? a = !0 : g(t, e.line, "warning", `Unknown token "${W(m)}" skipped`);
+    m === "->" && !a ? a = !0 : g(t, e.line, "warning", `Unknown token "${U(m)}" skipped`);
   const u = t.defs.get(o);
-  if (u === void 0) return g(t, e.line, "warning", `Unknown tone-set "${W(o)}", line skipped`);
+  if (u === void 0) return g(t, e.line, "warning", `Unknown tone-set "${U(o)}", line skipped`);
   if (t.events.length >= T.maxEvents)
     return t.stop = !0, g(t, e.line, "error", `More than ${T.maxEvents} events, parsing stopped`);
   t.lastT = r, t.events.push({ tSec: r, voice: u, ramp: a, line: e.line });
 }
-function nn(t) {
+function sn(t) {
   return t === "NOW" || t.charCodeAt(0) >= 48 && t.charCodeAt(0) <= 57 && t.includes(":");
 }
-function sn(t, e) {
+function rn(t, e) {
   const n = e.tokens[0] ?? "";
-  nn(n) ? tn(t, e) : n.includes(":") ? Qt(t, e) : g(t, e.line, "warning", `Unknown token "${W(n)}", line skipped`);
+  sn(n) ? nn(t, e) : n.includes(":") ? en(t, e) : g(t, e.line, "warning", `Unknown token "${U(n)}", line skipped`);
 }
 function pe(t) {
   return {
@@ -337,48 +339,48 @@ function pe(t) {
     ok: t.errors === 0
   };
 }
-function rn() {
+function on() {
   return { diags: [], errors: 0, defs: /* @__PURE__ */ new Map(), mode: "binaural", events: [], lastT: 0, stop: !1 };
 }
 function J(t) {
-  const e = rn();
+  const e = on();
   try {
     if (typeof t != "string")
       return g(e, 1, "error", "Input must be a string"), pe(e);
-    if (t.length > T.maxBytes || It(t) > T.maxBytes)
+    if (t.length > T.maxBytes || _t(t) > T.maxBytes)
       return g(e, 1, "error", `Input exceeds ${T.maxBytes} bytes, not parsed`), pe(e);
-    for (const n of Dt(t))
-      if (n.tooLong ? g(e, n.line, "error", `Line longer than ${T.maxLineLength} characters`) : sn(e, n), e.stop) break;
+    for (const n of Ft(t))
+      if (n.tooLong ? g(e, n.line, "error", `Line longer than ${T.maxLineLength} characters`) : rn(e, n), e.stop) break;
     e.events.length === 0 && e.errors === 0 && g(e, 1, "warning", "No sequence events found");
   } catch (n) {
     g(e, 1, "error", `Internal parser error: ${n instanceof Error ? n.message : "unknown"}`);
   }
   return pe(e);
 }
-const on = `# Deep Focus: 40 Hz gamma binaural beat on a 200 Hz carrier.
+const an = `# Deep Focus: 40 Hz gamma binaural beat on a 200 Hz carrier.
 mode: bin
 focus: 200+40/0.4
 00:00:00 focus
-`, an = `# Flow State: 18 Hz beta on a 220 Hz carrier.
+`, cn = `# Flow State: 18 Hz beta on a 220 Hz carrier.
 mode: bin
 flow: 220+18/0.4
 00:00:00 flow
-`, cn = `# AI Burnout Reset: 10 Hz alpha glides to 6 Hz theta over 20 minutes,
+`, ln = `# AI Burnout Reset: 10 Hz alpha glides to 6 Hz theta over 20 minutes,
 # with a soft pink noise bed. Gain stays low for tired ears.
 mode: bin
 alpha: 200+10/0.35 pink/15
 theta: 200+6/0.35 pink/20
 00:00:00 alpha ->
 00:20:00 theta
-`, ln = `# Breathwork Sync: 5.5 Hz theta, 5.5 breaths per minute.
+`, un = `# Breathwork Sync: 5.5 Hz theta, 5.5 breaths per minute.
 mode: bin
 breathe: 180+5.5/0.4
 00:00:00 breathe
-`, un = `# Deep Rest: 2.5 Hz delta on a low 150 Hz carrier.
+`, dn = `# Deep Rest: 2.5 Hz delta on a low 150 Hz carrier.
 mode: bin
 rest: 150+2.5/0.35 brown/10
 00:00:00 rest
-`, dn = `# ts - SBaGen style demo sequence, 1998 vintage.
+`, hn = `# ts - SBaGen style demo sequence, 1998 vintage.
 # Four tone-sets, ramps between them, about 15 minutes in all.
 # Press play, close your eyes, and enjoy the ride.
 mode: bin
@@ -396,40 +398,40 @@ back:  200+9/0.4 pink/10    # coming back up
     id: "deep-focus",
     name: "Deep Focus",
     description: "40 Hz gamma beat for concentrated work.",
-    sbg: on
+    sbg: an
   },
   {
     id: "flow-state",
     name: "Flow State",
     description: "18 Hz beta beat for steady, engaged flow.",
-    sbg: an
+    sbg: cn
   },
   {
     id: "burnout-reset",
     name: "AI Burnout Reset",
     description: "10 Hz alpha gliding to 6 Hz theta over 20 minutes with soft pink noise.",
-    sbg: cn
+    sbg: ln
   },
   {
     id: "breathwork-sync",
     name: "Breathwork Sync",
     description: "5.5 Hz theta with a 6-breath guided pacer at 5.5 breaths per minute.",
-    sbg: ln,
+    sbg: un,
     breath: { inSec: 5.45, outSec: 5.45 }
   },
   {
     id: "deep-rest",
     name: "Deep Rest",
     description: "2.5 Hz delta beat for deep rest.",
-    sbg: un
+    sbg: dn
   },
   {
     id: "classic-1998",
     name: "Classic 1998 SBaGen Demo",
     description: "A 15 minute SBaGen-style demo with timed ramps.",
-    sbg: dn
+    sbg: hn
   }
-], Ys = {
+], Gs = {
   brand: "Zonked",
   promise: "Free. Private. No account.",
   welcomeTitle: "Calm sound, made for you.",
@@ -622,25 +624,25 @@ back:  200+9/0.4 pink/10    # coming back up
   loading: "Loading",
   nav: ["Today", "Sounds", "Crew", "You"],
   sounds: (t) => `${t} ${t === 1 ? "sound" : "sounds"}`
-}, Gs = {
+}, Zs = {
   focus: "Focus",
   calm: "Calm down",
   sleep: "Sleep",
   study: "Study",
   recover: "Recover after work",
   curious: "Just curious"
-}, Zs = {
+}, Xs = {
   morning: "Morning",
   afternoon: "Afternoon",
   evening: "Evening",
   night: "Night",
   anytime: "Anytime"
-}, Xs = {
+}, Js = {
   headphones: "Headphones",
   speakers: "Speakers",
   bluetooth: "Bluetooth",
   unsure: "Not sure"
-}, Js = [
+}, Qs = [
   { id: "deep-work", label: "Focus", mood: "Steady and quiet", icon: "target" },
   { id: "adhd-focus", label: "Steady attention", mood: "Even and plain", icon: "wave" },
   { id: "ai-burnout", label: "Recover", mood: "Slow and soft", icon: "leaf" },
@@ -649,32 +651,32 @@ back:  200+9/0.4 pink/10    # coming back up
   { id: "lucid-dream", label: "Dream", mood: "Drifting", icon: "cloud" },
   { id: "meditate", label: "Meditate", mood: "Open and still", icon: "lotus" },
   { id: "quick-reset", label: "Quick reset", mood: "Short and light", icon: "bolt" }
-], Qs = {
+], ei = {
   strong: "Several studies exist.",
   mixed: "Studies disagree.",
   preliminary: "Early, small studies.",
   limited: "Very little research.",
   preference: "People simply like it."
 };
-function ei(t) {
+function ti(t) {
   return t >= 5 && t < 12 ? "Good morning." : t >= 12 && t < 17 ? "Good afternoon." : t >= 17 && t < 21 ? "Good evening." : "Hello, night owl.";
 }
-const hn = {
+const pn = {
   focus: "Your load looks light",
   flow: "Your load is building",
   recovery: "Your load is high",
   decompress: "Your load is very high"
 }, De = (t) => Number.isInteger(t) ? String(t) : t.toFixed(1);
-function ti(t) {
+function ni(t) {
   if (t.why !== void 0) return t.why;
   const { level: e, score: n } = t.burnout, { beatHz: s, transitionSec: i } = t.target, r = i < 90 ? `${Math.round(i)} s` : `${Math.round(i / 60)} min`, o = e === "focus" ? `holds a steady ${De(s)} Hz beat` : `eases the beat to ${De(s)} Hz over about ${r}`;
-  return `${hn[e]} (score ${Math.round(n)}), so the sound ${o}.`;
+  return `${pn[e]} (score ${Math.round(n)}), so the sound ${o}.`;
 }
-const ni = (t) => {
+const si = (t) => {
   const e = t.indexOf(". ");
   return e < 0 ? t : t.slice(0, e + 1);
-}, me = "zonked.timer.v1", pn = 2.5, Fe = 0.1, $e = 6, O = { countdownMin: 30, sleepMin: 30, focusMin: 25, breakMin: 5 }, mn = 1, fn = 720, gn = 500, fe = ["none", "countdown", "sleep-fade", "pomodoro"], yn = { kind: "none", running: !1, remainingSec: 0, totalSec: 0 }, Q = (t, e) => typeof t == "number" && Number.isFinite(t) ? Math.min(fn, Math.max(mn, t)) : e;
-class bn {
+}, me = "zonked.timer.v1", mn = 2.5, Fe = 0.1, $e = 6, O = { countdownMin: 30, sleepMin: 30, focusMin: 25, breakMin: 5 }, fn = 1, gn = 720, yn = 500, fe = ["none", "countdown", "sleep-fade", "pomodoro"], bn = { kind: "none", running: !1, remainingSec: 0, totalSec: 0 }, Q = (t, e) => typeof t == "number" && Number.isFinite(t) ? Math.min(gn, Math.max(fn, t)) : e;
+class wn {
   constructor(e, n = null) {
     c(this, "listeners", /* @__PURE__ */ new Set());
     c(this, "spec", null);
@@ -750,7 +752,7 @@ class bn {
     this.running = !0, this.lastMs = this.clock.now(), this.startPoll();
   }
   startPoll() {
-    this.poll === null && (this.poll = this.clock.setInterval(() => void this.changed(), gn));
+    this.poll === null && (this.poll = this.clock.setInterval(() => void this.changed(), yn));
   }
   stopPoll() {
     this.poll !== null && this.clock.clearInterval(this.poll), this.poll = null;
@@ -776,7 +778,7 @@ class bn {
   }
   build() {
     const e = this.spec;
-    if (e === null) return yn;
+    if (e === null) return bn;
     const n = this.segmentMs() / 1e3, s = Math.max(0, Math.ceil(n - this.elapsedMs / 1e3));
     if (e.kind === "pomodoro")
       return {
@@ -828,11 +830,11 @@ class bn {
       }
   }
 }
-const wn = {
+const vn = {
   now: () => Date.now(),
   setInterval: (t, e) => window.setInterval(t, e),
   clearInterval: (t) => window.clearInterval(t)
-}, We = ["off", "white", "pink", "brown", "violet"], R = 0.85, vn = 8, Sn = 3;
+}, We = ["off", "white", "pink", "brown", "violet"], R = 0.85, Sn = 8, Mn = 3;
 function at(t, e) {
   const n = Number.isFinite(e) ? e : H[t], s = Z;
   switch (t) {
@@ -860,15 +862,15 @@ function at(t, e) {
       return h(n, s.level.min, s.level.max);
   }
 }
-const Mn = 100, Ke = 0.25, kn = 3, Ln = 0.02, ge = (t, e, n) => t + (e - t) * n, h = (t, e, n) => t < e ? e : t > n ? n : t, q = (t, e) => Number.isFinite(t) ? t : e;
-function En() {
+const kn = 100, Ke = 0.25, Ln = 3, En = 0.02, ge = (t, e, n) => t + (e - t) * n, h = (t, e, n) => t < e ? e : t > n ? n : t, V = (t, e) => Number.isFinite(t) ? t : e;
+function Rn() {
   try {
     return typeof localStorage > "u" ? null : localStorage;
   } catch {
     return null;
   }
 }
-function Rn(t, e, n) {
+function An(t, e, n) {
   return {
     ...e,
     carrierHz: ge(t.carrierHz, e.carrierHz, n),
@@ -879,7 +881,7 @@ function Rn(t, e, n) {
 function Ue(t) {
   return Se.find((e) => e.id === t) ?? Se[0];
 }
-class An {
+class Tn {
   constructor(e, n, s, i = {}) {
     c(this, "listeners", /* @__PURE__ */ new Set());
     c(this, "mode");
@@ -921,7 +923,7 @@ class An {
     c(this, "startedAt", 0);
     c(this, "timer", null);
     var a;
-    this.engine = e, this.clock = n, this.onSession = s, this.toEvents = i.toEvents, this.timers = new bn(n, i.storage === void 0 ? En() : i.storage), this.timers.subscribe(() => {
+    this.engine = e, this.clock = n, this.onSession = s, this.toEvents = i.toEvents, this.timers = new wn(n, i.storage === void 0 ? Rn() : i.storage), this.timers.subscribe(() => {
       const u = this.timers.state().phase;
       this.playing && u === "break" && this.lastPhase !== "break" && (this.breakCount += 1), this.lastPhase = u, this.emit();
     }), this.timers.onEnd = (u) => {
@@ -1133,7 +1135,7 @@ class An {
   effective(e) {
     const n = this.timers.effects();
     this.gainScale = n.gainScale;
-    const s = e.beatHz + (pn - e.beatHz) * n.beatMix, i = Math.min(s, vn), r = h(s + (i - s) * this.breakMix, 0.5, 40), o = this.beatOverride ?? r, a = this.noiseOverride, u = h(e.gain + this.gainTrim, 0, R), m = this.source === "crew" ? Math.min(u, this.crewLevel, this.userCeiling) : u;
+    const s = e.beatHz + (mn - e.beatHz) * n.beatMix, i = Math.min(s, Sn), r = h(s + (i - s) * this.breakMix, 0.5, 40), o = this.beatOverride ?? r, a = this.noiseOverride, u = h(e.gain + this.gainTrim, 0, R), m = this.source === "crew" ? Math.min(u, this.crewLevel, this.userCeiling) : u;
     this.heardRaw = m;
     const y = this.muted ? 0 : m, b = Object.keys(this.layerOverrides).length > 0 ? { ...e.layers ?? H, ...this.layerOverrides } : e.layers;
     return {
@@ -1142,7 +1144,7 @@ class An {
       ...(a == null ? void 0 : a.noise) !== void 0 ? { noise: a.noise } : {},
       ...(a == null ? void 0 : a.noiseLevel) !== void 0 ? { noiseLevel: a.noiseLevel } : {},
       // Defense in depth: a non-finite gain (forged crew state) is silence, never NaN.
-      gain: q(Math.min(R, y * n.gainScale), 0),
+      gain: V(Math.min(R, y * n.gainScale), 0),
       ...b !== void 0 ? { layers: b } : {}
     };
   }
@@ -1150,9 +1152,9 @@ class An {
     const n = Math.max(0, e - this.lastTickMs);
     if (this.lastTickMs = e, this.source === "crew") {
       const r = Math.min(h(this.base.gain + this.gainTrim, 0, R), this.userCeiling);
-      this.crewLevel = r > this.crewLevel ? Math.min(r, this.crewLevel + Ln * n / 1e3) : r;
+      this.crewLevel = r > this.crewLevel ? Math.min(r, this.crewLevel + En * n / 1e3) : r;
     }
-    const s = this.timers.state().phase === "break" ? 1 : 0, i = n / (Sn * 1e3);
+    const s = this.timers.state().phase === "break" ? 1 : 0, i = n / (Mn * 1e3);
     this.breakMix = s > this.breakMix ? Math.min(s, this.breakMix + i) : Math.max(s, this.breakMix - i);
   }
   /** Manual preset choice. Overrides the crew until followCrew(). */
@@ -1205,7 +1207,7 @@ class An {
       this.emit();
       return;
     }
-    this.playing = !0, this.startedAt = e, this.peak = this.burnout ?? 0, this.endKind = "manual", this.breakCount = 0, this.lastPhase = this.timers.state().phase, this.timer = this.clock.setInterval(() => this.tick(), Mn), this.timers.resume(), this.emit();
+    this.playing = !0, this.startedAt = e, this.peak = this.burnout ?? 0, this.endKind = "manual", this.breakCount = 0, this.lastPhase = this.timers.state().phase, this.timer = this.clock.setInterval(() => this.tick(), kn), this.timers.resume(), this.emit();
   }
   async doStop() {
     var e, n;
@@ -1234,14 +1236,14 @@ class An {
     if (n.kind === "hold") return n.voice;
     if (n.kind === "script") return he(n.events, (e - n.startMs) / 1e3);
     const s = Math.min(1, Math.max(0, (e - n.startMs) / n.durMs));
-    return s >= 1 ? (this.mode = { kind: "hold", voice: n.to }, n.to) : Rn(n.from, n.to, s);
+    return s >= 1 ? (this.mode = { kind: "hold", voice: n.to }, n.to) : An(n.from, n.to, s);
   }
   restartModeClock(e) {
     const n = this.mode;
     n.kind !== "hold" && (this.mode = { ...n, startMs: e });
   }
   startScript(e) {
-    this.mode = { kind: "script", events: e, startMs: this.clock.now() }, this.base = he(e, 0), this.captureFromBase(), this.current = this.effective(this.base), this.playing && this.engine.setVoice(this.current, kn), this.emit();
+    this.mode = { kind: "script", events: e, startMs: this.clock.now() }, this.base = he(e, 0), this.captureFromBase(), this.current = this.effective(this.base), this.playing && this.engine.setVoice(this.current, Ln), this.emit();
   }
   enterCrew(e) {
     const n = this.clock.now();
@@ -1252,11 +1254,11 @@ class An {
     else {
       const i = e.target, r = {
         ...this.base,
-        carrierHz: h(q(i.carrierHz, this.base.carrierHz), 20, 1500),
-        beatHz: h(q(i.beatHz, this.base.beatHz), 0.5, 40),
-        gain: h(q(i.gain, 0), 0, R)
+        carrierHz: h(V(i.carrierHz, this.base.carrierHz), 20, 1500),
+        beatHz: h(V(i.beatHz, this.base.beatHz), 0.5, 40),
+        gain: h(V(i.gain, 0), 0, R)
       };
-      this.mode = { kind: "transition", from: this.base, to: r, startMs: n, durMs: h(q(i.transitionSec, 5), 0.1, 600) * 1e3 };
+      this.mode = { kind: "transition", from: this.base, to: r, startMs: n, durMs: h(V(i.transitionSec, 5), 0.1, 600) * 1e3 };
     }
     this.emit();
   }
@@ -1265,7 +1267,7 @@ class An {
     for (const n of this.listeners) n(e);
   }
 }
-const Tn = 1, Me = 200, Hn = 60, ye = 240, ct = ["off", "white", "pink", "brown", "violet"], zn = ["binaural", "monaural", "isochronic"], Cn = ["template", "preset", "custom", "mix"], Nn = ["none", "countdown", "sleep-fade", "pomodoro"], ke = (t, e, n) => t < e ? e : t > n ? n : t;
+const Hn = 1, Me = 200, zn = 60, ye = 240, ct = ["off", "white", "pink", "brown", "violet"], Cn = ["binaural", "monaural", "isochronic"], Nn = ["template", "preset", "custom", "mix"], Pn = ["none", "countdown", "sleep-fade", "pomodoro"], ke = (t, e, n) => t < e ? e : t > n ? n : t;
 function D(t) {
   return typeof t == "object" && t !== null && !Array.isArray(t);
 }
@@ -1275,9 +1277,9 @@ function p(t, e) {
 function N(t, e, n, s) {
   return typeof t == "number" && Number.isFinite(t) ? ke(t, e, n) : s;
 }
-function Pn(t, e) {
+function On(t, e) {
   if (typeof t != "string") return e;
-  const n = t.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, Hn);
+  const n = t.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, zn);
   return n.length > 0 ? n : e;
 }
 function lt(t) {
@@ -1286,17 +1288,17 @@ function lt(t) {
 function oe(t, e, n) {
   return typeof t == "string" && e.includes(t) ? t : n;
 }
-function On(t) {
+function xn(t) {
   return D(t) ? {
     carrierHz: N(p(t, "carrierHz"), l.carrierMin, l.carrierMax, 200),
     beatHz: N(p(t, "beatHz"), l.beatMin, l.beatMax, 10),
-    mode: oe(p(t, "mode"), zn, "binaural"),
+    mode: oe(p(t, "mode"), Cn, "binaural"),
     noise: oe(p(t, "noise"), ct, "off"),
     noiseLevel: N(p(t, "noiseLevel"), l.noiseMin, l.noiseMax, 0),
     gain: N(p(t, "gain"), l.gainMin, l.gainMax, 0.3)
   } : null;
 }
-function xn(t) {
+function In(t) {
   const e = {};
   if (!D(t)) return e;
   for (const n of Object.keys(H)) {
@@ -1305,81 +1307,81 @@ function xn(t) {
   }
   return e;
 }
-function In(t) {
+function _n(t) {
   if (!D(t)) return { kind: "none" };
-  const e = oe(p(t, "kind"), Nn, "none");
+  const e = oe(p(t, "kind"), Pn, "none");
   return e === "countdown" || e === "sleep-fade" ? { kind: e, minutes: Math.round(N(p(t, "minutes"), 1, ye, 30)) } : e === "pomodoro" ? {
     kind: e,
     focusMin: Math.round(N(p(t, "focusMin"), 1, ye, 25)),
     breakMin: Math.round(N(p(t, "breakMin"), 1, ye, 5))
   } : { kind: "none" };
 }
-function _n(t) {
-  return D(t) ? { kind: oe(p(t, "kind"), Cn, "custom"), id: lt(p(t, "id")) ?? "custom" } : { kind: "custom", id: "custom" };
-}
 function Bn(t) {
+  return D(t) ? { kind: oe(p(t, "kind"), Nn, "custom"), id: lt(p(t, "id")) ?? "custom" } : { kind: "custom", id: "custom" };
+}
+function Dn(t) {
   if (!D(t)) return null;
-  const e = On(p(t, "voice"));
+  const e = xn(p(t, "voice"));
   if (e === null) return null;
   const n = p(t, "beatOverride"), s = p(t, "noiseOverride"), i = D(s) ? p(s, "noise") : void 0, r = D(s) ? p(s, "noiseLevel") : void 0, o = {
     ...typeof i == "string" && ct.includes(i) ? { noise: i } : {},
     ...typeof r == "number" && Number.isFinite(r) ? { noiseLevel: ke(r, l.noiseMin, l.noiseMax) } : {}
   };
   return {
-    source: _n(p(t, "source")),
+    source: Bn(p(t, "source")),
     voice: e,
-    layers: xn(p(t, "layers")),
-    timer: In(p(t, "timer")),
+    layers: In(p(t, "layers")),
+    timer: _n(p(t, "timer")),
     ...typeof n == "number" && Number.isFinite(n) ? { beatOverride: ke(n, l.beatMin, l.beatMax) } : {},
     ...Object.keys(o).length > 0 ? { noiseOverride: o } : {}
   };
 }
-function Dn(t, e) {
-  if (!D(t) || p(t, "v") !== Tn) return null;
-  const n = lt(p(t, "id")), s = Bn(t);
+function Fn(t, e) {
+  if (!D(t) || p(t, "v") !== Hn) return null;
+  const n = lt(p(t, "id")), s = Dn(t);
   if (n === null || s === null) return null;
   const i = N(p(t, "createdAt"), 0, e + 864e5, e), r = N(p(t, "updatedAt"), 0, e + 864e5, i);
-  return { ...s, v: 1, id: n, name: Pn(p(t, "name"), "My mix"), createdAt: i, updatedAt: r };
+  return { ...s, v: 1, id: n, name: On(p(t, "name"), "My mix"), createdAt: i, updatedAt: r };
 }
-const si = 3e4, Fn = 30 * 6e4, $n = { state: null, source: "none", changedAtMs: 0, snoozeUntilMs: 0, demoNextAtMs: null };
-let M = $n, K = null;
-const Le = /* @__PURE__ */ new Set(), ii = () => M;
-function ri(t) {
+const ii = 3e4, $n = 30 * 6e4, Wn = { state: null, source: "none", changedAtMs: 0, snoozeUntilMs: 0, demoNextAtMs: null };
+let k = Wn, q = null;
+const Le = /* @__PURE__ */ new Set(), ri = () => k;
+function oi(t) {
   return Le.add(t), () => void Le.delete(t);
 }
 function le(t) {
-  M = t;
+  k = t;
   for (const e of [...Le]) e();
 }
-const Wn = (t, e) => t !== null && t.target.beatHz === e.target.beatHz && t.target.carrierHz === e.target.carrierHz && t.target.gain === e.target.gain;
-function Kn(t, e, n = Date.now()) {
-  if (M.source === "demo") return;
-  const s = !Wn(M.state, e);
-  le({ ...M, state: e, source: "bridge", changedAtMs: s ? n : M.changedAtMs }), n >= M.snoozeUntilMs && t.applyCrew(e);
+const Kn = (t, e) => t !== null && t.target.beatHz === e.target.beatHz && t.target.carrierHz === e.target.carrierHz && t.target.gain === e.target.gain;
+function Un(t, e, n = Date.now()) {
+  if (k.source === "demo") return;
+  const s = !Kn(k.state, e);
+  le({ ...k, state: e, source: "bridge", changedAtMs: s ? n : k.changedAtMs }), n >= k.snoozeUntilMs && t.applyCrew(e);
 }
-function Un() {
-  M.source === "bridge" && le({ ...M, state: null, source: "none", changedAtMs: 0 });
+function qn() {
+  k.source === "bridge" && le({ ...k, state: null, source: "none", changedAtMs: 0 });
 }
-function oi(t, e = Date.now(), n = Fn) {
-  K !== null && clearTimeout(K), le({ ...M, snoozeUntilMs: e + n }), K = setTimeout(() => qn(t), n);
+function ai(t, e = Date.now(), n = $n) {
+  q !== null && clearTimeout(q), le({ ...k, snoozeUntilMs: e + n }), q = setTimeout(() => jn(t), n);
 }
-function qn(t) {
-  K !== null && clearTimeout(K), K = null, le({ ...M, snoozeUntilMs: 0 }), M.source === "bridge" && M.state !== null && t.applyCrew(M.state);
+function jn(t) {
+  q !== null && clearTimeout(q), q = null, le({ ...k, snoozeUntilMs: 0 }), k.source === "bridge" && k.state !== null && t.applyCrew(k.state);
 }
-const jn = 160;
-function Vn(t) {
+const Vn = 160;
+function Yn(t) {
   if (typeof t != "string") return null;
-  const e = t.slice(0, 4096).replace(/[\p{Cc}\u2028\u2029\u202A-\u202E\u2066-\u2069\u200B-\u200F\uFEFF]/gu, " ").replace(/\s+/g, " ").trim(), n = Array.from(e).slice(0, jn).join("").trim();
+  const e = t.slice(0, 4096).replace(/[\p{Cc}\u2028\u2029\u202A-\u202E\u2066-\u2069\u200B-\u200F\uFEFF]/gu, " ").replace(/\s+/g, " ").trim(), n = Array.from(e).slice(0, Vn).join("").trim();
   return n.length > 0 ? n : null;
 }
-const Yn = 5, Gn = 600;
-function j(t, e, n) {
+const Gn = 5, Zn = 600;
+function Y(t, e, n) {
   return Math.min(n, Math.max(e, t));
 }
 function be(t) {
   return typeof t == "object" && t !== null && !Array.isArray(t);
 }
-function Zn(t) {
+function Xn(t) {
   return t < 40 ? "focus" : t < 60 ? "flow" : t < 80 ? "recovery" : "decompress";
 }
 function ut(t) {
@@ -1389,17 +1391,17 @@ function ut(t) {
   const s = e.score, i = n.beatHz, r = n.carrierHz, o = n.gain, a = n.transitionSec;
   if (![s, i, r, o, a].every((z) => typeof z == "number" && Number.isFinite(z)))
     return null;
-  const u = j(s, 0, 100), m = Zn(u), y = n.presetId, f = t.sbg, b = t.at, P = Vn(t.why);
+  const u = Y(s, 0, 100), m = Xn(u), y = n.presetId, f = t.sbg, b = t.at, P = Yn(t.why);
   return {
     version: 1,
     at: typeof b == "number" && Number.isFinite(b) ? Math.trunc(b) : 0,
     burnout: { score: u, level: m },
     target: {
       ...typeof y == "string" && y.length > 0 && y.length <= 64 ? { presetId: y } : {},
-      beatHz: j(i, l.beatMin, l.beatMax),
-      carrierHz: j(r, l.carrierMin, l.carrierMax),
-      gain: j(o, l.gainMin, l.gainMax),
-      transitionSec: j(a, Yn, Gn),
+      beatHz: Y(i, l.beatMin, l.beatMax),
+      carrierHz: Y(r, l.carrierMin, l.carrierMax),
+      gain: Y(o, l.gainMin, l.gainMax),
+      transitionSec: Y(a, Gn, Zn),
       breathe: n.breathe === !0
     },
     sbg: typeof f == "string" && f.length <= T.maxBytes ? f : null,
@@ -1407,31 +1409,31 @@ function ut(t) {
   };
 }
 let dt = null;
-function Xn(t) {
+function Jn(t) {
   dt = t;
 }
-function ai() {
+function ci() {
   return dt;
 }
-const Ee = 0.85, ci = 2, li = 0.3, ui = 0.15, di = 0.4, Jn = 0.6, qe = 0.95, X = (t, e, n) => t < e ? e : t > n ? n : t;
-function Qn(t, e = 0) {
+const Ee = 0.85, li = 2, ui = 0.3, di = 0.15, hi = 0.4, Qn = 0.6, qe = 0.95, X = (t, e, n) => t < e ? e : t > n ? n : t;
+function es(t, e = 0) {
   return Number.isFinite(t) ? X(t, 0, Ee) : X(Number.isFinite(e) ? e : 0, 0, Ee);
 }
-function es(t, e = 0) {
+function ts(t, e = 0) {
   return Number.isFinite(t) ? X(t, 0, 1) : X(Number.isFinite(e) ? e : 0, 0, 1);
 }
-function hi(t) {
-  return 1 - Jn * es(t);
-}
 function pi(t) {
-  return Qn(t) / Ee;
+  return 1 - Qn * ts(t);
 }
-function ts(t = 2049) {
+function mi(t) {
+  return es(t) / Ee;
+}
+function ns(t = 2049) {
   const e = Math.max(3, t | 0), n = new Float32Array(e);
   for (let s = 0; s < e; s++) n[s] = X(s / (e - 1) * 2 - 1, -qe, qe);
   return n;
 }
-const ns = "zonked.safety.v1", je = "zonked.reduceMotion";
+const ss = "zonked.safety.v1", je = "zonked.reduceMotion";
 function Ne(t, e = ht()) {
   try {
     return (e == null ? void 0 : e.getItem(t)) === "1";
@@ -1452,14 +1454,14 @@ function ht() {
     return;
   }
 }
-function ss() {
+function is() {
   try {
     return typeof localStorage > "u" ? null : localStorage;
   } catch {
     return null;
   }
 }
-function mi() {
+function fi() {
   const [t, e] = Ie(() => Ne(je)), [n, s] = Ie(() => {
     var r;
     return ((r = window.matchMedia) == null ? void 0 : r.call(window, "(prefers-reduced-motion: reduce)").matches) ?? !1;
@@ -1474,11 +1476,12 @@ function mi() {
     Pe(je, r), e(r);
   }, t];
 }
-const is = "" + new URL("assets/worklet-CT8dHE_F.js", import.meta.url).href, rs = new URL(new URL("assets/dsp_core.wasm.json", import.meta.url).href).href, os = "audio-unsupported", k = {
+const rs = "" + new URL("assets/worklet-CT8dHE_F.js", import.meta.url).href, os = new URL(new URL("assets/dsp_core.wasm.json", import.meta.url).href).href, as = "audio-unsupported", S = {
   carrierHz: { min: 20, max: 1500, def: 200 },
   beatHz: { min: 0.5, max: 40, def: 10 },
   gain: { min: 0, max: 0.85 },
   noiseLevel: { min: 0, max: 1 },
+  beatLevel: { min: 0, max: 1, def: 1 },
   rampSec: { min: 0.05, max: 30, def: 0.05 }
 }, ae = 32, d = {
   carrierHz: 0,
@@ -1488,7 +1491,8 @@ const is = "" + new URL("assets/worklet-CT8dHE_F.js", import.meta.url).href, rs 
   noiseKind: 4,
   noiseLevel: 5,
   rampSec: 6,
-  reserved: 7,
+  /** Beat voice level, 0..1, default 1. Slot 7 was reserved (always 0) before the tone-off flag. */
+  beatLevel: 7,
   lofiLevel: 8,
   lofiWarmth: 9,
   crackle: 10,
@@ -1513,27 +1517,27 @@ const is = "" + new URL("assets/worklet-CT8dHE_F.js", import.meta.url).href, rs 
   stereoWidth: 29,
   panDepth: 30,
   panRateHz: 31
-}, as = 4 + ae * 4;
-function S(t, e, n, s) {
+}, cs = 4 + ae * 4;
+function M(t, e, n, s) {
   return typeof t != "number" || !Number.isFinite(t) ? s : t < e ? e : t > n ? n : t;
 }
-const pt = (t, e = k.carrierHz.def) => S(t, k.carrierHz.min, k.carrierHz.max, e), mt = (t, e = k.beatHz.def) => S(t, k.beatHz.min, k.beatHz.max, e), ft = (t, e = 0) => S(t, k.gain.min, k.gain.max, e), gt = (t, e = 0) => S(t, k.noiseLevel.min, k.noiseLevel.max, e), yt = (t, e = k.rampSec.def) => S(t, k.rampSec.min, k.rampSec.max, e), w = Z, E = (t, e) => S(t, w.level.min, w.level.max, e), ee = (t, e = 0) => S(typeof t == "number" ? Math.round(t) : t, 0, w.enumMax, e), Ve = (t, e) => S(t, w.bpm.min, w.bpm.max, e);
-function bt(t) {
+const pt = (t, e = S.carrierHz.def) => M(t, S.carrierHz.min, S.carrierHz.max, e), mt = (t, e = S.beatHz.def) => M(t, S.beatHz.min, S.beatHz.max, e), ft = (t, e = 0) => M(t, S.gain.min, S.gain.max, e), gt = (t, e = 0) => M(t, S.noiseLevel.min, S.noiseLevel.max, e), yt = (t, e = S.beatLevel.def) => t === void 0 ? e : M(t, S.beatLevel.min, S.beatLevel.max, e), bt = (t, e = S.rampSec.def) => M(t, S.rampSec.min, S.rampSec.max, e), w = Z, E = (t, e) => M(t, w.level.min, w.level.max, e), ee = (t, e = 0) => M(typeof t == "number" ? Math.round(t) : t, 0, w.enumMax, e), Ve = (t, e) => M(t, w.bpm.min, w.bpm.max, e);
+function wt(t) {
   const e = H, n = t ?? e;
   return {
     lofiLevel: E(n.lofiLevel, e.lofiLevel),
     lofiWarmth: E(n.lofiWarmth, e.lofiWarmth),
     crackle: E(n.crackle, e.crackle),
     instLevel: E(n.instLevel, e.instLevel),
-    instKind: S(typeof n.instKind == "number" ? Math.round(n.instKind) : n.instKind, 0, w.instKindMax, e.instKind),
-    instRootHz: S(n.instRootHz, w.instRootHz.min, w.instRootHz.max, e.instRootHz),
+    instKind: M(typeof n.instKind == "number" ? Math.round(n.instKind) : n.instKind, 0, w.instKindMax, e.instKind),
+    instRootHz: M(n.instRootHz, w.instRootHz.min, w.instRootHz.max, e.instRootHz),
     instScale: ee(n.instScale, e.instScale),
     instBpm: Ve(n.instBpm, e.instBpm),
     padLevel: E(n.padLevel, e.padLevel),
     padChord: ee(n.padChord, e.padChord),
-    padRootHz: S(n.padRootHz, w.padRootHz.min, w.padRootHz.max, e.padRootHz),
+    padRootHz: M(n.padRootHz, w.padRootHz.min, w.padRootHz.max, e.padRootHz),
     chimeLevel: E(n.chimeLevel, e.chimeLevel),
-    chimeRatePerMin: S(n.chimeRatePerMin, w.chimeRatePerMin.min, w.chimeRatePerMin.max, e.chimeRatePerMin),
+    chimeRatePerMin: M(n.chimeRatePerMin, w.chimeRatePerMin.min, w.chimeRatePerMin.max, e.chimeRatePerMin),
     percLevel: E(n.percLevel, e.percLevel),
     percBpm: Ve(n.percBpm, e.percBpm),
     percPattern: ee(n.percPattern, e.percPattern),
@@ -1541,31 +1545,32 @@ function bt(t) {
     tapeWow: E(n.tapeWow, e.tapeWow),
     pianoPedal: E(n.pianoPedal, e.pianoPedal),
     breathDepth: E(n.breathDepth, e.breathDepth),
-    breathRateHz: S(n.breathRateHz, w.breathRateHz.min, w.breathRateHz.max, e.breathRateHz),
+    breathRateHz: M(n.breathRateHz, w.breathRateHz.min, w.breathRateHz.max, e.breathRateHz),
     stereoWidth: E(n.stereoWidth, e.stereoWidth),
     panDepth: E(n.panDepth, e.panDepth),
-    panRateHz: S(n.panRateHz, w.panRateHz.min, w.panRateHz.max, e.panRateHz)
+    panRateHz: M(n.panRateHz, w.panRateHz.min, w.panRateHz.max, e.panRateHz)
   };
 }
-const wt = { binaural: 0, monaural: 1, isochronic: 2 }, vt = { off: 0, white: 1, pink: 2, brown: 3, violet: 4 };
-function cs(t, e) {
+const vt = { binaural: 0, monaural: 1, isochronic: 2 }, St = { off: 0, white: 1, pink: 2, brown: 3, violet: 4 };
+function ls(t, e) {
   e[d.lofiLevel] = t.lofiLevel, e[d.lofiWarmth] = t.lofiWarmth, e[d.crackle] = t.crackle, e[d.instLevel] = t.instLevel, e[d.instKind] = t.instKind, e[d.instRootHz] = t.instRootHz, e[d.instScale] = t.instScale, e[d.instBpm] = t.instBpm, e[d.padLevel] = t.padLevel, e[d.padChord] = t.padChord, e[d.padRootHz] = t.padRootHz, e[d.chimeLevel] = t.chimeLevel, e[d.chimeRatePerMin] = t.chimeRatePerMin, e[d.percLevel] = t.percLevel, e[d.percBpm] = t.percBpm, e[d.percPattern] = t.percPattern, e[d.lofiProgression] = t.lofiProgression, e[d.tapeWow] = t.tapeWow, e[d.pianoPedal] = t.pianoPedal, e[d.breathDepth] = t.breathDepth, e[d.breathRateHz] = t.breathRateHz, e[d.stereoWidth] = t.stereoWidth, e[d.panDepth] = t.panDepth, e[d.panRateHz] = t.panRateHz;
 }
-function ls(t, e, n) {
-  return n[d.carrierHz] = pt(t.carrierHz), n[d.beatHz] = mt(t.beatHz), n[d.gain] = ft(t.gain), n[d.mode] = wt[t.mode] ?? 0, n[d.noiseKind] = vt[t.noise] ?? 0, n[d.noiseLevel] = gt(t.noiseLevel), n[d.rampSec] = yt(e), n[d.reserved] = 0, cs(bt(t.layers), n), n;
+function us(t, e, n) {
+  return n[d.carrierHz] = pt(t.carrierHz), n[d.beatHz] = mt(t.beatHz), n[d.gain] = ft(t.gain), n[d.mode] = vt[t.mode] ?? 0, n[d.noiseKind] = St[t.noise] ?? 0, n[d.noiseLevel] = gt(t.noiseLevel), n[d.rampSec] = bt(e), n[d.beatLevel] = yt(t.beatLevel), ls(wt(t.layers), n), n;
 }
 function Ye(t, e) {
   return {
     carrierHz: pt(t.carrierHz, e == null ? void 0 : e.carrierHz),
     beatHz: mt(t.beatHz, e == null ? void 0 : e.beatHz),
-    noise: t.noise in vt ? t.noise : (e == null ? void 0 : e.noise) ?? "off",
+    noise: t.noise in St ? t.noise : (e == null ? void 0 : e.noise) ?? "off",
     noiseLevel: gt(t.noiseLevel, e == null ? void 0 : e.noiseLevel),
-    mode: t.mode in wt ? t.mode : (e == null ? void 0 : e.mode) ?? "binaural",
+    mode: t.mode in vt ? t.mode : (e == null ? void 0 : e.mode) ?? "binaural",
     gain: ft(t.gain, e == null ? void 0 : e.gain),
-    ...t.layers !== void 0 ? { layers: bt(t.layers) } : {}
+    ...t.beatLevel !== void 0 ? { beatLevel: yt(t.beatLevel, e == null ? void 0 : e.beatLevel) } : {},
+    ...t.layers !== void 0 ? { layers: wt(t.layers) } : {}
   };
 }
-class us {
+class ds {
   constructor(e) {
     c(this, "seq");
     c(this, "data");
@@ -1577,15 +1582,15 @@ class us {
     Atomics.add(this.seq, 0, 1);
   }
 }
-const G = 8192, ds = G - 1, St = 8, hs = St + G * 2 * 4;
-function ps(t) {
-  return new SharedArrayBuffer(hs);
+const G = 8192, hs = G - 1, Mt = 8, ps = Mt + G * 2 * 4;
+function ms(t) {
+  return new SharedArrayBuffer(ps);
 }
-class ms {
+class fs {
   constructor(e) {
     c(this, "idx");
     c(this, "ring");
-    this.idx = new Int32Array(e, 0, 2), this.ring = new Float32Array(e, St, G * 2);
+    this.idx = new Int32Array(e, 0, 2), this.ring = new Float32Array(e, Mt, G * 2);
   }
   read(e) {
     const n = Atomics.load(this.idx, 0), s = Atomics.load(this.idx, 1);
@@ -1595,14 +1600,14 @@ class ms {
     const r = Math.min(i, e.length >> 1);
     let o = n - r | 0;
     for (let a = 0; a < r; a++) {
-      const u = (o & ds) * 2;
+      const u = (o & hs) * 2;
       e[a * 2] = this.ring[u] ?? 0, e[a * 2 + 1] = this.ring[u + 1] ?? 0, o = o + 1 | 0;
     }
     return Atomics.store(this.idx, 1, n), r;
   }
 }
-const Ge = { read: () => 0 }, te = 2, Ze = 0.3, fs = 1e3;
-class gs {
+const Ge = { read: () => 0 }, te = 2, Ze = 0.3, gs = 1e3;
+class ys {
   constructor() {
     c(this, "_status");
     c(this, "listeners", /* @__PURE__ */ new Set());
@@ -1663,11 +1668,11 @@ class gs {
   }
   async build() {
     const e = new AudioContext({ latencyHint: "interactive" });
-    if (this.ctx = e, typeof AudioWorkletNode > "u" || e.audioWorklet === void 0) throw new Error(os);
-    await e.audioWorklet.addModule(is);
-    const n = await fetch(rs);
+    if (this.ctx = e, typeof AudioWorkletNode > "u" || e.audioWorklet === void 0) throw new Error(as);
+    await e.audioWorklet.addModule(rs);
+    const n = await fetch(os);
     if (!n.ok) throw new Error(`wasm fetch failed: ${n.status}`);
-    const s = await n.arrayBuffer(), i = typeof SharedArrayBuffer < "u" && this._status.crossOriginIsolated, r = i ? new SharedArrayBuffer(as) : void 0, o = i ? ps() : void 0, a = new AudioWorkletNode(e, "zonked-dsp", { numberOfInputs: 0, outputChannelCount: [2] }), u = new Promise((b, P) => {
+    const s = await n.arrayBuffer(), i = typeof SharedArrayBuffer < "u" && this._status.crossOriginIsolated, r = i ? new SharedArrayBuffer(cs) : void 0, o = i ? ms() : void 0, a = new AudioWorkletNode(e, "zonked-dsp", { numberOfInputs: 0, outputChannelCount: [2] }), u = new Promise((b, P) => {
       a.port.onmessage = (z) => {
         const C = z.data;
         C.type === "ready" ? b() : C.type === "error" ? P(new Error(C.message ?? "worklet init failed")) : this.onWorkletMessage(z.data);
@@ -1677,7 +1682,7 @@ class gs {
     const m = e.createGain();
     m.gain.value = 0;
     const y = e.createGain(), f = e.createWaveShaper();
-    f.curve = ts(), a.connect(y).connect(m).connect(f).connect(e.destination), Xn({ ctx: e, input: m, duck: y }), this.node = a, this.master = m, this.writer = r ? new us(r) : null, this.tele = o ? new ms(o) : Ge, this.setStatus({ sampleRate: e.sampleRate, usesSharedMemory: i });
+    f.curve = ns(), a.connect(y).connect(m).connect(f).connect(e.destination), Jn({ ctx: e, input: m, duck: y }), this.node = a, this.master = m, this.writer = r ? new ds(r) : null, this.tele = o ? new fs(o) : Ge, this.setStatus({ sampleRate: e.sampleRate, usesSharedMemory: i });
   }
   onWorkletMessage(e) {
     if (e.type === "stats") {
@@ -1693,11 +1698,11 @@ class gs {
   }
   pushVoice(e, n) {
     var s;
-    ls(e, n, this.block), this.writer !== null ? this.writer.write(this.block) : (s = this.node) == null || s.port.postMessage({ type: "params", p: new Float32Array(this.block) });
+    us(e, n, this.block), this.writer !== null ? this.writer.write(this.block) : (s = this.node) == null || s.port.postMessage({ type: "params", p: new Float32Array(this.block) });
   }
   setVoice(e, n) {
     this.voice = Ye(e, this.voice ?? void 0);
-    let s = yt(n ?? 0.05);
+    let s = bt(n ?? 0.05);
     this.ctx !== null && this.ctx.currentTime - this.startedAt < 2 * te && (s = Math.max(s, te)), this.pushVoice(this.voice, s);
   }
   stop() {
@@ -1744,18 +1749,18 @@ class gs {
     return n === null ? Promise.resolve(e) : new Promise((s) => {
       const i = ++this.statsId, r = setTimeout(() => {
         this.pending.delete(i), s(e);
-      }, fs);
+      }, gs);
       this.pending.set(i, { resolve: s, timer: r }), n.port.postMessage({ type: "stats-request", id: i });
     });
   }
 }
-function ys() {
-  return new gs();
+function bs() {
+  return new ys();
 }
 const Xe = 15, ue = (t) => {
   const e = t.mediaSession;
   return e ?? void 0;
-}, bs = [
+}, ws = [
   { src: "/pwa-512x512.png", sizes: "512x512", type: "image/png" },
   { src: "/pwa-192x192.png", sizes: "192x192", type: "image/png" }
 ], Je = [
@@ -1767,7 +1772,7 @@ const Xe = 15, ue = (t) => {
   "seekforward",
   "seekbackward"
 ];
-function ws(t, e) {
+function vs(t, e) {
   switch (t) {
     case "play":
       return () => e.play();
@@ -1799,7 +1804,7 @@ function ws(t, e) {
       return null;
   }
 }
-function Mt(t, e = navigator) {
+function kt(t, e = navigator) {
   const n = ue(e);
   if (!(n === void 0 || typeof MediaMetadata > "u"))
     try {
@@ -1807,7 +1812,7 @@ function Mt(t, e = navigator) {
         title: (t == null ? void 0 : t.name) ?? "Zonked",
         artist: "Zonked",
         album: (t == null ? void 0 : t.category) ?? "Acoustic recovery",
-        artwork: bs
+        artwork: ws
       });
     } catch {
     }
@@ -1825,14 +1830,14 @@ function Qe(t, e, n = navigator) {
     } catch {
     }
 }
-function vs(t, e = navigator) {
+function Ss(t, e = navigator) {
   const n = ue(e);
   if (n === void 0) return () => {
   };
-  Mt(null, e);
+  kt(null, e);
   for (const s of Je)
     try {
-      n.setActionHandler(s, ws(s, t));
+      n.setActionHandler(s, vs(s, t));
     } catch {
     }
   return () => {
@@ -1848,7 +1853,7 @@ function vs(t, e = navigator) {
     }
   };
 }
-function Ss(t, e = navigator) {
+function Ms(t, e = navigator) {
   const n = ue(e);
   n !== void 0 && (n.playbackState = t ? "playing" : "paused");
 }
@@ -1863,7 +1868,7 @@ async function et(t) {
   }
   return !0;
 }
-function Ms(t) {
+function ks(t) {
   const e = t.doc ?? (typeof document > "u" ? void 0 : document), n = t.win ?? (typeof window > "u" ? void 0 : window), s = () => {
     var o;
     const r = (e == null ? void 0 : e.hidden) === !0;
@@ -1874,7 +1879,7 @@ function Ms(t) {
   };
 }
 const tt = "zonked.wakeLock";
-class ks {
+class Ls {
   constructor(e = typeof navigator > "u" ? {} : navigator, n = null) {
     c(this, "sentinel", null);
     c(this, "enabled");
@@ -1953,18 +1958,18 @@ class ks {
     }
   }
 }
-const Ls = ["favorites", "milestones"], Es = "zonked", I = "scripts", _ = "logs", A = "mixes", B = "records", Rs = 2, Oe = 80, $ = (t) => typeof t == "number" && Number.isFinite(t);
+const Es = ["favorites", "milestones"], Rs = "zonked", I = "scripts", _ = "logs", A = "mixes", B = "records", As = 2, Oe = 80, $ = (t) => typeof t == "number" && Number.isFinite(t);
 function nt(t) {
   if (typeof t != "object" || t === null) return !1;
   const e = t;
   return $(e.id) && typeof e.name == "string" && e.name.length >= 1 && e.name.length <= Oe && typeof e.text == "string" && e.text.length <= T.maxBytes && $(e.updatedAt);
 }
-function As(t) {
+function Ts(t) {
   if (typeof t != "object" || t === null) return !1;
   const e = t;
   return $(e.id) && $(e.startedAt) && $(e.endedAt) && $(e.peakScore) && typeof e.presetId == "string" && e.presetId.length <= Oe;
 }
-function Ts(t) {
+function Hs(t) {
   const e = { id: t.id, startedAt: t.startedAt, endedAt: t.endedAt, peakScore: t.peakScore, presetId: t.presetId }, n = t, s = n.endKind, i = n.breaks;
   return {
     ...e,
@@ -1982,28 +1987,28 @@ function F(t) {
     t.oncomplete = () => e(), t.onerror = () => n(t.error ?? new Error("IndexedDB transaction failed")), t.onabort = () => n(t.error ?? new Error("IndexedDB transaction aborted"));
   });
 }
-function Hs(t) {
+function zs(t) {
   return new Promise((e, n) => {
-    const s = t.open(Es, Rs);
+    const s = t.open(Rs, As);
     s.onupgradeneeded = () => {
       const i = s.result, r = (o) => i.objectStoreNames.contains(o);
       r(I) || i.createObjectStore(I, { keyPath: "id", autoIncrement: !0 }), r(_) || i.createObjectStore(_, { keyPath: "id", autoIncrement: !0 }), r(A) || i.createObjectStore(A, { keyPath: "id" }), r(B) || i.createObjectStore(B);
     }, s.onsuccess = () => e(s.result), s.onerror = () => n(s.error ?? new Error("IndexedDB open failed")), s.onblocked = () => n(new Error("IndexedDB open blocked"));
   });
 }
-function kt(t, e) {
+function Lt(t, e) {
   if (e.length > T.maxBytes) throw new RangeError("Script exceeds 256 KB");
   const n = t.trim().slice(0, Oe);
   return n.length > 0 ? n : "Untitled";
 }
-function zs() {
+function Cs() {
   let t = 1;
   const e = [], n = [], s = /* @__PURE__ */ new Map(), i = /* @__PURE__ */ new Map();
   return {
     persistent: () => Promise.resolve(!1),
     saveScript(r, o) {
       var y;
-      const a = kt(r, o), u = { id: ((y = e.find((f) => f.name === a)) == null ? void 0 : y.id) ?? t++, name: a, text: o, updatedAt: Date.now() }, m = e.findIndex((f) => f.id === u.id);
+      const a = Lt(r, o), u = { id: ((y = e.find((f) => f.name === a)) == null ? void 0 : y.id) ?? t++, name: a, text: o, updatedAt: Date.now() }, m = e.findIndex((f) => f.id === u.id);
       return m >= 0 ? e[m] = u : e.push(u), Promise.resolve(u);
     },
     listScripts: () => Promise.resolve([...e].sort((r, o) => o.updatedAt - r.updatedAt)),
@@ -2031,17 +2036,17 @@ function zs() {
     }
   };
 }
-function Cs(t = globalThis.indexedDB) {
-  const e = zs();
+function Ns(t = globalThis.indexedDB) {
+  const e = Cs();
   if (t === void 0) return e;
   let n = null;
-  const s = () => (n ?? (n = Hs(t).catch(() => null)), n);
+  const s = () => (n ?? (n = zs(t).catch(() => null)), n);
   return {
     persistent: async () => await s() !== null,
     async saveScript(i, r) {
       const o = await s();
       if (o === null) return e.saveScript(i, r);
-      const a = kt(i, r), u = o.transaction(I, "readwrite"), m = u.objectStore(I), f = (await x(m.getAll())).filter(nt).find((z) => z.name === a), b = { name: a, text: r, updatedAt: Date.now() }, P = await x(m.put(f ? { ...b, id: f.id } : b));
+      const a = Lt(i, r), u = o.transaction(I, "readwrite"), m = u.objectStore(I), f = (await x(m.getAll())).filter(nt).find((z) => z.name === a), b = { name: a, text: r, updatedAt: Date.now() }, P = await x(m.put(f ? { ...b, id: f.id } : b));
       return await F(u), { ...b, id: Number(P) };
     },
     async listScripts() {
@@ -2062,13 +2067,13 @@ function Cs(t = globalThis.indexedDB) {
     },
     async listLogs(i = 50) {
       const r = await s();
-      return r === null ? e.listLogs(i) : (await x(r.transaction(_).objectStore(_).getAll())).filter(As).map(Ts).sort((a, u) => u.startedAt - a.startedAt).slice(0, i);
+      return r === null ? e.listLogs(i) : (await x(r.transaction(_).objectStore(_).getAll())).filter(Ts).map(Hs).sort((a, u) => u.startedAt - a.startedAt).slice(0, i);
     },
     async listMixes() {
       const i = await s();
       if (i === null) return e.listMixes();
       const r = await x(i.transaction(A).objectStore(A).getAll()), o = Date.now();
-      return r.map((a) => Dn(a, o)).filter((a) => a !== null).sort((a, u) => u.updatedAt - a.updatedAt).slice(0, Me);
+      return r.map((a) => Fn(a, o)).filter((a) => a !== null).sort((a, u) => u.updatedAt - a.updatedAt).slice(0, Me);
     },
     async putMix(i) {
       const r = await s();
@@ -2086,7 +2091,7 @@ function Cs(t = globalThis.indexedDB) {
     },
     async getRecord(i) {
       const r = await s();
-      return r === null || !Ls.includes(i) ? e.getRecord(i) : await x(r.transaction(B).objectStore(B).get(i));
+      return r === null || !Es.includes(i) ? e.getRecord(i) : await x(r.transaction(B).objectStore(B).get(i));
     },
     async setRecord(i, r) {
       const o = await s();
@@ -2102,49 +2107,49 @@ function Cs(t = globalThis.indexedDB) {
     }
   };
 }
-const Ns = 5, Ps = (t) => xt(t);
+const Ps = 5, Os = (t) => It(t);
 let ne = null;
-const Os = () => Ne(ns);
-function xs(t, e, n) {
-  vs({
+const xs = () => Ne(ss);
+function Is(t, e, n) {
+  Ss({
     // A lock-screen play only resumes after the notice was accepted once.
     play: () => {
-      Os() && !t.snapshot().playing && t.play();
+      xs() && !t.snapshot().playing && t.play();
     },
     pause: () => void t.stop(),
     stop: () => void t.stop(),
     seekBy: (i) => t.seekBy(i)
-  }), Ms({
+  }), ks({
     engine: e,
     isPlaying: () => t.snapshot().playing,
     onVisibility: (i) => void n.setHidden(i)
   });
   let s = "";
   t.subscribe((i) => {
-    const r = Math.floor(i.elapsedSec / Ns), o = `${String(i.playing)}|${i.templateId ?? ""}|${i.timer.kind}|${i.timer.phase}|${String(r)}`;
+    const r = Math.floor(i.elapsedSec / Ps), o = `${String(i.playing)}|${i.templateId ?? ""}|${i.timer.kind}|${i.timer.phase}|${String(r)}`;
     if (o === s) return;
-    s = o, Ss(i.playing), Mt(i.templateName === null ? null : { name: i.templateName, category: i.templateCategory ?? "" });
+    s = o, Ms(i.playing), kt(i.templateName === null ? null : { name: i.templateName, category: i.templateCategory ?? "" });
     const a = t.positionState();
     a === null ? Qe(0, 0) : Qe(a.durationSec, a.positionSec), n.setPlaying(i.playing);
   });
 }
 function de() {
   if (ne !== null) return ne;
-  const t = ys(), e = Cs(), n = new An(t, wn, (i) => void e.addLog(i).catch(() => {
-  }), { toEvents: Ps }), s = new ks(void 0, ss());
-  return xs(n, t, s), ne = { engine: t, player: n, store: e }, ne;
+  const t = bs(), e = Ns(), n = new Tn(t, vn, (i) => void e.addLog(i).catch(() => {
+  }), { toEvents: Os }), s = new Ls(void 0, is());
+  return Is(n, t, s), ne = { engine: t, player: n, store: e }, ne;
 }
 let re = 0;
-const Re = /* @__PURE__ */ new Set(), fi = () => re > 0;
-function gi(t) {
+const Re = /* @__PURE__ */ new Set(), gi = () => re > 0;
+function yi(t) {
   return Re.add(t), () => void Re.delete(t);
 }
-function yi(t) {
+function bi(t) {
   re = Math.max(0, re + (t ? 1 : -1));
   for (const e of Re) e(re > 0);
 }
-const bi = () => de().engine.getStats(), wi = () => de().engine.status.state, Is = "http://localhost:43210/events", _s = 7e4, Bs = 1e3, Ds = 3e4, Ae = "zonked.crew.v1", Te = /* @__PURE__ */ new Set();
-function Lt() {
+const wi = () => de().engine.getStats(), vi = () => de().engine.status.state, _s = "http://localhost:43210/events", Bs = 7e4, Ds = 1e3, Fs = 3e4, Ae = "zonked.crew.v1", Te = /* @__PURE__ */ new Set();
+function Et() {
   try {
     if (typeof location < "u" && new URLSearchParams(location.search).get("crew") === "1")
       return Pe(Ae, !0), !0;
@@ -2152,7 +2157,7 @@ function Lt() {
   }
   return Ne(Ae);
 }
-function vi(t) {
+function Si(t) {
   Pe(Ae, t);
   for (const e of [...Te])
     try {
@@ -2160,19 +2165,19 @@ function vi(t) {
     } catch {
     }
 }
-function Et(t) {
+function Rt(t) {
   return Te.add(t), () => {
     Te.delete(t);
   };
 }
-function Fs(t) {
-  const e = Number.isFinite(t) ? Math.max(0, Math.floor(t)) : 0;
-  return Math.min(Ds, Bs * 2 ** Math.min(e, 10));
-}
 function $s(t) {
+  const e = Number.isFinite(t) ? Math.max(0, Math.floor(t)) : 0;
+  return Math.min(Fs, Ds * 2 ** Math.min(e, 10));
+}
+function Ws(t) {
   return typeof EventSource > "u" ? null : new EventSource(t);
 }
-class Si {
+class Mi {
   constructor(e) {
     c(this, "es", null);
     c(this, "timer", null);
@@ -2188,14 +2193,14 @@ class Si {
   }
   /** Marks the client as running. It connects only while crew is enabled. */
   start() {
-    this.wanted || (this.wanted = !0, this.unsub = Et(() => this.sync()), this.sync());
+    this.wanted || (this.wanted = !0, this.unsub = Rt(() => this.sync()), this.sync());
   }
   stop() {
     var e;
     this.wanted = !1, (e = this.unsub) == null || e.call(this), this.unsub = null, this.sync();
   }
   isEnabled() {
-    return this.deps.enabled ? this.deps.enabled() : this.deps.create !== void 0 || Lt();
+    return this.deps.enabled ? this.deps.enabled() : this.deps.create !== void 0 || Et();
   }
   sync() {
     const e = this.wanted && this.isEnabled();
@@ -2203,10 +2208,10 @@ class Si {
   }
   connect() {
     if (this.stopped) return;
-    const e = this.deps.create ?? $s;
+    const e = this.deps.create ?? Ws;
     let n = null;
     try {
-      n = e(this.deps.url ?? Is);
+      n = e(this.deps.url ?? _s);
     } catch {
       n = null;
     }
@@ -2223,7 +2228,7 @@ class Si {
     });
   }
   handleState(e) {
-    if (typeof e != "string" || e.length > _s) return;
+    if (typeof e != "string" || e.length > Bs) return;
     let n;
     try {
       n = JSON.parse(e);
@@ -2239,7 +2244,7 @@ class Si {
   }
   scheduleRetry() {
     if (this.stopped) return;
-    const e = Fs(this.attempt);
+    const e = $s(this.attempt);
     this.attempt += 1;
     const n = this.deps.setTimer ?? ((s, i) => setTimeout(s, i));
     this.timer = n(() => {
@@ -2268,99 +2273,99 @@ class Si {
     }
   }
 }
-const Ws = "zonked.css";
-function Mi(t) {
-  const e = new URL(Ws, t).href;
+const Ks = "zonked.css";
+function ki(t) {
+  const e = new URL(Ks, t).href;
   if ([...document.querySelectorAll("link[data-zonked-css]")].some((i) => i.getAttribute("href") === e)) return;
   const s = document.createElement("link");
   s.rel = "stylesheet", s.href = e, s.setAttribute("data-zonked-css", "1"), document.head.appendChild(s);
 }
-const Ks = "/apps/zonked/api/state", Us = 15e3;
+const Us = "/apps/zonked/api/state", qs = 15e3;
 let He = null, st = null, ce = "standalone", ze = "";
-const Ce = /* @__PURE__ */ new Set(), ki = () => ce;
-function Li(t) {
+const Ce = /* @__PURE__ */ new Set(), Li = () => ce;
+function Ei(t) {
   return Ce.add(t), () => void Ce.delete(t);
 }
-function Rt(t) {
+function At(t) {
   if (t !== ce) {
     ce = t;
     for (const e of [...Ce]) e(t);
   }
 }
 function we() {
-  ce === "connected" && de().player.crewLost(), Un(), ze = "", Rt("standalone");
+  ce === "connected" && de().player.crewLost(), qn(), ze = "", At("standalone");
 }
 async function ve() {
-  if (He === null || !Lt()) return we();
+  if (He === null || !Et()) return we();
   try {
-    const t = await He.get(Ks), e = ut(t.crew);
+    const t = await He.get(Us), e = ut(t.crew);
     if (e === null) return we();
-    Rt("connected");
+    At("connected");
     const n = JSON.stringify([e.burnout, e.target, e.why ?? ""]);
     if (n === ze) return;
-    ze = n, Kn(de().player, e);
+    ze = n, Un(de().player, e);
   } catch {
     we();
   }
 }
-function qs(t) {
-  He = t, st === null && (st = setInterval(() => void ve(), Us), Et(() => void ve()), ve());
+function js(t) {
+  He = t, st === null && (st = setInterval(() => void ve(), qs), Rt(() => void ve()), ve());
 }
-function Ei() {
-  const t = Ht.useAppApi, e = t === void 0 ? null : t();
+function Ri() {
+  const t = zt.useAppApi, e = t === void 0 ? null : t();
   it(() => {
-    e !== null && qs(e);
+    e !== null && js(e);
   }, [e]);
 }
 export {
-  os as A,
-  Si as B,
-  Ys as C,
-  di as D,
-  Qs as E,
-  li as F,
-  Gs as G,
-  Mi as H,
-  Ei as I,
-  yi as J,
-  ki as K,
-  ui as L,
+  as as A,
+  Mi as B,
+  Gs as C,
+  hi as D,
+  ei as E,
+  ui as F,
+  Zs as G,
+  ki as H,
+  Ri as I,
+  bi as J,
+  Li as K,
+  di as L,
   Ee as M,
-  fi as N,
-  Li as O,
+  gi as N,
+  Ei as O,
   Se as P,
-  gi as Q,
-  vi as R,
-  ns as S,
-  wi as T,
-  bi as U,
-  Zs as V,
-  Xs as W,
-  Js as X,
+  yi as Q,
+  Si as R,
+  ss as S,
+  vi as T,
+  wi as U,
+  Xs as V,
+  Js as W,
+  Qs as X,
   De as Y,
-  ti as Z,
-  si as _,
-  ci as a,
-  ni as b,
-  Qn as c,
-  hi as d,
-  pi as e,
-  es as f,
-  ei as g,
-  ai as h,
-  oi as i,
+  ni as Z,
+  ii as _,
+  li as a,
+  si as b,
+  es as c,
+  pi as d,
+  mi as e,
+  ts as f,
+  ti as g,
+  ci as h,
+  ai as i,
   de as j,
-  Os as k,
-  Lt as l,
-  ri as m,
-  ii as n,
-  Et as o,
+  xs as k,
+  Et as l,
+  oi as m,
+  ri as n,
+  Rt as o,
   ut as p,
-  Kn as q,
-  qn as r,
+  Un as q,
+  jn as r,
   le as s,
-  Un as t,
-  mi as u,
+  qn as t,
+  fi as u,
   D as v,
   Pe as w,
   p as x,
