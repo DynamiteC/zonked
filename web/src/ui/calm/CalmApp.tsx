@@ -13,7 +13,9 @@ import { DEFAULT_PROFILE, clearAll, loadLast, saveLast } from './data';
 import type { StorageLike } from './data';
 import { EndCard, useEndCard } from './EndCard';
 import type { EndInfo } from './EndCard';
-import type { JourneyProgress, Profile } from './data';
+import type { Goal, JourneyProgress, Profile } from './data';
+import type { TimerSpec } from '../../app/timers';
+import { SLEEP_FADE_MIN } from './TimerChips';
 import { SafetyNotice } from './SafetyNotice';
 import { Screens } from './CalmScreens';
 import { useLook } from './look';
@@ -147,17 +149,23 @@ interface PlayDeps {
   readonly setView: (v: View) => void;
 }
 
+/** Sleep goal starts with the Sleep fade timer over the length of the sound. Others start a plain countdown. */
+export function defaultTimer(goal: Goal, minutes: number | null): TimerSpec | null {
+  if (minutes === null) return null;
+  return goal === 'sleep' ? { kind: 'sleep-fade', minutes: Math.max(SLEEP_FADE_MIN, minutes) } : { kind: 'countdown', minutes };
+}
+
 /** Play, play a journey day, and finish onboarding. Every new start goes through the safety gate. */
 function usePlayActions({ s, data, last, end, active, setView }: PlayDeps) {
   const play = useCallback(
-    (t: Template, minutes: number | null = t.recommendedMinutes) => {
+    (t: Template, minutes: number | null = t.recommendedMinutes, goal: Goal = data.profile.goal) => {
       active.current = null;
       last.remember(t.id);
       end.dismiss();
-      s.playTemplate(t, minutes);
+      s.playTemplate(t, defaultTimer(goal, minutes));
       setView('player');
     },
-    [s, last, end, active, setView],
+    [s, last, end, active, setView, data.profile.goal],
   );
   const playDay = (id: string, no: number, t: Template): void => {
     play(t);
@@ -165,10 +173,10 @@ function usePlayActions({ s, data, last, end, active, setView }: PlayDeps) {
   };
   const finish = (profile: Profile, t: Template): void => {
     data.setProfile(profile);
-    if (!s.snap.playing || s.snap.templateId !== t.id) return play(t);
+    if (!s.snap.playing || s.snap.templateId !== t.id) return play(t, t.recommendedMinutes, profile.goal);
     // The preview keeps playing into the session: no gap and no second fade-in.
     last.remember(t.id);
-    s.player.startTimer({ kind: 'countdown', minutes: t.recommendedMinutes });
+    s.player.startTimer(defaultTimer(profile.goal, t.recommendedMinutes) ?? { kind: 'countdown', minutes: t.recommendedMinutes });
     setView('player');
   };
   return { play, playDay, finish };

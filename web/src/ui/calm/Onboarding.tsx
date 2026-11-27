@@ -6,7 +6,7 @@ import { CALM, DEVICE_LABEL, GOAL_LABEL, TIME_LABEL } from './copy';
 import { DEFAULT_PROFILE, DEVICES, GOALS, TIMES_OF_DAY } from './data';
 import type { Device, Goal, Profile, TimeOfDay } from './data';
 import { SafetyNotice } from './SafetyNotice';
-import { StarterStep, pickStarters } from './StarterStep';
+import { StarterStep, clearPick, pickStarters } from './StarterStep';
 
 const CalmMascot = lazy(() => import('./mascot').then((m) => ({ default: m.CalmMascot })));
 
@@ -88,11 +88,11 @@ export function Onboarding({ playing, reduced, onAccept, onPreview, onStop, onFi
   const [when, setWhen] = useState<TimeOfDay>(initial.timeOfDay);
   const [device, setDevice] = useState<Device>(initial.device);
   const profile: Profile = { ...initial, goal, timeOfDay: when, device, createdAt: Date.now() };
-  // Skip path: the notice is still required, then the first safe starter plays with no starter screen.
+  // The notice is always required first. Skip, or answers that give one clear pick, then play with no starter screen.
   const accept = (): void => {
     onAccept();
-    const first = skipped ? pickStarters(profile)[0] : undefined;
-    if (first !== undefined) onFinish(profile, first.template);
+    const first = skipped ? pickStarters(profile)[0] : clearPick(profile);
+    if (first !== undefined && first !== null) onFinish(profile, first.template);
     else setStep(5);
   };
   const leaveNotice = (): void => {

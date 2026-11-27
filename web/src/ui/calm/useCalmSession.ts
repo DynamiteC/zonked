@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { AudioEngine } from '../../audio/types';
 import { Player, realClock } from '../../app/player';
 import type { Clock, PlayerSnapshot } from '../../app/player';
+import type { TimerSpec } from '../../app/timers';
 import { installE2E } from '../../app/e2e';
 import { reportPlaying } from '../../app/swUpdate';
 import { useReducedMotion, safeStorage } from '../../app/useReducedMotion';
@@ -29,7 +30,7 @@ export interface CalmSession {
   readonly accept: () => void;
   readonly cancelGate: () => void;
   /** Plays one template through the safety gate. A countdown starts only after sound starts. */
-  readonly playTemplate: (t: Template, minutes: number | null) => void;
+  readonly playTemplate: (t: Template, timer: number | TimerSpec | null) => void;
   readonly toggle: () => void;
 }
 
@@ -82,11 +83,11 @@ export function useCalmSession(engine: AudioEngine, clock: Clock = realClock, st
   }, []);
 
   const playTemplate = useCallback(
-    (t: Template, minutes: number | null) =>
+    (t: Template, timer: number | TimerSpec | null) =>
       guarded(() => {
         player.setQueue([t]);
         void player.playTemplate(t).then((ok) => {
-          if (ok && minutes !== null) player.startTimer({ kind: 'countdown', minutes });
+          if (ok && timer !== null) player.startTimer(typeof timer === 'number' ? { kind: 'countdown', minutes: timer } : timer);
         });
       }),
     [player, guarded],

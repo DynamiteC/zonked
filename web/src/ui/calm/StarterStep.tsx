@@ -11,7 +11,11 @@ const familyOf = (id: string): string => id.replace(/-\d+$/, '');
 export interface Starter {
   readonly template: Template;
   readonly reason: string;
+  readonly score: number;
 }
+
+/** The first pick must beat the best sound of another family by this many points to count as clear. */
+export const CLEAR_MARGIN = 5;
 
 /** Top 3 recommendations with distinct families (spec section b). */
 export function pickStarters(profile: Profile, now: Date = new Date()): readonly Starter[] {
@@ -21,10 +25,17 @@ export function pickStarters(profile: Profile, now: Date = new Date()): readonly
     const fam = familyOf(r.template.id);
     if (seen.has(fam)) continue;
     seen.add(fam);
-    out.push({ template: r.template, reason: r.reasons[0] ?? r.template.reasonTemplate });
+    out.push({ template: r.template, reason: r.reasons[0] ?? r.template.reasonTemplate, score: r.score });
     if (out.length === 3) break;
   }
   return out;
+}
+
+/** The one starter to play when the answers point at it clearly, else null (show the starter screen). */
+export function clearPick(profile: Profile, now: Date = new Date()): Starter | null {
+  const [first, second] = pickStarters(profile, now);
+  if (first === undefined) return null;
+  return second === undefined || first.score - second.score >= CLEAR_MARGIN ? first : null;
 }
 
 interface Props {

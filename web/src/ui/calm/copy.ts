@@ -33,7 +33,7 @@ export const CALM = {
   feelNot: 'Not for me',
   feelSaved: 'Noted. This stays on this device.',
   starterTitle: 'Pick a starter sound',
-  preview: 'Preview',
+  preview: 'Hear 10 s',
   previewing: 'Playing a short preview',
   safetyTitle: 'Before you start',
   safetyLines: [
