@@ -1,0 +1,171 @@
+# Zonked UX: before and after, and a redesign brief
+
+Status: report only. No source file was changed. Shots were taken from throwaway builds of commit 96d55ca (original) and HEAD of feature/zonked-app (Calm web, Calm in the Kiro Crew app), built with Vite only (wasm file as committed). Viewports: 1280x800 (suffix d) and 375x812 (suffix m). All shots are in `docs/ux-shots/` with the prefix `before-`.
+
+Shot names used below: `before-orig-first-d|m`, `before-calm-first-d|m`, `before-calm-step2-d`, `before-calm-step3-d`, `before-calm-safety-d|m`, `before-calm-starter-d|m`, `before-calm-today-d|m`, `before-calm-player-d|m`, `before-calm-library-d|m`, `before-calm-journeys-d|m`, `before-calm-crew-d|m`, `before-calm-settings-d|m`, `before-calm-studio-d|m`, `before-app-first-d|m`, `before-app-gate-d|m`, `before-app-calm-playing-d|m`.
+
+Shots I opened and read: orig-first d and m, calm-first d and m, calm-today-d, calm-player-d, calm-safety-m, calm-library-d, calm-studio-d, app-first-d, app-calm-playing-m, calm-journeys-m. The other shots were captured with the same script and not read one by one.
+
+Measured at HEAD: first load is 79.9 KB gzip (JS 74.9 KB, CSS 5.0 KB), under the 110 KB budget.
+
+## 1. First-impression test (5 seconds)
+
+| Surface | What is it? | What do I do? | Feels safe? | Score |
+|---|---|---|---|---|
+| Original Studio (`before-orig-first-d`) | Unclear. A dark robot face, a tagline, 4 header buttons, many small "?" boxes. | Press the yellow Play, or pick one of 6 "Play this" cards. Both start sound at once. | Weak. No headphone or volume note on screen. Violet noise warns in yellow text, which is good, but the rest is silent about risk. | 2 |
+| Calm web (`before-calm-first-m`) | Clear. A friendly mascot, "Free. Private. No account.", "What brings you here?". It does not yet say "sound app". | Pick one of 6 answers, tap Next. On desktop the Next button sits below the fold at 800 px high (`before-calm-first-d`). | Strong. Safety notice comes before any sound (`before-calm-safety-m`). Plain list, one big button, Back link. | 4 |
+| Calm in the Kiro Crew app (`before-app-first-d`) | Same onboarding card, but a second block under it says "Open Zonked once to read the headphone note" with a greyed Play. Two products in one frame. | Same as Calm web, plus a confusing grey Play that does nothing yet. | Good message, but the plain grey panel looks unfinished next to the warm page. | 3 |
+
+Evidence notes:
+
+- Original: the Play button is the loudest object, and nothing asks about the user first. The word "Zonked" gives no hint of what the sound does.
+- Calm web: the single-column question reads in about 4 seconds. The cost is the 5-step path (see section 6).
+- Calm in app: in the phone shot (`before-app-calm-playing-m`) the page shows its own bottom tab bar and, below it, the panel with a second Stop button. Two Stop buttons on one screen is the clearest flaw.
+
+## 2. What happened to the UI
+
+Improved:
+
+- Entry. The original asks nothing and starts sound on one tap. Calm asks one question, then shows the safety notice, then offers a starter sound. Safety moved from a footnote to a gate.
+- Tone. "Hello, night owl", "Rest days count too" and "Volume is capped for your safety" replace labels such as "Keep awake" and "Help me choose".
+- Layout. One column, big targets (44 to 56 px), pill buttons, one primary button per screen (`before-calm-today-d`).
+- Player. A large mascot, one Stop, timer chips (15, 30, 60, until I stop, sleep fade). Few controls (`before-calm-player-d`).
+
+Regressed or still plain:
+
+- Desktop frame. The left rail is a wide empty strip with five text links and nothing else. The brand "Zonked" sits at the left of the main area (x=216) while the content column starts at x=330, so the two do not align (`before-calm-today-d`, `before-calm-library-d`).
+- Library on desktop shows 8 flat tiles and then 60 percent empty space (`before-calm-library-d`). The tiles carry a name only: no count, no icon, no sound preview.
+- Mini player on Today covers the first row of cards at 800 px high (`before-calm-today-d`). On phone it sits just above the tab bar and hides the fourth Journey card (`before-calm-journeys-m`).
+- Mascot is large on onboarding and the player, small on Today, and absent on Library, Journeys and Settings. It is a face that comes and goes, not a guide.
+- Studio is unchanged from the original (`before-calm-studio-d` equals `before-orig-first-d`). It keeps the "?" boxes, yellow-on-black style and square corners. It is related to Calm only by the mascot and the words.
+- The Studio mode pill is top right on every Calm screen with the same weight as a primary action. A new user does not need it.
+- App page. The panel under the page is built with inline styles and native grey buttons (`app/ui/src/Panel.tsx`), so it looks like another product.
+
+## 3. Consistency audit
+
+Shared tokens already exist for Calm and the app: the app stylesheet carries the same `--c-*` variables as `web/src/ui/calm/calm.css`. Studio uses a separate set (`--bg`, `--panel`, `--gold`, `--mint`, `--s1` to `--s4`) in `web/src/styles/base.css`.
+
+| # | Inconsistency | Where | One-line fix |
+|---|---|---|---|
+| 1 | App panel uses inline styles and native grey buttons, not `c-btn` | `app/ui/src/Panel.tsx` (CARD, BTN consts) | Give the panel the `c-btn` and `c-card` classes from the shared stylesheet. |
+| 2 | Two Stop buttons on one screen in the app (page and panel) | `app/ui/src/Panel.tsx`, `app/ui/src/App.tsx` | Hide the panel Stop while the page is visible, or make the panel a one-line status. |
+| 3 | Brand text and content column do not share a left edge on desktop | `web/src/ui/calm/calm.css` (`.c-topbar` vs `.c-main`) | Put the brand in the rail, above Today, and leave the top bar for the mode pill. |
+| 4 | Desktop rail has no icon, logo or progress, so it looks empty | `web/src/ui/calm/CalmChrome.tsx` | Add the small mascot head and a one-line "Today: 10 min" under the links, or narrow the rail to 160 px. |
+| 5 | Border radius has 7 values: 8, 14, 18, 20, 22, 24, 999 px, and 0 in Studio | `web/src/ui/calm/calm.css` | Use 3 steps: 12 (inputs, notes), 20 (cards), 999 (pills). |
+| 6 | Type sizes are ad hoc: .8125, .875, .9375, 1, 1.125, 1.375, 1.75, 2.125 rem | `web/src/ui/calm/calm.css` | Keep 6 steps: 0.875, 1, 1.125, 1.375, 1.75, 2.125 rem (table below). |
+| 7 | Studio uses a mono accent type and 0 radius, Calm uses system sans and pills; shared words but not shared marks | `web/src/styles/base.css` | Keep Studio sharp (by design), but share the mascot, the type family for body text and the gold accent value. |
+| 8 | Button styles: Calm pill with 1px line, Studio square yellow, panel native | `calm.css`, `base.css`, `Panel.tsx` | One primary (filled accent) and one secondary (white, line) in Calm and app. Studio keeps its own. |
+| 9 | Copy tone: Calm says "Quick Mind Bridge", "Not this one"; Studio says "Keep awake", "Breathe", "Reduce motion"; app says "Let the Crew steer my sound" | `web/src/ui/calm/copy.ts`, `app/ui/src/Panel.tsx` | Keep all user copy in `copy.ts` and import it in the app. |
+| 10 | Icons: none in Calm nav (text only), "?" boxes in Studio, none in the app | `CalmChrome.tsx`, Studio panels | Add 5 simple line icons to the nav (inline SVG, about 1 KB total). Leave Studio "?" boxes as is. |
+| 11 | Motion: Calm has fade-in 240 ms, 60 s background drift, reduced-motion respected; Studio has a pulsing eye with its own reduced-motion toggle | `calm.css` lines for `c-drift`, `c-enter`; `mascot.css` | Keep both. Make one shared "motion off" flag read by both. |
+| 12 | Input and choice borders use `--c-line` (#E4D9C9) at 1.3 to 1 contrast on the page | `calm.css` (`.c-choice span`, `.c-btn`) | Use a border colour of at least 3 to 1 (token `--c-edge`, table below) on controls. Decorative cards may keep the soft line. |
+| 13 | Small teal text on the pink end of the gradient is 4.36 to 1 (eyebrow, links) | `calm.css` (`.c-eyebrow`, links) | Darken teal to #1A645F or put text on `--c-surface`. |
+| 14 | Mascot size differs per screen and is missing on 3 screens | `web/src/ui/calm/mascot/` | One size scale: 120 (hero), 72 (inline), 40 (nav rail). |
+
+## 4. Growth.design check
+
+| Principle | Delivered now? | Evidence |
+|---|---|---|
+| Hick (fewer choices) | Mostly on onboarding: 6 answers on one screen. Library shows 8 tiles then 5 tabs; Settings is long. Studio shows about 12 choices at first load. | `before-calm-first-d`, `before-calm-library-d`, `before-orig-first-d` |
+| Default effect | Yes. Today pre-selects "Your session for today" with one Start. The starter step pre-picks a sound. "Just curious" is pre-selected. | `before-calm-today-d`, `before-calm-starter-d` |
+| Endowed progress | Partly. "Step 1 of 5" and the week dots exist. The first dot is empty, so the user starts at zero, not at one. | `before-calm-today-d` |
+| Peak-end | Partly. The end card exists in code (`EndCard.tsx`) but no shot shows it, and the player has no calm closing screen on stop in the captured flow. | `before-calm-player-d` |
+| Exit points | Yes. "Skip, just play", Back on the safety step, Stop always visible, "Not this one". | `before-calm-safety-m`, `before-calm-player-d` |
+| Reciprocity | Yes in words: "Free. Private. No account." in the first screen. Nothing given before asking: the first sound comes only after 5 steps. | `before-calm-first-m` |
+
+## 5. Redesign brief
+
+Ranked by first-impression gain per unit of effort. Effort: S under half a day, M about 1 day, L several days.
+
+Hearing safety rule for all 8: none may change a limit, a ramp or a clamp. All sound still starts only after the safety notice. Offline rule: no new network calls, no remote fonts or images. Bundle rule: add under 3 KB gzip in total across the 8 (limit is 110 KB, now 79.9 KB).
+
+| Rank | Change | Before | After | Effort | Safety / size / offline |
+|---|---|---|---|---|---|
+| 1 | Show the first sound in 2 taps | 5 steps before sound. | After question 1, show "Start Quick Mind Bridge (10 min)" with the safety text in the same card. Steps 2 and 3 move to later, optional. | M | Safety text and accept stay before sound (check C1 must still pass). Size neutral. Offline yes. |
+| 2 | Put the primary button above the fold on desktop | Next sits below 800 px. | Tighten the mascot (120 px) and tile heights so Next shows at 800 px. | S | None. |
+| 3 | Fix the desktop frame | Empty rail, brand misaligned, mini player over content. | Brand moves into the rail with the mascot head. Mini player docks to the rail bottom on desktop. Content column gains a right info card (today's session, week dots). | M | None. About 0.5 KB. |
+| 4 | Make the app panel match | Grey native panel under the page, two Stop buttons. | One slim status row with the shared `c-btn` look. Panel Stop hidden when the page is open. | S | The panel must still stop sound from any state. Test with the CSP harness. |
+| 5 | Richer Library tiles | 8 text tiles, 60 percent empty. | Tiles show count ("12 sounds"), a one-line mood and a small icon; a "Popular now" row under them. | M | Icons are inline SVG. About 1 KB. |
+| 6 | Calm nav icons and clear current tab | Text only, current tab marked by underline. | Icon plus label, filled pill on current tab. | S | About 1 KB. |
+| 7 | Endowed progress | Week dots all empty on day 1. | First dot pre-filled with "You joined today". Journeys show "Day 0 of 7, you are ready". | S | Wording must not use streak or loss words (check C5). |
+| 8 | Quieter Studio switch | A white pill the same size as the main action, on every screen. | A small text link in Settings plus a keyboard shortcut. Studio keeps its look but gets the Calm mascot and body font. | S | None. |
+
+Wireframes (ASCII).
+
+Change 1, first screen, phone:
+
+```
+Before                       After
++-----------------+          +-----------------+
+| Zonked   [Studio]|         | Zonked          |
+| Step 1 of 5     |          |   (mascot)      |
+|   (mascot)      |          | What do you need|
+| What brings you |          | right now?      |
+| here?           |          | [Focus]  [Calm] |
+| [Focus]         |          | [Sleep]  [More] |
+| [Calm down]     |          +-----------------+
+| [Sleep] ...     |          Tap one: a card shows
+| [Next]          |          "10 min, headphones,
++-----------------+          volume low" + [Start]
+```
+
+Change 3, desktop:
+
+```
+Before                         After
++------+--------------+        +------+--------------+--------+
+| nav  | Zonked [Stu] |        |(m)   |              |Today   |
+|      |  mascot      |        |Today |   content    |10 min  |
+|      |  content     |        |Journ |              |M T W...|
+|      |              |        |Libr  |              |        |
+| mini player over    |        |[mini]|              |        |
++------+--------------+        +------+--------------+--------+
+```
+
+### Shared design tokens (Calm light, Calm dark, app)
+
+Contrast ratios are text on the stated background (WCAG relative luminance).
+
+| Token | Light | Dark | Use | Contrast |
+|---|---|---|---|---|
+| `--c-bg` | #FBF6EF | #14121A | page | n/a |
+| `--c-surface` | #FFFFFF | #1E1B27 | cards | n/a |
+| `--c-text` | #2A2433 | #F2EDF7 | body | 13.96 / 16.12 |
+| `--c-soft` | #5E5668 | #B9B0C6 | secondary text | 6.50 / 8.92 |
+| `--c-accent` (button fill) | #B4531A | #FFB26B | primary button | white on it 5.01; dark text on dark accent 9.73 |
+| `--c-teal` | #1A645F (was #1F6F6B) | #6FD6CF | links, current | 5.51 for old value on page, 4.36 on the pink end; the new value is meant to clear 4.5 there (check when built) |
+| `--c-caution` | #8A5A00 | #FFCB6B | warnings | 5.51 |
+| `--c-edge` (new) | #8F8575 | #6B6480 | control borders | at least 3 to 1 target (check when built) |
+| `--c-line` | #E4D9C9 | #383247 | decorative lines only | 1.3 (not for controls) |
+| Radius | 12 / 20 / 999 px | same | inputs, cards, pills | n/a |
+| Spacing | 4, 8, 12, 16, 24, 32 px | same | all gaps | n/a |
+| Type | 0.875, 1, 1.125, 1.375, 1.75, 2.125 rem | same | small, body, lead, h2, h1, greeting | n/a |
+| Touch target | 44 px minimum, 48 px buttons, 56 px choices | same | all taps | n/a |
+
+Values marked "check when built" are proposals, not measured results.
+
+### Keeping Studio distinct but related
+
+1. Studio stays dark, square-cornered (radius 0), with gold and mint accents. Calm never uses square corners or neon gold.
+2. Both share: the mascot (Studio may use the line version), the body font family, the word list in `copy.ts` for plain terms, the 44 px target size, the focus ring style and the reduced-motion flag.
+3. Studio may show technical terms (carrier, beat). Calm may not.
+4. Safety text, limits and notices are identical in both. Studio gets no way around the gate.
+5. Switching keeps the playing sound. The switch lives in Settings in Calm and in the header in Studio.
+
+## 6. After-state metrics to measure later
+
+| Metric | Now (from code and shots) | Target | How |
+|---|---|---|---|
+| Taps to first sound (new user) | Calm: Next x3, accept, Start = 5 taps. Skip path: "Skip, just play" then accept = 2 taps. Original: 1 tap (no gate). | 3 taps with the gate kept | Count in an e2e flow. |
+| Reading words before first sound | Not counted yet. Safety list alone is 6 lines. | Under 80 words | Extract visible text per step in e2e, sum words. |
+| Time to first sound | Not measured. | Under 20 s for a new user, from page load to audible ramp | Playwright timestamps from load to the player toggle. |
+| Contrast failures | 1.3 to 1 on control borders; 4.36 to 1 for teal on the pink end. Two known. | 0 | Run an automated contrast check on every shot state, light and dark. |
+| Extra: first load size | 79.9 KB gzip | Under 110 KB | `npm --prefix web run check:bundle`. |
+| Extra: two Stop buttons in the app | 1 case | 0 | App harness text check. |
+
+## Limits of this report
+
+- No by-ear check and no screen reader pass were done.
+- Dark theme, 200 percent text and reduced motion were not captured here.
+- Shots are headless Chromium, not Chrome. The app page was shown through the CSP harness, not the real dashboard.
+- Contrast numbers were computed from token values, not sampled from pixels.

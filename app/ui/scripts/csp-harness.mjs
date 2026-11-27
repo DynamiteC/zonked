@@ -112,19 +112,23 @@ try {
   if (shots) await page.screenshot({ path: join(shots, 'gate.png') });
   await page.click('[data-testid=calm-safety-accept]');
   await page.waitForSelector('[data-testid=mini-stop], [data-playing=true]', { timeout: 15000 });
-  await page.waitForFunction(() => document.querySelector('[data-testid=panel-stop]') !== null, null, { timeout: 15000 });
+  await page.waitForFunction(() => document.querySelector('[data-testid=panel-hint]')?.textContent?.startsWith('Playing'), null, { timeout: 15000 });
+  out.stopButtonsWhilePageOpen = await page.evaluate(() => document.querySelectorAll('[data-testid=panel-stop]').length);
   await page.waitForTimeout(2600); // finish the 2 s ramp
   out.panelWhilePlaying = (await page.textContent('[data-testid=panel-hint]'))?.trim();
   out.statsPlaying = await measure(page);
   if (shots) await page.screenshot({ path: join(shots, 'calm-playing.png') });
   // Leave the page (route change). The sound must keep playing, the panel must still say so.
   await page.evaluate(() => window.__unmount());
+  await page.waitForSelector('[data-testid=panel-stop]');
   await page.waitForTimeout(1200);
   out.afterUnmountPanel = (await page.textContent('[data-testid=panel-hint]'))?.trim();
   out.statsAfterUnmount = await measure(page);
   await page.evaluate(() => window.__mount());
   await page.waitForSelector('[data-testid=play-status]');
   out.afterRemountStatus = (await page.textContent('[data-testid=play-status]'))?.trim();
+  await page.evaluate(() => window.__unmount());
+  await page.waitForSelector('[data-testid=panel-stop]');
   // Panel stop ends the sound, panel play restarts it.
   await page.click('[data-testid=panel-stop]');
   await page.waitForSelector('[data-testid=panel-play]');

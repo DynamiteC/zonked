@@ -104,7 +104,7 @@ export function Onboarding({ playing, reduced, onAccept, onPreview, onStop, onFi
   return (
     <section className="c-onb" aria-label={q !== null ? CALM.stepOf(q) : CALM.safetyTitle}>
       {q !== null && <p className="c-step">{CALM.stepOf(q)}</p>}
-      {q === 1 && <Mascot mood="happy" size={140} reduced={reduced} />}
+      {q === 1 && <Mascot mood="happy" size={120} reduced={reduced} />}
       {q === 1 && <p className="c-promise">{CALM.promise}</p>}
       {q !== null && (
         <Question

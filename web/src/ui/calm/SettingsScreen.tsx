@@ -1,8 +1,10 @@
 import { CALM } from './copy';
+import { PageHead } from './MascotView';
 
 interface Props {
   readonly gentle: boolean;
   readonly reduceMotion: boolean;
+  readonly reduced?: boolean;
   readonly onGentle: (v: boolean) => void;
   readonly onReduceMotion: (v: boolean) => void;
   readonly onStudio: () => void;
@@ -22,15 +24,15 @@ function Switch({ label, hint, checked, onChange, testId }: { readonly label: st
   );
 }
 
-export function SettingsScreen({ gentle, reduceMotion, onGentle, onReduceMotion, onStudio, onForget }: Props): React.JSX.Element {
+export function SettingsScreen({ gentle, reduceMotion, reduced = false, onGentle, onReduceMotion, onStudio, onForget }: Props): React.JSX.Element {
   return (
     <div>
-      <h1 className="c-h1">{CALM.settingsTitle}</h1>
+      <PageHead title={CALM.settingsTitle} reduced={reduced} />
       <Switch label={CALM.gentle} hint={CALM.gentleHint} checked={gentle} onChange={onGentle} testId="gentle-switch" />
       <Switch label={CALM.reduceMotion} checked={reduceMotion} onChange={onReduceMotion} testId="motion-switch" />
       <div className="c-actions">
-        <button type="button" className="c-btn" data-testid="studio-switch" onClick={onStudio}>
-          {CALM.studio}
+        <button type="button" className="c-btn c-link" data-testid="studio-switch" onClick={onStudio}>
+          {CALM.studioLink}
         </button>
         <p className="c-muted">{CALM.studioHint}</p>
         <button type="button" className="c-btn c-link" onClick={onForget}>

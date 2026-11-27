@@ -3,6 +3,7 @@ import type { AudioEngine } from '../../audio/types';
 import type { Clock } from '../../app/player';
 import type { Store } from '../../storage/db';
 import { CALM } from './copy';
+import { Mascot } from './MascotView';
 import { readMode, writeMode } from './mode';
 import type { UiMode } from './mode';
 
@@ -18,6 +19,16 @@ const BACK_STYLE: React.CSSProperties = {
   padding: '0 16px',
   font: 'inherit',
   cursor: 'pointer',
+};
+
+/** Studio keeps its sharp look but shares the Calm mascot and the system body font. */
+const BAR_STYLE: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 8,
+  padding: '8px 16px',
+  fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+  fontWeight: 700,
 };
 
 export interface ModeRootProps {
@@ -47,6 +58,10 @@ export function ModeRoot({ engine, clock, store, initialMode }: ModeRootProps): 
         <CalmApp engine={engine} {...extra} onStudio={() => choose('studio')} />
       ) : (
         <>
+          <div style={BAR_STYLE} data-testid="studio-bar">
+            <Mascot size={40} reduced />
+            <span>{`${CALM.brand} Studio`}</span>
+          </div>
           <StudioApp engine={engine} {...extra} />
           <button type="button" style={BACK_STYLE} data-testid="back-to-calm" onClick={() => choose('calm')}>
             {CALM.backToCalm}

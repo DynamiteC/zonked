@@ -15,7 +15,9 @@ import { EndCard, useEndCard } from './EndCard';
 import type { JourneyProgress, Profile } from './data';
 import { SafetyNotice } from './SafetyNotice';
 import { Screens } from './CalmScreens';
-import { useCalmData } from './useCalmData';
+import { InfoCard } from './InfoCard';
+import { toDayNumber } from './data';
+import { today, useCalmData } from './useCalmData';
 import { useCalmSession } from './useCalmSession';
 import { useCrewBridge } from './useCrewBridge';
 import { useFavorite } from './useFavorite';
@@ -53,6 +55,9 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   const end = useEndCard(s.snap, !onboarding);
   const still = s.reduced || data.profile.extraGentle;
 
+  useStudioShortcut(onStudio);
+  const hasHistory = data.logs.some((l) => toDayNumber(l.startedAt) < today());
+  const joinedToday = toDayNumber(data.profile.createdAt) === today();
   const go = useCallback((v: View) => setView(v), []);
   const { play, playDay, finish } = usePlayActions({ s, data, last, end, active, setView });
   useJourneyDone(s.snap.playing, s.snap.elapsedSec, active, data.progress, data.setJourney);
@@ -68,7 +73,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
 
   return (
     <div className="c-app" data-theme="auto" data-motion={still ? 'off' : 'on'} data-playing={s.snap.playing ? 'true' : 'false'}>
-      <TopBar onStudio={onStudio} />
+      <TopBar />
       <main id="c-main" className="c-main" tabIndex={-1}>
         <Suspense fallback={<p className="c-loading" role="status">{CALM.loading}</p>}>
           {onboarding ? (
@@ -97,7 +102,10 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
         </Suspense>
       </main>
       {!onboarding && view !== 'player' && <MiniPlayer snap={s.snap} onOpen={() => go('player')} onStop={() => void s.player.stop()} />}
-      {!onboarding && <TabBar view={view} onGo={go} />}
+      {!onboarding && <TabBar view={view} onGo={go} reduced={still} />}
+      {!onboarding && view !== 'player' && (
+        <InfoCard profile={data.profile} week={data.week} joinedToday={joinedToday} hasHistory={hasHistory} onPlay={play} />
+      )}
       <p className="c-sr" role="status" data-testid="play-status">
         {s.snap.playing ? `Playing. ${CALM.volumeCapped}` : 'Stopped.'}
       </p>
@@ -164,7 +172,21 @@ function useLastPlayed(storage: StorageLike): { readonly template: Template | nu
   return useMemo(() => ({ template, remember }), [template, remember]);
 }
 
-function TopBar({ onStudio }: { readonly onStudio: () => void }): React.JSX.Element {
+/** Alt+Shift+S opens Studio mode. A modifier is required so a single key never fires it. */
+function useStudioShortcut(onStudio: () => void): void {
+  useEffect(() => {
+    const on = (e: KeyboardEvent): void => {
+      if (e.altKey && e.shiftKey && e.code === 'KeyS') {
+        e.preventDefault();
+        onStudio();
+      }
+    };
+    window.addEventListener('keydown', on);
+    return () => window.removeEventListener('keydown', on);
+  }, [onStudio]);
+}
+
+function TopBar(): React.JSX.Element {
   return (
     <>
       <a className="c-skip" href="#c-main">
@@ -172,9 +194,6 @@ function TopBar({ onStudio }: { readonly onStudio: () => void }): React.JSX.Elem
       </a>
       <header className="c-topbar">
         <span className="c-brand">{CALM.brand}</span>
-        <button type="button" className="c-chip-btn" data-testid="studio-top" aria-pressed="false" onClick={onStudio}>
-          {CALM.studio}
-        </button>
       </header>
     </>
   );

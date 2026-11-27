@@ -1,24 +1,37 @@
 import type { PlayerSnapshot } from '../../app/player';
 import { formatClock } from '../recContext';
 import { CALM } from './copy';
+import { Icon } from './icons';
+import { Mascot } from './MascotView';
 
-export type View = 'today' | 'journeys' | 'journey' | 'library' | 'player' | 'crew' | 'settings';
+export type View = 'today' | 'journeys' | 'journey' | 'library' | 'player' | 'crew' | 'settings' | 'nature';
 
-const TABS: readonly { readonly view: View; readonly label: string }[] = [
-  { view: 'today', label: CALM.nav[0] },
-  { view: 'journeys', label: CALM.nav[1] },
-  { view: 'library', label: CALM.nav[2] },
-  { view: 'crew', label: CALM.nav[3] },
-  { view: 'settings', label: CALM.nav[4] },
+const TABS: readonly { readonly view: View; readonly label: string; readonly icon: string }[] = [
+  { view: 'today', label: CALM.nav[0], icon: 'today' },
+  { view: 'journeys', label: CALM.nav[1], icon: 'journeys' },
+  { view: 'library', label: CALM.nav[2], icon: 'library' },
+  { view: 'crew', label: CALM.nav[3], icon: 'crew' },
+  { view: 'settings', label: CALM.nav[4], icon: 'settings' },
 ];
 
-export function TabBar({ view, onGo }: { readonly view: View; readonly onGo: (v: View) => void }): React.JSX.Element {
-  const current: View = view === 'journey' ? 'journeys' : view;
+interface TabProps {
+  readonly view: View;
+  readonly onGo: (v: View) => void;
+  readonly reduced?: boolean;
+}
+
+export function TabBar({ view, onGo, reduced = false }: TabProps): React.JSX.Element {
+  const current: View = view === 'journey' ? 'journeys' : view === 'nature' ? 'library' : view;
   return (
     <nav className="c-tabbar" aria-label="Main">
+      <div className="c-rail-brand" aria-hidden="true">
+        <Mascot size={40} reduced={reduced} />
+        <span className="c-brand">{CALM.brand}</span>
+      </div>
       {TABS.map((t) => (
         <button key={t.view} type="button" className="c-nav" aria-current={current === t.view ? 'page' : undefined} onClick={() => onGo(t.view)}>
-          {t.label}
+          <Icon name={t.icon} />
+          <span>{t.label}</span>
         </button>
       ))}
     </nav>
@@ -31,7 +44,7 @@ interface MiniProps {
   readonly onStop: () => void;
 }
 
-/** Visible on every tab while a session runs. Stop is one tap. */
+/** Visible on every tab while a session runs. Stop is one tap. On desktop it docks to the rail bottom. */
 export function MiniPlayer({ snap, onOpen, onStop }: MiniProps): React.JSX.Element | null {
   if (!snap.playing) return null;
   const left = snap.timer.kind !== 'none' && snap.timer.running ? ` ${formatClock(snap.timer.remainingSec)}` : '';

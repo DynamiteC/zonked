@@ -57,6 +57,21 @@ export const CALM = {
   emptyRecent: 'Your recent sessions show up here.',
   welcomeBack: 'Welcome back. Pick up where you like.',
   firstWeek: 'Your week starts here. Rest days count too.',
+  natureTitle: 'Nature sounds and my sounds',
+  natureLine: 'Add rain, streams or birds under your session, or your own file.',
+  joinedToday: 'You joined today',
+  joinedLine: 'You joined today. Your week starts here. Rest days count too.',
+  dayZero: (total: number) => `Day 0 of ${total}, you are ready`,
+  infoTitle: 'Today',
+  panelOpenFirst: 'Open Zonked once to read the headphone note.',
+  panelPickFirst: 'Open Zonked and pick a sound first.',
+  panelCrewLabel: 'Let the Crew steer my sound',
+  panelCrewOff: 'Crew is off.',
+  panelCrewOn: 'Crew is steering.',
+  panelCrewLost: 'Crew backend not reachable. Playing on your own.',
+  panelPlaying: 'Playing.',
+  panelStopped: 'Stopped.',
+  panelOpenPage: 'Zonked is open on the page. Use Stop there.',
   restCount: 'Rest days count too.',
   timerChips: ['15 min', '30 min', '60 min', 'Until I stop', 'Sleep fade'],
   breathe: 'Breathe in, breathe out',
@@ -69,7 +84,9 @@ export const CALM = {
   favorite: 'Favorite',
   saved: 'Saved',
   studio: 'Studio mode',
-  studioHint: 'For advanced controls.',
+  studioLink: 'Open Studio mode',
+  studioHint: 'For advanced controls. Shortcut: Alt+Shift+S.',
+  studioNote: 'Advanced controls live in Settings, or press Alt+Shift+S for Studio mode.',
   backToCalm: 'Back to Calm',
   crewTitle: 'Crew',
   crewIntro:
@@ -90,6 +107,7 @@ export const CALM = {
   errorStorage: 'We could not save this on your device. Your session still works.',
   loading: 'Loading',
   nav: ['Today', 'Journeys', 'Library', 'Crew', 'Settings'],
+  sounds: (n: number) => `${n} ${n === 1 ? 'sound' : 'sounds'}`,
 } as const;
 
 export const GOAL_LABEL: Readonly<Record<Goal, string>> = {
@@ -116,15 +134,23 @@ export const DEVICE_LABEL: Readonly<Record<Device, string>> = {
   unsure: 'Not sure',
 };
 
-export const FEELINGS: readonly { readonly id: string; readonly label: string }[] = [
-  { id: 'deep-work', label: 'Focus' },
-  { id: 'adhd-focus', label: 'Steady attention' },
-  { id: 'ai-burnout', label: 'Recover' },
-  { id: 'heal-stress', label: 'Calm down' },
-  { id: 'cant-sleep', label: 'Sleep' },
-  { id: 'lucid-dream', label: 'Dream' },
-  { id: 'meditate', label: 'Meditate' },
-  { id: 'quick-reset', label: 'Quick reset' },
+export interface Feeling {
+  readonly id: string;
+  readonly label: string;
+  /** One short line about the mood of the sounds. No health claims. */
+  readonly mood: string;
+  readonly icon: string;
+}
+
+export const FEELINGS: readonly Feeling[] = [
+  { id: 'deep-work', label: 'Focus', mood: 'Steady and quiet', icon: 'target' },
+  { id: 'adhd-focus', label: 'Steady attention', mood: 'Even and plain', icon: 'wave' },
+  { id: 'ai-burnout', label: 'Recover', mood: 'Slow and soft', icon: 'leaf' },
+  { id: 'heal-stress', label: 'Calm down', mood: 'Warm and gentle', icon: 'heart' },
+  { id: 'cant-sleep', label: 'Sleep', mood: 'Dim and slow', icon: 'moon' },
+  { id: 'lucid-dream', label: 'Dream', mood: 'Drifting', icon: 'cloud' },
+  { id: 'meditate', label: 'Meditate', mood: 'Open and still', icon: 'lotus' },
+  { id: 'quick-reset', label: 'Quick reset', mood: 'Short and light', icon: 'bolt' },
 ];
 
 export const EVIDENCE: Readonly<Record<string, string>> = {

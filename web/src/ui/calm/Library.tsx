@@ -7,10 +7,15 @@ import { SOUND_MENU } from '../../catalog/soundMenu';
 import type { Template } from '../../catalog/types';
 import type { LogRecord, Store } from '../../storage/db';
 import { CALM, EVIDENCE, FEELINGS } from './copy';
+import { Icon } from './icons';
+import { PageHead } from './MascotView';
 
 interface Props {
   readonly store: Store;
   readonly logs: readonly LogRecord[];
+  readonly reduced?: boolean;
+  /** Opens the Nature and My sounds screen. */
+  readonly onNature?: () => void;
   readonly onPlay: (t: Template) => void;
   readonly onPlayMix: (m: Mix) => void;
 }
@@ -37,6 +42,11 @@ const Empty = ({ text }: { readonly text: string }): React.JSX.Element => <p cla
 function Feeling({ onPlay }: { readonly onPlay: (t: Template) => void }): React.JSX.Element {
   const [sit, setSit] = useState<string | null>(null);
   const [page, setPage] = useState(0);
+  const counts = useMemo(() => {
+    const c: Record<string, number> = {};
+    for (const t of getTemplates()) for (const s of t.situations) c[s] = (c[s] ?? 0) + 1;
+    return c;
+  }, []);
   const all = useMemo(() => getTemplates().filter((t) => sit !== null && (t.situations as readonly string[]).includes(sit)), [sit]);
   return (
     <>
@@ -44,7 +54,10 @@ function Feeling({ onPlay }: { readonly onPlay: (t: Template) => void }): React.
         {FEELINGS.map((f, i) => (
           <li key={f.id}>
             <button type="button" className={`c-tile c-g${(i % 6) + 1}`} aria-pressed={sit === f.id} onClick={() => { setSit(f.id); setPage(0); }}>
-              {f.label}
+              <Icon name={f.icon} />
+              <span className="c-tile-name">{f.label}</span>
+              <span className="c-tile-mood">{f.mood}</span>
+              <span className="c-tile-count">{CALM.sounds(counts[f.id] ?? 0)}</span>
             </button>
           </li>
         ))}
@@ -98,7 +111,7 @@ function useStored(store: Store): { readonly favs: Favorites; readonly mixes: re
   return { favs, mixes };
 }
 
-export function Library({ store, logs, onPlay, onPlayMix }: Props): React.JSX.Element {
+export function Library({ store, logs, reduced = false, onNature, onPlay, onPlayMix }: Props): React.JSX.Element {
   const [tab, setTab] = useState(0);
   const [q, setQ] = useState('');
   const { favs, mixes } = useStored(store);
@@ -109,7 +122,13 @@ export function Library({ store, logs, onPlay, onPlayMix }: Props): React.JSX.El
   const recent = logs.slice(0, 10);
   return (
     <div>
-      <h1 className="c-h1">{CALM.libraryTitle}</h1>
+      <PageHead title={CALM.libraryTitle} reduced={reduced} />
+      {onNature !== undefined && (
+        <button type="button" className="c-card c-link-card c-nature-link" data-testid="open-nature" onClick={onNature}>
+          <b>{CALM.natureTitle}</b>
+          <span className="c-muted">{CALM.natureLine}</span>
+        </button>
+      )}
       <div className="c-search">
         <label htmlFor="c-search-in" className="c-sr">
           {CALM.searchLabel}

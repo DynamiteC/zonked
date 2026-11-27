@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CalmApp } from '@zonked-web/ui/calm/CalmApp';
-import { getSession } from './engine/session';
+import { getSession, setPageMounted } from './engine/session';
 import { ensureStyles } from './engine/styles';
 import { useCrewLink } from './engine/crewLink';
 
@@ -16,6 +16,10 @@ export default function Zonked(): React.JSX.Element {
   ensureStyles(import.meta.url);
   useCrewLink();
   const { engine, store } = getSession();
+  useEffect(() => {
+    setPageMounted(true);
+    return () => setPageMounted(false);
+  }, []);
   const [note, setNote] = useState(false);
   return (
     <div data-testid="zonked-app" style={{ height: '100%', minHeight: 0, overflow: 'hidden', position: 'relative', transform: 'translateZ(0)' }}>

@@ -115,12 +115,22 @@ describe('studio switch', () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     await screen.findByTestId('greeting');
     expect(readMode()).toBe('calm');
-    click(CALM.studio);
+    click(CALM.nav[4]);
+    fireEvent.click(await screen.findByRole('button', { name: CALM.studioLink }));
     await screen.findByTestId('play-button');
     expect(localStorage.getItem(MODE_KEY)).toBe('studio');
     click(CALM.backToCalm);
     await screen.findByTestId('greeting');
     expect(localStorage.getItem(MODE_KEY)).toBe('calm');
+  });
+
+  it('opens Studio with Alt+Shift+S and not with a bare S', async () => {
+    render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
+    await screen.findByTestId('greeting');
+    fireEvent.keyDown(window, { code: 'KeyS' });
+    expect(screen.queryByTestId('play-button')).toBeNull();
+    fireEvent.keyDown(window, { code: 'KeyS', altKey: true, shiftKey: true });
+    await screen.findByTestId('play-button');
   });
 
   it('opens Studio at start when it was the last choice', async () => {
@@ -223,5 +233,41 @@ describe('reduced motion and gentle mode', () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     await screen.findByTestId('greeting');
     expect(document.querySelector('.c-app')?.getAttribute('data-motion')).toBe('off');
+  });
+});
+
+describe('redesign', () => {
+  it('fills the first dot with a welcome line on the day the person joined', () => {
+    render(<WeekDots week={weekStats([], 20_000)} hasHistory={false} joinedToday />);
+    expect(document.querySelectorAll('.c-dot-joined')).toHaveLength(1);
+    expect(screen.getByTestId('week-text').textContent).toBe(CALM.joinedLine);
+    expect(document.body.textContent).not.toMatch(/lost|missed|broke|streak|chain/i);
+  });
+
+  it('shows the nav with icons and marks the current tab', async () => {
+    saveProfile(createLocalStorage(), PROFILE);
+    render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
+    await screen.findByTestId('greeting');
+    const nav = screen.getByRole('navigation', { name: 'Main' });
+    expect(nav.querySelectorAll('svg.c-icon')).toHaveLength(5);
+    expect(nav.querySelector('[aria-current="page"]')?.textContent).toBe(CALM.nav[0]);
+  });
+
+  it('Library tiles show a sound count and a mood line', async () => {
+    saveProfile(createLocalStorage(), PROFILE);
+    render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
+    await screen.findByTestId('greeting');
+    click(CALM.nav[2]);
+    await screen.findByText('Focus', { selector: '.c-tile-name' });
+    expect(document.querySelectorAll('.c-tile-count')).toHaveLength(8);
+    expect(document.querySelector('.c-tile-count')?.textContent).toMatch(/^\d+ sounds?$/);
+    expect(document.querySelector('.c-tile-mood')?.textContent).not.toBe('');
+  });
+
+  it('has no Studio button in the top bar', async () => {
+    saveProfile(createLocalStorage(), PROFILE);
+    render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
+    await screen.findByTestId('greeting');
+    expect(screen.queryByTestId('studio-top')).toBeNull();
   });
 });

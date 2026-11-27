@@ -71,6 +71,19 @@ export function getSession(): Session {
   return session;
 }
 
+/** Count of mounted Zonked pages. The panel hides its Stop while a page shows its own. */
+let pages = 0;
+const pageListeners = new Set<(open: boolean) => void>();
+export const isPageOpen = (): boolean => pages > 0;
+export function onPageOpen(fn: (open: boolean) => void): () => void {
+  pageListeners.add(fn);
+  return () => void pageListeners.delete(fn);
+}
+export function setPageMounted(mounted: boolean): void {
+  pages = Math.max(0, pages + (mounted ? 1 : -1));
+  for (const fn of pageListeners) fn(pages > 0);
+}
+
 /** Read-only probes for the offline harness. They change nothing. */
 export const engineStats = (): ReturnType<AudioEngine['getStats']> => getSession().engine.getStats();
 export const engineState = (): string => getSession().engine.status.state;

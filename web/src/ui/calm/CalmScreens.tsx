@@ -42,7 +42,7 @@ interface Props {
 export function Screens({ view, journeyId, s, data, crewInfo, still, fav, last, handlers: h }: Props): React.JSX.Element {
   switch (view) {
     case 'journeys':
-      return <JourneyList progress={data.progress} onOpen={h.openJourney} />;
+      return <JourneyList progress={data.progress} onOpen={h.openJourney} reduced={still} />;
     case 'journey':
       return (
         <JourneyDetail
@@ -57,7 +57,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, still, fav, last, 
         />
       );
     case 'library':
-      return <Library store={s.store} logs={data.logs} onPlay={h.play} onPlayMix={h.onMix} />;
+      return <Library store={s.store} logs={data.logs} reduced={still} onNature={() => h.go('nature')} onPlay={h.play} onPlayMix={h.onMix} />;
     case 'player':
       return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} />;
     case 'crew':
@@ -67,6 +67,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, still, fav, last, 
         <SettingsScreen
           gentle={data.profile.extraGentle}
           reduceMotion={s.userReduced}
+          reduced={still}
           onGentle={(v) => data.setProfile({ ...data.profile, extraGentle: v })}
           onReduceMotion={s.setReduced}
           onStudio={h.onStudio}
@@ -81,6 +82,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, still, fav, last, 
           progress={data.progress}
           reduced={still}
           hasHistory={data.logs.some((l) => toDayNumber(l.startedAt) < today())}
+          joinedToday={toDayNumber(data.profile.createdAt) === today()}
           crewConnected={crewInfo.enabled && crewInfo.status === 'connected'}
           last={last}
           onPlay={h.play}

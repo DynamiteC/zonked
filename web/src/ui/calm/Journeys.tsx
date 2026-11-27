@@ -1,20 +1,22 @@
 import { getTemplates } from '../../catalog';
 import type { Template } from '../../catalog/types';
 import { CALM } from './copy';
+import { PageHead } from './MascotView';
 import { JOURNEYS, getJourney, resolveJourney } from './data';
 import type { Journey, JourneyProgress, Profile, ProgressMap } from './data';
 
 interface ListProps {
   readonly progress: ProgressMap;
   readonly onOpen: (id: string) => void;
+  readonly reduced?: boolean;
 }
 
 const dayCount = (j: Journey): number => j.days.length;
 
-export function JourneyList({ progress, onOpen }: ListProps): React.JSX.Element {
+export function JourneyList({ progress, onOpen, reduced = false }: ListProps): React.JSX.Element {
   return (
     <div>
-      <h1 className="c-h1">{CALM.journeysTitle}</h1>
+      <PageHead title={CALM.journeysTitle} reduced={reduced} />
       <p className="c-lead">{CALM.journeysEmpty}</p>
       <ul className="c-list">
         {JOURNEYS.map((j, i) => {
@@ -24,7 +26,7 @@ export function JourneyList({ progress, onOpen }: ListProps): React.JSX.Element 
               <button type="button" className={`c-journey-card c-wide c-j${(i % 6) + 1}`} onClick={() => onOpen(j.id)}>
                 <b>{j.title}</b>
                 <small>{j.blurb}</small>
-                <em>{done === 0 ? `${dayCount(j)} days` : `${done} of ${dayCount(j)} done`}</em>
+                <em>{done === 0 ? CALM.dayZero(dayCount(j)) : `${done} of ${dayCount(j)} done`}</em>
               </button>
             </li>
           );

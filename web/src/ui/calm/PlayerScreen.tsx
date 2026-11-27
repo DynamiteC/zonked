@@ -27,7 +27,7 @@ export function BreathRing({ still, playing }: RingProps): React.JSX.Element {
     <div className="c-stage" data-testid="breath-ring" data-still={still ? 'true' : 'false'}>
       <span className="c-ring" style={{ transform: `scale(${scale})`, transition: still ? 'none' : `transform ${dur}s ease-in-out` }} aria-hidden="true" />
       <Suspense fallback={null}>
-        <CalmMascot mood={playing ? 'breathing' : 'idle'} size={140} reducedMotion={still} />
+        <CalmMascot mood={playing ? 'breathing' : 'idle'} size={120} reducedMotion={still} />
       </Suspense>
     </div>
   );
