@@ -51,7 +51,7 @@ interface QuestionProps {
 function Question({ step, answers: a, set, onBack, onNext, onSkip }: QuestionProps): React.JSX.Element {
   return (
     <>
-      <h2 className="c-h1">{TITLES[step]}</h2>
+      <h1 className="c-h1">{TITLES[step]}</h1>
       {step === 1 && <ChoiceGrid legend={CALM.goalTitle} options={opts(GOALS, GOAL_LABEL)} value={a.goal} onChange={set.goal} />}
       {step === 2 && <ChoiceGrid legend={CALM.whenTitle} options={opts(TIMES_OF_DAY, TIME_LABEL)} value={a.when} onChange={set.when} />}
       {step === 3 && <ChoiceGrid legend={CALM.listenTitle} options={opts(DEVICES, DEVICE_LABEL)} value={a.device} onChange={set.device} />}

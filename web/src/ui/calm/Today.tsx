@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { recommendTemplates } from '../../catalog';
 import type { Template } from '../../catalog/types';
 import { CALM, GOAL_LABEL, greeting } from './copy';
-import { JOURNEYS, profileToRecommendation } from './data';
+import { profileToRecommendation } from './data';
 import type { Profile, ProgressMap, WeekStats } from './data';
 import { Mascot } from './MascotView';
 import { WeekDots } from './WeekDots';
@@ -28,12 +28,7 @@ interface Props {
   readonly onReset: () => void;
 }
 
-function dayLine(progress: ProgressMap, id: string, total: number): string {
-  const done = progress[id]?.doneDays.length ?? 0;
-  return done === 0 ? CALM.dayZero(total) : `Day ${Math.min(total, done + 1)} of ${total}`;
-}
-
-export function Today({ profile, week, progress, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, onPlay, onOpenJourney, onGo, onReset }: Props): React.JSX.Element {
+export function Today({ profile, week, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, onPlay, onGo, onReset }: Props): React.JSX.Element {
   const [skip, setSkip] = useState(0);
   const recs = useMemo(() => recommendTemplates(profileToRecommendation(profile, now()), 5), [profile, now]);
   const pick = recs[skip % Math.max(1, recs.length)];
@@ -78,7 +73,7 @@ export function Today({ profile, week, progress, reduced, crewConnected, hasHist
           {CALM.forYou}
         </h2>
         <ul className="c-rows">
-          {recs.map((r) => (
+          {recs.slice(0, 3).map((r) => (
             <li key={r.template.id}>
               <button type="button" className="c-mini-card" onClick={() => onPlay(r.template)}>
                 <b>{r.template.name}</b>
@@ -89,24 +84,11 @@ export function Today({ profile, week, progress, reduced, crewConnected, hasHist
           ))}
         </ul>
       </section>
-      <section aria-labelledby="c-jr-h">
-        <h2 id="c-jr-h" className="c-h3">
-          {CALM.journeysTitle}
-        </h2>
-        <ul className="c-rows">
-          {JOURNEYS.map((j) => (
-            <li key={j.id}>
-              <button type="button" className="c-journey-card" onClick={() => onOpenJourney(j.id)}>
-                <b>{j.title}</b>
-                <small>{j.blurb}</small>
-                <em>{dayLine(progress, j.id, j.days.length)}</em>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </section>
       <button type="button" className="c-link-card" onClick={() => onGo('library')}>
         <b>{`Browse all sounds`}</b>
+      </button>
+      <button type="button" className="c-link-card" onClick={() => onGo('journeys')}>
+        <b>{CALM.journeysTitle}</b>
       </button>
       {crewConnected && (
         <p className="c-crew-chip" role="status">

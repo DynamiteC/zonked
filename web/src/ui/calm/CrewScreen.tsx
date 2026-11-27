@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { setCrewEnabled } from '../bridgeClient';
 import { CALM } from './copy';
 import { CrewPanel } from './CrewPanel';
@@ -19,6 +20,13 @@ interface Props {
 export function CrewScreen({ crew, overridden, onDemo, onStopDemo, onNotNow, onResume, onFollow }: Props): React.JSX.Element {
   const live = crew.view.state !== null;
   const demo = crew.view.source === 'demo';
+  const [ended, setEnded] = useState(false);
+  const was = useRef(false);
+  useEffect(() => {
+    if (was.current && !demo) setEnded(true);
+    if (demo) setEnded(false);
+    was.current = demo;
+  }, [demo]);
   return (
     <div>
       <h1 className="c-h1">{CALM.crewTitle}</h1>
@@ -33,7 +41,7 @@ export function CrewScreen({ crew, overridden, onDemo, onStopDemo, onNotNow, onR
         <CrewPanel view={crew.view} overridden={overridden} onNotNow={onNotNow} onResume={onResume} onFollow={onFollow} onStopDemo={onStopDemo} />
       ) : (
         <div data-testid="crew-why-off">
-          <p className="c-status" role="status" data-testid="crew-status">{CALM.crewOff}</p>
+          <p className="c-status" role="status" data-testid="crew-status">{ended ? CALM.crewDemoEnd : CALM.crewOff}</p>
           <p className="c-why-off">{crew.enabled ? CALM.crewDisabled : CALM.crewWhyOff}</p>
           <ol className="c-steps">
             <li>{CALM.crewStep1}</li>

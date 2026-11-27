@@ -119,6 +119,7 @@ export const CALM = {
   crewNextDemoLast: (sec: number) => `none, the demo ends in ${sec} s`,
   crewDemo: 'Watch the crew work',
   crewDemoHint: 'A 60 second pretend session. Nothing is read from your computer.',
+  crewDemoEnd: 'That was pretend. Real mode reads git counts only.',
   crewDemoStop: 'Stop the demo',
   crewDemoBadge: 'Simulated session',
   settingsTitle: 'Settings',

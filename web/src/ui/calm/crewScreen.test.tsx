@@ -66,6 +66,16 @@ describe('Crew screen', () => {
     expect(screen.getByTestId('crew-demo-note')).toBeTruthy();
   });
 
+  it('after the demo ends it says it was pretend, and Why sits above the stage labels', () => {
+    const demoView = info({ state: st, source: 'demo', demoNextAtMs: Date.now() + 9000 }, false);
+    const view = render(<CrewScreen crew={demoView} overridden={false} onDemo={noop} onStopDemo={noop} onNotNow={noop} onResume={noop} onFollow={noop} />);
+    const why = screen.getByTestId('crew-why');
+    const meter = view.container.querySelector('.c-meter') as Element;
+    expect(why.compareDocumentPosition(meter) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    view.rerender(<CrewScreen crew={info({}, false)} overridden={false} onDemo={noop} onStopDemo={noop} onNotNow={noop} onResume={noop} onFollow={noop} />);
+    expect(screen.getByTestId('crew-status').textContent).toBe('That was pretend. Real mode reads git counts only.');
+  });
+
   it('explains Beat now in one plain line', () => {
     render(<CrewScreen crew={info({ state: st, source: 'bridge', changedAtMs: Date.now() })} overridden={false} onDemo={noop} onStopDemo={noop} onNotNow={noop} onResume={noop} onFollow={noop} />);
     expect(screen.getByTestId('crew-beat-hint').textContent).toBe('Higher beats feel alert, lower beats feel calm.');
@@ -89,6 +99,8 @@ describe('Today reset entry', () => {
     const b = screen.getByTestId('today-reset');
     expect(b.textContent).toContain('A short pause, 90 seconds');
     expect(b.className).not.toContain('c-primary');
+    expect(screen.queryByText('Journeys')).toBeTruthy();
+    expect(document.querySelectorAll('.c-mini-card').length).toBe(3);
     fireEvent.click(b);
     expect(onReset).toHaveBeenCalled();
   });

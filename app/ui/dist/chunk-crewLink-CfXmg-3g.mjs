@@ -544,6 +544,7 @@ back:  200+9/0.4 pink/10    # coming back up
   crewNextDemoLast: (t) => `none, the demo ends in ${t} s`,
   crewDemo: "Watch the crew work",
   crewDemoHint: "A 60 second pretend session. Nothing is read from your computer.",
+  crewDemoEnd: "That was pretend. Real mode reads git counts only.",
   crewDemoStop: "Stop the demo",
   crewDemoBadge: "Simulated session",
   settingsTitle: "Settings",

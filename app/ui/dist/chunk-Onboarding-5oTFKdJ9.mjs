@@ -1,7 +1,7 @@
 import { jsxs as d, jsx as e, Fragment as L } from "react/jsx-runtime";
 import { useId as M, useMemo as _, useState as f, useRef as x, useEffect as G, Suspense as B, lazy as P } from "react";
-import { C as n, G as R, T as z, U as F } from "./chunk-crewLink-CGwtdNl8.mjs";
-import { r as V, p as j, D as U, S as W, G as q, T as Q, a as Y } from "./chunk-App-1ky-Zja1.mjs";
+import { C as n, G as R, T as z, U as F } from "./chunk-crewLink-CfXmg-3g.mjs";
+import { r as V, p as j, D as U, S as W, G as q, T as Q, a as Y } from "./chunk-App-B_eUWfDg.mjs";
 function C({ legend: t, options: l, value: c, onChange: i }) {
   const o = M();
   return /* @__PURE__ */ d("fieldset", { className: "c-choices", children: [
@@ -10,7 +10,7 @@ function C({ legend: t, options: l, value: c, onChange: i }) {
       /* @__PURE__ */ e("input", { type: "radio", name: o, value: a.value, checked: c === a.value, onChange: () => i(a.value) }),
       /* @__PURE__ */ d("span", { children: [
         a.label,
-        c === a.value && /* @__PURE__ */ e("i", { className: "c-sel", children: n.selected })
+        c === a.value && /* @__PURE__ */ e("i", { className: "c-sel", "aria-hidden": "true", children: n.selected })
       ] })
     ] }, a.value))
   ] });
@@ -35,7 +35,7 @@ function J({ profile: t, playing: l, onPreview: c, onStop: i, onStart: o }) {
     }, $);
   }, N = (k = a.find((s) => s.template.id === u)) == null ? void 0 : k.template;
   return /* @__PURE__ */ d(L, { children: [
-    /* @__PURE__ */ e("h2", { className: "c-h1", children: n.starterTitle }),
+    /* @__PURE__ */ e("h1", { className: "c-h1", children: n.starterTitle }),
     /* @__PURE__ */ d("fieldset", { className: "c-starters", children: [
       /* @__PURE__ */ e("legend", { className: "c-sr", children: n.starterTitle }),
       a.map((s) => /* @__PURE__ */ d("div", { className: "c-starter", "data-picked": u === s.template.id ? "true" : "false", children: [
@@ -55,13 +55,13 @@ function J({ profile: t, playing: l, onPreview: c, onStop: i, onStart: o }) {
     }, children: n.start }) })
   ] });
 }
-const K = P(() => import("./chunk-mascot-CjKHJelf.mjs").then((t) => ({ default: t.CalmMascot }))), y = (t, l) => t.map((c) => ({ value: c, label: l[c] })), X = { 1: n.goalTitle, 2: n.whenTitle, 3: n.listenTitle };
+const K = P(() => import("./chunk-mascot-DYiBHlqD.mjs").then((t) => ({ default: t.CalmMascot }))), y = (t, l) => t.map((c) => ({ value: c, label: l[c] })), X = { 1: n.goalTitle, 2: n.whenTitle, 3: n.listenTitle };
 function S({ mood: t, size: l, reduced: c }) {
   return /* @__PURE__ */ e("div", { className: "c-hero", children: /* @__PURE__ */ e(B, { fallback: null, children: /* @__PURE__ */ e(K, { mood: t, size: l, reducedMotion: c }) }) });
 }
 function Z({ step: t, answers: l, set: c, onBack: i, onNext: o, onSkip: a }) {
   return /* @__PURE__ */ d(L, { children: [
-    /* @__PURE__ */ e("h2", { className: "c-h1", children: X[t] }),
+    /* @__PURE__ */ e("h1", { className: "c-h1", children: X[t] }),
     t === 1 && /* @__PURE__ */ e(C, { legend: n.goalTitle, options: y(q, R), value: l.goal, onChange: c.goal }),
     t === 2 && /* @__PURE__ */ e(C, { legend: n.whenTitle, options: y(Q, z), value: l.when, onChange: c.when }),
     t === 3 && /* @__PURE__ */ e(C, { legend: n.listenTitle, options: y(Y, F), value: l.device, onChange: c.device }),

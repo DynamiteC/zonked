@@ -40,7 +40,7 @@ describe('onboarding order', () => {
   it('shows the safety notice before any sound and plays a preview only after it', async () => {
     const eng = engine();
     render(<ModeRoot engine={eng} store={createStore(undefined)} />);
-    await screen.findByText(CALM.goalTitle, { selector: 'h2' });
+    await screen.findByText(CALM.goalTitle, { selector: 'h1' });
     click(CALM.next);
     click(CALM.next);
     click(CALM.next);
@@ -59,7 +59,7 @@ describe('onboarding order', () => {
   it('skip shows the unnumbered notice, plays nothing, then starts a default session on accept', async () => {
     const eng = engine();
     render(<ModeRoot engine={eng} store={createStore(undefined)} />);
-    await screen.findByText(CALM.goalTitle, { selector: 'h2' });
+    await screen.findByText(CALM.goalTitle, { selector: 'h1' });
     expect(screen.getByText('1 of 3')).toBeTruthy();
     click(CALM.skip);
     expect(screen.getByText(CALM.safetyTitle)).toBeTruthy();
@@ -77,15 +77,17 @@ describe('onboarding order', () => {
 
   it('marks the pre-picked goal as Selected and keeps the note to one sentence', async () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
-    await screen.findByText(CALM.goalTitle, { selector: 'h2' });
+    await screen.findByText(CALM.goalTitle, { selector: 'h1' });
     expect(screen.getByText(CALM.selected)).toBeTruthy();
+    expect(screen.getByRole('heading', { level: 1 })).toBeTruthy();
+    expect(screen.queryByRole('radio', { name: /Selected/ })).toBeNull();
     expect(CALM.listenNote.match(/[.!?]/g)).toHaveLength(1);
   });
 
   it('Start keeps a running preview going: one engine start, no restart', async () => {
     const eng = engine();
     render(<ModeRoot engine={eng} store={createStore(undefined)} />);
-    await screen.findByText(CALM.goalTitle, { selector: 'h2' });
+    await screen.findByText(CALM.goalTitle, { selector: 'h1' });
     click(CALM.next);
     click(CALM.next);
     click(CALM.next);
@@ -100,7 +102,7 @@ describe('onboarding order', () => {
 
   it('Back keeps earlier answers', async () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
-    await screen.findByText(CALM.goalTitle, { selector: 'h2' });
+    await screen.findByText(CALM.goalTitle, { selector: 'h1' });
     fireEvent.click(screen.getByLabelText(/^Sleep/));
     click(CALM.next);
     click(CALM.back);

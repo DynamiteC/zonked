@@ -56,7 +56,7 @@ export function StarterStep({ profile, playing, onPreview, onStop, onStart }: Pr
   const chosen = starters.find((s) => s.template.id === picked)?.template;
   return (
     <>
-      <h2 className="c-h1">{CALM.starterTitle}</h2>
+      <h1 className="c-h1">{CALM.starterTitle}</h1>
       <fieldset className="c-starters">
         <legend className="c-sr">{CALM.starterTitle}</legend>
         {starters.map((s) => (

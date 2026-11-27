@@ -24,7 +24,7 @@ export function ChoiceGrid<T extends string>({ legend, options, value, onChange 
           <input type="radio" name={name} value={o.value} checked={value === o.value} onChange={() => onChange(o.value)} />
           <span>
             {o.label}
-            {value === o.value && <i className="c-sel">{CALM.selected}</i>}
+            {value === o.value && <i className="c-sel" aria-hidden="true">{CALM.selected}</i>}
           </span>
         </label>
       ))}

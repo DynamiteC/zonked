@@ -63,16 +63,16 @@ export function CrewPanel({ view, overridden, onNotNow, onResume, onFollow, onSt
         <div><dt>{CALM.crewBeat}</dt><dd data-testid="crew-beat">{`${hzText(st.target.beatHz)} Hz`}</dd></div>
       </dl>
       <p className="c-muted" data-testid="crew-beat-hint">{CALM.crewBeatHint}</p>
+      <section aria-labelledby="c-why-h" className="c-why">
+        <h2 id="c-why-h" className="c-h3">{CALM.crewWhyTitle}</h2>
+        <p data-testid="crew-why">{crewWhy(st)}</p>
+      </section>
       <ol className="c-meter" aria-label="Session load">
         {STEPS.map((s, i) => (
           <li key={s} className={i === step ? 'c-seg c-on' : 'c-seg'} aria-current={i === step ? 'step' : undefined}>{s}</li>
         ))}
       </ol>
       <p className="c-next" data-testid="crew-next"><b>{`${CALM.crewNext}: `}</b>{nextLine(view, now)}</p>
-      <section aria-labelledby="c-why-h" className="c-why">
-        <h2 id="c-why-h" className="c-h3">{CALM.crewWhyTitle}</h2>
-        <p data-testid="crew-why">{crewWhy(st)}</p>
-      </section>
       <div className="c-actions c-row">
         {demo ? (
           <button type="button" className="c-btn" data-testid="crew-demo-stop" onClick={onStopDemo}>{CALM.crewDemoStop}</button>

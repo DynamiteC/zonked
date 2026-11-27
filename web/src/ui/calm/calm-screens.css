@@ -44,8 +44,8 @@
 
 /* Library */
 .c-search input { width: 100%; min-height: 48px; border-radius: 8px; border: var(--c-bw) solid var(--c-edge); background: var(--c-surface); color: var(--c-text); padding: 0 16px; font: inherit; }
-.c-tabs { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 12px 0; border-bottom: 1px solid var(--c-line); }
-.c-tab { min-height: 44px; padding: 0 2px; background: none; border: 0; border-bottom: 3px solid transparent; color: var(--c-soft); font: inherit; cursor: pointer; }
+.c-tabs { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 4px 14px; margin: 12px 0; border-bottom: 1px solid var(--c-line); }
+.c-tab { min-height: 44px; padding: 0 2px; white-space: nowrap; flex: none; font-size: 0.9375rem; background: none; border: 0; border-bottom: 3px solid transparent; color: var(--c-soft); font: inherit; cursor: pointer; }
 .c-tab[aria-selected="true"] { color: var(--c-ink); font-weight: 700; border-bottom-color: var(--c-ink); }
 .c-tiles { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .c-tile { display: grid; align-content: start; gap: 2px; width: 100%; min-height: 104px; padding: 14px; border: var(--c-bw) solid var(--c-edge); border-radius: 8px; background: none; color: var(--c-text); font: inherit; text-align: left; cursor: pointer; }
@@ -53,6 +53,7 @@
 .c-tile-name { font-weight: 700; font-size: 1.125rem; }
 .c-tile-mood, .c-tile-count { font-size: 0.875rem; color: var(--c-soft); }
 .c-tchip { min-height: 44px; padding: 0 16px; border-radius: 8px; border: var(--c-bw) solid var(--c-edge); background: none; color: var(--c-text); font: inherit; cursor: pointer; }
+.c-tchip[aria-checked="true"]::before { content: ""; display: inline-block; width: 0.35em; height: 0.7em; margin-right: 0.5em; border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg) translateY(-0.15em); }
 .c-tchip[aria-checked="true"] { background: var(--c-text); color: var(--c-bg); border: 2px solid var(--c-text); font-weight: 700; }
 
 /* Player: scene behind the mascot, one big button. */
@@ -79,8 +80,8 @@
 
 /* Crew */
 .c-meter { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin: 10px 0; }
-.c-seg { padding: 12px 6px; text-align: center; border: var(--c-bw) solid var(--c-edge); border-radius: 8px; font-size: 0.875rem; color: var(--c-soft); }
-.c-seg.c-on { background: var(--c-accent); color: var(--c-on-accent); border: 2px solid var(--c-accent-edge); font-weight: 700; }
+.c-seg { padding: 6px 4px; text-align: center; border: 0; border-bottom: 3px solid var(--c-line); font-size: 0.875rem; color: var(--c-soft); cursor: default; }
+.c-seg.c-on { color: var(--c-text); border-bottom-color: var(--c-ink); font-weight: 700; }
 .c-steps { padding-left: 24px; margin: 8px 0 16px; }
 .c-steps li { padding: 4px 0; }
 .c-why-off { border-left: 3px solid var(--c-caution); padding: 4px 0 4px 14px; margin: 16px 0; }

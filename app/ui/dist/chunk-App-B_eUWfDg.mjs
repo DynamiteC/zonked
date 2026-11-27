@@ -1,6 +1,6 @@
 import { jsx as i, jsxs as f, Fragment as we } from "react/jsx-runtime";
-import { lazy as D, Suspense as q, useRef as _, useState as S, useEffect as C, useCallback as T, useMemo as K, useSyncExternalStore as Yt } from "react";
-import { C as d, P as Vt, s as st, p as Jt, g as Zt, G as Xt, L as Qt, F as xe, d as ot, D as en, c as re, a as Fe, b as tn, e as nn, f as rt, E as an, r as sn, h as on, i as it, j as rn, u as ln, w as cn, S as un, k as dn, o as mn, B as hn, l as pn, m as ie, n as fn, q as gn, t as He, v as U, x as lt, y as yn, z as bn, A as vn, H as je, M as wn } from "./chunk-crewLink-CGwtdNl8.mjs";
+import { lazy as D, Suspense as q, useRef as _, useState as M, useEffect as C, useCallback as T, useMemo as K, useSyncExternalStore as Yt } from "react";
+import { C as d, P as Vt, s as at, p as Jt, g as Xt, G as Zt, L as Qt, F as Be, d as st, D as en, c as re, a as xe, b as tn, e as nn, f as ot, E as an, r as sn, h as on, i as rt, j as rn, u as ln, w as cn, S as un, k as dn, o as mn, B as hn, l as pn, m as ie, n as fn, q as gn, t as Fe, v as U, x as it, y as yn, z as bn, A as vn, H as He, M as wn } from "./chunk-crewLink-CfXmg-3g.mjs";
 function p(e) {
   return {
     modes: ["binaural"],
@@ -13,7 +13,7 @@ function p(e) {
     ...e
   };
 }
-const M = (e, t) => e[(t % e.length + e.length) % e.length], kn = [98, 110, 123.5, 87.3, 103.8, 130.8], Sn = [196, 220, 247, 175, 165, 262], Mn = {
+const N = (e, t) => e[(t % e.length + e.length) % e.length], kn = [98, 110, 123.5, 87.3, 103.8, 130.8], Sn = [196, 220, 247, 175, 165, 262], Mn = {
   calm: [4, 3],
   warm: [6, 2],
   dreamy: [4, 3],
@@ -27,12 +27,12 @@ const M = (e, t) => e[(t % e.length + e.length) % e.length], kn = [98, 110, 123.
 }, Nn = (e) => [...e].reduce((t, n) => (t * 31 + n.charCodeAt(0)) % 9973, 7);
 function An(e, t, n) {
   const a = Nn(e) + n;
-  return { prog: M(Mn[t], a), key: M(kn, a), pianoRoot: M(Sn, a >> 1) };
+  return { prog: N(Mn[t], a), key: N(kn, a), pianoRoot: N(Sn, a >> 1) };
 }
 function Tn(e, t, n) {
   const a = e === "dreamy" || e === "ethereal" || e === "calm";
   return {
-    breathDepth: M([0.45, 0.4, 0.3, 0.2, 0.1], t - 1),
+    breathDepth: N([0.45, 0.4, 0.3, 0.2, 0.1], t - 1),
     breathRateHz: 0.06 + 0.02 * (n % 5),
     stereoWidth: 0.3 + 0.1 * (n % 4),
     panDepth: a ? 0.15 : 0,
@@ -42,47 +42,47 @@ function Tn(e, t, n) {
 const En = {
   lofi: (e, t) => ({
     lofiLevel: 0.45,
-    lofiWarmth: M([0.5, 0.6, 0.7], e),
+    lofiWarmth: N([0.5, 0.6, 0.7], e),
     lofiProgression: t.prog,
-    tapeWow: M([0.25, 0.35, 0.45], e),
+    tapeWow: N([0.25, 0.35, 0.45], e),
     padRootHz: t.key
   }),
   piano: (e, t) => ({
     instLevel: 0.35,
     instKind: 3,
     instRootHz: t.pianoRoot,
-    instScale: M([2, 0, 1, 4, 3], e),
-    instBpm: M([40, 46, 52], e),
-    pianoPedal: M([0.4, 0.55, 0.7], e)
+    instScale: N([2, 0, 1, 4, 3], e),
+    instBpm: N([40, 46, 52], e),
+    pianoPedal: N([0.4, 0.55, 0.7], e)
   }),
   crackle: () => ({ crackle: 0.12 }),
-  drone: (e) => ({ instLevel: 0.35, instKind: 1, instRootHz: M([55, 62, 73, 82], e), instScale: 7, instBpm: 40 }),
+  drone: (e) => ({ instLevel: 0.35, instKind: 1, instRootHz: N([55, 62, 73, 82], e), instScale: 7, instBpm: 40 }),
   pluck: (e) => ({
     instLevel: 0.3,
     instKind: 0,
-    instRootHz: M([196, 220, 247, 262], e),
-    instScale: M([0, 2, 4, 1], e),
-    instBpm: M([48, 56, 64, 72], e)
+    instRootHz: N([196, 220, 247, 262], e),
+    instScale: N([0, 2, 4, 1], e),
+    instBpm: N([48, 56, 64, 72], e)
   }),
   bell: (e) => ({
     instLevel: 0.28,
     instKind: 2,
-    instRootHz: M([262, 294, 330, 349], e),
+    instRootHz: N([262, 294, 330, 349], e),
     instScale: 4,
     instBpm: 40
   }),
-  pad: (e, t) => ({ padLevel: 0.4, padChord: M([0, 2, 4, 6], e), padRootHz: t.key }),
-  chimes: (e) => ({ chimeLevel: 0.25, chimeRatePerMin: M([3, 4, 6, 8], e) }),
+  pad: (e, t) => ({ padLevel: 0.4, padChord: N([0, 2, 4, 6], e), padRootHz: t.key }),
+  chimes: (e) => ({ chimeLevel: 0.25, chimeRatePerMin: N([3, 4, 6, 8], e) }),
   perc: (e) => ({
     percLevel: 0.2,
-    percBpm: M([64, 72, 80, 92], e),
-    percPattern: M([0, 3, 4, 7], e)
+    percBpm: N([64, 72, 80, 92], e),
+    percPattern: N([0, 3, 4, 7], e)
   })
 };
 function Ln(e, t, n = { prog: 0, key: 110, pianoRoot: 220 }) {
   return e.reduce((a, s) => ({ ...a, ...En[s](t, n) }), {});
 }
-const $e = (e) => Math.round(e * 1e3) / 1e3, le = (e) => Math.min(40, Math.max(0.5, e));
+const je = (e) => Math.round(e * 1e3) / 1e3, le = (e) => Math.min(40, Math.max(0.5, e));
 function Cn(e, t, n, a, s) {
   const o = Math.min(5, Math.max(1, t * 0.15));
   if (e === "plateau") {
@@ -95,21 +95,21 @@ function Cn(e, t, n, a, s) {
     return Array.from({ length: 7 }, (l, c) => ({ t: t * c / 6, beat: c % 2 === 0 ? n : a, ramp: c < 6 }));
   const r = t / 4;
   return Array.from({ length: 4 }, (l, c) => {
-    const h = n + (a - n) * c / 3;
-    return c < 3 ? [{ t: c * r, beat: h, ramp: !1 }, { t: c * r + r * 0.75, beat: h, ramp: !0 }] : [{ t: c * r, beat: h, ramp: !1 }];
+    const m = n + (a - n) * c / 3;
+    return c < 3 ? [{ t: c * r, beat: m, ramp: !1 }, { t: c * r + r * 0.75, beat: m, ramp: !0 }] : [{ t: c * r, beat: m, ramp: !1 }];
   }).flat();
 }
 function On(e, t, n, a, s) {
-  const o = (t % 3 - 1) * e.jitter, r = le(e.to + o), l = M(e.noises, t >> 1), c = M(e.layers, t * 2 + (t >> 1)), h = M(e.vibes, t), g = Ln(c, t, An(e.slug, h, t)), N = Object.keys(g).length > 0, v = N ? { ...g, ...Tn(h, e.intensity, t) } : g;
+  const o = (t % 3 - 1) * e.jitter, r = le(e.to + o), l = N(e.noises, t >> 1), c = N(e.layers, t * 2 + (t >> 1)), m = N(e.vibes, t), g = Ln(c, t, An(e.slug, m, t)), A = Object.keys(g).length > 0, k = A ? { ...g, ...Tn(m, e.intensity, t) } : g;
   return Cn(e.shape, n, le(e.from), r, e.ret).map((w) => ({
-    atMin: $e(w.t),
-    beatHz: $e(le(w.beat)),
+    atMin: je(w.t),
+    beatHz: je(le(w.beat)),
     carrierHz: a,
     gain: e.gain,
     mode: s,
     noise: l[0],
     noiseLevel: l[1],
-    ...N ? { layers: v } : {},
+    ...A ? { layers: k } : {},
     ramp: w.ramp
   }));
 }
@@ -135,16 +135,16 @@ function Se(e, t) {
 }
 function zn(e, t) {
   const n = e.adjectives.length, a = t * 7 % (n * e.nouns.length);
-  return `${M(e.adjectives, a)} ${M(e.nouns, Math.floor(a / n))}`;
+  return `${N(e.adjectives, a)} ${N(e.nouns, Math.floor(a / n))}`;
 }
 const Dn = (e) => String(e).padStart(2, "0");
 function Rn(e, t, n, a) {
-  const s = M(t.mins, n), o = M(t.carriers, n * 3 + 1), r = M(t.modes, n + (n >> 2)), l = On(t, n, s, o, r), c = t.to < 4 ? "delta" : t.to < 8 ? "theta" : t.to < 12 ? "alpha" : t.to < 30 ? "beta" : "gamma";
+  const s = N(t.mins, n), o = N(t.carriers, n * 3 + 1), r = N(t.modes, n + (n >> 2)), l = On(t, n, s, o, r), c = t.to < 4 ? "delta" : t.to < 8 ? "theta" : t.to < 12 ? "alpha" : t.to < 30 ? "beta" : "gamma";
   return {
     id: `${e.prefix}-${t.slug}-${Dn(n + 1)}`,
     name: zn(e, a),
     category: e.category,
-    vibe: M(t.vibes, n),
+    vibe: N(t.vibes, n),
     tags: [t.slug, c, r, ...t.tags],
     layerTags: ke(l),
     situations: t.situations,
@@ -1034,10 +1034,10 @@ const In = {
       reason: "Closes the work day with a calm descent that works over speakers."
     })
   ]
-}, Q = (e) => Math.round(e * 1e3) / 1e3, ee = (e) => Math.min(40, Math.max(0.5, e)), ct = (e) => e.segs.reduce((t, n) => t + n[0], 0) * (e.scale ?? 1);
-function Ge(e, t) {
+}, Q = (e) => Math.round(e * 1e3) / 1e3, ee = (e) => Math.min(40, Math.max(0.5, e)), lt = (e) => e.segs.reduce((t, n) => t + n[0], 0) * (e.scale ?? 1);
+function $e(e, t) {
   const n = e.carrier ?? 200;
-  return e.carrierEnd === void 0 ? n : Math.round(n + (e.carrierEnd - n) * t / Math.max(ct(e), 1));
+  return e.carrierEnd === void 0 ? n : Math.round(n + (e.carrierEnd - n) * t / Math.max(lt(e), 1));
 }
 function Gn(e) {
   const t = [], [n, a] = e.noise ?? ["off", 0];
@@ -1047,13 +1047,13 @@ function Gn(e) {
     t.push({
       atMin: Q(s / 60),
       beatHz: Q(ee(o[1])),
-      carrierHz: Ge(e, s),
+      carrierHz: $e(e, s),
       gain: e.gain ?? 0.5,
       mode: e.mode ?? "binaural",
       noise: n,
       noiseLevel: a,
       ramp: l
-    }), s += o[0] * (e.scale ?? 1), l && (c === void 0 || ee(c[1]) !== ee(o[2])) && t.push({ ...t[t.length - 1], atMin: Q(s / 60), beatHz: Q(ee(o[2])), carrierHz: Ge(e, s), ramp: !1 });
+    }), s += o[0] * (e.scale ?? 1), l && (c === void 0 || ee(c[1]) !== ee(o[2])) && t.push({ ...t[t.length - 1], atMin: Q(s / 60), beatHz: Q(ee(o[2])), carrierHz: $e(e, s), ramp: !1 });
   }), t;
 }
 function Wn(e) {
@@ -1066,7 +1066,7 @@ function Wn(e) {
     tags: [...e.tags, e.source],
     layerTags: ke(t),
     situations: e.situations,
-    recommendedMinutes: Math.max(1, Math.round(ct(e) / 60)),
+    recommendedMinutes: Math.max(1, Math.round(lt(e) / 60)),
     intensity: e.intensity,
     adhdFriendly: Se(t, e.intensity),
     stages: t,
@@ -1074,7 +1074,7 @@ function Wn(e) {
     source: e.source
   };
 }
-const te = ["white", 0.3], pe = ["pink", 0.3], fe = ["brown", 0.3], We = [
+const te = ["white", 0.3], pe = ["pink", 0.3], fe = ["brown", 0.3], Ge = [
   [60, 10, 8],
   [60, 8, 8],
   [60, 8, 6],
@@ -1290,7 +1290,7 @@ const te = ["white", 0.3], pe = ["pink", 0.3], fe = ["brown", 0.3], We = [
     vibe: "dreamy",
     situations: ["lucid-dream"],
     intensity: 2,
-    segs: We,
+    segs: Ge,
     gain: 0.5,
     tags: ["theta", "lucid"],
     reason: "A theta bed with brief alpha lifts and a soft ending."
@@ -1390,7 +1390,7 @@ const te = ["white", 0.3], pe = ["pink", 0.3], fe = ["brown", 0.3], We = [
     vibe: "dreamy",
     situations: ["lucid-dream", "cant-sleep"],
     intensity: 2,
-    segs: We.slice(0, 12),
+    segs: Ge.slice(0, 12),
     gain: 0.5,
     tags: ["theta", "lucid", "short"],
     reason: "The opening stretch of the Lucid Dream Cycle, sized for naps."
@@ -1440,10 +1440,10 @@ const te = ["white", 0.3], pe = ["pink", 0.3], fe = ["brown", 0.3], We = [
     reason: "Five steps from alpha up to a 28.5 Hz middle, then back down, in twenty two minutes."
   })
 ];
-function Zn() {
+function Xn() {
   return [...Vn, ...Jn].map(Wn);
 }
-const ut = [
+const ct = [
   { id: "lofi", name: "Lo-fi", blurb: "Warm, slow chords with a tape and vinyl feel, like a quiet study radio.", mood: "warm", defaultLevel: 0.5, layerKeys: ["lofiLevel", "lofiProgression", "tapeWow", "crackle"], templateId: "starter-lofi", evidence: "preference" },
   { id: "piano", name: "Soft piano", blurb: "A soft piano playing gentle, slow phrases with long ringing notes.", mood: "calm", defaultLevel: 0.45, layerKeys: ["instLevel", "instKind", "pianoPedal"], templateId: "starter-piano", evidence: "preference" },
   { id: "violet", name: "Violet hiss", blurb: "A thin, bright hiss, like gentle static. Keep it quiet.", mood: "bright", defaultLevel: 0.3, layerKeys: [], templateId: "starter-violet", evidence: "limited" },
@@ -1451,9 +1451,9 @@ const ut = [
   { id: "deep", name: "Deep rumble", blurb: "A deep, low rumble like distant thunder or a big waterfall (brown noise).", mood: "deep", defaultLevel: 0.4, layerKeys: [], templateId: "starter-deep", evidence: "preference" },
   { id: "chimes", name: "Soft chimes", blurb: "Soft bells that ring now and then at uneven gaps.", mood: "dreamy", defaultLevel: 0.3, layerKeys: ["chimeLevel", "chimeRatePerMin"], templateId: "starter-chimes", evidence: "preference" },
   { id: "beats", name: "Beats only", blurb: "A soft pulse you hear as two slightly different tones, one per ear. Use headphones.", mood: "neutral", defaultLevel: 0, layerKeys: [], templateId: "starter-beats", evidence: "mixed" }
-], Xn = (e) => Number.isFinite(e) ? Math.min(1, Math.max(0, e)) : 0;
+], Zn = (e) => Number.isFinite(e) ? Math.min(1, Math.max(0, e)) : 0;
 function Qn(e, t) {
-  const n = Xn(t);
+  const n = Zn(t);
   switch (e) {
     case "lofi":
       return { noise: "off", noiseLevel: 0, layers: { lofiLevel: n, lofiWarmth: 0.6, lofiProgression: 2, tapeWow: 0.35, crackle: 0.12, breathDepth: 0.4, breathRateHz: 0.08, stereoWidth: 0.5 } };
@@ -1501,18 +1501,18 @@ function ta(e) {
   };
 }
 function na() {
-  return ut.map(ta);
+  return ct.map(ta);
 }
 function aa() {
   return [
     ...na(),
-    ...Zn(),
+    ...Xn(),
     ...[jn, Bn, xn, Fn, Hn, In, Pn, $n].flatMap(_n)
   ];
 }
-let qe;
+let We;
 function B() {
-  return qe ?? (qe = aa()), qe;
+  return We ?? (We = aa()), We;
 }
 new Proxy([], {
   get: (e, t) => Reflect.get(B(), t),
@@ -1535,7 +1535,7 @@ function oa(e) {
     return (((n = t.layers) == null ? void 0 : n.crackle) ?? 0) > 0;
   });
 }
-function Ke(e) {
+function qe(e) {
   return e.stages.some((t) => t.mode === "binaural");
 }
 const ra = {
@@ -1556,7 +1556,7 @@ function ca(e, t, n) {
   return n.push(`Runs ${e} min, longer than your ${a}; you can stop any time.`), Math.max(0, 15 * (1 - s * 1.5)) - (s > 0.5 ? 5 : 0);
 }
 function ua(e, t, n) {
-  return t.deviceType === "speaker" ? Ke(e) ? (n.push("Warning: binaural beats need headphones. A speaker will not deliver the effect; pick an isochronic or monaural template if you can."), -8) : (n.push("Isochronic or monaural beats work over speakers."), 10) : (n.push(t.deviceType === "bluetooth" ? "Good over Bluetooth headphones." : "Headphones suit every beat type."), Ke(e) ? 10 : 8);
+  return t.deviceType === "speaker" ? qe(e) ? (n.push("Warning: binaural beats need headphones. A speaker will not deliver the effect; pick an isochronic or monaural template if you can."), -8) : (n.push("Isochronic or monaural beats work over speakers."), 10) : (n.push(t.deviceType === "bluetooth" ? "Good over Bluetooth headphones." : "Headphones suit every beat type."), qe(e) ? 10 : 8);
 }
 function da(e, t, n) {
   const a = e.intensity > 3 || sa(e) || oa(e), s = t.sensorySensitivity;
@@ -1582,11 +1582,11 @@ function pa(e, t = 5, n = B()) {
     c.onSituation || c.reasons.push("Filters relaxed: too few exact matches, so close alternatives are included.");
   }), l.map((c) => ({ template: c.template, score: c.score, reasons: c.reasons }));
 }
-function dt(e) {
+function ut(e) {
   const t = Math.max(0, Math.ceil(e)), n = Math.floor(t / 60), a = Math.floor(n / 60), s = (o) => String(o).padStart(2, "0");
   return a > 0 ? `${a}:${s(n % 60)}:${s(t % 60)}` : `${s(n)}:${s(t % 60)}`;
 }
-const Ue = {
+const Ke = {
   today: "M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z",
   journeys: "M5 19c0-6 14-4 14-14M5 19a1.5 1.5 0 1 0 0-.01M19 5a1.5 1.5 0 1 0 0-.01",
   library: "M5 4h4v16H5zM11 4h4v16h-4zM17 6l3 .8-3.6 13.2-3-.8",
@@ -1611,9 +1611,9 @@ const Ue = {
   file: "M6 3h8l4 4v14H6zM14 3v4h4M9 14l2 2 4-4"
 };
 function Me({ name: e, size: t = 22 }) {
-  return /* @__PURE__ */ i("svg", { className: "c-icon", width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", focusable: "false", children: /* @__PURE__ */ i("path", { d: Ue[e] ?? Ue.wave }) });
+  return /* @__PURE__ */ i("svg", { className: "c-icon", width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", focusable: "false", children: /* @__PURE__ */ i("path", { d: Ke[e] ?? Ke.wave }) });
 }
-const fa = D(() => import("./chunk-mascot-CjKHJelf.mjs").then((e) => ({ default: e.CalmMascot })));
+const fa = D(() => import("./chunk-mascot-DYiBHlqD.mjs").then((e) => ({ default: e.CalmMascot })));
 function Ne({ size: e, mood: t = "idle", reduced: n }) {
   return /* @__PURE__ */ i(q, { fallback: /* @__PURE__ */ i("span", { className: "c-mascot-gap", style: { width: e, height: e } }), children: /* @__PURE__ */ i(fa, { mood: t, size: e, reducedMotion: n }) });
 }
@@ -1650,7 +1650,7 @@ function va(e, t = null) {
 }
 function wa({ snap: e, crewPresetId: t = null, onOpen: n, onStop: a }) {
   if (!e.playing) return null;
-  const s = e.timer.kind !== "none" && e.timer.running ? dt(e.timer.remainingSec) : "";
+  const s = e.timer.kind !== "none" && e.timer.running ? ut(e.timer.remainingSec) : "";
   return /* @__PURE__ */ f("div", { className: "c-mini", role: "group", "aria-label": "Now playing", children: [
     /* @__PURE__ */ f("button", { type: "button", className: "c-btn c-link c-mini-open", onClick: n, children: [
       va(e, t),
@@ -1687,7 +1687,7 @@ function Ea(e) {
 function H(...e) {
   return Object.freeze(e.map((t) => t === "rest" ? Aa : Ea(t)));
 }
-const ue = (e, t) => Array.from({ length: t }, () => e), j = (e) => Object.freeze(e), Ae = Object.freeze([
+const ue = (e, t) => Array.from({ length: t }, () => e), j = (e) => Object.freeze(e), dt = Object.freeze([
   j({
     id: "calm-evenings",
     title: "7 Calm Evenings",
@@ -1774,8 +1774,8 @@ const ue = (e, t) => Array.from({ length: t }, () => e), j = (e) => Object.freez
     )
   })
 ]);
-function cr(e) {
-  return Ae.find((t) => t.id === e);
+function lr(e) {
+  return dt.find((t) => t.id === e);
 }
 const La = {
   focus: { situation: "deep-work", vibe: "bright", minutes: 25 },
@@ -1846,19 +1846,19 @@ function xa(e, t, n = mt) {
     dots: r
   });
 }
-const Te = "zonked.profile.v1", Ee = "zonked.journeys.v1", Le = "zonked.last.v1", pt = 32 * 1024, ft = 1, Fa = 1e7, Ha = /^[a-z0-9-]{1,64}$/, gt = Object.freeze({
+const Ae = "zonked.profile.v1", Te = "zonked.journeys.v1", Ee = "zonked.last.v1", pt = 32 * 1024, ft = 1, Fa = 1e7, Ha = /^[a-z0-9-]{1,64}$/, gt = Object.freeze({
   goal: "curious",
   timeOfDay: "anytime",
   device: "unsure",
   extraGentle: !1,
   createdAt: 0
-}), ja = Object.freeze({}), Ce = (e) => typeof e == "object" && e !== null && !Array.isArray(e), ge = (e, t) => typeof e == "number" && Number.isInteger(e) && e >= 0 && e <= t, de = (e, t) => e.some((n) => n === t);
+}), ja = Object.freeze({}), Le = (e) => typeof e == "object" && e !== null && !Array.isArray(e), ge = (e, t) => typeof e == "number" && Number.isInteger(e) && e >= 0 && e <= t, de = (e, t) => e.some((n) => n === t);
 function yt(e, t) {
   try {
     const n = e.get(t);
     if (n === null || n.length > pt) return;
     const a = JSON.parse(n);
-    return Ce(a) && a.v === ft ? a : void 0;
+    return Le(a) && a.v === ft ? a : void 0;
   } catch {
     return;
   }
@@ -1877,21 +1877,21 @@ function vt(e) {
     return Object.freeze({ goal: t, timeOfDay: n, device: a, extraGentle: s, createdAt: o });
 }
 function $a(e) {
-  const t = yt(e, Te);
+  const t = yt(e, Ae);
   return (t && vt(t)) ?? gt;
 }
 function Ga(e, t) {
   const n = vt({ ...t });
-  return n !== void 0 && bt(e, Te, { ...n });
+  return n !== void 0 && bt(e, Ae, { ...n });
 }
 function wt(e, t) {
-  const n = Ae.find((c) => c.id === e);
-  if (n === void 0 || !Ce(t) || !ge(t.startedAt, Fa)) return;
+  const n = dt.find((c) => c.id === e);
+  if (n === void 0 || !Le(t) || !ge(t.startedAt, Fa)) return;
   const { doneDays: a, pickedIds: s } = t;
   if (!Array.isArray(a) || !Array.isArray(s) || s.length > n.days.length) return;
   const o = a, r = s;
   if (!o.every((c) => ge(c, n.days.length) && c >= 1) || !r.every((c) => typeof c == "string" && Ha.test(c))) return;
-  const l = [...new Set(o)].sort((c, h) => c - h);
+  const l = [...new Set(o)].sort((c, m) => c - m);
   return Object.freeze({
     startedAt: t.startedAt,
     doneDays: Object.freeze(l),
@@ -1899,8 +1899,8 @@ function wt(e, t) {
   });
 }
 function Wa(e) {
-  const t = yt(e, Ee), n = t == null ? void 0 : t.journeys;
-  if (!Ce(n)) return ja;
+  const t = yt(e, Te), n = t == null ? void 0 : t.journeys;
+  if (!Le(n)) return ja;
   const a = {};
   for (const [s, o] of Object.entries(n)) {
     const r = wt(s, o);
@@ -1914,16 +1914,16 @@ function qa(e, t) {
     const o = wt(a, s);
     o !== void 0 && (n[a] = o);
   }
-  return bt(e, Ee, { journeys: n });
+  return bt(e, Te, { journeys: n });
 }
 function Ka(e) {
-  for (const t of [Te, Ee, Le])
+  for (const t of [Ae, Te, Ee])
     try {
       e.remove(t);
     } catch {
     }
 }
-function Ye() {
+function Ue() {
   const e = /* @__PURE__ */ new Map();
   return {
     get: (t) => e.get(t) ?? null,
@@ -1934,7 +1934,7 @@ function Ye() {
 function Ua(e) {
   try {
     const t = e ?? globalThis.localStorage;
-    if (t === void 0) return Ye();
+    if (t === void 0) return Ue();
     const n = "zonked.probe";
     return t.setItem(n, "1"), t.removeItem(n), {
       get: (a) => t.getItem(a),
@@ -1942,13 +1942,13 @@ function Ua(e) {
       remove: (a) => t.removeItem(a)
     };
   } catch {
-    return Ye();
+    return Ue();
   }
 }
 const kt = /^[a-z0-9-]{1,80}$/;
 function Ya(e) {
   try {
-    const t = e.get(Le);
+    const t = e.get(Ee);
     return t !== null && kt.test(t) ? t : null;
   } catch {
     return null;
@@ -1956,13 +1956,13 @@ function Ya(e) {
 }
 function Va(e, t) {
   try {
-    kt.test(t) && e.set(Le, t);
+    kt.test(t) && e.set(Ee, t);
   } catch {
   }
 }
-const Ja = 60, Za = 400;
-function Xa(e, t) {
-  const n = _(null), [a, s] = S(null);
+const Ja = 60, Xa = 400;
+function Za(e, t) {
+  const n = _(null), [a, s] = M(null);
   C(() => {
     if (e.playing) {
       s(null), n.current = e.templateId === null ? null : { id: e.templateId, name: e.templateName ?? d.brand, minutes: e.elapsedSec / 60 };
@@ -1970,7 +1970,7 @@ function Xa(e, t) {
     }
     const r = n.current;
     if (n.current = null, !t || r === null || r.minutes * 60 < Ja) return;
-    const l = window.setTimeout(() => s({ ...r, minutes: Math.round(r.minutes) }), Za);
+    const l = window.setTimeout(() => s({ ...r, minutes: Math.round(r.minutes) }), Xa);
     return () => window.clearTimeout(l);
   }, [e.playing, e.templateId, e.templateName, e.elapsedSec, t]);
   const o = T(() => s(null), []);
@@ -2025,32 +2025,32 @@ function as(e) {
 }
 const ss = 200, Y = (e = Date.now) => V(e());
 function os(e, t) {
-  const n = K(() => Ua(), []), [a, s] = S(() => $a(n)), [o, r] = S(() => Wa(n)), [l, c] = S([]), [h, g] = S(0);
+  const n = K(() => Ua(), []), [a, s] = M(() => $a(n)), [o, r] = M(() => Wa(n)), [l, c] = M([]), [m, g] = M(0);
   C(() => {
-    let k = !0;
-    return e.listLogs(ss).then((u) => k && c(u)).catch(() => {
+    let y = !0;
+    return e.listLogs(ss).then((u) => y && c(u)).catch(() => {
     }), () => {
-      k = !1;
+      y = !1;
     };
-  }, [e, h, t]);
-  const N = K(() => {
-    const k = l.map((u) => ({ day: V(u.startedAt), minutes: as(u) }));
-    return xa(k, Y());
-  }, [l]), v = T(
-    (k) => {
-      s(k), Ga(n, k);
+  }, [e, m, t]);
+  const A = K(() => {
+    const y = l.map((u) => ({ day: V(u.startedAt), minutes: as(u) }));
+    return xa(y, Y());
+  }, [l]), k = T(
+    (y) => {
+      s(y), Ga(n, y);
     },
     [n]
   ), w = T(
-    (k, u) => {
-      r((m) => {
-        const { [k]: y, ...b } = m, E = u === null ? b : { ...b, [k]: u };
+    (y, u) => {
+      r((h) => {
+        const { [y]: b, ...v } = h, E = u === null ? v : { ...v, [y]: u };
         return qa(n, E), E;
       });
     },
     [n]
-  ), A = T(() => g((k) => k + 1), []);
-  return { storage: n, profile: a, progress: o, week: N, logs: l, setProfile: v, setJourney: w, refresh: A };
+  ), S = T(() => g((y) => y + 1), []);
+  return { storage: n, profile: a, progress: o, week: A, logs: l, setProfile: k, setJourney: w, refresh: S };
 }
 const St = 15e3, Mt = 6e4, ae = [
   { score: 22, level: "focus", beatHz: 40, carrierHz: 200, gain: 0.45, transitionSec: 5, why: "Simulated: a fresh start. The pretend load is low, so the sound stays steady." },
@@ -2082,23 +2082,23 @@ function Tt() {
   for (const e of se) At.clearTimer(e);
   se = [];
 }
-function Ve(e, t, n, a) {
+function Ye(e, t, n, a) {
   const s = a.now(), o = is(t, Math.trunc(s / 1e3));
   if (o === null) return;
   const r = t >= ae.length - 1;
-  st({ state: o, source: "demo", changedAtMs: s, snoozeUntilMs: 0, demoNextAtMs: n + (r ? Mt : (t + 1) * St) }), e.applyCrew(o), e.followCrew();
+  at({ state: o, source: "demo", changedAtMs: s, snoozeUntilMs: 0, demoNextAtMs: n + (r ? Mt : (t + 1) * St) }), e.applyCrew(o), e.followCrew();
 }
 function Et(e) {
-  Tt(), st({ state: null, source: "none", changedAtMs: 0, snoozeUntilMs: 0, demoNextAtMs: null }), e.crewLost();
+  Tt(), at({ state: null, source: "none", changedAtMs: 0, snoozeUntilMs: 0, demoNextAtMs: null }), e.crewLost();
 }
 function ls(e, t = Nt) {
   Tt(), At = t;
   const n = t.now();
-  Ve(e, 0, n, t), e.snapshot().playing || e.play();
-  for (let a = 1; a < ae.length; a += 1) se.push(t.setTimer(() => Ve(e, a, n, t), a * St));
+  Ye(e, 0, n, t), e.snapshot().playing || e.play();
+  for (let a = 1; a < ae.length; a += 1) se.push(t.setTimer(() => Ye(e, a, n, t), a * St));
   se.push(t.setTimer(() => Et(e), Mt));
 }
-const cs = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], Je = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], us = { listened: "listened", rest: "rest day", today: "today", upcoming: "coming up" };
+const cs = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], Ve = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], us = { listened: "listened", rest: "rest day", today: "today", upcoming: "coming up" };
 function ds(e, t = !0, n = !1) {
   return e.quietWeek && n && !t ? d.joinedLine : e.quietWeek ? t ? d.welcomeBack : d.firstWeek : `${d.weekOf(e.daysListened)}. ${d.restCount}`;
 }
@@ -2110,92 +2110,80 @@ function ms({ week: e, hasHistory: t = !0, joinedToday: n = !1, compact: a = !1 
       return /* @__PURE__ */ f("li", { className: `c-dot c-dot-${o}${l ? " c-dot-joined" : ""}`, "data-state": o, children: [
         /* @__PURE__ */ i("span", { className: "c-mark", "aria-hidden": "true", children: l || o === "listened" ? /* @__PURE__ */ i(Me, { name: "check", size: 16 }) : "" }),
         /* @__PURE__ */ i("span", { className: "c-dayname", "aria-hidden": "true", children: cs[r] }),
-        /* @__PURE__ */ i("span", { className: "c-sr", children: `${Je[r]}, ${l ? d.joinedToday : us[o]}` })
-      ] }, Je[r]);
+        /* @__PURE__ */ i("span", { className: "c-sr", children: `${Ve[r]}, ${l ? d.joinedToday : us[o]}` })
+      ] }, Ve[r]);
     }) }),
     /* @__PURE__ */ i("p", { className: "c-muted", "data-testid": a ? void 0 : "week-text", children: ds(e, t, s) })
   ] });
 }
 const hs = () => /* @__PURE__ */ new Date();
-function ps(e, t, n) {
-  var s;
-  const a = ((s = e[t]) == null ? void 0 : s.doneDays.length) ?? 0;
-  return a === 0 ? d.dayZero(n) : `Day ${Math.min(n, a + 1)} of ${n}`;
-}
-function fs({ profile: e, week: t, progress: n, reduced: a, crewConnected: s, hasHistory: o = !0, joinedToday: r = !1, now: l = hs, last: c = null, onPlay: h, onOpenJourney: g, onGo: N, onReset: v }) {
-  const [w, A] = S(0), k = K(() => pa(za(e, l()), 5), [e, l]), u = k[w % Math.max(1, k.length)];
+function ps({ profile: e, week: t, reduced: n, crewConnected: a, hasHistory: s = !0, joinedToday: o = !1, now: r = hs, last: l = null, onPlay: c, onGo: m, onReset: g }) {
+  const [A, k] = M(0), w = K(() => pa(za(e, r()), 5), [e, r]), S = w[A % Math.max(1, w.length)];
   return /* @__PURE__ */ f("div", { className: "c-today", children: [
     /* @__PURE__ */ f("header", { className: "c-pagehead", children: [
-      /* @__PURE__ */ i(Ne, { size: 72, reduced: a }),
-      /* @__PURE__ */ i("h1", { className: "c-greet", "data-testid": "greeting", children: Zt(l().getHours()) })
+      /* @__PURE__ */ i(Ne, { size: 72, reduced: n }),
+      /* @__PURE__ */ i("h1", { className: "c-greet", "data-testid": "greeting", children: Xt(r().getHours()) })
     ] }),
-    c !== null && c.id !== (u == null ? void 0 : u.template.id) && /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-wide c-again", "data-testid": "play-again", onClick: () => h(c), children: `${d.playAgain}: ${c.name}` }),
-    u !== void 0 && /* @__PURE__ */ f("section", { className: "c-daily", "aria-labelledby": "c-daily-h", children: [
+    l !== null && l.id !== (S == null ? void 0 : S.template.id) && /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-wide c-again", "data-testid": "play-again", onClick: () => c(l), children: `${d.playAgain}: ${l.name}` }),
+    S !== void 0 && /* @__PURE__ */ f("section", { className: "c-daily", "aria-labelledby": "c-daily-h", children: [
       /* @__PURE__ */ i("p", { className: "c-eyebrow", children: d.dailyEyebrow }),
-      /* @__PURE__ */ i("h2", { id: "c-daily-h", children: u.template.name }),
-      /* @__PURE__ */ i("p", { className: "c-muted", children: `${u.template.recommendedMinutes} min. ${u.reasons[0] ?? d.suggested}` }),
+      /* @__PURE__ */ i("h2", { id: "c-daily-h", children: S.template.name }),
+      /* @__PURE__ */ i("p", { className: "c-muted", children: `${S.template.recommendedMinutes} min. ${S.reasons[0] ?? d.suggested}` }),
       /* @__PURE__ */ f("div", { className: "c-actions", children: [
-        /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-primary", "data-testid": "today-play", onClick: () => h(u.template), children: d.start }),
-        /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link", onClick: () => A((m) => m + 1), children: d.notThisOne })
+        /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-primary", "data-testid": "today-play", onClick: () => c(S.template), children: d.start }),
+        /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link", onClick: () => k((y) => y + 1), children: d.notThisOne })
       ] })
     ] }),
-    /* @__PURE__ */ f("button", { type: "button", className: "c-link-card c-reset-entry", "data-testid": "today-reset", onClick: v, children: [
+    /* @__PURE__ */ f("button", { type: "button", className: "c-link-card c-reset-entry", "data-testid": "today-reset", onClick: g, children: [
       /* @__PURE__ */ i("b", { children: d.resetEntry }),
       /* @__PURE__ */ i("small", { children: d.resetEntryHint })
     ] }),
     /* @__PURE__ */ f("section", { "aria-labelledby": "c-goal-h", children: [
-      /* @__PURE__ */ i("h2", { id: "c-goal-h", className: "c-h3", children: `Your goal: ${Xt[e.goal]}` }),
-      /* @__PURE__ */ i(ms, { week: t, hasHistory: o, joinedToday: r })
+      /* @__PURE__ */ i("h2", { id: "c-goal-h", className: "c-h3", children: `Your goal: ${Zt[e.goal]}` }),
+      /* @__PURE__ */ i(ms, { week: t, hasHistory: s, joinedToday: o })
     ] }),
     /* @__PURE__ */ f("section", { "aria-labelledby": "c-for-h", children: [
       /* @__PURE__ */ i("h2", { id: "c-for-h", className: "c-h3", children: d.forYou }),
-      /* @__PURE__ */ i("ul", { className: "c-rows", children: k.map((m) => /* @__PURE__ */ i("li", { children: /* @__PURE__ */ f("button", { type: "button", className: "c-mini-card", onClick: () => h(m.template), children: [
-        /* @__PURE__ */ i("b", { children: m.template.name }),
-        /* @__PURE__ */ i("small", { children: m.reasons[0] ?? d.suggested }),
-        /* @__PURE__ */ i("em", { children: `${m.template.recommendedMinutes} min` })
-      ] }) }, m.template.id)) })
+      /* @__PURE__ */ i("ul", { className: "c-rows", children: w.slice(0, 3).map((y) => /* @__PURE__ */ i("li", { children: /* @__PURE__ */ f("button", { type: "button", className: "c-mini-card", onClick: () => c(y.template), children: [
+        /* @__PURE__ */ i("b", { children: y.template.name }),
+        /* @__PURE__ */ i("small", { children: y.reasons[0] ?? d.suggested }),
+        /* @__PURE__ */ i("em", { children: `${y.template.recommendedMinutes} min` })
+      ] }) }, y.template.id)) })
     ] }),
-    /* @__PURE__ */ f("section", { "aria-labelledby": "c-jr-h", children: [
-      /* @__PURE__ */ i("h2", { id: "c-jr-h", className: "c-h3", children: d.journeysTitle }),
-      /* @__PURE__ */ i("ul", { className: "c-rows", children: Ae.map((m) => /* @__PURE__ */ i("li", { children: /* @__PURE__ */ f("button", { type: "button", className: "c-journey-card", onClick: () => g(m.id), children: [
-        /* @__PURE__ */ i("b", { children: m.title }),
-        /* @__PURE__ */ i("small", { children: m.blurb }),
-        /* @__PURE__ */ i("em", { children: ps(n, m.id, m.days.length) })
-      ] }) }, m.id)) })
-    ] }),
-    /* @__PURE__ */ i("button", { type: "button", className: "c-link-card", onClick: () => N("library"), children: /* @__PURE__ */ i("b", { children: "Browse all sounds" }) }),
-    s && /* @__PURE__ */ i("p", { className: "c-crew-chip", role: "status", children: "Crew connected: easing the sound" })
+    /* @__PURE__ */ i("button", { type: "button", className: "c-link-card", onClick: () => m("library"), children: /* @__PURE__ */ i("b", { children: "Browse all sounds" }) }),
+    /* @__PURE__ */ i("button", { type: "button", className: "c-link-card", onClick: () => m("journeys"), children: /* @__PURE__ */ i("b", { children: d.journeysTitle }) }),
+    a && /* @__PURE__ */ i("p", { className: "c-crew-chip", role: "status", children: "Crew connected: easing the sound" })
   ] });
 }
-const gs = { label: "Breathe in", count: 4 };
-function ys(e) {
-  const [t, n] = S(0);
+const fs = { label: "Breathe in", count: 4 };
+function gs(e) {
+  const [t, n] = M(0);
   if (C(() => {
     if (n(0), !e) return;
     const s = window.setInterval(() => n((o) => o + 1), 1e3);
     return () => window.clearInterval(s);
-  }, [e]), !e) return gs;
+  }, [e]), !e) return fs;
   const a = t % 8;
   return { label: a < 4 ? "Breathe in" : "Breathe out", count: 4 - a % 4 };
 }
-const bs = (e) => e.label === "Breathe in" ? d.counterIn(e.count) : d.counterOut(e.count);
-function vs({ label: e, on: t, announce: n }) {
+const ys = (e) => e.label === "Breathe in" ? d.counterIn(e.count) : d.counterOut(e.count);
+function bs({ label: e, on: t, announce: n }) {
   return /* @__PURE__ */ i("p", { className: "c-sr", role: "status", "aria-live": "polite", "data-testid": "breath-live", children: t && n ? e : "" });
 }
-const ws = 0.5, ks = 1.25, G = (e, t) => Number.isFinite(e) ? e : t, W = (e, t, n) => Math.max(t, Math.min(n, e)), Ze = (e) => (1 - Math.cos(Math.PI * W(e, 0, 1))) / 2;
-function Ss(e, t = 4, n = 4) {
+const vs = 0.5, ws = 1.25, G = (e, t) => Number.isFinite(e) ? e : t, W = (e, t, n) => Math.max(t, Math.min(n, e)), Je = (e) => (1 - Math.cos(Math.PI * W(e, 0, 1))) / 2;
+function ks(e, t = 4, n = 4) {
   const a = W(G(t, 4), 0.5, 30), s = W(G(n, 4), 0.5, 30), o = a + s, l = (G(e, 0) % o + o) % o;
-  if (l < a) return Ze(l / a);
-  const c = Math.min(ws, s / 4), h = W((l - a) / (s - c), 0, 1);
-  return 1 - Ze(1 - Math.pow(1 - h, ks));
+  if (l < a) return Je(l / a);
+  const c = Math.min(vs, s / 4), m = W((l - a) / (s - c), 0, 1);
+  return 1 - Je(1 - Math.pow(1 - m, ws));
 }
-function Ms(e, t = 4, n = 4) {
+function Ss(e, t = 4, n = 4) {
   const a = W(G(t, 4), 0.5, 30), s = a + W(G(n, 4), 0.5, 30);
   return (G(e, 0) % s + s) % s < a ? "Breathe in" : "Breathe out";
 }
-const Xe = { phase: 0, label: "Breathe in" }, Ns = 4e-3;
-function As(e) {
-  const [t, n] = S(Xe);
+const Xe = { phase: 0, label: "Breathe in" }, Ms = 4e-3;
+function Ns(e) {
+  const [t, n] = M(Xe);
   return C(() => {
     if (!e || typeof requestAnimationFrame != "function") {
       n(Xe);
@@ -2203,35 +2191,35 @@ function As(e) {
     }
     let a = 0;
     const s = performance.now(), o = (r) => {
-      const l = (r - s) / 1e3, c = Ss(l), h = Ms(l);
-      n((g) => h === g.label && Math.abs(c - g.phase) < Ns ? g : { phase: c, label: h }), a = requestAnimationFrame(o);
+      const l = (r - s) / 1e3, c = ks(l), m = Ss(l);
+      n((g) => m === g.label && Math.abs(c - g.phase) < Ms ? g : { phase: c, label: m }), a = requestAnimationFrame(o);
     };
     return a = requestAnimationFrame(o), () => {
       cancelAnimationFrame(a);
     };
   }, [e]), t;
 }
-function ur({ label: e, className: t, live: n = !0 }) {
+function cr({ label: e, className: t, live: n = !0 }) {
   return /* @__PURE__ */ i("p", { className: t ?? "cm-cue", ...n ? { "aria-live": "polite", role: "status" } : {}, children: e });
 }
-const Ts = 20;
-function Es(e) {
+const As = 20;
+function Ts(e) {
   if (e.kind === "sleep-fade") return 4;
   if (e.kind !== "countdown") return 3;
   const t = Math.round(e.totalSec / 60);
   return t === 15 ? 0 : t === 30 ? 1 : t === 60 ? 2 : -1;
 }
-function Ls({ timer: e, player: t }) {
+function Es({ timer: e, player: t }) {
   const n = (s) => {
-    s <= 2 ? t.startTimer({ kind: "countdown", minutes: [15, 30, 60][s] ?? 15 }) : s === 3 ? t.stopTimer() : t.startTimer({ kind: "sleep-fade", minutes: Ts });
-  }, a = Es(e);
+    s <= 2 ? t.startTimer({ kind: "countdown", minutes: [15, 30, 60][s] ?? 15 }) : s === 3 ? t.stopTimer() : t.startTimer({ kind: "sleep-fade", minutes: As });
+  }, a = Ts(e);
   return /* @__PURE__ */ f("div", { children: [
     /* @__PURE__ */ i("div", { className: "c-chips", role: "radiogroup", "aria-label": "Timer", children: d.timerChips.map((s, o) => /* @__PURE__ */ i("button", { type: "button", role: "radio", "aria-checked": a === o, className: "c-tchip", onClick: () => n(o), children: s }, s)) }),
-    e.kind !== "none" && e.running && /* @__PURE__ */ i("p", { className: "c-time", "data-testid": "time-left", children: dt(e.remainingSec) })
+    e.kind !== "none" && e.running && /* @__PURE__ */ i("p", { className: "c-time", "data-testid": "time-left", children: ut(e.remainingSec) })
   ] });
 }
-const Lt = 8 * 1024 * 1024, Ct = 600, Cs = 20, Os = 2, zs = 0.45, Ds = 1e-4;
-function Rs(e) {
+const Lt = 8 * 1024 * 1024, Ct = 600, Ls = 20, Cs = 2, Os = 0.45, zs = 1e-4;
+function Ds(e) {
   var s;
   const t = ((s = e[0]) == null ? void 0 : s.length) ?? 0, n = new Float32Array(t), a = Math.max(1, e.length);
   for (const o of e) {
@@ -2243,7 +2231,7 @@ function Rs(e) {
   }
   return n;
 }
-function _s(e, t) {
+function Rs(e, t) {
   const n = e.length - t, a = e.slice(0, n);
   for (let s = 0; s < t; s++) {
     const o = (s + 0.5) / t * (Math.PI / 2);
@@ -2253,16 +2241,16 @@ function _s(e, t) {
 }
 function Ot(e, t) {
   if (!Number.isFinite(t) || t <= 0 || e.length === 0) return { ok: !1, error: "This file has no sound in it." };
-  const n = Rs(e), a = n.length / t;
+  const n = Ds(e), a = n.length / t;
   if (a > Ct) return { ok: !1, error: "This file is longer than 10 minutes." };
   let s = 0;
   for (const l of n) s = Math.max(s, Math.abs(l));
-  if (s < Ds) return { ok: !1, error: "This file is silent." };
-  const o = zs / s;
+  if (s < zs) return { ok: !1, error: "This file is silent." };
+  const o = Os / s;
   for (let l = 0; l < n.length; l++) n[l] = (n[l] ?? 0) * o;
-  if (a < Cs) return { ok: !0, data: n, loop: !1 };
-  const r = Math.min(Math.round(Os * t), Math.floor(n.length / 4));
-  return { ok: !0, data: _s(n, r), loop: !0 };
+  if (a < Ls) return { ok: !0, data: n, loop: !1 };
+  const r = Math.min(Math.round(Cs * t), Math.floor(n.length / 4));
+  return { ok: !0, data: Rs(n, r), loop: !0 };
 }
 const me = [
   { id: "rain", label: "Rain", kind: "loop", note: "Steady rain on leaves and ground.", moods: ["focus", "calm", "sleep", "nature"] },
@@ -2297,127 +2285,127 @@ const me = [
   { id: "brown", label: "Brown noise (synth)", kind: "synth", note: "A deep, soft rumble that masks noise.", moods: ["focus", "sleep"] },
   { id: "swell", label: "Ocean swell (synth)", kind: "synth", note: "Slow waves that rise and fall, made in code.", moods: ["calm", "sleep", "nature"] },
   { id: "crickets", label: "Night crickets (synth)", kind: "synth", note: "Quiet crickets far off, made in code.", moods: ["calm", "sleep", "nature"] }
-], $ = (e) => ({ ok: !1, error: e }), Is = 20261128, Ps = /^[a-z]+$/;
-function Bs(e) {
+], $ = (e) => ({ ok: !1, error: e }), _s = 20261128, Is = /^[a-z]+$/;
+function Ps(e) {
   const t = /* @__PURE__ */ new Map(), n = /* @__PURE__ */ new Map();
   let a = null, s = 0, o = null, r = 0, l = 0;
   const c = () => a === null ? 0 : o ?? tn(s);
-  function h(u) {
-    u.duck.gain.setTargetAtTime(ot(c()), u.ctx.currentTime, en);
+  function m(u) {
+    u.duck.gain.setTargetAtTime(st(c()), u.ctx.currentTime, en);
   }
   function g(u) {
-    if (!Ps.test(u) || !me.some((m) => m.id === u)) return null;
+    if (!Is.test(u) || !me.some((h) => h.id === u)) return null;
     try {
-      const m = new URL(`${e.baseUrl}samples/${u}.mp3.json`, e.origin);
-      return m.origin === new URL(e.origin).origin ? m.href : null;
+      const h = new URL(`${e.baseUrl}samples/${u}.mp3.json`, e.origin);
+      return h.origin === new URL(e.origin).origin ? h.href : null;
     } catch {
       return null;
     }
   }
-  async function N(u, m) {
-    if (t.has(m)) return { ok: !0 };
-    const y = g(m);
-    if (y === null) return $("unknown sample");
+  async function A(u, h) {
+    if (t.has(h)) return { ok: !0 };
+    const b = g(h);
+    if (b === null) return $("unknown sample");
     try {
-      const b = await e.fetchBytes(y), E = await u.ctx.decodeAudioData(b);
-      return t.set(m, E), { ok: !0 };
+      const v = await e.fetchBytes(b), E = await u.ctx.decodeAudioData(v);
+      return t.set(h, E), { ok: !0 };
     } catch {
       return $("sample unavailable: check the connection or reinstall the app files");
     }
   }
-  function v(u, m) {
-    const y = n.get(m);
-    if (y !== void 0) return y;
-    const b = N(u, m).finally(() => {
-      n.delete(m);
+  function k(u, h) {
+    const b = n.get(h);
+    if (b !== void 0) return b;
+    const v = A(u, h).finally(() => {
+      n.delete(h);
     });
-    return n.set(m, b), b;
+    return n.set(h, v), v;
   }
-  function w(u, m) {
-    const y = m.ctx.currentTime, b = u.gain.gain;
-    b.cancelScheduledValues(y), b.setValueAtTime(b.value, y), b.linearRampToValueAtTime(0, y + xe);
+  function w(u, h) {
+    const b = h.ctx.currentTime, v = u.gain.gain;
+    v.cancelScheduledValues(b), v.setValueAtTime(v.value, b), v.linearRampToValueAtTime(0, b + Be);
     try {
-      u.src.stop(y + xe + 0.05);
+      u.src.stop(b + Be + 0.05);
     } catch {
     }
     u.src.onended = () => {
       u.src.disconnect(), u.gain.disconnect();
     };
   }
-  function A(u, m, y, b, E) {
-    a !== null && w(a, u), s = re(b, s);
+  function S(u, h, b, v, E) {
+    a !== null && w(a, u), s = re(v, s);
     const O = u.ctx.createBufferSource(), z = u.ctx.createGain();
-    O.buffer = y, O.loop = E, z.gain.setValueAtTime(0, u.ctx.currentTime), z.gain.linearRampToValueAtTime(s, u.ctx.currentTime + Fe), O.connect(z), z.connect(u.input);
-    const F = { id: m, src: O, gain: z };
+    O.buffer = b, O.loop = E, z.gain.setValueAtTime(0, u.ctx.currentTime), z.gain.linearRampToValueAtTime(s, u.ctx.currentTime + xe), O.connect(z), z.connect(u.input);
+    const F = { id: h, src: O, gain: z };
     return E || (O.onended = () => {
-      O.disconnect(), z.disconnect(), a === F && (a = null, h(u));
-    }), O.start(), a = F, h(u), { ok: !0 };
+      O.disconnect(), z.disconnect(), a === F && (a = null, m(u));
+    }), O.start(), a = F, m(u), { ok: !0 };
   }
-  async function k(u, m, y, b) {
+  async function y(u, h, b, v) {
     let E;
     try {
       E = (await import("./chunk-graph-BSt4xAW7.mjs")).buildSynth;
     } catch {
       return $("sample unavailable: reinstall the app files");
     }
-    if (b !== r) return { ok: !0 };
-    a !== null && w(a, u), s = re(y, s);
-    const O = E(u.ctx, m, Is + l++), z = u.ctx.createGain();
-    return z.gain.setValueAtTime(0, u.ctx.currentTime), z.gain.linearRampToValueAtTime(s, u.ctx.currentTime + Fe), O.connect(z), z.connect(u.input), a = { id: m, src: O, gain: z }, h(u), { ok: !0 };
+    if (v !== r) return { ok: !0 };
+    a !== null && w(a, u), s = re(b, s);
+    const O = E(u.ctx, h, _s + l++), z = u.ctx.createGain();
+    return z.gain.setValueAtTime(0, u.ctx.currentTime), z.gain.linearRampToValueAtTime(s, u.ctx.currentTime + xe), O.connect(z), z.connect(u.input), a = { id: h, src: O, gain: z }, m(u), { ok: !0 };
   }
   return {
     list: () => me,
-    async start(u, m) {
-      const y = e.getBus();
-      if (y === null) return $("start the sound first");
-      const b = ++r;
-      if (me.some((z) => z.id === u && z.kind === "synth")) return k(y, u, m, b);
-      const E = await v(y, u);
+    async start(u, h) {
+      const b = e.getBus();
+      if (b === null) return $("start the sound first");
+      const v = ++r;
+      if (me.some((z) => z.id === u && z.kind === "synth")) return y(b, u, h, v);
+      const E = await k(b, u);
       if (!E.ok) return E;
       const O = t.get(u);
-      return O === void 0 || b !== r ? O === void 0 ? $("sample unavailable") : { ok: !0 } : A(y, u, O, m, !0);
+      return O === void 0 || v !== r ? O === void 0 ? $("sample unavailable") : { ok: !0 } : S(b, u, O, h, !0);
     },
     /** Plays a ready buffer (a person's own sound). Loops, or plays once when `loop` is false. */
-    startBuffer(u, m, y, b) {
+    startBuffer(u, h, b, v) {
       const E = e.getBus();
-      return E === null ? $("start the sound first") : (r++, A(E, u, m, y, b));
+      return E === null ? $("start the sound first") : (r++, S(E, u, h, b, v));
     },
     setLevel(u) {
       s = re(u, s);
-      const m = e.getBus();
-      if (m === null || a === null) return;
-      const y = a.gain.gain;
-      y.cancelScheduledValues(m.ctx.currentTime), y.setTargetAtTime(s, m.ctx.currentTime, Qt), h(m);
+      const h = e.getBus();
+      if (h === null || a === null) return;
+      const b = a.gain.gain;
+      b.cancelScheduledValues(h.ctx.currentTime), b.setTargetAtTime(s, h.ctx.currentTime, Qt), m(h);
     },
     setBlend(u) {
       o = nn(u, o ?? 0);
-      const m = e.getBus();
-      m !== null && h(m);
+      const h = e.getBus();
+      h !== null && m(h);
     },
     stop() {
       r++;
-      const u = e.getBus(), m = a;
-      a = null, !(u === null || m === null) && (w(m, u), h(u));
+      const u = e.getBus(), h = a;
+      a = null, !(u === null || h === null) && (w(h, u), m(u));
     },
     playing: () => (a == null ? void 0 : a.id) ?? null
   };
 }
-async function xs(e) {
+async function Bs(e) {
   const t = await fetch(e, { credentials: "same-origin" });
   if (!t.ok) throw new Error(`status ${t.status}`);
   return t.arrayBuffer();
 }
-const x = Bs({
-  getBus: rt,
-  fetchBytes: xs,
+const x = Ps({
+  getBus: ot,
+  fetchBytes: Bs,
   baseUrl: "./",
   origin: typeof location > "u" ? "" : location.href
-}), zt = () => x.list(), Fs = (e, t) => x.start(e, t), Hs = (e) => x.setLevel(e), js = () => x.stop(), $s = (e) => x.setBlend(e), Gs = () => x.playing();
-async function Ws(e, t, n) {
-  const a = rt();
+}), zt = () => x.list(), xs = (e, t) => x.start(e, t), Fs = (e) => x.setLevel(e), Hs = () => x.stop(), js = (e) => x.setBlend(e), $s = () => x.playing();
+async function Gs(e, t, n) {
+  const a = ot();
   if (a === null) return { ok: !1, error: "start the sound first" };
   try {
-    const s = await a.ctx.decodeAudioData(t.slice(0)), o = Array.from({ length: s.numberOfChannels }, (c, h) => s.getChannelData(h)), r = Ot(o, s.sampleRate);
+    const s = await a.ctx.decodeAudioData(t.slice(0)), o = Array.from({ length: s.numberOfChannels }, (c, m) => s.getChannelData(m)), r = Ot(o, s.sampleRate);
     if (!r.ok) return r;
     const l = a.ctx.createBuffer(1, r.data.length, s.sampleRate);
     return l.getChannelData(0).set(r.data), x.startBuffer(e, l, n, r.loop);
@@ -2428,25 +2416,25 @@ async function Ws(e, t, n) {
 const Dt = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   MAX_SAMPLE_LEVEL: wn,
-  duckGain: ot,
+  duckGain: st,
   listSamples: zt,
-  playingSample: Gs,
-  setBlend: $s,
-  setSampleLevel: Hs,
-  startOwn: Ws,
-  startSample: Fs,
-  stopSample: js
-}, Symbol.toStringTag, { value: "Module" })), Oe = "zonked.nature.v1", Rt = 0.3, _t = 0.4, It = 0.85, Qe = { id: null, blend: Rt, level: _t }, et = (e, t, n, a) => typeof e == "number" && Number.isFinite(e) ? Math.min(n, Math.max(t, e)) : a;
-function qs(e) {
-  if (e === null || e.length > 400) return Qe;
+  playingSample: $s,
+  setBlend: js,
+  setSampleLevel: Fs,
+  startOwn: Gs,
+  startSample: xs,
+  stopSample: Hs
+}, Symbol.toStringTag, { value: "Module" })), Ce = "zonked.nature.v1", Rt = 0.3, _t = 0.4, It = 0.85, Ze = { id: null, blend: Rt, level: _t }, Qe = (e, t, n, a) => typeof e == "number" && Number.isFinite(e) ? Math.min(n, Math.max(t, e)) : a;
+function Ws(e) {
+  if (e === null || e.length > 400) return Ze;
   try {
     const t = JSON.parse(e);
-    return { id: typeof t.id == "string" && /^(own:)?[a-z0-9]{3,40}$/.test(t.id) ? t.id : null, blend: et(t.blend, 0, 1, Rt), level: et(t.level, 0, It, _t) };
+    return { id: typeof t.id == "string" && /^(own:)?[a-z0-9]{3,40}$/.test(t.id) ? t.id : null, blend: Qe(t.blend, 0, 1, Rt), level: Qe(t.level, 0, It, _t) };
   } catch {
-    return Qe;
+    return Ze;
   }
 }
-const ze = () => {
+const Oe = () => {
   try {
     return typeof localStorage > "u" ? null : localStorage;
   } catch {
@@ -2454,72 +2442,72 @@ const ze = () => {
   }
 }, Pt = () => {
   var e;
-  return qs(((e = ze()) == null ? void 0 : e.getItem(Oe)) ?? null);
+  return Ws(((e = Oe()) == null ? void 0 : e.getItem(Ce)) ?? null);
 };
-function tt(e) {
+function et(e) {
   var t;
   try {
-    (t = ze()) == null || t.setItem(Oe, JSON.stringify(e));
+    (t = Oe()) == null || t.setItem(Ce, JSON.stringify(e));
   } catch {
   }
 }
-function Ks() {
+function qs() {
   var e;
   try {
-    (e = ze()) == null || e.removeItem(Oe);
+    (e = Oe()) == null || e.removeItem(Ce);
   } catch {
   }
 }
-const Us = { wind: "breeze", waterfall: "rapids", flute: "wave" }, Ys = D(() => import("./chunk-MySounds-C28kRjA9.mjs").then((e) => ({ default: e.MySounds }))), Vs = D(() => import("./chunk-Credits-DTDPYRpG.mjs").then((e) => ({ default: e.Credits })));
+const Ks = { wind: "breeze", waterfall: "rapids", flute: "wave" }, Us = D(() => import("./chunk-MySounds-DMo0V4xV.mjs").then((e) => ({ default: e.MySounds }))), Ys = D(() => import("./chunk-Credits-DJHwq3Tx.mjs").then((e) => ({ default: e.Credits })));
 function ye({ id: e, label: t, value: n, max: a, onChange: s }) {
   return /* @__PURE__ */ f("div", { className: "c-slider", children: [
     /* @__PURE__ */ i("label", { htmlFor: e, children: t }),
     /* @__PURE__ */ i("input", { id: e, type: "range", min: 0, max: a, step: 0.05, value: n, "aria-valuetext": `${Math.round(n / a * 100)} percent`, onChange: (o) => s(Number(o.currentTarget.value)) })
   ] });
 }
-function De({ nature: e }) {
+function ze({ nature: e }) {
   return /* @__PURE__ */ f("div", { className: "c-nature-controls", children: [
     /* @__PURE__ */ i(ye, { id: "c-blend", label: d.natureBlend, value: e.prefs.blend, max: 1, onChange: e.setBlend }),
     /* @__PURE__ */ i(ye, { id: "c-nlevel", label: d.natureLevel, value: e.prefs.level, max: It, onChange: e.setLevel })
   ] });
 }
-function Js({ nature: e, reduced: t, onBack: n }) {
-  const [a, s] = S(null);
+function Vs({ nature: e, reduced: t, onBack: n }) {
+  const [a, s] = M(null);
   return /* @__PURE__ */ f("div", { className: "c-nature", children: [
     /* @__PURE__ */ i(ga, { title: d.natureHead, reduced: t }),
     /* @__PURE__ */ i("p", { className: "c-lead", children: d.natureIntro }),
     /* @__PURE__ */ i("ul", { className: "c-tiles c-nature-tiles", children: zt().map((o, r) => /* @__PURE__ */ f("li", { children: [
       /* @__PURE__ */ f("button", { type: "button", className: `c-tile c-g${r % 6 + 1}`, "data-testid": `nature-${o.id}`, "aria-pressed": e.on === o.id, onClick: () => e.start(o.id), children: [
-        /* @__PURE__ */ i(Me, { name: Us[o.id] ?? o.id }),
+        /* @__PURE__ */ i(Me, { name: Ks[o.id] ?? o.id }),
         /* @__PURE__ */ i("span", { className: "c-tile-name", children: o.label }),
         /* @__PURE__ */ i("span", { className: "c-tile-mood", children: o.kind === "synth" ? o.note ?? d.natureMade : d.natureFree }),
         e.on === o.id && /* @__PURE__ */ i("span", { className: "c-tile-count", children: d.natureOn })
       ] }),
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link c-small", "aria-expanded": a === o.id, onClick: () => s(a === o.id ? null : o.id), children: `${d.natureCredits}: ${o.label}` }),
-      a === o.id && /* @__PURE__ */ i(q, { fallback: null, children: /* @__PURE__ */ i(Vs, { id: o.id, synth: o.kind === "synth" }) })
+      a === o.id && /* @__PURE__ */ i(q, { fallback: null, children: /* @__PURE__ */ i(Ys, { id: o.id, synth: o.kind === "synth" }) })
     ] }, o.id)) }),
-    /* @__PURE__ */ i(De, { nature: e }),
+    /* @__PURE__ */ i(ze, { nature: e }),
     e.on !== null && /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-wide", "data-testid": "nature-stop", onClick: e.stop, children: d.natureOff }),
     /* @__PURE__ */ i("p", { className: "c-status", role: "status", "data-testid": "nature-message", children: e.message }),
     /* @__PURE__ */ i("p", { className: "c-note", children: d.natureNote }),
-    /* @__PURE__ */ i(q, { fallback: null, children: /* @__PURE__ */ i(Ys, { nature: e }) }),
+    /* @__PURE__ */ i(q, { fallback: null, children: /* @__PURE__ */ i(Us, { nature: e }) }),
     /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link c-back", onClick: n, children: d.natureBack })
   ] });
 }
-const Zs = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const Js = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  NatureControls: De,
-  NatureScreen: Js,
+  NatureControls: ze,
+  NatureScreen: Vs,
   Slider: ye
-}, Symbol.toStringTag, { value: "Module" })), Xs = ["cant-sleep", "lucid-dream"], Qs = ["adhd-focus", "deep-work", "ai-burnout"];
+}, Symbol.toStringTag, { value: "Module" })), Xs = ["cant-sleep", "lucid-dream"], Zs = ["adhd-focus", "deep-work", "ai-burnout"];
 function Bt(e, t) {
   if (t) return "nature";
   const n = e === null ? void 0 : B().find((s) => s.id === e), a = (n == null ? void 0 : n.situations) ?? [];
-  return a.some((s) => Xs.includes(s)) ? "sleep" : a.some((s) => Qs.includes(s)) ? "focus" : "calm";
+  return a.some((s) => Xs.includes(s)) ? "sleep" : a.some((s) => Zs.includes(s)) ? "focus" : "calm";
 }
-const eo = 400;
+const Qs = 400;
 function xt(e, t) {
-  const [n, a] = S(0);
+  const [n, a] = M(0);
   return C(() => {
     if (!t) {
       a(0);
@@ -2532,20 +2520,20 @@ function xt(e, t) {
         s && a((c) => c * 0.6 + l * 0.4);
       }).catch(() => {
       });
-    }, eo);
+    }, Qs);
     return () => {
       s = !1, window.clearInterval(o);
     };
   }, [e, t]), n;
 }
-const to = D(() => import("./chunk-mascot-CjKHJelf.mjs").then((e) => ({ default: e.CalmMascot }))), no = D(() => import("./chunk-visuals-B0CqKfY2.mjs").then((e) => ({ default: e.SceneLoop }))), ao = D(() => import("./chunk-mascot-CjKHJelf.mjs").then((e) => ({ default: e.BreathCue })));
-function Re({ still: e, playing: t, situation: n, theme: a, level: s, announce: o = !0 }) {
-  const r = As(t && !e), l = ys(t && e), c = t && !e;
+const eo = D(() => import("./chunk-mascot-DYiBHlqD.mjs").then((e) => ({ default: e.CalmMascot }))), to = D(() => import("./chunk-visuals-B0CqKfY2.mjs").then((e) => ({ default: e.SceneLoop }))), no = D(() => import("./chunk-mascot-DYiBHlqD.mjs").then((e) => ({ default: e.BreathCue })));
+function De({ still: e, playing: t, situation: n, theme: a, level: s, announce: o = !0 }) {
+  const r = Ns(t && !e), l = gs(t && e), c = t && !e;
   return /* @__PURE__ */ f(we, { children: [
     /* @__PURE__ */ i("div", { className: "c-stage", "data-testid": "breath-ring", "data-still": e ? "true" : "false", "data-situation": n, children: /* @__PURE__ */ f(q, { fallback: null, children: [
-      /* @__PURE__ */ i("div", { className: "c-stage-scene", children: /* @__PURE__ */ i(no, { situation: n, reducedMotion: e, theme: a }) }),
+      /* @__PURE__ */ i("div", { className: "c-stage-scene", children: /* @__PURE__ */ i(to, { situation: n, reducedMotion: e, theme: a }) }),
       /* @__PURE__ */ i("div", { className: "c-stage-mascot", children: /* @__PURE__ */ i(
-        to,
+        eo,
         {
           mood: t ? "breathing" : "idle",
           size: 190,
@@ -2557,76 +2545,76 @@ function Re({ still: e, playing: t, situation: n, theme: a, level: s, announce: 
       ) })
     ] }) }),
     /* @__PURE__ */ f("div", { className: "c-cue", children: [
-      c ? /* @__PURE__ */ i(q, { fallback: null, children: /* @__PURE__ */ i(ao, { label: r.label, className: "c-cue-text", live: !1 }) }) : t ? /* @__PURE__ */ i("p", { className: "c-cue-text", "data-testid": "breath-counter", children: bs(l) }) : /* @__PURE__ */ i("p", { className: "c-cue-text", children: d.breathe }),
-      /* @__PURE__ */ i(vs, { label: c ? r.label : l.label, on: t, announce: o })
+      c ? /* @__PURE__ */ i(q, { fallback: null, children: /* @__PURE__ */ i(no, { label: r.label, className: "c-cue-text", live: !1 }) }) : t ? /* @__PURE__ */ i("p", { className: "c-cue-text", "data-testid": "breath-counter", children: ys(l) }) : /* @__PURE__ */ i("p", { className: "c-cue-text", children: d.breathe }),
+      /* @__PURE__ */ i(bs, { label: c ? r.label : l.label, on: t, announce: o })
     ] })
   ] });
 }
-function so({ engine: e, theme: t, announce: n = !0, player: a, snap: s, still: o, favorite: r, onToggle: l, onFavorite: c, nature: h }) {
-  const [g, N] = S(!1), v = xt(e, s.playing), w = ut.find((u) => u.templateId === s.templateId), A = (w == null ? void 0 : w.evidence) ?? "mixed", k = Bt(s.templateId, h.on !== null);
+function ao({ engine: e, theme: t, announce: n = !0, player: a, snap: s, still: o, favorite: r, onToggle: l, onFavorite: c, nature: m }) {
+  const [g, A] = M(!1), k = xt(e, s.playing), w = ct.find((u) => u.templateId === s.templateId), S = (w == null ? void 0 : w.evidence) ?? "mixed", y = Bt(s.templateId, m.on !== null);
   return /* @__PURE__ */ f("div", { className: "c-player", children: [
     /* @__PURE__ */ i("h1", { className: "c-h1", children: s.templateName ?? d.brand }),
-    /* @__PURE__ */ i(Re, { still: o, playing: s.playing, situation: k, theme: t, level: v, announce: n }),
+    /* @__PURE__ */ i(De, { still: o, playing: s.playing, situation: y, theme: t, level: k, announce: n }),
     /* @__PURE__ */ f("div", { className: "c-controls", children: [
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-round c-big", "data-testid": "player-toggle", onClick: l, children: s.playing ? d.stop : d.play }),
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-round", "aria-pressed": r, onClick: c, children: r ? d.saved : d.favorite })
     ] }),
-    /* @__PURE__ */ i(Ls, { timer: s.timer, player: a }),
-    /* @__PURE__ */ i(oo, { nature: h }),
+    /* @__PURE__ */ i(Es, { timer: s.timer, player: a }),
+    /* @__PURE__ */ i(so, { nature: m }),
     /* @__PURE__ */ i("p", { className: "c-muted", children: d.volumeCapped }),
     /* @__PURE__ */ f("section", { className: "c-why", children: [
-      /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link", "aria-expanded": g, "aria-controls": "c-why-box", onClick: () => N((u) => !u), children: d.whyTitle }),
+      /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link", "aria-expanded": g, "aria-controls": "c-why-box", onClick: () => A((u) => !u), children: d.whyTitle }),
       /* @__PURE__ */ f("div", { id: "c-why-box", hidden: !g, children: [
         /* @__PURE__ */ i("p", { children: d.whyBody }),
-        /* @__PURE__ */ i("p", { children: `Evidence: ${A}. ${an[A] ?? ""}` })
+        /* @__PURE__ */ i("p", { children: `Evidence: ${S}. ${an[S] ?? ""}` })
       ] })
     ] })
   ] });
 }
-function oo({ nature: e }) {
+function so({ nature: e }) {
   const t = e.prefs.id ?? Pt().id ?? "rain";
   return /* @__PURE__ */ f("section", { className: "c-card c-nature-quick", "aria-label": d.natureHead, children: [
     /* @__PURE__ */ i("button", { type: "button", className: "c-btn", "data-testid": "player-nature", "aria-pressed": e.on !== null, onClick: () => e.on === null ? e.start(t) : e.stop(), children: e.on === null ? `${d.natureAdd}: ${t.startsWith("own:") ? d.mineTitle : t}` : d.natureOff }),
-    e.on !== null && /* @__PURE__ */ i(De, { nature: e }),
+    e.on !== null && /* @__PURE__ */ i(ze, { nature: e }),
     /* @__PURE__ */ i("p", { className: "c-status", role: "status", children: e.message })
   ] });
 }
-const ro = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const oo = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  PlayerScreen: so,
-  Stage: Re
-}, Symbol.toStringTag, { value: "Module" })), he = 90, io = "android-wakeful-relax-5";
-function lo(e) {
-  const [t, n] = S("idle"), [a, s] = S(he), o = _(0), { player: r, guarded: l, playTemplate: c } = e, h = T(() => {
-    const A = B().find((k) => k.id === io);
-    A !== void 0 && l(() => {
-      o.current = Date.now() + he * 1e3, s(he), n("running"), c(A, null);
+  PlayerScreen: ao,
+  Stage: De
+}, Symbol.toStringTag, { value: "Module" })), he = 90, ro = "android-wakeful-relax-5";
+function io(e) {
+  const [t, n] = M("idle"), [a, s] = M(he), o = _(0), { player: r, guarded: l, playTemplate: c } = e, m = T(() => {
+    const S = B().find((y) => y.id === ro);
+    S !== void 0 && l(() => {
+      o.current = Date.now() + he * 1e3, s(he), n("running"), c(S, null);
     });
   }, [l, c]), g = T(() => {
     n("idle"), r.stop();
   }, [r]);
   C(() => {
     if (t !== "running") return;
-    const A = window.setInterval(() => {
-      const k = Math.ceil((o.current - Date.now()) / 1e3);
-      if (k > 0) return s(k);
-      window.clearInterval(A), s(0), n("done"), r.stop();
+    const S = window.setInterval(() => {
+      const y = Math.ceil((o.current - Date.now()) / 1e3);
+      if (y > 0) return s(y);
+      window.clearInterval(S), s(0), n("done"), r.stop();
     }, 1e3);
-    return () => window.clearInterval(A);
+    return () => window.clearInterval(S);
   }, [t, r]);
-  const N = _(!1), v = e.snap.playing;
+  const A = _(!1), k = e.snap.playing;
   C(() => {
-    t !== "running" ? N.current = !1 : v ? N.current = !0 : N.current && n("idle");
-  }, [t, v]);
+    t !== "running" ? A.current = !1 : k ? A.current = !0 : A.current && n("idle");
+  }, [t, k]);
   const w = _(t);
-  return w.current = t, C(() => () => void (w.current === "running" && r.stop()), [r]), { phase: t, left: a, begin: h, stop: g };
+  return w.current = t, C(() => () => void (w.current === "running" && r.stop()), [r]), { phase: t, left: a, begin: m, stop: g };
 }
-function co({ s: e, still: t, theme: n, announce: a, onBack: s }) {
-  const o = lo(e), r = xt(e.engine, e.snap.playing), l = Bt(e.snap.templateId, !1);
-  return o.phase === "done" ? /* @__PURE__ */ i(uo, { onAgain: o.begin, onBack: s }) : /* @__PURE__ */ f("div", { className: "c-player c-reset", "data-testid": "reset-screen", "data-phase": o.phase, children: [
+function lo({ s: e, still: t, theme: n, announce: a, onBack: s }) {
+  const o = io(e), r = xt(e.engine, e.snap.playing), l = Bt(e.snap.templateId, !1);
+  return o.phase === "done" ? /* @__PURE__ */ i(co, { onAgain: o.begin, onBack: s }) : /* @__PURE__ */ f("div", { className: "c-player c-reset", "data-testid": "reset-screen", "data-phase": o.phase, children: [
     /* @__PURE__ */ i("h1", { className: "c-h1", children: d.resetTitle }),
     o.phase === "idle" && /* @__PURE__ */ i("p", { className: "c-lead", children: d.resetIntro }),
-    /* @__PURE__ */ i(Re, { still: t, playing: o.phase === "running" && e.snap.playing, situation: l, theme: n, level: r, announce: a }),
+    /* @__PURE__ */ i(De, { still: t, playing: o.phase === "running" && e.snap.playing, situation: l, theme: n, level: r, announce: a }),
     o.phase === "running" ? /* @__PURE__ */ f(we, { children: [
       /* @__PURE__ */ i("p", { className: "c-muted c-digits", "data-testid": "reset-left", "aria-hidden": "true", children: d.resetLeft(o.left) }),
       /* @__PURE__ */ i("div", { className: "c-controls", children: /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-round c-big", "data-testid": "reset-stop", onClick: o.stop, children: d.stop }) })
@@ -2637,7 +2625,7 @@ function co({ s: e, still: t, theme: n, announce: a, onBack: s }) {
     /* @__PURE__ */ i("p", { className: "c-muted", children: d.volumeCapped })
   ] });
 }
-function uo({ onAgain: e, onBack: t }) {
+function co({ onAgain: e, onBack: t }) {
   const n = _(null);
   return C(() => {
     var a;
@@ -2652,36 +2640,36 @@ function uo({ onAgain: e, onBack: t }) {
     ] })
   ] });
 }
-const mo = D(() => import("./chunk-Journeys-BeQhJUEU.mjs").then((e) => ({ default: e.JourneyList }))), ho = D(() => import("./chunk-Journeys-BeQhJUEU.mjs").then((e) => ({ default: e.JourneyDetail }))), po = D(() => import("./chunk-Library-Cr8d5CS7.mjs").then((e) => ({ default: e.Library }))), fo = D(() => Promise.resolve().then(() => ro).then((e) => ({ default: e.PlayerScreen }))), go = D(() => import("./chunk-CrewScreen-DfIi1Rhs.mjs").then((e) => ({ default: e.CrewScreen }))), yo = D(() => Promise.resolve().then(() => Zs).then((e) => ({ default: e.NatureScreen }))), bo = D(() => import("./chunk-SettingsScreen-DT6aDFsf.mjs").then((e) => ({ default: e.SettingsScreen })));
-function vo({ view: e, journeyId: t, s: n, data: a, crewInfo: s, nature: o, still: r, fav: l, last: c, look: h, prefs: g, onPrefs: N, handlers: v }) {
+const uo = D(() => import("./chunk-Journeys-D8avlNkE.mjs").then((e) => ({ default: e.JourneyList }))), mo = D(() => import("./chunk-Journeys-D8avlNkE.mjs").then((e) => ({ default: e.JourneyDetail }))), ho = D(() => import("./chunk-Library-DxJxJhmN.mjs").then((e) => ({ default: e.Library }))), po = D(() => Promise.resolve().then(() => oo).then((e) => ({ default: e.PlayerScreen }))), fo = D(() => import("./chunk-CrewScreen-Ddf5uMyI.mjs").then((e) => ({ default: e.CrewScreen }))), go = D(() => Promise.resolve().then(() => Js).then((e) => ({ default: e.NatureScreen }))), yo = D(() => import("./chunk-SettingsScreen-CutOQAFx.mjs").then((e) => ({ default: e.SettingsScreen })));
+function bo({ view: e, journeyId: t, s: n, data: a, crewInfo: s, nature: o, still: r, fav: l, last: c, look: m, prefs: g, onPrefs: A, handlers: k }) {
   switch (e) {
     case "journeys":
-      return /* @__PURE__ */ i(mo, { progress: a.progress, onOpen: v.openJourney, reduced: r });
+      return /* @__PURE__ */ i(uo, { progress: a.progress, onOpen: k.openJourney, reduced: r });
     case "journey":
       return /* @__PURE__ */ i(
-        ho,
+        mo,
         {
           id: t ?? "",
           profile: a.profile,
           progress: a.progress,
           todayDay: Y(),
-          onBack: () => v.go("journeys"),
+          onBack: () => k.go("journeys"),
           onStartJourney: a.setJourney,
           onRestart: (w) => a.setJourney(w, null),
-          onPlayDay: v.playDay
+          onPlayDay: k.playDay
         }
       );
     case "library":
-      return /* @__PURE__ */ i(po, { store: n.store, logs: a.logs, reduced: r, onNature: () => v.go("nature"), onPlay: v.play, onPlayMix: v.onMix });
+      return /* @__PURE__ */ i(ho, { store: n.store, logs: a.logs, reduced: r, onNature: () => k.go("nature"), onPlay: k.play, onPlayMix: k.onMix });
     case "nature":
-      return /* @__PURE__ */ i(yo, { nature: o, reduced: r, onBack: () => v.go("library") });
+      return /* @__PURE__ */ i(go, { nature: o, reduced: r, onBack: () => k.go("library") });
     case "player":
-      return /* @__PURE__ */ i(fo, { player: n.player, snap: n.snap, still: r, favorite: l.on, onToggle: n.toggle, onFavorite: l.toggle, nature: o, engine: n.engine, theme: h.theme, announce: g.announce });
+      return /* @__PURE__ */ i(po, { player: n.player, snap: n.snap, still: r, favorite: l.on, onToggle: n.toggle, onFavorite: l.toggle, nature: o, engine: n.engine, theme: m.theme, announce: g.announce });
     case "reset":
-      return /* @__PURE__ */ i(co, { s: n, still: r, theme: h.theme, announce: g.announce, onBack: () => v.go("today") });
+      return /* @__PURE__ */ i(lo, { s: n, still: r, theme: m.theme, announce: g.announce, onBack: () => k.go("today") });
     case "crew":
       return /* @__PURE__ */ i(
-        go,
+        fo,
         {
           crew: s,
           overridden: n.snap.overridden,
@@ -2694,22 +2682,22 @@ function vo({ view: e, journeyId: t, s: n, data: a, crewInfo: s, nature: o, stil
       );
     case "settings":
       return /* @__PURE__ */ i(
-        bo,
+        yo,
         {
           gentle: a.profile.extraGentle,
           reduceMotion: n.userReduced,
           reduced: r,
           onGentle: (w) => a.setProfile({ ...a.profile, extraGentle: w }),
           onReduceMotion: n.setReduced,
-          onStudio: v.onStudio,
-          onForget: v.forget,
+          onStudio: k.onStudio,
+          onForget: k.forget,
           prefs: g,
-          onPrefs: N
+          onPrefs: A
         }
       );
     default:
       return /* @__PURE__ */ i(
-        fs,
+        ps,
         {
           profile: a.profile,
           week: a.week,
@@ -2719,15 +2707,15 @@ function vo({ view: e, journeyId: t, s: n, data: a, crewInfo: s, nature: o, stil
           joinedToday: V(a.profile.createdAt) === Y(),
           crewConnected: s.enabled && s.status === "connected",
           last: c,
-          onPlay: v.play,
-          onOpenJourney: v.openJourney,
-          onGo: v.go,
-          onReset: () => v.go("reset")
+          onPlay: k.play,
+          onOpenJourney: k.openJourney,
+          onGo: k.go,
+          onReset: () => k.go("reset")
         }
       );
   }
 }
-const wo = "zonked.look.v1", Ft = "zonked.theme.v2", J = { choice: "dark", dim: null, announce: !0 }, ko = ["system", "light", "dark", "contrast"], So = (e) => typeof e == "string" && ko.includes(e);
+const vo = "zonked.look.v1", Ft = "zonked.theme.v2", J = { choice: "dark", dim: null, announce: !0 }, wo = ["system", "light", "dark", "contrast"], ko = (e) => typeof e == "string" && wo.includes(e);
 function Ht(e) {
   if (e === null) return null;
   try {
@@ -2737,34 +2725,34 @@ function Ht(e) {
     return null;
   }
 }
-function Mo(e) {
+function So(e) {
   const t = Ht(e);
   return t === null ? J : {
-    choice: So(t.choice) ? t.choice : J.choice,
+    choice: ko(t.choice) ? t.choice : J.choice,
     dim: typeof t.dim == "boolean" ? t.dim : null,
     announce: t.announce !== !1
   };
 }
-function No(e) {
+function Mo(e) {
   const t = Ht(e);
   if (t === null) return J;
   const n = t.highContrast === !0 ? "contrast" : t.theme === "light" ? "light" : "dark";
   return { ...J, choice: n };
 }
-const Ao = (e) => e.getHours() >= 19 || e.getHours() < 7, To = (e, t = /* @__PURE__ */ new Date()) => e.dim ?? Ao(t), Eo = () => typeof window.matchMedia == "function" && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-function Lo(e, t) {
+const No = (e) => e.getHours() >= 19 || e.getHours() < 7, Ao = (e, t = /* @__PURE__ */ new Date()) => e.dim ?? No(t), To = () => typeof window.matchMedia == "function" && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+function Eo(e, t) {
   return e.choice === "contrast" ? { theme: t, highContrast: !0 } : { theme: e.choice === "system" ? t : e.choice, highContrast: !1 };
 }
-function Co() {
+function Lo() {
   try {
     const e = window.localStorage.getItem(Ft);
-    return e !== null ? Mo(e) : No(window.localStorage.getItem(wo));
+    return e !== null ? So(e) : Mo(window.localStorage.getItem(vo));
   } catch {
     return J;
   }
 }
-function Oo() {
-  const [e, t] = S(Co), [n, a] = S(Eo);
+function Co() {
+  const [e, t] = M(Lo), [n, a] = M(To);
   C(() => {
     var l;
     if (typeof window.matchMedia != "function") return;
@@ -2781,87 +2769,87 @@ function Oo() {
     } catch {
     }
   }, []);
-  return { look: Lo(e, n), prefs: e, dim: To(e), setPrefs: s };
+  return { look: Eo(e, n), prefs: e, dim: Ao(e), setPrefs: s };
 }
 let oe = null;
-const nt = () => oe, at = (e) => void (oe = e);
-function zo() {
+const tt = () => oe, nt = (e) => void (oe = e);
+function Oo() {
   oe !== null && (oe = null, Promise.resolve().then(() => Dt).then((e) => e.stopSample()).catch(() => {
   }));
 }
-const Do = "zonked.mysounds.v1", Ro = 5, _o = 20 * 1024 * 1024, R = "sounds", Io = 60, I = (e) => ({ ok: !1, error: e }), Po = "Your device could not store this sound. Remove one and try again.", jt = (e) => /^own:[a-z0-9]{6,40}$/.test(e);
-function Bo(e) {
-  const t = e.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, Io);
+const zo = "zonked.mysounds.v1", Do = 5, Ro = 20 * 1024 * 1024, R = "sounds", _o = 60, I = (e) => ({ ok: !1, error: e }), Io = "Your device could not store this sound. Remove one and try again.", jt = (e) => /^own:[a-z0-9]{6,40}$/.test(e);
+function Po(e) {
+  const t = e.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, _o);
   return t === "" ? "My sound" : t;
 }
-function xo(e) {
+function Bo(e) {
   return new Promise((t, n) => {
-    const a = e.open(Do, 1);
+    const a = e.open(zo, 1);
     a.onupgradeneeded = () => void a.result.createObjectStore(R, { keyPath: "id" }), a.onsuccess = () => t(a.result), a.onerror = () => n(a.error ?? new Error("open failed")), a.onblocked = () => n(new Error("blocked"));
   });
 }
-function _e(e) {
+function Re(e) {
   return new Promise((t, n) => {
     e.onsuccess = () => t(e.result), e.onerror = () => n(e.error ?? new Error("request failed"));
   });
 }
-function Ie(e) {
+function _e(e) {
   return new Promise((t, n) => {
     e.oncomplete = () => t(), e.onerror = () => n(e.error ?? new Error("write failed")), e.onabort = () => n(e.error ?? new Error("write aborted"));
   });
 }
-const Z = () => typeof indexedDB > "u" ? null : indexedDB;
-async function X(e, t, n) {
+const X = () => typeof indexedDB > "u" ? null : indexedDB;
+async function Z(e, t, n) {
   if (e === null) return I("This browser cannot keep sounds on your device.");
   let a = null;
   try {
-    return a = await xo(e), { ok: !0, value: await t(a) };
+    return a = await Bo(e), { ok: !0, value: await t(a) };
   } catch (s) {
     if (s instanceof RangeError) return I(s.message === "count" ? "You can keep 5 sounds. Remove one first." : "Your sounds would use more than 20 MB. Remove one first.");
     const o = s instanceof DOMException && s.name === "QuotaExceededError";
-    return I(o ? Po : n);
+    return I(o ? Io : n);
   } finally {
     a == null || a.close();
   }
 }
-async function dr(e = Z()) {
-  return X(e, async (t) => (await _e(t.transaction(R).objectStore(R).getAll())).map((a) => ({ id: a.id, name: a.name, size: a.size })), "Your sounds could not be read.");
+async function ur(e = X()) {
+  return Z(e, async (t) => (await Re(t.transaction(R).objectStore(R).getAll())).map((a) => ({ id: a.id, name: a.name, size: a.size })), "Your sounds could not be read.");
 }
-async function Fo(e, t = Z()) {
+async function xo(e, t = X()) {
   if (!jt(e)) return I("Unknown sound.");
-  const n = await X(t, async (a) => await _e(a.transaction(R).objectStore(R).get(e)), "Your sound could not be read.");
+  const n = await Z(t, async (a) => await Re(a.transaction(R).objectStore(R).get(e)), "Your sound could not be read.");
   return n.ok ? n.value === void 0 ? I("That sound is gone.") : { ok: !0, value: n.value.bytes } : n;
 }
-async function mr(e, t, n = Z()) {
+async function dr(e, t, n = X()) {
   if (t.byteLength > Lt) return I("This file is bigger than 8 MB.");
-  const s = { id: `own:${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`, name: Bo(e), size: t.byteLength, bytes: t };
-  return X(n, async (o) => {
-    const r = await _e(o.transaction(R).objectStore(R).getAll());
-    if (r.length >= Ro) throw new RangeError("count");
-    if (r.reduce((c, h) => c + h.size, 0) + s.size > _o) throw new RangeError("total");
+  const s = { id: `own:${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`, name: Po(e), size: t.byteLength, bytes: t };
+  return Z(n, async (o) => {
+    const r = await Re(o.transaction(R).objectStore(R).getAll());
+    if (r.length >= Do) throw new RangeError("count");
+    if (r.reduce((c, m) => c + m.size, 0) + s.size > Ro) throw new RangeError("total");
     const l = o.transaction(R, "readwrite");
-    return l.objectStore(R).put(s), await Ie(l), { id: s.id, name: s.name, size: s.size };
+    return l.objectStore(R).put(s), await _e(l), { id: s.id, name: s.name, size: s.size };
   }, "Your sound could not be saved.");
 }
-async function hr(e, t = Z()) {
-  return X(t, async (n) => {
+async function mr(e, t = X()) {
+  return Z(t, async (n) => {
     const a = n.transaction(R, "readwrite");
-    return a.objectStore(R).delete(e), await Ie(a), !0;
+    return a.objectStore(R).delete(e), await _e(a), !0;
   }, "That sound could not be removed.");
 }
-async function Ho(e = Z()) {
-  return X(e, async (t) => {
+async function Fo(e = X()) {
+  return Z(e, async (t) => {
     const n = t.transaction(R, "readwrite");
-    return n.objectStore(R).clear(), await Ie(n), !0;
+    return n.objectStore(R).clear(), await _e(n), !0;
   }, "Your sounds could not be removed.");
 }
-const jo = async (e) => {
+const Ho = async (e) => {
   const t = typeof OfflineAudioContext > "u" ? void 0 : OfflineAudioContext;
   if (t === void 0) throw new Error("no decoder");
   const n = await new t(1, 1, 44100).decodeAudioData(e.slice(0));
   return { channels: Array.from({ length: n.numberOfChannels }, (a, s) => n.getChannelData(s)), sampleRate: n.sampleRate };
 };
-async function pr(e, t = jo) {
+async function hr(e, t = Ho) {
   var o;
   if (e.byteLength > Lt) return I("This file is bigger than 8 MB.");
   if (e.byteLength === 0) return I("This file is empty.");
@@ -2876,78 +2864,78 @@ async function pr(e, t = jo) {
   return s.ok ? { ok: !0, value: !0 } : I(s.error);
 }
 const ne = () => Promise.resolve().then(() => Dt);
-async function $o(e, t) {
+async function jo(e, t) {
   const n = await ne();
   if (!jt(e)) return n.startSample(e, t);
-  const a = await Fo(e);
+  const a = await xo(e);
   return a.ok ? n.startOwn(e, a.value, t) : { ok: !1, error: a.error };
 }
-function Go(e) {
-  const [t, n] = S(Pt), [a, s] = S(nt), [o, r] = S(""), l = _(t);
+function $o(e) {
+  const [t, n] = M(Pt), [a, s] = M(tt), [o, r] = M(""), l = _(t);
   l.current = t;
-  const { player: c, guarded: h } = e;
+  const { player: c, guarded: m } = e;
   C(() => {
-    e.snap.playing || (zo(), s(null));
+    e.snap.playing || (Oo(), s(null));
   }, [e.snap.playing]);
   const g = T(
     async (u) => {
       if (r(""), c.snapshot().playing || await c.play(), !c.snapshot().playing) return void r(d.errorAudio);
       (await ne()).setBlend(l.current.blend);
-      const y = await $o(u, l.current.level);
-      if (!y.ok) return void r(y.error);
-      at(u), s(u);
-      const b = { ...l.current, id: u };
-      n(b), tt(b);
+      const b = await jo(u, l.current.level);
+      if (!b.ok) return void r(b.error);
+      nt(u), s(u);
+      const v = { ...l.current, id: u };
+      n(v), et(v);
     },
     [c]
-  ), N = T((u) => h(() => void g(u)), [h, g]), v = T(() => {
-    at(null), s(null), ne().then((u) => u.stopSample());
-  }, []), w = T((u, m) => {
-    const y = { ...l.current, ...u };
-    n(y), tt(y), nt() !== null && ne().then(m);
-  }, []), A = T((u) => w({ blend: u }, (m) => m.setBlend(u)), [w]), k = T((u) => w({ level: u }, (m) => m.setSampleLevel(u)), [w]);
-  return { prefs: t, on: a, message: o, start: N, stop: v, setBlend: A, setLevel: k };
+  ), A = T((u) => m(() => void g(u)), [m, g]), k = T(() => {
+    nt(null), s(null), ne().then((u) => u.stopSample());
+  }, []), w = T((u, h) => {
+    const b = { ...l.current, ...u };
+    n(b), et(b), tt() !== null && ne().then(h);
+  }, []), S = T((u) => w({ blend: u }, (h) => h.setBlend(u)), [w]), y = T((u) => w({ level: u }, (h) => h.setSampleLevel(u)), [w]);
+  return { prefs: t, on: a, message: o, start: A, stop: k, setBlend: S, setLevel: y };
 }
-async function Wo() {
-  Ks(), await Ho();
+async function Go() {
+  qs(), await Fo();
 }
-function qo() {
-  const { player: e, store: t, engine: n } = it(), [a, s] = S(() => e.snapshot()), [o, r] = S(rn), [l, c] = S(!1), [h, g, N] = ln(), v = _(null), w = _(o);
+function Wo() {
+  const { player: e, store: t, engine: n } = rt(), [a, s] = M(() => e.snapshot()), [o, r] = M(rn), [l, c] = M(!1), [m, g, A] = ln(), k = _(null), w = _(o);
   C(() => (s(e.snapshot()), e.subscribe(s)), [e]);
-  const A = T(
-    (b) => {
-      w.current ? b() : (v.current = b, c(!0));
+  const S = T(
+    (v) => {
+      w.current ? v() : (k.current = v, c(!0));
     },
     []
-  ), k = T(() => {
+  ), y = T(() => {
     cn(un, !0), w.current = !0, r(!0), c(!1);
-    const b = v.current;
-    v.current = null, b == null || b();
+    const v = k.current;
+    k.current = null, v == null || v();
   }, []), u = T(() => {
-    v.current = null, c(!1);
-  }, []), m = T(
-    (b, E) => A(() => {
-      e.setQueue([b]), e.playTemplate(b).then((O) => {
+    k.current = null, c(!1);
+  }, []), h = T(
+    (v, E) => S(() => {
+      e.setQueue([v]), e.playTemplate(v).then((O) => {
         O && E !== null && e.startTimer({ kind: "countdown", minutes: E });
       });
     }),
-    [e, A]
-  ), y = T(() => {
-    e.snapshot().playing ? e.stop() : A(() => void e.play());
-  }, [e, A]);
-  return { engine: n, player: e, store: t, snap: a, accepted: o, gate: l, reduced: h, setReduced: g, userReduced: N, guarded: A, accept: k, cancelGate: u, playTemplate: m, toggle: y };
+    [e, S]
+  ), b = T(() => {
+    e.snapshot().playing ? e.stop() : S(() => void e.play());
+  }, [e, S]);
+  return { engine: n, player: e, store: t, snap: a, accepted: o, gate: l, reduced: m, setReduced: g, userReduced: A, guarded: S, accept: y, cancelGate: u, playTemplate: h, toggle: b };
 }
-function Ko(e, t) {
-  const [n, a] = S("standalone"), [s, o] = S(() => dn());
+function qo(e, t) {
+  const [n, a] = M("standalone"), [s, o] = M(() => dn());
   C(() => mn(o), []), C(() => {
     let l = !1;
     const c = new hn({
       ...t !== void 0 ? { create: t } : {},
-      onStatus: (h) => {
-        a(h), h === "standalone" && (ie().source !== "demo" && e.crewLost(), l && gn(), l = !1);
+      onStatus: (m) => {
+        a(m), m === "standalone" && (ie().source !== "demo" && e.crewLost(), l && gn(), l = !1);
       },
-      onState: (h) => {
-        l = !0, fn(e, h);
+      onState: (m) => {
+        l = !0, fn(e, m);
       }
     });
     return c.start(), () => c.stop();
@@ -2956,14 +2944,14 @@ function Ko(e, t) {
   return { enabled: s, status: n, view: r };
 }
 const be = 500, ve = { v: 1, items: [] };
-function Uo(e, t) {
-  if (!He(e) || U(e, "v") !== 1) return ve;
+function Ko(e, t) {
+  if (!Fe(e) || U(e, "v") !== 1) return ve;
   const n = U(e, "items");
   if (!Array.isArray(n)) return ve;
   const a = [], s = /* @__PURE__ */ new Set();
   for (const o of n.slice(0, be * 2)) {
-    if (!He(o)) continue;
-    const r = U(o, "kind"), l = lt(U(o, "id"));
+    if (!Fe(o)) continue;
+    const r = U(o, "kind"), l = it(U(o, "id"));
     if (r !== "template" && r !== "mix" || l === null) continue;
     const c = `${r}:${l}`;
     if (!s.has(c) && (s.add(c), a.push({ kind: r, id: l, at: yn(U(o, "at"), 0, t + 864e5, t) }), a.length >= be))
@@ -2974,46 +2962,46 @@ function Uo(e, t) {
 function $t(e, t, n) {
   return e.items.some((a) => a.kind === t && a.id === n);
 }
-function Yo(e, t, n, a) {
-  return $t(e, t, n) ? { v: 1, items: e.items.filter((s) => !(s.kind === t && s.id === n)) } : lt(n) === null || e.items.length >= be ? e : { v: 1, items: [{ kind: t, id: n, at: a }, ...e.items] };
+function Uo(e, t, n, a) {
+  return $t(e, t, n) ? { v: 1, items: e.items.filter((s) => !(s.kind === t && s.id === n)) } : it(n) === null || e.items.length >= be ? e : { v: 1, items: [{ kind: t, id: n, at: a }, ...e.items] };
 }
-function Vo(e, t) {
-  const [n, a] = S(ve);
+function Yo(e, t) {
+  const [n, a] = M(ve);
   C(() => {
     let o = !0;
-    return e.getRecord("favorites").then((r) => o && a(Uo(r, Date.now()))).catch(() => {
+    return e.getRecord("favorites").then((r) => o && a(Ko(r, Date.now()))).catch(() => {
     }), () => {
       o = !1;
     };
   }, [e]);
   const s = T(() => {
     if (t === null) return;
-    const o = Yo(n, "template", t, Date.now());
+    const o = Uo(n, "template", t, Date.now());
     a(o), e.setRecord("favorites", o).catch(() => {
     });
   }, [n, t, e]);
   return { on: t !== null && $t(n, "template", t), toggle: s };
 }
-const Jo = D(() => import("./chunk-Onboarding-S3PT8EUY.mjs").then((e) => ({ default: e.Onboarding }))), Zo = (e) => Math.max(180, e * 60 * 0.8);
+const Vo = D(() => import("./chunk-Onboarding-5oTFKdJ9.mjs").then((e) => ({ default: e.Onboarding }))), Jo = (e) => Math.max(180, e * 60 * 0.8);
 function Xo({ engine: e, clock: t, store: n, bridgeCreate: a, onStudio: s }) {
-  var Be;
-  const o = qo(), r = os(o.store, o.snap.playing), l = Ko(o.player, a), c = Go(o), [h, g] = S("today"), [N, v] = S(null), w = _(null), A = Vo(o.store, o.snap.templateId), k = r.profile.createdAt === 0, u = tr(r.storage), m = Xa(o.snap, !k && h !== "reset"), y = o.reduced || r.profile.extraGentle, { look: b, prefs: E, dim: O, setPrefs: z } = Oo();
-  nr(s);
-  const F = T((P) => g(P), []), { play: Pe, playDay: Wt, finish: qt } = Qo({ s: o, data: r, last: u, end: m, active: w, setView: g });
-  sr(o.snap.playing, o.snap.elapsedSec, w, r.progress, r.setJourney);
+  var Pe;
+  const o = Wo(), r = os(o.store, o.snap.playing), l = qo(o.player, a), c = $o(o), [m, g] = M("today"), [A, k] = M(null), w = _(null), S = Yo(o.store, o.snap.templateId), y = r.profile.createdAt === 0, u = er(r.storage), h = Za(o.snap, !y && m !== "reset"), b = o.reduced || r.profile.extraGentle, { look: v, prefs: E, dim: O, setPrefs: z } = Co();
+  tr(s);
+  const F = T((P) => g(P), []), { play: Ie, playDay: Wt, finish: qt } = Zo({ s: o, data: r, last: u, end: h, active: w, setView: g });
+  ar(o.snap.playing, o.snap.elapsedSec, w, r.progress, r.setJourney);
   const Kt = (P) => {
-    v(P), g("journey");
+    k(P), g("journey");
   }, Ut = () => {
-    Ka(r.storage), c.stop(), Wo(), r.setProfile(gt), g("today");
+    Ka(r.storage), c.stop(), Go(), r.setProfile(gt), g("today");
   };
-  return /* @__PURE__ */ f("div", { className: "c-app", "data-theme": b.theme, "data-contrast": b.highContrast ? "high" : "normal", "data-view": h, "data-dim": O ? "true" : "false", "data-motion": y ? "off" : "on", "data-playing": o.snap.playing ? "true" : "false", children: [
-    /* @__PURE__ */ i(ar, {}),
+  return /* @__PURE__ */ f("div", { className: "c-app", "data-theme": v.theme, "data-contrast": v.highContrast ? "high" : "normal", "data-view": m, "data-dim": O ? "true" : "false", "data-motion": b ? "off" : "on", "data-playing": o.snap.playing ? "true" : "false", children: [
+    /* @__PURE__ */ i(nr, {}),
     l.view.source === "demo" && /* @__PURE__ */ i("p", { className: "c-badge-sim", role: "status", "data-testid": "demo-badge", children: d.crewDemoBadge }),
-    /* @__PURE__ */ i("main", { id: "c-main", className: "c-main", tabIndex: -1, children: /* @__PURE__ */ i(q, { fallback: /* @__PURE__ */ i("p", { className: "c-loading", role: "status", children: d.loading }), children: k ? /* @__PURE__ */ i(
-      Jo,
+    /* @__PURE__ */ i("main", { id: "c-main", className: "c-main", tabIndex: -1, children: /* @__PURE__ */ i(q, { fallback: /* @__PURE__ */ i("p", { className: "c-loading", role: "status", children: d.loading }), children: y ? /* @__PURE__ */ i(
+      Vo,
       {
         playing: o.snap.playing,
-        reduced: y,
+        reduced: b,
         initial: r.profile,
         onAccept: o.accept,
         onPreview: (P) => o.playTemplate(P, null),
@@ -3021,54 +3009,54 @@ function Xo({ engine: e, clock: t, store: n, bridgeCreate: a, onStudio: s }) {
         onFinish: qt
       }
     ) : /* @__PURE__ */ i(
-      vo,
+      bo,
       {
-        view: h,
-        journeyId: N,
+        view: m,
+        journeyId: A,
         s: o,
         data: r,
         crewInfo: l,
         nature: c,
-        still: y,
-        fav: A,
+        still: b,
+        fav: S,
         last: u.template,
-        look: b,
+        look: v,
         prefs: E,
         onPrefs: z,
-        handlers: { go: F, play: Pe, playDay: Wt, openJourney: Kt, forget: Ut, onStudio: s, onMix: (P) => o.guarded(() => o.player.playMix(P)) }
+        handlers: { go: F, play: Ie, playDay: Wt, openJourney: Kt, forget: Ut, onStudio: s, onMix: (P) => o.guarded(() => o.player.playMix(P)) }
       }
     ) }) }),
-    !k && h !== "player" && h !== "reset" && /* @__PURE__ */ i(wa, { snap: o.snap, crewPresetId: ((Be = l.view.state) == null ? void 0 : Be.target.presetId) ?? null, onOpen: () => F("player"), onStop: () => void o.player.stop() }),
-    !k && /* @__PURE__ */ i(ba, { view: h, onGo: F, reduced: y }),
+    !y && m !== "player" && m !== "reset" && /* @__PURE__ */ i(wa, { snap: o.snap, crewPresetId: ((Pe = l.view.state) == null ? void 0 : Pe.target.presetId) ?? null, onOpen: () => F("player"), onStop: () => void o.player.stop() }),
+    !y && /* @__PURE__ */ i(ba, { view: m, onGo: F, reduced: b }),
     /* @__PURE__ */ i("p", { className: "c-sr", role: "status", "data-testid": "play-status", children: o.snap.playing ? `Playing. ${d.volumeCapped}` : "Stopped." }),
-    m.card !== null && !o.snap.playing && /* @__PURE__ */ i(Qa, { info: m.card, onAgain: () => {
+    h.card !== null && !o.snap.playing && /* @__PURE__ */ i(Qa, { info: h.card, onAgain: () => {
       var P;
-      return er(((P = m.card) == null ? void 0 : P.id) ?? null, Pe);
-    }, onClose: m.dismiss, firstRun: V(r.profile.createdAt) === Y() }),
+      return Qo(((P = h.card) == null ? void 0 : P.id) ?? null, Ie);
+    }, onClose: h.dismiss, firstRun: V(r.profile.createdAt) === Y() }),
     o.gate && /* @__PURE__ */ i(es, { onAccept: o.accept, onCancel: o.cancelGate })
   ] });
 }
-function Qo({ s: e, data: t, last: n, end: a, active: s, setView: o }) {
+function Zo({ s: e, data: t, last: n, end: a, active: s, setView: o }) {
   const r = T(
-    (h, g = h.recommendedMinutes) => {
-      s.current = null, n.remember(h.id), a.dismiss(), e.playTemplate(h, g), o("player");
+    (m, g = m.recommendedMinutes) => {
+      s.current = null, n.remember(m.id), a.dismiss(), e.playTemplate(m, g), o("player");
     },
     [e, n, a, s, o]
   );
-  return { play: r, playDay: (h, g, N) => {
-    r(N), s.current = { id: h, no: g, needSec: Zo(N.recommendedMinutes) };
-  }, finish: (h, g) => {
-    if (t.setProfile(h), !e.snap.playing || e.snap.templateId !== g.id) return r(g);
+  return { play: r, playDay: (m, g, A) => {
+    r(A), s.current = { id: m, no: g, needSec: Jo(A.recommendedMinutes) };
+  }, finish: (m, g) => {
+    if (t.setProfile(m), !e.snap.playing || e.snap.templateId !== g.id) return r(g);
     n.remember(g.id), e.player.startTimer({ kind: "countdown", minutes: g.recommendedMinutes }), o("player");
   } };
 }
 const Gt = (e) => e === null ? null : B().find((t) => t.id === e) ?? null;
-function er(e, t) {
+function Qo(e, t) {
   const n = Gt(e);
   n !== null && t(n);
 }
-function tr(e) {
-  const [t, n] = S(() => Ya(e)), a = K(() => Gt(t), [t]), s = T(
+function er(e) {
+  const [t, n] = M(() => Ya(e)), a = K(() => Gt(t), [t]), s = T(
     (o) => {
       Va(e, o), n(o);
     },
@@ -3076,7 +3064,7 @@ function tr(e) {
   );
   return K(() => ({ template: a, remember: s }), [a, s]);
 }
-function nr(e) {
+function tr(e) {
   C(() => {
     const t = (n) => {
       n.altKey && n.shiftKey && n.code === "KeyS" && (n.preventDefault(), e());
@@ -3084,19 +3072,19 @@ function nr(e) {
     return window.addEventListener("keydown", t), () => window.removeEventListener("keydown", t);
   }, [e]);
 }
-function ar() {
+function nr() {
   return /* @__PURE__ */ f(we, { children: [
     /* @__PURE__ */ i("a", { className: "c-skip", href: "#c-main", children: "Skip to content" }),
     /* @__PURE__ */ i("header", { className: "c-topbar", children: /* @__PURE__ */ i("span", { className: "c-brand", children: d.brand }) })
   ] });
 }
-function sr(e, t, n, a, s) {
+function ar(e, t, n, a, s) {
   C(() => {
     const o = n.current, r = o === null ? void 0 : a[o.id];
     !e || o === null || r === void 0 || t < o.needSec || (n.current = null, r.doneDays.includes(o.no) || s(o.id, { ...r, doneDays: [...r.doneDays, o.no].sort((l, c) => l - c) }));
   }, [e, t, n, a, s]);
 }
-const or = {
+const sr = {
   position: "fixed",
   left: 12,
   right: 12,
@@ -3109,42 +3097,42 @@ const or = {
   fontSize: 14,
   textAlign: "center"
 };
-function fr() {
+function pr() {
   bn(import.meta.url), vn();
-  const { engine: e, store: t } = it();
-  C(() => (je(!0), () => je(!1)), []);
-  const [n, a] = S(!1);
+  const { engine: e, store: t } = rt();
+  C(() => (He(!0), () => He(!1)), []);
+  const [n, a] = M(!1);
   return /* @__PURE__ */ f("div", { "data-testid": "zonked-app", style: { height: "100%", minHeight: 0, overflow: "hidden", position: "relative", transform: "translateZ(0)" }, children: [
     /* @__PURE__ */ i("div", { style: { height: "100%", overflowY: "auto" }, children: /* @__PURE__ */ i(Xo, { engine: e, store: t, onStudio: () => a(!0) }) }),
-    n && /* @__PURE__ */ i("p", { role: "status", style: or, "data-testid": "studio-note", onClick: () => a(!1), children: "Studio, the advanced mode, is not in the Kiro Crew app yet. Tap to close." })
+    n && /* @__PURE__ */ i("p", { role: "status", style: sr, "data-testid": "studio-note", onClick: () => a(!1), children: "Studio, the advanced mode, is not in the Kiro Crew app yet. Tap to close." })
   ] });
 }
 export {
-  ur as B,
+  cr as B,
   gt as D,
   ka as G,
   Me as I,
-  Ae as J,
+  dt as J,
   Lt as M,
   ve as N,
   ga as P,
   es as S,
   Sa as T,
-  fr as Z,
+  pr as Z,
   Ma as a,
   B as b,
-  Uo as c,
-  ut as d,
-  To as e,
-  Ss as f,
-  cr as g,
-  Ms as h,
-  mr as i,
-  hr as j,
-  Ho as k,
-  dr as l,
+  Ko as c,
+  ct as d,
+  Ao as e,
+  ks as f,
+  lr as g,
+  Ss as h,
+  dr as i,
+  mr as j,
+  Fo as k,
+  ur as l,
   za as p,
   pa as r,
-  As as u,
-  pr as v
+  Ns as u,
+  hr as v
 };
