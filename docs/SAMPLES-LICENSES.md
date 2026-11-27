@@ -42,3 +42,21 @@ Public domain here means the recording author dedicated it to the public domain,
   (gentle breeze with birds) covers soft wind.
 - A waterfall loop: none found under an allowed licence. River rapids is shipped instead.
 - yt-dlp was not needed: every shipped file came from Wikimedia Commons.
+
+## Round 2 search (2026-11-28): no new loops shipped
+
+Searched Wikimedia Commons and the Internet Archive for a village flute, a waterfall and soft wind. Nothing met
+both the licence rule and the loop rule, so nothing was added.
+
+- Waterfall: every waterfall recording on Commons is CC BY-SA or CC BY (Water fall, Waterfall, Waterfall Gully,
+  Waterfall and birds sounds, Cascade de Syratu, Catarata Pacchacc, Ru-Kivach, Falls into nothing). Internet Archive
+  "Waterfall_178" carries only a Public Domain Mark, not an author dedication, so it is not used.
+- Soft wind: Commons wind recordings are CC BY-SA 4.0 (Wind sounds 2020-05-10, Strong winds before the Rain, Wind in
+  Swedish pine forest). "Windy breath" (public domain) is a 20 s breath recording, not outdoor wind.
+- Flute, CC0 or public domain, all too short or not ambient: Flute, Flute 2, Flute 3 (13 s phrases), Chinese flute
+  Hulusi (15 s, wide dynamics), DiZi Chinese Flute Sample (17 s, loud), Shakuhachi 440Hz (a tuning tone), Pack-3 Flute
+  Mood 1 loops (CC0, 9 to 12 s, mostly silent gaps with note bursts).
+- Internet Archive items tagged CC0 by an uploader (Bamboo Flute Music Bamboo Oye, relaxing bamboo flute hour
+  mixes, Joachim Raffel albums): the licence tag was set by an uploader, not shown to come from the author. Skipped.
+- A CC0 Barcelona fountain recording (Albert Murillo, Internet Archive) is steady but is a city fountain with low
+  rumble, not a waterfall. Not shipped.
