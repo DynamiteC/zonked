@@ -18,7 +18,8 @@ export default defineConfig({
       injectRegister: false,
       includeAssets: ['favicon.svg', 'logo.svg', 'apple-touch-icon.png'],
       workbox: {
-        globPatterns: ['**/*.{html,js,css,wasm,svg,png,webmanifest,ico}'],
+        // samples/*.json are the nature loops (about 1.4 MB). They are fetched lazily but precached for offline play.
+        globPatterns: ['**/*.{html,js,css,wasm,svg,png,webmanifest,ico}', 'samples/*.mp3.json'],
         maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,

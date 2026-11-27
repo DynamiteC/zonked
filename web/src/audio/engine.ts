@@ -5,6 +5,8 @@ import type { AudioContextStateLike, AudioEngine, EngineStats, EngineStatus, Tel
 import {
   PARAM_COUNT, PARAM_SAB_BYTES, ParamWriter, clampRamp, clampVoice, voiceToParams,
 } from './params';
+import { setSampleBus } from './samples/bus';
+import { guardCurve } from './samples/math';
 import { RingTelemetryReader, createTelemetryBuffer, emptyTelemetry } from './telemetry';
 
 const START_RAMP_SEC = 2;
@@ -102,7 +104,12 @@ export class ZonkedAudioEngine implements AudioEngine {
     node.port.onmessage = (e: MessageEvent): void => this.onWorkletMessage(e.data as Record<string, unknown>);
     const master = ctx.createGain();
     master.gain.value = 0;
-    node.connect(master).connect(ctx.destination);
+    // Beat path goes through a duck gain, nature samples join at master, a clip guard ends the chain.
+    const duck = ctx.createGain();
+    const guard = ctx.createWaveShaper();
+    guard.curve = guardCurve();
+    node.connect(duck).connect(master).connect(guard).connect(ctx.destination);
+    setSampleBus({ ctx, input: master, duck });
     this.node = node;
     this.master = master;
     this.writer = sab ? new ParamWriter(sab) : null;

@@ -28,6 +28,7 @@ export const STAGES = [
   sh('check-privacy', 'npm --prefix web run check:privacy'),
   sh('check-chars', 'node scripts/check-chars.mjs'),
   sh('check-sizes', 'node scripts/check-sizes.mjs'),
+  sh('check-samples', 'node scripts/check-samples.mjs'),
   sh('web-script-tests', 'npm --prefix web run test:scripts'),
   sh('root-script-tests', 'node --test scripts/'),
   { name: 'wasm-drift', run: () => hashWasm() === wasmBefore || (console.error('web/src/wasm/dsp_core.wasm changed during the build: rebuild is not reproducible or the committed file is stale'), false) },
