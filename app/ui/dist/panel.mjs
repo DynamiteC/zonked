@@ -1,7 +1,7 @@
 import { jsx as a, jsxs as p } from "react/jsx-runtime";
-import { useState as l, useEffect as r } from "react";
-import { e as k, h as w, a as C, b as y, j as S, k as N, l as O, m as L, i as o, C as t, p as P } from "./chunk-crewLink-Br6qeo5M.mjs";
-import { q as $, r as q } from "./chunk-crewLink-Br6qeo5M.mjs";
+import { useState as l, useEffect as i } from "react";
+import { m as w, q as k, b as y, c as C, v as S, x as N, y as O, z as L, i as o, C as t, A as P } from "./chunk-crewLink-BQ1FLTqp.mjs";
+import { D as M, E as $ } from "./chunk-crewLink-BQ1FLTqp.mjs";
 function x(e) {
   const n = e.timer;
   return n.kind !== "countdown" || !n.running ? null : Math.ceil(n.remainingSec / 60);
@@ -10,12 +10,12 @@ function v(e) {
   const n = x(e);
   return e.playing ? n === null ? t.panelPlaying : `${t.panelPlaying} About ${String(n)} min left.` : o() ? e.templateId === null ? t.panelPickFirst : t.panelStopped : t.panelOpenFirst;
 }
-function F() {
-  k(import.meta.url), w();
-  const { player: e } = C(), [n, d] = l(y), [u, m] = l(S), [h, f] = l(N);
-  r(() => O(m), []), r(() => L(f), []);
-  const [s, i] = l(() => e.snapshot());
-  r(() => (i(e.snapshot()), e.subscribe(i)), [e]);
+function j() {
+  w(import.meta.url), k();
+  const { player: e } = y(), [n, d] = l(C), [u, m] = l(S), [h, f] = l(N);
+  i(() => O(m), []), i(() => L(f), []);
+  const [s, r] = l(() => e.snapshot());
+  i(() => (r(e.snapshot()), e.subscribe(r)), [e]);
   const g = o() && s.templateId !== null, b = n ? u === "connected" ? t.panelCrewOn : t.panelCrewLost : t.panelCrewOff;
   return /* @__PURE__ */ a("div", { className: "c-app c-panel", "data-testid": "zonked-panel", "data-theme": "auto", children: /* @__PURE__ */ p("div", { className: "c-card", children: [
     /* @__PURE__ */ a("strong", { "data-testid": "panel-title", children: s.templateName ?? t.brand }),
@@ -41,7 +41,7 @@ function F() {
   ] }) });
 }
 export {
-  F as default,
-  $ as engineState,
-  q as engineStats
+  j as default,
+  M as engineState,
+  $ as engineStats
 };

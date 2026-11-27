@@ -1,9 +1,9 @@
 import { jsxs as l, jsx as t, Fragment as g } from "react/jsx-runtime";
 import { useState as N, useEffect as w, Suspense as v, lazy as p } from "react";
-import { f as S, b as E, d as x, l as M } from "./chunk-App-ikZzyVmD.mjs";
-import { C as i, E as L } from "./chunk-crewLink-Br6qeo5M.mjs";
-import { u as T } from "./chunk-useBreath-g1tM8NNc.mjs";
-import { NatureControls as I } from "./chunk-NatureScreen-D8F4LJsu.mjs";
+import { f as S, b as x, d as E, l as M } from "./chunk-App-7MO50ppA.mjs";
+import { C as i, I as L } from "./chunk-crewLink-BQ1FLTqp.mjs";
+import { u as I } from "./chunk-useBreath-g1tM8NNc.mjs";
+import { NatureControls as T } from "./chunk-NatureScreen-C_YzgtOG.mjs";
 const P = 20;
 function F(e) {
   if (e.kind === "sleep-fade") return 4;
@@ -23,7 +23,7 @@ function B({ timer: e, player: n }) {
 const O = ["cant-sleep", "lucid-dream"], _ = ["adhd-focus", "deep-work", "ai-burnout"];
 function $(e, n) {
   if (n) return "nature";
-  const s = e === null ? void 0 : E().find((c) => c.id === e), a = (s == null ? void 0 : s.situations) ?? [];
+  const s = e === null ? void 0 : x().find((c) => c.id === e), a = (s == null ? void 0 : s.situations) ?? [];
   return a.some((c) => O.includes(c)) ? "sleep" : a.some((c) => _.includes(c)) ? "focus" : "calm";
 }
 const A = 400;
@@ -47,9 +47,9 @@ function D(e, n) {
     };
   }, [e, n]), s;
 }
-const U = p(() => import("./chunk-mascot-BnpJf37G.mjs").then((e) => ({ default: e.CalmMascot }))), j = p(() => import("./chunk-visuals-C5gzaUuH.mjs").then((e) => ({ default: e.SceneLoop }))), z = p(() => import("./chunk-mascot-BnpJf37G.mjs").then((e) => ({ default: e.BreathCue })));
+const U = p(() => import("./chunk-mascot-CORasA8g.mjs").then((e) => ({ default: e.CalmMascot }))), j = p(() => import("./chunk-visuals-B0CqKfY2.mjs").then((e) => ({ default: e.SceneLoop }))), z = p(() => import("./chunk-mascot-CORasA8g.mjs").then((e) => ({ default: e.BreathCue })));
 function W({ still: e, playing: n, situation: s, theme: a, level: c }) {
-  const r = T(n && !e), o = n && !e;
+  const r = I(n && !e), o = n && !e;
   return /* @__PURE__ */ l(g, { children: [
     /* @__PURE__ */ t("div", { className: "c-stage", "data-testid": "breath-ring", "data-still": e ? "true" : "false", "data-situation": s, children: /* @__PURE__ */ l(v, { fallback: null, children: [
       /* @__PURE__ */ t("div", { className: "c-stage-scene", children: /* @__PURE__ */ t(j, { situation: s, reducedMotion: e, theme: a }) }),
@@ -69,7 +69,7 @@ function W({ still: e, playing: n, situation: s, theme: a, level: c }) {
   ] });
 }
 function R({ engine: e, theme: n, player: s, snap: a, still: c, favorite: r, onToggle: o, onFavorite: u, nature: d }) {
-  const [f, k] = N(!1), C = D(e, a.playing), m = x.find((h) => h.templateId === a.templateId), b = (m == null ? void 0 : m.evidence) ?? "mixed", y = $(a.templateId, d.on !== null);
+  const [f, k] = N(!1), C = D(e, a.playing), m = E.find((h) => h.templateId === a.templateId), b = (m == null ? void 0 : m.evidence) ?? "mixed", y = $(a.templateId, d.on !== null);
   return /* @__PURE__ */ l("div", { className: "c-player", children: [
     /* @__PURE__ */ t("h1", { className: "c-h1", children: a.templateName ?? i.brand }),
     /* @__PURE__ */ t(W, { still: c, playing: a.playing, situation: y, theme: n, level: C }),
@@ -93,7 +93,7 @@ function q({ nature: e }) {
   const n = e.prefs.id ?? M().id ?? "rain";
   return /* @__PURE__ */ l("section", { className: "c-card c-nature-quick", "aria-label": i.natureHead, children: [
     /* @__PURE__ */ t("button", { type: "button", className: "c-btn", "data-testid": "player-nature", "aria-pressed": e.on !== null, onClick: () => e.on === null ? e.start(n) : e.stop(), children: e.on === null ? `${i.natureAdd}: ${n.startsWith("own:") ? i.mineTitle : n}` : i.natureOff }),
-    e.on !== null && /* @__PURE__ */ t(I, { nature: e }),
+    e.on !== null && /* @__PURE__ */ t(T, { nature: e }),
     /* @__PURE__ */ t("p", { className: "c-status", role: "status", children: e.message })
   ] });
 }

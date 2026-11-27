@@ -1,9 +1,9 @@
 import { jsxs as i, jsx as e } from "react/jsx-runtime";
 import { useState as p, Suspense as s, lazy as u } from "react";
-import { listSamples as h } from "./chunk-samples-DyHOIbNK.mjs";
-import { C as a } from "./chunk-crewLink-Br6qeo5M.mjs";
-import { P as b, I as N, M as f } from "./chunk-App-ikZzyVmD.mjs";
-const C = { wind: "breeze", waterfall: "rapids", flute: "wave" }, k = u(() => import("./chunk-MySounds-BpTeX3sD.mjs").then((t) => ({ default: t.MySounds }))), v = u(() => import("./chunk-Credits-CtvAUBl0.mjs").then((t) => ({ default: t.Credits })));
+import { listSamples as h } from "./chunk-samples-D25uGNeW.mjs";
+import { C as a } from "./chunk-crewLink-BQ1FLTqp.mjs";
+import { P as b, I as N, M as f } from "./chunk-App-7MO50ppA.mjs";
+const C = { wind: "breeze", waterfall: "rapids", flute: "wave" }, k = u(() => import("./chunk-MySounds-DW-PERo0.mjs").then((t) => ({ default: t.MySounds }))), v = u(() => import("./chunk-Credits-BSWyWzcp.mjs").then((t) => ({ default: t.Credits })));
 function o({ id: t, label: r, value: c, max: l, onChange: d }) {
   return /* @__PURE__ */ i("div", { className: "c-slider", children: [
     /* @__PURE__ */ e("label", { htmlFor: t, children: r }),

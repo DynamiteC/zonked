@@ -86,7 +86,7 @@ function L({ id: t }) {
   return /* @__PURE__ */ l("svg", { className: "cm-layer cm-bodyl", viewBox: u, "aria-hidden": "true", focusable: "false", children: [
     /* @__PURE__ */ e("defs", { children: /* @__PURE__ */ l("linearGradient", { id: `${t}-cloth`, x1: "0", y1: "0", x2: "0", y2: "1", children: [
       /* @__PURE__ */ e("stop", { offset: "0", stopColor: "#86A5B3" }),
-      /* @__PURE__ */ e("stop", { offset: "0.55", stopColor: "#5F7D8B" }),
+      /* @__PURE__ */ e("stop", { offset: "0.82", stopColor: "#5C7A88" }),
       /* @__PURE__ */ e("stop", { offset: "1", stopColor: "#5A7886", stopOpacity: "0" })
     ] }) }),
     /* @__PURE__ */ l("g", { className: "cm-chest", filter: `url(#${t}-paint)`, children: [
@@ -111,7 +111,7 @@ function B() {
     ] })
   ] });
 }
-function D() {
+function W() {
   const t = (r, i, s) => /* @__PURE__ */ e(
     "path",
     {
@@ -130,7 +130,7 @@ function D() {
     [0, 1, 2].map((r) => t(498, 1, r))
   ] });
 }
-const F = 8, W = 40, x = (t) => Number.isFinite(t) ? Math.max(-1, Math.min(1, t)) : 0;
+const F = 8, D = 40, x = (t) => Number.isFinite(t) ? Math.max(-1, Math.min(1, t)) : 0;
 function E(t, r) {
   const i = g(0);
   $(() => {
@@ -138,7 +138,7 @@ function E(t, r) {
     if (!r || !s) return;
     const n = (c, a) => {
       const o = Date.now();
-      o - i.current < W || (i.current = o, s.style.setProperty("--ry", `${(x(c) * F).toFixed(2)}deg`), s.style.setProperty("--rx", `${(-x(a) * F).toFixed(2)}deg`));
+      o - i.current < D || (i.current = o, s.style.setProperty("--ry", `${(x(c) * F).toFixed(2)}deg`), s.style.setProperty("--rx", `${(-x(a) * F).toFixed(2)}deg`));
     }, d = (c) => {
       const a = window.innerWidth || 1, o = window.innerHeight || 1;
       n(c.clientX / a * 2 - 1, c.clientY / o * 2 - 1);
@@ -172,7 +172,7 @@ function j({ mood: t = "idle", size: r = 220, reducedMotion: i, label: s = "Zonk
           /* @__PURE__ */ e(C, {}),
           /* @__PURE__ */ e(L, { id: a }),
           /* @__PURE__ */ e("div", { className: "cm-sway", children: /* @__PURE__ */ l("div", { className: "cm-head", children: [
-            /* @__PURE__ */ e(D, {}),
+            /* @__PURE__ */ e(W, {}),
             /* @__PURE__ */ e(v, { id: a }),
             /* @__PURE__ */ e(N, { id: a }),
             /* @__PURE__ */ e(M, { id: a, mood: t }),

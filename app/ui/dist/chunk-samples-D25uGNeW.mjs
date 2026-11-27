@@ -1,6 +1,6 @@
-import { L as D, t as T, v as C, x as F, y as b, z as B, A as O, H as V, I as x } from "./chunk-crewLink-Br6qeo5M.mjs";
-import { M as Y } from "./chunk-crewLink-Br6qeo5M.mjs";
-import { e as U } from "./chunk-App-ikZzyVmD.mjs";
+import { M as D, N as T, O as C, P as F, Q as b, R as B, U as O, V, W as x } from "./chunk-crewLink-BQ1FLTqp.mjs";
+import { X as Y } from "./chunk-crewLink-BQ1FLTqp.mjs";
+import { e as U } from "./chunk-App-7MO50ppA.mjs";
 const y = [
   { id: "rain", label: "Rain", kind: "loop", note: "Steady rain on leaves and ground.", moods: ["focus", "calm", "sleep", "nature"] },
   { id: "stream", label: "Stream", kind: "loop", note: "Clear water running close by.", moods: ["focus", "calm", "nature"] },
@@ -34,8 +34,8 @@ const y = [
   { id: "brown", label: "Brown noise (synth)", kind: "synth", note: "A deep, soft rumble that masks noise.", moods: ["focus", "sleep"] },
   { id: "swell", label: "Ocean swell (synth)", kind: "synth", note: "Slow waves that rise and fall, made in code.", moods: ["calm", "sleep", "nature"] },
   { id: "crickets", label: "Night crickets (synth)", kind: "synth", note: "Quiet crickets far off, made in code.", moods: ["calm", "sleep", "nature"] }
-], p = (o) => ({ ok: !1, error: o }), M = 20261128, W = /^[a-z]+$/;
-function z(o) {
+], p = (o) => ({ ok: !1, error: o }), W = 20261128, M = /^[a-z]+$/;
+function N(o) {
   const d = /* @__PURE__ */ new Map(), h = /* @__PURE__ */ new Map();
   let a = null, s = 0, g = null, u = 0, k = 0;
   const S = () => a === null ? 0 : g ?? O(s);
@@ -43,7 +43,7 @@ function z(o) {
     e.duck.gain.setTargetAtTime(C(S()), e.ctx.currentTime, F);
   }
   function L(e) {
-    if (!W.test(e) || !y.some((n) => n.id === e)) return null;
+    if (!M.test(e) || !y.some((n) => n.id === e)) return null;
     try {
       const n = new URL(`${o.baseUrl}samples/${e}.mp3.json`, o.origin);
       return n.origin === new URL(o.origin).origin ? n.href : null;
@@ -99,7 +99,7 @@ function z(o) {
     }
     if (l !== u) return { ok: !0 };
     a !== null && w(a, e), s = b(t, s);
-    const r = c(e.ctx, n, M + k++), i = e.ctx.createGain();
+    const r = c(e.ctx, n, W + k++), i = e.ctx.createGain();
     return i.gain.setValueAtTime(0, e.ctx.currentTime), i.gain.linearRampToValueAtTime(s, e.ctx.currentTime + B), r.connect(i), i.connect(e.input), a = { id: n, src: r, gain: i }, m(e), { ok: !0 };
   }
   return {
@@ -139,18 +139,18 @@ function z(o) {
     playing: () => (a == null ? void 0 : a.id) ?? null
   };
 }
-async function G(o) {
+async function z(o) {
   const d = await fetch(o, { credentials: "same-origin" });
   if (!d.ok) throw new Error(`status ${d.status}`);
   return d.arrayBuffer();
 }
-const f = z({
+const f = N({
   getBus: x,
-  fetchBytes: G,
+  fetchBytes: z,
   baseUrl: "./",
   origin: typeof location > "u" ? "" : location.href
-}), $ = () => f.list(), K = (o, d) => f.start(o, d), q = (o) => f.setLevel(o), P = () => f.stop(), Q = (o) => f.setBlend(o), j = () => f.playing();
-async function H(o, d, h) {
+}), I = () => f.list(), K = (o, d) => f.start(o, d), P = (o) => f.setLevel(o), Q = () => f.stop(), q = (o) => f.setBlend(o), X = () => f.playing();
+async function j(o, d, h) {
   const a = x();
   if (a === null) return { ok: !1, error: "start the sound first" };
   try {
@@ -165,11 +165,11 @@ async function H(o, d, h) {
 export {
   Y as MAX_SAMPLE_LEVEL,
   C as duckGain,
-  $ as listSamples,
-  j as playingSample,
-  Q as setBlend,
-  q as setSampleLevel,
-  H as startOwn,
+  I as listSamples,
+  X as playingSample,
+  q as setBlend,
+  P as setSampleLevel,
+  j as startOwn,
   K as startSample,
-  P as stopSample
+  Q as stopSample
 };
