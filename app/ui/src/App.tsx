@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { CalmApp } from '@zonked-web/ui/calm/CalmApp';
 import { getSession } from './engine/session';
 import { ensureStyles } from './engine/styles';
+import { useCrewLink } from './engine/crewLink';
 
 const NOTE_STYLE = {
   position: 'fixed', left: 12, right: 12, bottom: 84, zIndex: 70, padding: '10px 14px',
@@ -13,6 +14,7 @@ const NOTE_STYLE = {
 // box instead of covering the dashboard sidebar.
 export default function Zonked(): React.JSX.Element {
   ensureStyles(import.meta.url);
+  useCrewLink();
   const { engine, store } = getSession();
   const [note, setNote] = useState(false);
   return (

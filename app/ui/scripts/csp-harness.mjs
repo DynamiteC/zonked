@@ -37,8 +37,15 @@ async function shim(name, code, external = []) {
 const reactNames = Object.keys(reactRequire('react')).filter((k) => /^[A-Za-z_$][\w$]*$/.test(k) && k !== 'default');
 await shim('all', `import R from 'react'; import * as J from 'react/jsx-runtime'; import * as C from 'react-dom/client'; export default R; export const {${reactNames.join(',')}}=R; export const {jsx,jsxs}=J; export const {createRoot}=C;`);
 
+// Stand-in for the dashboard's /apps/<name>/api reverse proxy: forwards to the real backend handler
+// (unsigned, temp data dir) with the prefix rewritten, so the UI is tested against the real routes.
+const { createHandler } = await import('../../backend/server.mjs');
+const { createStore } = await import('../../backend/store.mjs');
+const backend = createHandler({ store: createStore(mkdtempSync(join(tmpdir(), 'zk-crew-'))), allowUnsigned: true });
+await shim('sdk', `export function useAppApi(){ return { get: (p) => fetch(p).then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.json(); }) }; }`);
+
 const HOST = `<!doctype html><html><head><meta charset="utf-8"><title>host</title>
-<script type="importmap">{"imports":{"react":"/shims/all.mjs","react/jsx-runtime":"/shims/all.mjs","react-dom/client":"/shims/all.mjs"}}</script>
+<script type="importmap">{"imports":{"react":"/shims/all.mjs","react/jsx-runtime":"/shims/all.mjs","react-dom/client":"/shims/all.mjs","@kirocrew/app-sdk":"/shims/sdk.mjs"}}</script>
 </head><body><div id="root" style="height:640px;overflow:auto"></div><div id="panel" style="border-top:1px solid #888"></div>
 <script type="module">
   const mod = await import('/apps/zonked/ui/dist/index.mjs');
@@ -57,6 +64,10 @@ function send(res, status, headers, body) { res.writeHead(status, headers); res.
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://x');
   const p = url.pathname;
+  if (p.startsWith('/apps/zonked/api/')) {
+    req.url = `/api/${p.slice('/apps/zonked/api/'.length)}`;
+    return void backend(req, res);
+  }
   if (p === '/') return send(res, 200, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Security-Policy': DASH_CSP, 'Cache-Control': 'no-store' }, HOST);
   const base = p.startsWith('/shims/') ? shimDir : p.startsWith('/apps/zonked/ui/') ? join(uiDir) : null;
   if (!base) return send(res, 404, {}, 'nf');
@@ -139,7 +150,22 @@ try {
     try { await fetch('data:application/wasm;base64,AGFzbQEAAAA='); return 'allowed'; } catch (e) { return `blocked: ${e.name}`; }
   });
   out.wasmDirect = await page.evaluate(async () => (await fetch('/apps/zonked/ui/dist/assets/dsp_core.wasm')).status);
-  out.ok = out.statsPlaying.peak > 0 && out.statsPlaying.peak <= 0.95 && out.statsAfterUnmount.peak > 0 && out.afterPanelStop !== 'running';
+  // Crew link: off by default, standalone while the backend has no report, steering after one.
+  const crewStatus = async () => (await page.textContent('[data-testid=panel-crew-status]'))?.trim();
+  out.crewDefault = await crewStatus();
+  await page.check('[data-testid=panel-crew]');
+  await page.waitForFunction(() => /not reachable/.test(document.querySelector('[data-testid=panel-crew-status]')?.textContent ?? ''), null, { timeout: 5000 });
+  out.crewNoReport = await crewStatus();
+  const sent = await fetch(`http://127.0.0.1:${port}/apps/zonked/api/intensity`, { method: 'POST', body: JSON.stringify({ version: 1, at: 1790000000, score: 70 }) });
+  out.crewReportStatus = sent.status;
+  await page.uncheck('[data-testid=panel-crew]');
+  await page.check('[data-testid=panel-crew]');
+  await page.waitForFunction(() => /steering/.test(document.querySelector('[data-testid=panel-crew-status]')?.textContent ?? ''), null, { timeout: 5000 });
+  out.crewSteering = await crewStatus();
+  await page.uncheck('[data-testid=panel-crew]');
+  out.crewOff = await crewStatus();
+  out.crewOk = out.crewDefault === 'Crew is off.' && /not reachable/.test(out.crewNoReport) && out.crewSteering === 'Crew is steering.' && out.crewOff === 'Crew is off.';
+  out.ok = out.crewOk && out.statsPlaying.peak > 0 && out.statsPlaying.peak <= 0.95 && out.statsAfterUnmount.peak > 0 && out.afterPanelStop !== 'running';
 } catch (e) {
   out.error = String(e);
   if (shots) await page.screenshot({ path: join(shots, 'error.png') }).catch(() => {});

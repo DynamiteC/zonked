@@ -10,6 +10,95 @@
     "focus",
     "recovery"
   ],
+  "agents": [
+    "agents/burnout-sentinel.json",
+    "agents/acoustic-sequencer.json",
+    "agents/dsp-verifier.json"
+  ],
+  "backend": {
+    "entryPoint": "backend/server.mjs",
+    "type": "node",
+    "port": "auto",
+    "healthCheck": "/health"
+  },
+  "agentTools": {
+    "route": "agent-tools",
+    "tools": [
+      {
+        "name": "zonked_report_intensity",
+        "title": "Report session intensity",
+        "description": "Burnout sentinel only. Report the 0-100 burnout score and the signals behind it. The backend clamps every value and decides if the sound should change.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "at": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4102444800
+            },
+            "commitsPerHour": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 120
+            },
+            "sessionMinutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 720
+            },
+            "buildFailures": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10
+            },
+            "dirtyFiles": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 200
+            },
+            "degraded": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "score",
+            "at"
+          ],
+          "additionalProperties": false
+        },
+        "timeoutSeconds": 10,
+        "maxResultChars": 4000
+      },
+      {
+        "name": "zonked_get_suggestion",
+        "title": "Get the sound suggestion",
+        "description": "Acoustic sequencer. Returns the current safe sound target and why the backend holds or changes it. Read only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "timeoutSeconds": 10,
+        "maxResultChars": 4000
+      }
+    ]
+  },
+  "crons": [
+    {
+      "name": "burnout-check",
+      "every": 300,
+      "agent": "burnout-sentinel",
+      "message": "Measure the session intensity and report it with zonked_report_intensity. Report once, then stop.",
+      "persistent_session": false,
+      "silent": true,
+      "enabled": false
+    }
+  ],
   "ui": {
     "entry": "dist/index.mjs",
     "pages": [
@@ -20,7 +109,12 @@
       }
     ]
   },
-  "permissions": {},
+  "permissions": {
+    "api": [
+      "/apps/zonked/api"
+    ],
+    "cron": true
+  },
   "contributes": {
     "panelTabs": [
       {

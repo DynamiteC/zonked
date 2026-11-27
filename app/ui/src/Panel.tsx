@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import type { PlayerSnapshot } from '@zonked-web/app/player';
 import { getSession, isSafetyAccepted } from './engine/session';
+import { getCrewLinkStatus, onCrewLinkStatus, useCrewLink } from './engine/crewLink';
+import type { CrewLinkStatus } from './engine/crewLink';
+import { isCrewEnabled, setCrewEnabled } from '@zonked-web/ui/bridgeClient';
 
 export { engineState, engineStats } from './engine/session';
 
@@ -19,7 +22,11 @@ function minutesLeft(s: PlayerSnapshot): number | null {
 
 /** Side-panel tab: a small Now Playing card. Shares the page's singleton, so it sees the same sound. */
 export default function ZonkedPanel(): React.JSX.Element {
+  useCrewLink();
   const { player } = getSession();
+  const [crewOn, setCrewOn] = useState(isCrewEnabled);
+  const [link, setLink] = useState<CrewLinkStatus>(getCrewLinkStatus);
+  useEffect(() => onCrewLinkStatus(setLink), []);
   const [snap, setSnap] = useState<PlayerSnapshot>(() => player.snapshot());
   useEffect(() => {
     setSnap(player.snapshot());
@@ -42,6 +49,16 @@ export default function ZonkedPanel(): React.JSX.Element {
       ) : (
         <button type="button" style={BTN} data-testid="panel-play" disabled={!canPlay} onClick={() => void player.play()}>Play</button>
       )}
+      <label style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <input
+          type="checkbox" data-testid="panel-crew" checked={crewOn}
+          onChange={(e) => { setCrewOn(e.target.checked); setCrewEnabled(e.target.checked); }}
+        />
+        Let the Crew steer my sound
+      </label>
+      <span data-testid="panel-crew-status" role="status">
+        {!crewOn ? 'Crew is off.' : link === 'connected' ? 'Crew is steering.' : 'Crew backend not reachable. Playing on your own.'}
+      </span>
     </div>
   );
 }
