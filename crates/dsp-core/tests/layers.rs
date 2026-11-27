@@ -13,6 +13,7 @@ fn block(gain: f32) -> [f32; 32] {
     p[1] = 40.0;
     p[2] = gain;
     p[6] = 0.05;
+    p[7] = 1.0;
     p[9] = 0.5;
     p[13] = 220.0;
     p[15] = 90.0;
@@ -100,9 +101,9 @@ fn fnv(p: [f32; 8], pad: usize) -> u64 {
 fn layers_off_matches_pre_layer_output_bit_for_bit() {
     // Hashes captured from the engine before layers existed.
     let cases: [([f32; 8], u64); 3] = [
-        ([200.0, 10.0, 0.5, 0.0, 0.0, 0.0, 0.05, 0.0], 0xd91e_3aa2_5c0e_7356),
-        ([300.0, 7.0, 0.85, 1.0, 2.0, 0.6, 0.05, 0.0], 0xf8a0_4001_ba37_bf50),
-        ([440.0, 4.0, 0.7, 2.0, 3.0, 1.0, 0.5, 0.0], 0x2c5e_c9d8_1eaa_921c),
+        ([200.0, 10.0, 0.5, 0.0, 0.0, 0.0, 0.05, 1.0], 0xd91e_3aa2_5c0e_7356),
+        ([300.0, 7.0, 0.85, 1.0, 2.0, 0.6, 0.05, 1.0], 0xf8a0_4001_ba37_bf50),
+        ([440.0, 4.0, 0.7, 2.0, 3.0, 1.0, 0.5, 1.0], 0x2c5e_c9d8_1eaa_921c),
     ];
     for (p, h) in cases {
         assert_eq!(fnv(p, 8), h, "8 slot block");

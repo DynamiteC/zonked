@@ -23,6 +23,7 @@ static PARAMS: ParamCell = ParamCell(UnsafeCell::new({
     p[0] = 200.0;
     p[1] = 10.0;
     p[6] = 0.05;
+    p[7] = 1.0;
     p
 }));
 

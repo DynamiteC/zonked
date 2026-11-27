@@ -31,6 +31,10 @@ pub struct Engine {
     t_beat: f32,
     t_gain: f32,
     t_level: f32,
+    /// Binaural voice level (slot 7), smoothed: 1 = full beat voice, 0 = none.
+    beat_level: f32,
+    t_beat_level: f32,
+    a_beat_level: f32,
     mode: u8,
     kind: u8,
     a_freq: f32,
@@ -66,6 +70,9 @@ impl Engine {
             t_beat: 10.0,
             t_gain: 0.0,
             t_level: 0.0,
+            beat_level: 1.0,
+            t_beat_level: 1.0,
+            a_beat_level: 0.0,
             mode: 0,
             kind: 0,
             a_freq: 0.0,
@@ -94,6 +101,7 @@ impl Engine {
         self.a_mode = coefficient(MODE_TAU, self.sr);
         self.a_noise = coefficient(ramp, self.sr);
         self.a_freq = coefficient(ramp * 2.0, self.sr);
+        self.a_beat_level = coefficient(BEAT_LEVEL_TAU, self.sr);
     }
 
     pub fn reset_phase(&mut self) {
@@ -104,11 +112,11 @@ impl Engine {
     }
 
     /// Read a parameter block (any length, up to 32 slots). Missing or
-    /// non-finite entries keep the previous value; slots 8..=23 drive the layers.
+    /// non-finite entries keep the previous value; slot 7 is the beat voice level (default 1.0); slots 8..=31 drive the layers.
     pub fn apply_params(&mut self, p: &[f32]) {
         let g = |i: usize| p.get(i).copied().unwrap_or(f32::NAN);
         let (carrier, beat, gain, mode) = (g(0), g(1), g(2), g(3));
-        let (kind, level, ramp) = (g(4), g(5), g(6));
+        let (kind, level, ramp, beat_level) = (g(4), g(5), g(6), g(7));
         self.layers.apply(p);
         self.t_carrier = sanitize(carrier, self.t_carrier, CARRIER_MIN, CARRIER_MAX);
         self.t_beat = sanitize(beat, self.t_beat, BEAT_MIN, BEAT_MAX);
@@ -116,6 +124,7 @@ impl Engine {
         self.mode = sanitize_enum(mode, self.mode, 2);
         self.kind = sanitize_enum(kind, self.kind, 4);
         self.t_level = sanitize(level, self.t_level, 0.0, 1.0);
+        self.t_beat_level = sanitize(beat_level, self.t_beat_level, 0.0, 1.0);
         if ramp.is_finite() {
             self.set_ramp(clamp(ramp, RAMP_MIN, RAMP_MAX));
         }
@@ -187,9 +196,11 @@ impl Engine {
             // Raised cosine gate: 0.5 * (1 - cos(2 pi beat t)).
             let gate = 0.5 - 0.5 * cos_turn(self.ph_b);
             let iso = sin_turn(self.ph_c) * gate;
+            self.beat_level = step(self.beat_level, self.t_beat_level, self.a_beat_level);
             let [wb, wm, wi] = self.mode_w;
-            let tone_l = sl * wb + mono * wm + iso * wi;
-            let tone_r = sr * wb + mono * wm + iso * wi;
+            let bl = self.beat_level;
+            let tone_l = (sl * wb + mono * wm + iso * wi) * bl;
+            let tone_r = (sr * wb + mono * wm + iso * wi) * bl;
             let nl = self.noise_l.sample();
             let nr = self.noise_r.sample();
             let bed_l = nl.white * self.w[0] + nl.pink * self.w[1] + nl.brown * self.w[2] + nl.violet * self.w[3];
