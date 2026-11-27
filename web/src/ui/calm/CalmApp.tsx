@@ -12,6 +12,7 @@ import { CALM } from './copy';
 import { DEFAULT_PROFILE, clearAll, loadLast, saveLast } from './data';
 import type { StorageLike } from './data';
 import { EndCard, useEndCard } from './EndCard';
+import type { EndInfo } from './EndCard';
 import type { JourneyProgress, Profile } from './data';
 import { SafetyNotice } from './SafetyNotice';
 import { Screens } from './CalmScreens';
@@ -22,6 +23,7 @@ import { toDayNumber } from './data';
 import { today, useCalmData } from './useCalmData';
 import { useCalmSession } from './useCalmSession';
 import { useCrewBridge } from './useCrewBridge';
+import { useFeel } from './useFeel';
 import { useFavorite } from './useFavorite';
 import './calm.css';
 
@@ -53,6 +55,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   const [journeyId, setJourneyId] = useState<string | null>(null);
   const active = useRef<ActiveDay | null>(null);
   const fav = useFavorite(s.store, s.snap.templateId);
+  const feel = useFeel(data.storage);
   const onboarding = data.profile.createdAt === 0;
   const last = useLastPlayed(data.storage);
   const end = useEndCard(s.snap, !onboarding && view !== 'reset');
@@ -69,6 +72,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   };
   const forget = (): void => {
     clearAll(data.storage);
+    feel.clear();
     nature.stop();
     void forgetNature();
     data.setProfile(DEFAULT_PROFILE);
@@ -105,6 +109,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
               look={look}
               prefs={prefs}
               onPrefs={setPrefs}
+              feel={feel.entries}
               handlers={{ go, play, playDay, openJourney, forget, onStudio, onMix: (m: Mix) => s.guarded(() => s.player.playMix(m)) }}
             />
           )}
@@ -115,10 +120,22 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
       <p className="c-sr" role="status" data-testid="play-status">
         {s.snap.playing ? `Playing. ${CALM.volumeCapped}` : 'Stopped.'}
       </p>
-      {end.card !== null && !s.snap.playing && <EndCard info={end.card} onAgain={() => replay(end.card?.id ?? null, play)} onClose={end.dismiss} firstRun={toDayNumber(data.profile.createdAt) === today()} />}
+      {end.card !== null && !s.snap.playing && <EndCardHost card={end.card} play={play} dismiss={end.dismiss} feel={feel} firstRun={toDayNumber(data.profile.createdAt) === today()} />}
       {s.gate && <SafetyNotice onAccept={s.accept} onCancel={s.cancelGate} />}
     </div>
   );
+}
+
+interface HostProps {
+  readonly card: EndInfo;
+  readonly play: (t: Template) => void;
+  readonly dismiss: () => void;
+  readonly feel: ReturnType<typeof useFeel>;
+  readonly firstRun: boolean;
+}
+
+function EndCardHost({ card, play, dismiss, feel, firstRun }: HostProps): React.JSX.Element {
+  return <EndCard info={card} onAgain={() => replay(card.id, play)} onClose={dismiss} firstRun={firstRun} onFeel={(a) => feel.answer(card.id, a)} />;
 }
 
 interface PlayDeps {

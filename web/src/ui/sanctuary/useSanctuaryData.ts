@@ -10,6 +10,7 @@ import type { MilestoneState, Stats } from '../../app/milestones';
 import { MAX_MIXES, makeMix, renameMix, uniqueName } from '../../app/mixes';
 import type { Mix, MixDraft } from '../../app/mixes';
 import type { Store } from '../../storage/db';
+import { createLocalStorage, loadFeel, saveFeel } from '../calm/data';
 import { SX } from './copy';
 
 /** shortcut: stats read the newest 5000 sessions, upgrade to a running total if anyone listens that much. */
@@ -180,6 +181,10 @@ export function useSanctuaryData(store: Store, now: () => number): SanctuaryData
         const favItems = [...res.favorites.items, ...favorites.items.filter((i) => mode === 'merge' || i.kind === 'template')];
         const fav = parseFavorites({ v: 1, items: favItems }, t);
         await saveRecord('favorites', fav);
+        if (res.feel !== null) {
+          const local = createLocalStorage();
+          saveFeel(local, mode === 'merge' ? [...loadFeel(local), ...res.feel] : res.feel);
+        }
         setFavorites(fav);
         setMixes([...fresh, ...kept].sort((a, b) => b.updatedAt - a.updatedAt));
         setNotice(res.skipped > 0 ? `${SX.data.imported} ${SX.data.skipped}` : SX.data.imported);
@@ -203,7 +208,7 @@ export function useSanctuaryData(store: Store, now: () => number): SanctuaryData
         await patchMilestones((cur) => ({ ...cur, reminder: { ...cur.reminder, on, text: cleanReminderText(text) } }));
         setNotice(SX.milestones.reminderSaved);
       },
-      exportText: () => exportBackup(mixes, favorites, milestones, now()),
+      exportText: () => exportBackup(mixes, favorites, milestones, now(), loadFeel(createLocalStorage())),
       resetAll: () =>
         guard(async () => {
           await store.clearSanctuary();

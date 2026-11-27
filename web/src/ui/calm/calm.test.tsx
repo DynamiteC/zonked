@@ -187,6 +187,21 @@ describe('play again and end card', () => {
   });
 });
 
+describe('how was that row', () => {
+  it('is optional, saves one answer once and shows no score', () => {
+    const onFeel = vi.fn();
+    const { rerender } = render(<EndCard info={{ id: 'x', name: 'Soft Rain', minutes: 12 }} onAgain={vi.fn()} onClose={vi.fn()} />);
+    expect(screen.queryByTestId('feel-row')).toBeNull();
+    rerender(<EndCard info={{ id: 'x', name: 'Soft Rain', minutes: 12 }} onAgain={vi.fn()} onClose={vi.fn()} onFeel={onFeel} />);
+    expect(screen.getByText(CALM.feelQuestion)).toBeTruthy();
+    fireEvent.click(screen.getByTestId('feel-calmer'));
+    expect(onFeel).toHaveBeenCalledWith('calmer');
+    expect(screen.queryByTestId('feel-row')).toBeNull();
+    expect(screen.getByTestId('feel-saved').textContent).toBe(CALM.feelSaved);
+    expect(document.body.textContent).not.toMatch(/score|\d+ ?%|streak/i);
+  });
+});
+
 describe('week display', () => {
   it('shows days listened out of seven, with rest days counted and no loss wording', () => {
     const day = 20_000;

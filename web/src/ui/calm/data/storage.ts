@@ -1,3 +1,4 @@
+import { FEEL_KEY } from './feel';
 import { JOURNEYS } from './journeys';
 import { DEVICES, GOALS, TIMES_OF_DAY } from './types';
 import type { JourneyProgress, ProgressMap, Profile, StorageLike } from './types';
@@ -105,7 +106,7 @@ export function saveProgress(storage: StorageLike, progress: ProgressMap): boole
 
 /** Removes everything this folder stores. Never throws. */
 export function clearAll(storage: StorageLike): void {
-  for (const key of [PROFILE_KEY, PROGRESS_KEY, LAST_KEY]) {
+  for (const key of [PROFILE_KEY, PROGRESS_KEY, LAST_KEY, FEEL_KEY]) {
     try {
       storage.remove(key);
     } catch {

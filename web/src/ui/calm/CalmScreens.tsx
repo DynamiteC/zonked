@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import type { Mix } from '../../app/mixes';
 import type { Template } from '../../catalog/types';
 import type { View } from './CalmChrome';
+import type { FeelEntry } from './data';
 import type { CalmData } from './useCalmData';
 import { today } from './useCalmData';
 import { toDayNumber } from './data';
@@ -45,11 +46,12 @@ interface Props {
   readonly look: Look;
   readonly prefs: Prefs;
   readonly onPrefs: (p: Prefs) => void;
+  readonly feel: readonly FeelEntry[];
   readonly handlers: Handlers;
 }
 
 /** Picks the screen for the current view. Only Today is in the first chunk. */
-export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav, last, look, prefs, onPrefs, handlers: h }: Props): React.JSX.Element {
+export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav, last, look, prefs, onPrefs, feel, handlers: h }: Props): React.JSX.Element {
   switch (view) {
     case 'journeys':
       return <JourneyList progress={data.progress} onOpen={h.openJourney} reduced={still} />;
@@ -111,6 +113,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
           joinedToday={toDayNumber(data.profile.createdAt) === today()}
           crewConnected={crewInfo.enabled && crewInfo.status === 'connected'}
           last={last}
+          feel={feel}
           onPlay={h.play}
           onOpenJourney={h.openJourney}
           onGo={h.go}

@@ -2,12 +2,13 @@ import { useMemo, useState } from 'react';
 import { recommendTemplates } from '../../catalog';
 import type { Template } from '../../catalog/types';
 import { CALM, GOAL_LABEL, greeting } from './copy';
-import { profileToRecommendation } from './data';
-import type { Profile, ProgressMap, WeekStats } from './data';
+import { nudgeRecs, profileToRecommendation } from './data';
+import type { FeelEntry, Profile, ProgressMap, WeekStats } from './data';
 import { Mascot } from './MascotView';
 import { WeekDots } from './WeekDots';
 
 const realNow = (): Date => new Date();
+const NO_FEEL: readonly FeelEntry[] = [];
 
 interface Props {
   readonly profile: Profile;
@@ -22,15 +23,20 @@ interface Props {
   readonly now?: () => Date;
   /** Last session played on this device, if any. */
   readonly last?: Template | null;
+  /** Saved "How was that?" answers. They nudge the order of For you and the daily pick. */
+  readonly feel?: readonly FeelEntry[];
   readonly onPlay: (t: Template) => void;
   readonly onOpenJourney: (id: string) => void;
   readonly onGo: (view: 'journeys' | 'library') => void;
   readonly onReset: () => void;
 }
 
-export function Today({ profile, week, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, onPlay, onGo, onReset }: Props): React.JSX.Element {
+export function Today({ profile, week, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, feel = NO_FEEL, onPlay, onGo, onReset }: Props): React.JSX.Element {
   const [skip, setSkip] = useState(0);
-  const recs = useMemo(() => recommendTemplates(profileToRecommendation(profile, now()), 5), [profile, now]);
+  const recs = useMemo(() => {
+    const ctx = profileToRecommendation(profile, now());
+    return nudgeRecs(recommendTemplates(ctx, 5), feel.length === 0 ? [] : recommendTemplates(ctx, 12), feel);
+  }, [profile, now, feel]);
   const pick = recs[skip % Math.max(1, recs.length)];
   return (
     <div className="c-today">

@@ -11,3 +11,7 @@ export {
   loadProfile, saveProfile, loadLast, saveLast, loadProgress, saveProgress, clearAll,
   createLocalStorage, createMemoryStorage, DEFAULT_PROFILE, MAX_PAYLOAD_BYTES,
 } from './storage';
+export {
+  FEEL_ANSWERS, FEEL_KEY, MAX_FEEL_BYTES, MAX_FEEL_ENTRIES, addFeel, clearFeel, feelBias, loadFeel, nudgeRecs, parseFeel, saveFeel,
+} from './feel';
+export type { FeelAnswer, FeelEntry } from './feel';
