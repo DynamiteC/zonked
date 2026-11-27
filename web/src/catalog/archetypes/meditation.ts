@@ -10,7 +10,7 @@ export const MEDITATION: CategorySpec = {
       slug: 'alpha-sit', shape: 'plateau', from: 12, to: 9.5, ret: 11, mins: [10, 15, 20, 30], carriers: [180, 200, 220],
       modes: ['binaural', 'monaural', 'isochronic'], noises: [['pink', 0.15], ['off', 0]], layers: [['chimes'], ['bell'], []],
       vibes: ['calm', 'grounded', 'warm'], situations: ['meditate', 'quick-reset', 'heal-stress'], intensity: 2, gain: 0.42, count: 5,
-      reason: 'Wakeful alpha for a {minutes} minute seated sit.',
+      reason: '{tone} calm and wide awake for a {minutes} minute seated sit.',
     }),
     arch({
       slug: 'theta-descent', shape: 'ramp-down', from: 10, to: 5, mins: [20, 30, 45], carriers: [160, 180], modes: ['binaural', 'monaural'],

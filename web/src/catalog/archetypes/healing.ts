@@ -10,7 +10,7 @@ export const HEALING: CategorySpec = {
       slug: 'tension-release', shape: 'ramp-down', from: 14, to: 8, mins: [15, 20, 30], carriers: [180, 200, 220],
       modes: ['binaural', 'isochronic', 'monaural'], noises: [['pink', 0.2]], layers: [['piano', 'pad'], ['pluck'], ['pad', 'chimes']],
       vibes: ['warm', 'calm'], situations: ['heal-stress', 'ai-burnout', 'quick-reset'], intensity: 2, gain: 0.42, count: 5,
-      reason: 'Slides from beta down to alpha over {minutes} minutes.',
+      reason: 'Starts at a busier pace and slows to a relaxed one over {minutes} minutes.',
     }),
     arch({
       slug: 'restore-theta', shape: 'plateau', from: 9, to: 6, mins: [20, 30, 45], carriers: [160, 180], modes: ['binaural', 'monaural'],

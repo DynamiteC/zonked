@@ -247,7 +247,7 @@ function buildOne(spec: CategorySpec, a: Arch, i: number, j: number): Template {
     intensity: a.intensity,
     adhdFriendly: isAdhdFriendly(stages, a.intensity),
     stages,
-    reasonTemplate: `${a.reason} ${variantNote(mode, carrier, m, at(a.vibes, i), stages)}`,
+    reasonTemplate: `${a.reason.replace('{tone}', MODE_WORD[mode])} ${variantNote(mode, carrier, m, at(a.vibes, i), stages)}`,
     source: 'original',
     ...(a.breath !== undefined ? { breath: a.breath } : {}),
   };

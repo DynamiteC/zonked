@@ -43,8 +43,14 @@ describe('catalog copy', () => {
       if (t.source !== 'original') expect(t.reasonTemplate).not.toContain('{minutes}');
     }
     const creative = getTemplates().find((t) => t.id === 'android-creativity');
-    expect(creative?.reasonTemplate).toBe(`${creative?.recommendedMinutes} minutes that drift back and forth between 10 and 6 Hz.`);
+    expect(creative?.reasonTemplate).toBe('Drifts back and forth between 10 and 6 Hz.');
     const smr = getTemplates().find((t) => t.id === 'android-smr-sleep');
-    expect(smr?.reasonTemplate.startsWith(`${smr?.recommendedMinutes} minutes of beats`)).toBe(true);
+    expect(smr?.reasonTemplate.startsWith('Beats crossing')).toBe(true);
+  });
+
+  it('never says a length twice and keeps band jargon out of plain cards', () => {
+    for (const t of getTemplates()) expect(t.reasonTemplate).not.toMatch(/\{duration\}|minutes that|beta down to alpha/);
+    const sits = getTemplates().filter((t) => t.id.startsWith('meditation-alpha-sit') && t.recommendedMinutes === 10).map(resolved);
+    expect(new Set(sits.map((r) => r.split('.')[0])).size).toBe(sits.length);
   });
 });
