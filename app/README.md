@@ -8,7 +8,7 @@ Trust the app when you enable it. Kiro Crew asks before an app may register agen
 
 ## Private and local
 
-- No account, no analytics, no network at run time. The engine makes beats, noise, lo-fi and piano in your browser. Seven short CC0 or public domain nature loops (about 1.4 MB, MP3, lazy loaded, precached) play only when chosen, and each is listed in `docs/SAMPLES-LICENSES.md`. Wind, waterfall and flute are synthesized. Your own sound file never leaves your device.
+- No account, no analytics, no network at run time. The engine makes beats, noise, lo-fi and piano in your browser. 22 short CC0 or public domain nature loops (MP3, lazy loaded, precached) play only when chosen, and each is listed in `docs/SAMPLES-LICENSES.md`. Ten more sounds are made in the browser. Your own sound file never leaves your device.
 - The small backend binds to the loopback address only and stores one small memory file in the app data folder.
 - The crew link is optional. The app works fully without it.
 

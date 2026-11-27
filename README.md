@@ -28,8 +28,9 @@ License: MIT ([`LICENSE`](LICENSE), [`NOTICE`](NOTICE)). Not a medical device.
 
 ## What is tested and what is not
 
-- Tested: Rust unit tests, web unit tests, browser checks (Playwright, Chromium), offline reload, and the CSP and header harness.
-- Not tested: listening by ear, Firefox, Safari, real phones, and a live Kiro Crew host.
+- Tested, with numbers from the final run: 65 Rust tests, 601 web tests in 59 files, 51 bridge tests, 35 app backend tests, 90 Playwright checks in Chromium, 162 of 162 checks in the browser matrix (Chromium, WebKit phone and Android profiles, fallback paths), the CSP harness with the app bundle (peak 0.40 while playing), and an offline check with zero outbound requests.
+- Not tested: listening by ear to the 22 recordings and 10 made-in-code sounds, real Firefox, real Safari, real phones, a real screen reader, and a live Kiro Crew host. `docs/OWNER-TEST.md` lists the steps for these.
+- Publish readiness against the App Kit guide: `docs/PUBLISH-CHECKLIST.md`.
 
 ## Quick start (60 s)
 
@@ -42,7 +43,7 @@ npm run preview        # http://localhost:4173
 
 The app opens on the Calm front door: five short questions, the hearing-safety notice, then a starter sound. No sound plays before you accept the notice. Today, Journeys, Library, Player, Crew and Settings sit in a tab bar, and Settings has a switch to Studio mode, the full control panel. Your choice is kept in this browser. In Studio, click the mask or press Space and accept the safety notice once. See "Requirements" below for the toolchain.
 
-Zonked resurrects two old things. One is SBaGen (1998), the `.sbg` brainwave sequence idea. The other is the author's own 2018 final-year web application, binaural beats research and yellow mask mascot, which were inspired by Giorgio Regni's GPLv3 Android app "Binaural Beats Therapy". That Android app is credited and kept in `legacy/` as reference only. The sequence idea and the mascot now run as a Rust `no_std` WebAssembly synth inside an `AudioWorklet`, in an offline-first PWA. A three-agent Kiro Crew watches your coding session and eases the sound from Beta/Gamma focus, to Alpha recovery, to Theta decompression. A library of 232 templates, a recommender, five synthesized sound layers, timers and lock-screen controls make it usable on its own all day.
+Zonked resurrects two old things. One is SBaGen (1998), the `.sbg` brainwave sequence idea. The other is the author's own 2018 final-year web application, binaural beats research and yellow mask mascot, which were inspired by Giorgio Regni's GPLv3 Android app "Binaural Beats Therapy". That Android app is credited and kept in `legacy/` as reference only. The sequence idea and the mascot now run as a Rust `no_std` WebAssembly synth inside an `AudioWorklet`, in an offline-first PWA. A three-agent Kiro Crew watches your coding session and eases the sound from Beta/Gamma focus, to Alpha recovery, to Theta decompression. A library of 239 templates, a recommender, five synthesized sound layers, 22 recorded nature loops and 10 made-in-code sounds with a blend slider, a 90 second pause, a 5 minute breathing session, a focus sprint, a sleep fade, timers and lock-screen controls make it usable on its own all day.
 
 - Demo video: `media/zonked-demo.mp4` (2:50), also `media/zonked-demo.webm`
 - Pitch deck: `docs/Zonked-Kiroween-Deck.pptx` (8 slides), web backup `docs/deck.html`
@@ -53,7 +54,7 @@ Zonked resurrects two old things. One is SBaGen (1998), the `.sbg` brainwave seq
 
 ## Free, private, for everyone
 
-Zonked is a free sound sanctuary for people easing stress, AI and work burnout, focus strain and sleep trouble. No account, no ads, no tracking, no network at run time. The engine makes the sound on your device, plus seven bundled nature loops that play only when chosen. The app works offline.
+Zonked is a free sound sanctuary for people easing stress, AI and work burnout, focus strain and sleep trouble. No account, no ads, no tracking, no network at run time. The engine makes the sound on your device, plus 22 bundled nature loops that play only when chosen, and 10 sounds made in code. The app works offline.
 
 The Sanctuary panel (More menu) holds:
 
@@ -108,11 +109,11 @@ Presets: Deep Focus (40 Hz gamma), Flow State (18 Hz beta), AI Burnout Reset (10
 
 ## The library
 
-Sound comes from the engine and a few bundled loops. The engine makes beats, noise, lo-fi and piano itself. Seven short CC0 or public domain nature loops (about 1.4 MB, MP3, lazy loaded, precached for offline) ship in the repo and play only when chosen. Each is listed with source and licence in `docs/SAMPLES-LICENSES.md`. Wind, waterfall and flute are synthesized in the browser. A person's own sound file never leaves their device. No network at run time.
+Sound comes from the engine and a few bundled loops. The engine makes beats, noise, lo-fi and piano itself. 22 short CC0 or public domain nature loops (MP3, lazy loaded, precached for offline) ship in the repo and play only when chosen. Each is listed with source and licence in `docs/SAMPLES-LICENSES.md`. Ten more sounds (wind, waterfall, flute, roof rain, singing bowl, soft chimes, campfire, brown noise, ocean swell, crickets) are made in the browser. A person's own sound file never leaves their device. No network at run time.
 
 ### Templates
 
-232 templates across categories such as vibes, healing, lucid dreams, meditation, sleep, focus and work recovery. Each template is a list of stages (beat, carrier, mode, noise, layers) that plays through the same sequencer as an `.sbg` script, so every value is clamped to the hearing-safety bounds. 208 are generated by a deterministic archetype DSL (`web/src/catalog/`), 21 re-express published frequency and duration values from the Android reference app and 3 from Gnaural schedules, in original wording (marked by `source`). Open the catalog drawer to search by text, category, vibe, layer tag and ADHD friendly, 24 per page. The catalog is a lazy chunk, loaded when first needed.
+239 templates across categories such as vibes, healing, lucid dreams, meditation, sleep, focus and work recovery. Each template is a list of stages (beat, carrier, mode, noise, layers) that plays through the same sequencer as an `.sbg` script, so every value is clamped to the hearing-safety bounds. 215 are generated by a deterministic archetype DSL (`web/src/catalog/`), 21 re-express published frequency and duration values from the Android reference app and 3 from Gnaural schedules, in original wording (marked by `source`). Open the catalog drawer to search by text, category, vibe, layer tag and ADHD friendly, 24 per page. The catalog is a lazy chunk, loaded when first needed.
 
 ### Recommender
 
@@ -205,15 +206,18 @@ Measured on the final tree:
 
 | Item | Result |
 |---|---|
-| First-load JS + CSS gzip | 100.09 KB + 4.88 KB = 104.96 KB (budget 110 KB) |
-| WASM core | 38,564 bytes, no imports |
-| Service worker precache | 36 entries (665.83 KiB) |
-| Web tests (vitest) | 331 in 35 files |
-| DSP tests (cargo) | 59 |
-| Bridge tests | 50 |
-| Script tests | 22 root, 9 web |
-| End to end (Playwright) | 73 checks |
-| Web coverage | lines 91.15 percent, branches 82.79 percent |
+| First-load JS + CSS gzip | 76.10 KB + 5.26 KB = 81.36 KB (budget 110 KB) |
+| WASM core | 38,568 bytes |
+| Service worker precache | 68 entries (2042.69 KiB) |
+| Web tests (vitest) | 601 in 59 files |
+| DSP tests (cargo) | 65 |
+| Bridge tests | 51 |
+| App backend tests | 35 |
+| Script tests | 27 root, 9 web |
+| End to end (Playwright) | 90 checks |
+| Browser matrix | 162 of 162 |
+| App bundle CSP harness | ok, peak 0.40 playing, 0.48 after unmount |
+| Offline check | 15 requests, 0 outbound |
 
 ```bash
 cargo test --manifest-path crates/dsp-core/Cargo.toml
@@ -222,7 +226,7 @@ cargo clippy --manifest-path crates/dsp-core/Cargo.toml --all-targets -- -D warn
 (cd web && npm test && npm run audit:security && npm run test:scripts)
 (cd web && npx vitest run --coverage)  # coverage report (v8)
 (cd web && npm run build && npm run check:bundle)   # fails above 110 KB gzip
-(cd web && npm run verify:e2e)      # Playwright, 73 checks
+(cd web && npm run verify:e2e)      # Playwright, 90 checks
 (cd web && npm run record:demo)     # regenerates media/ (needs ffmpeg)
 ```
 
