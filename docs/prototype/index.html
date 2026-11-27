@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en" data-theme="auto" data-mode="calm">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Zonked, calm prototype</title>
+<link rel="stylesheet" href="calm.css">
+<link rel="stylesheet" href="studio.css">
+</head>
+<body>
+<svg width="0" height="0" class="hidden-svg" aria-hidden="true" focusable="false">
+  <symbol id="mascot" viewBox="0 0 120 120">
+    <circle cx="60" cy="60" r="46" fill="#FFC400"/>
+    <circle cx="60" cy="60" r="46" fill="none" stroke="#B88A00" stroke-width="2"/>
+    <rect x="6" y="46" width="14" height="30" rx="7" fill="#3A2F4A"/>
+    <rect x="100" y="46" width="14" height="30" rx="7" fill="#3A2F4A"/>
+    <path d="M18 56 C18 14 102 14 102 56" fill="none" stroke="#3A2F4A" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="44" cy="56" r="10" fill="#FFF8E1"/>
+    <circle cx="76" cy="56" r="10" fill="#FFF8E1"/>
+    <circle cx="44" cy="58" r="5" fill="#2A2433" class="pupil"/>
+    <circle cx="76" cy="58" r="5" fill="#2A2433" class="pupil"/>
+    <path d="M46 82 Q60 92 74 82" fill="none" stroke="#2A2433" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="brand"><svg class="mini" aria-hidden="true"><use href="#mascot"/></svg><span>Zonked</span></div>
+    <div class="top-actions">
+      <button class="chip-btn" id="themeBtn" type="button" aria-label="Change look: automatic">Look: Auto</button>
+      <button class="chip-btn" id="studioBtn" type="button" aria-pressed="false">Studio mode</button>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+
+    <!-- Onboarding 1 -->
+    <section class="screen onb" data-screen="onb1" aria-labelledby="t-onb1">
+      <p class="step" id="s1">Step 1 of 5</p>
+      <div class="hero"><svg class="mascot big" role="img" aria-label="Zonked mascot, a friendly yellow headphone mask"><use href="#mascot"/></svg></div>
+      <h1 id="t-onb1">Calm sound, made for you.</h1>
+      <p class="lead">A few quick questions. Then your first sound.</p>
+      <p class="promise">Free. Private. No account.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-go="onb2">Get started</button>
+        <button class="btn link" type="button" data-go="onb5">Skip, just play</button>
+      </div>
+    </section>
+
+    <!-- Onboarding 2 -->
+    <section class="screen onb" data-screen="onb2" aria-labelledby="t-onb2">
+      <p class="step">Step 2 of 5</p>
+      <h1 id="t-onb2">What brings you here?</h1>
+      <fieldset class="choices">
+        <legend class="sr">Pick one goal</legend>
+        <label class="choice"><input type="radio" name="goal" value="focus"><span>Focus</span></label>
+        <label class="choice"><input type="radio" name="goal" value="calm" checked><span>Calm down</span></label>
+        <label class="choice"><input type="radio" name="goal" value="sleep"><span>Sleep</span></label>
+        <label class="choice"><input type="radio" name="goal" value="study"><span>Study</span></label>
+        <label class="choice"><input type="radio" name="goal" value="recover"><span>Recover after work</span></label>
+        <label class="choice"><input type="radio" name="goal" value="curious"><span>Just curious</span></label>
+      </fieldset>
+      <div class="actions row">
+        <button class="btn ghost" type="button" data-go="onb1">Back</button>
+        <button class="btn primary" type="button" data-go="onb3">Next</button>
+      </div>
+    </section>
+
+    <!-- Onboarding 3 -->
+    <section class="screen onb" data-screen="onb3" aria-labelledby="t-onb3">
+      <p class="step">Step 3 of 5</p>
+      <h1 id="t-onb3">When do you need it most?</h1>
+      <fieldset class="choices">
+        <legend class="sr">Pick a time of day</legend>
+        <label class="choice"><input type="radio" name="when" value="morning"><span>Morning</span></label>
+        <label class="choice"><input type="radio" name="when" value="afternoon"><span>Afternoon</span></label>
+        <label class="choice"><input type="radio" name="when" value="evening" checked><span>Evening</span></label>
+        <label class="choice"><input type="radio" name="when" value="night"><span>Night</span></label>
+        <label class="choice"><input type="radio" name="when" value="any"><span>Anytime</span></label>
+      </fieldset>
+      <div class="actions row">
+        <button class="btn ghost" type="button" data-go="onb2">Back</button>
+        <button class="btn primary" type="button" data-go="onb4">Next</button>
+      </div>
+    </section>
+
+    <!-- Onboarding 4 -->
+    <section class="screen onb" data-screen="onb4" aria-labelledby="t-onb4">
+      <p class="step">Step 4 of 5</p>
+      <h1 id="t-onb4">How do you listen?</h1>
+      <fieldset class="choices">
+        <legend class="sr">Pick how you listen</legend>
+        <label class="choice"><input type="radio" name="dev" value="head" checked><span>Headphones</span></label>
+        <label class="choice"><input type="radio" name="dev" value="speaker"><span>Speakers</span></label>
+        <label class="choice"><input type="radio" name="dev" value="bt"><span>Bluetooth</span></label>
+        <label class="choice"><input type="radio" name="dev" value="unsure"><span>Not sure</span></label>
+      </fieldset>
+      <p class="note">Headphones work best for two-tone beats. Speakers are fine for gentle pulses and noise. We pick sounds that suit your choice.</p>
+      <div class="actions row">
+        <button class="btn ghost" type="button" data-go="onb3">Back</button>
+        <button class="btn primary" type="button" data-go="onb5">Next</button>
+      </div>
+    </section>
+
+    <!-- Onboarding 5 -->
+    <section class="screen onb" data-screen="onb5" aria-labelledby="t-onb5">
+      <p class="step">Step 5 of 5</p>
+      <h1 id="t-onb5">Pick a starter sound</h1>
+      <p class="lead small">Chosen from your answers.</p>
+      <fieldset class="starters">
+        <legend class="sr">Starter sounds</legend>
+        <label class="starter"><input type="radio" name="starter" value="a" checked>
+          <span class="orb o1" aria-hidden="true"></span>
+          <span class="s-text"><b>Rain hush</b><small>Steady rain-like hush. Covers busy thoughts. 15 min.</small></span>
+          <button class="btn small ghost" type="button" data-preview>Preview</button></label>
+        <label class="starter"><input type="radio" name="starter" value="b">
+          <span class="orb o2" aria-hidden="true"></span>
+          <span class="s-text"><b>Soft piano</b><small>Slow, warm notes that ring out. 20 min.</small></span>
+          <button class="btn small ghost" type="button" data-preview>Preview</button></label>
+        <label class="starter"><input type="radio" name="starter" value="c">
+          <span class="orb o3" aria-hidden="true"></span>
+          <span class="s-text"><b>Warm glow</b><small>Gentle lo-fi chords for the evening. 20 min.</small></span>
+          <button class="btn small ghost" type="button" data-preview>Preview</button></label>
+      </fieldset>
+      <p class="status" role="status" id="previewStatus"></p>
+      <div class="actions row">
+        <button class="btn ghost" type="button" data-go="onb4">Back</button>
+        <button class="btn primary" type="button" data-go="safety">Start</button>
+      </div>
+    </section>
+
+    <!-- Safety -->
+    <section class="screen onb" data-screen="safety" aria-labelledby="t-safe">
+      <div class="hero"><svg class="mascot mid" aria-hidden="true"><use href="#mascot"/></svg></div>
+      <h1 id="t-safe">Before you start</h1>
+      <ul class="safe-list">
+        <li>Use stereo headphones for the best effect.</li>
+        <li>Keep the volume low. Sound fades in slowly.</li>
+        <li>You can stop any time.</li>
+        <li>Zonked is not a medical device.</li>
+      </ul>
+      <div class="actions">
+        <button class="btn primary" type="button" data-go="player">I understand, start</button>
+        <button class="btn ghost" type="button" data-go="onb5">Back</button>
+      </div>
+    </section>
+
+    <!-- Today -->
+    <section class="screen app-screen" data-screen="today" aria-labelledby="t-today">
+      <h1 id="t-today" class="greet">Good evening.</h1>
+      <p class="lead small">Your goal: Calm down</p>
+
+      <article class="card daily" aria-labelledby="d-title">
+        <p class="eyebrow">Your session for today</p>
+        <h2 id="d-title">Evening Glide</h2>
+        <p class="muted">20 minutes. Soft, slow sound. Suits the evening and your headphones.</p>
+        <div class="actions row">
+          <button class="btn primary" type="button" data-go="player">Start</button>
+          <button class="btn ghost" type="button" id="swapBtn">Not this one</button>
+        </div>
+      </article>
+
+      <section class="card" aria-labelledby="w-title">
+        <h2 id="w-title" class="h3">4 days this week</h2>
+        <ol class="week" aria-label="This week">
+          <li class="dot done"><span class="mark">&#10003;</span><span class="d">Mon</span><span class="sr">Listened</span></li>
+          <li class="dot rest"><span class="mark">-</span><span class="d">Tue</span><span class="sr">Rest day</span></li>
+          <li class="dot done"><span class="mark">&#10003;</span><span class="d">Wed</span><span class="sr">Listened</span></li>
+          <li class="dot done"><span class="mark">&#10003;</span><span class="d">Thu</span><span class="sr">Listened</span></li>
+          <li class="dot rest"><span class="mark">-</span><span class="d">Fri</span><span class="sr">Rest day</span></li>
+          <li class="dot today"><span class="mark">o</span><span class="d">Sat</span><span class="sr">Today</span></li>
+          <li class="dot"><span class="mark"></span><span class="d">Sun</span><span class="sr">Upcoming</span></li>
+        </ol>
+        <p class="muted small">Rest days count too. Goal: 4 days a week.</p>
+      </section>
+
+      <section aria-labelledby="f-title">
+        <div class="row-head"><h2 id="f-title" class="h3">For you</h2></div>
+        <ul class="hscroll" tabindex="0" aria-label="Suggestions, scroll sideways">
+          <li><button class="mini-card g1" type="button" data-go="player"><b>Rain hush</b><small>Covers busy thoughts</small><em>15 min</em></button></li>
+          <li><button class="mini-card g2" type="button" data-go="player"><b>Soft piano</b><small>Slow and warm</small><em>20 min</em></button></li>
+          <li><button class="mini-card g3" type="button" data-go="player"><b>Warm glow</b><small>Good for evenings</small><em>20 min</em></button></li>
+          <li><button class="mini-card g4" type="button" data-go="player"><b>Soft chimes</b><small>A light anchor</small><em>10 min</em></button></li>
+          <li><button class="mini-card g5" type="button" data-go="player"><b>Deep rumble</b><small>Easy to drift off to</small><em>30 min</em></button></li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="j-title">
+        <div class="row-head"><h2 id="j-title" class="h3">Journeys</h2><button class="btn link small" type="button" data-go="journeys">See all</button></div>
+        <ul class="hscroll" tabindex="0" aria-label="Journeys, scroll sideways">
+          <li><button class="journey-card j1" type="button" data-go="jday"><b>7 Calm Evenings</b><small>Day 3 of 7</small><span class="bar"><i class="w43"></i></span></button></li>
+          <li><button class="journey-card j2" type="button" data-go="jday"><b>14 Nights to Easier Sleep</b><small>Not started</small><span class="bar"><i class="w0"></i></span></button></li>
+        </ul>
+      </section>
+
+      <div class="card crew-chip" role="status"><span class="pulse" aria-hidden="true"></span> Crew connected: easing the sound <button class="btn link small" type="button" data-go="crew">Details</button></div>
+    </section>
+
+    <!-- Journeys -->
+    <section class="screen app-screen" data-screen="journeys" aria-labelledby="t-j">
+      <h1 id="t-j">Journeys</h1>
+      <p class="lead small">Short programs. One small session a day. Go at your own pace.</p>
+      <ul class="list">
+        <li><button class="journey-card wide j1" type="button" data-go="jday"><b>7 Calm Evenings</b><small>About 20 minutes each. Slow sound to end the day.</small><span class="bar"><i class="w43"></i></span><em>Day 3 of 7</em></button></li>
+        <li><button class="journey-card wide j3" type="button" data-go="jday"><b>5 Focus Mornings</b><small>Start the day with steady attention.</small><span class="bar"><i class="w0"></i></span><em>5 days</em></button></li>
+        <li><button class="journey-card wide j2" type="button" data-go="jday"><b>14 Nights to Easier Sleep</b><small>Slow sound that eases you toward bed.</small><span class="bar"><i class="w0"></i></span><em>14 days</em></button></li>
+        <li><button class="journey-card wide j4" type="button" data-go="jday"><b>Study Sprint Week</b><small>Focus blocks with short breaks.</small><span class="bar"><i class="w0"></i></span><em>7 days</em></button></li>
+        <li><button class="journey-card wide j5" type="button" data-go="jday"><b>After-Work Reset</b><small>Let the workday go.</small><span class="bar"><i class="w0"></i></span><em>5 days</em></button></li>
+        <li><button class="journey-card wide j6" type="button" data-go="jday"><b>Gentle ADHD Routine</b><small>A gentle routine for steady attention.</small><span class="bar"><i class="w0"></i></span><em>7 days</em></button></li>
+      </ul>
+    </section>
+
+    <!-- Journey day -->
+    <section class="screen app-screen" data-screen="jday" aria-labelledby="t-jd">
+      <button class="btn link small back" type="button" data-go="journeys">Back to journeys</button>
+      <h1 id="t-jd">7 Calm Evenings</h1>
+      <p class="lead small">Day 3 of 7. Go at your own pace.</p>
+      <ol class="days">
+        <li class="day done"><span class="badge">1</span><span class="d-text"><b>Evening Glide</b><small>20 min. Done</small></span><span class="tick" aria-hidden="true">&#10003;</span></li>
+        <li class="day done"><span class="badge">2</span><span class="d-text"><b>Breath Pacer</b><small>10 min. Done</small></span><span class="tick" aria-hidden="true">&#10003;</span></li>
+        <li class="day now"><span class="badge">3</span><span class="d-text"><b>Warm Glow</b><small>20 min. Today</small></span><button class="btn small primary" type="button" data-go="player">Start</button></li>
+        <li class="day rest"><span class="badge">4</span><span class="d-text"><b>Rest day</b><small>Nothing to do. Enjoy the quiet.</small></span></li>
+        <li class="day"><span class="badge">5</span><span class="d-text"><b>Alpha Sit</b><small>15 min. Not started</small></span></li>
+        <li class="day"><span class="badge">6</span><span class="d-text"><b>Lo-fi Unwind</b><small>25 min. Not started</small></span></li>
+        <li class="day"><span class="badge">7</span><span class="d-text"><b>Evening Glide</b><small>20 min. Not started</small></span></li>
+      </ol>
+    </section>
+
+    <!-- Library -->
+    <section class="screen app-screen" data-screen="library" aria-labelledby="t-l">
+      <h1 id="t-l">Library</h1>
+      <label class="search"><span class="sr">Search sounds</span><input type="search" placeholder="Search sounds" autocomplete="off"></label>
+      <div class="tabs" role="tablist" aria-label="Library sections">
+        <button role="tab" aria-selected="true" class="tab" type="button" data-tab="feel">Feeling</button>
+        <button role="tab" aria-selected="false" class="tab" type="button" data-tab="sound">Sound</button>
+        <button role="tab" aria-selected="false" class="tab" type="button" data-tab="fav">Favorites</button>
+        <button role="tab" aria-selected="false" class="tab" type="button" data-tab="mixes">My mixes</button>
+        <button role="tab" aria-selected="false" class="tab" type="button" data-tab="recent">Recent</button>
+      </div>
+      <div class="tabpanel" data-panel="feel" role="tabpanel">
+        <ul class="tiles">
+          <li><button class="tile g1" type="button" data-go="player">Focus</button></li>
+          <li><button class="tile g3" type="button" data-go="player">Steady attention</button></li>
+          <li><button class="tile g2" type="button" data-go="player">Recover</button></li>
+          <li><button class="tile g4" type="button" data-go="player">Calm down</button></li>
+          <li><button class="tile g5" type="button" data-go="player">Sleep</button></li>
+          <li><button class="tile g6" type="button" data-go="player">Dream</button></li>
+          <li><button class="tile g1" type="button" data-go="player">Meditate</button></li>
+          <li><button class="tile g2" type="button" data-go="player">Quick reset</button></li>
+        </ul>
+      </div>
+      <div class="tabpanel" data-panel="sound" role="tabpanel" hidden>
+        <ul class="list">
+          <li><button class="row-card" type="button" data-go="player"><b>Lo-fi</b><small>Warm, slow chords with a tape feel.</small></button></li>
+          <li><button class="row-card" type="button" data-go="player"><b>Soft piano</b><small>Slow, quiet notes that ring out.</small></button></li>
+          <li><button class="row-card" type="button" data-go="player"><b>Violet hiss</b><small>A thin, bright hiss. Start very quiet.</small></button></li>
+          <li><button class="row-card" type="button" data-go="player"><b>Rain hush</b><small>A steady rain-like hush.</small></button></li>
+          <li><button class="row-card" type="button" data-go="player"><b>Deep rumble</b><small>A low rumble like distant thunder.</small></button></li>
+          <li><button class="row-card" type="button" data-go="player"><b>Soft chimes</b><small>Soft bells now and then.</small></button></li>
+          <li><button class="row-card" type="button" data-go="player"><b>Beats only</b><small>A soft pulse. Use headphones.</small></button></li>
+        </ul>
+      </div>
+      <div class="tabpanel" data-panel="fav" role="tabpanel" hidden><p class="empty">Tap the heart on any sound to keep it here.</p></div>
+      <div class="tabpanel" data-panel="mixes" role="tabpanel" hidden><p class="empty">Make a mix in the player, then save it here.</p></div>
+      <div class="tabpanel" data-panel="recent" role="tabpanel" hidden><p class="empty">Your recent sessions show up here.</p></div>
+    </section>
+
+    <!-- Player -->
+    <section class="screen player" data-screen="player" aria-labelledby="t-p">
+      <button class="btn link small back" type="button" data-go="today">Back to Today</button>
+      <div class="stage">
+        <div class="ring" id="ring" aria-hidden="true"></div>
+        <svg class="mascot stage-m" aria-hidden="true"><use href="#mascot"/></svg>
+      </div>
+      <p class="breath-text" id="breathText">Breathe in, breathe out.</p>
+      <h1 id="t-p">Evening Glide</h1>
+      <p class="muted center">Soft, slow sound. Suits the evening.</p>
+      <p class="time" aria-live="off">19:42 left</p>
+      <div class="controls">
+        <button class="btn round" type="button" aria-label="Add to favorites" aria-pressed="false" id="favBtn">Favorite</button>
+        <button class="btn round big" type="button" id="playBtn" aria-pressed="true">Pause</button>
+        <button class="btn round" type="button" data-go="today">Stop</button>
+      </div>
+      <div class="chips" role="radiogroup" aria-label="Timer">
+        <button class="tchip" role="radio" aria-checked="false" type="button">15 min</button>
+        <button class="tchip" role="radio" aria-checked="true" type="button">30 min</button>
+        <button class="tchip" role="radio" aria-checked="false" type="button">60 min</button>
+        <button class="tchip" role="radio" aria-checked="false" type="button">Until I stop</button>
+        <button class="tchip" role="radio" aria-checked="false" type="button">Sleep fade</button>
+      </div>
+      <div class="actions row">
+        <button class="btn ghost" type="button" id="mixBtn" aria-haspopup="dialog">Mix</button>
+        <button class="btn ghost" type="button" id="whyBtn" aria-expanded="false" aria-controls="whyBox">Why this works</button>
+      </div>
+      <div class="why" id="whyBox" hidden>
+        <p>Some small studies suggest slow beats may help people relax. Results vary and may not happen for you.</p>
+        <p><b>Evidence: mixed.</b> Studies disagree.</p>
+        <p class="muted small">Zonked is not a medical device.</p>
+      </div>
+      <p class="status" role="status" id="playStatus">Playing. Volume is capped for your safety.</p>
+    </section>
+
+    <!-- Crew -->
+    <section class="screen app-screen" data-screen="crew" aria-labelledby="t-c">
+      <h1 id="t-c">Kiro Crew</h1>
+      <p class="lead small">Your coding session can watch itself and ease the sound. When you have worked hard for a while, Zonked slowly moves toward calmer sound. You stay in control.</p>
+      <div class="card">
+        <label class="switch"><input type="checkbox" id="crewOn" checked><span class="track" aria-hidden="true"></span><span class="lbl">Let Crew ease the sound</span></label>
+        <label class="switch"><input type="checkbox" checked><span class="track" aria-hidden="true"></span><span class="lbl">Follow Crew suggestions</span></label>
+        <p class="status" role="status">Connected. You have been busy for a while.</p>
+      </div>
+      <div class="card">
+        <h2 class="h3" id="m-t">Energy meter</h2>
+        <div class="meter" role="img" aria-label="Warming up, step 2 of 3">
+          <span class="seg on">Fresh</span><span class="seg on">Warming up</span><span class="seg">Time for a break</span>
+        </div>
+        <p class="muted small">Nothing leaves your computer.</p>
+      </div>
+    </section>
+
+    <!-- Studio -->
+    <section class="screen studio" data-screen="studio" aria-labelledby="t-s">
+      <button class="btn link small back" type="button" id="backCalm">Back to Calm</button>
+      <h1 id="t-s">Studio</h1>
+      <div class="panel">
+        <h2>Pulse</h2>
+        <dl class="read"><div><dt>Carrier</dt><dd>200.0 Hz</dd></div><div><dt>Beat</dt><dd>6.0 Hz</dd></div><div><dt>Band</dt><dd>Theta</dd></div><div><dt>Gain</dt><dd>0.50</dd></div></dl>
+      </div>
+      <div class="panel">
+        <h2>Layers</h2>
+        <label class="slider"><span>Lo-fi</span><input type="range" min="0" max="100" value="0"><output>0</output></label>
+        <label class="slider"><span>Noise</span><input type="range" min="0" max="100" value="40"><output>40</output></label>
+        <label class="slider"><span>Chimes</span><input type="range" min="0" max="100" value="10"><output>10</output></label>
+      </div>
+      <div class="panel">
+        <h2>Tools</h2>
+        <div class="actions row"><button class="btn" type="button">Inspect</button><button class="btn" type="button">Editor</button><button class="btn" type="button">Crew bridge</button></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Main">
+    <button class="nav" type="button" data-go="today"><span class="ic" aria-hidden="true"></span>Today</button>
+    <button class="nav" type="button" data-go="journeys"><span class="ic" aria-hidden="true"></span>Journeys</button>
+    <button class="nav" type="button" data-go="library"><span class="ic" aria-hidden="true"></span>Library</button>
+    <button class="nav" type="button" data-go="crew"><span class="ic" aria-hidden="true"></span>Crew</button>
+  </nav>
+
+  <div class="miniplayer" id="miniplayer" hidden>
+    <span class="mp-title">Evening Glide, 19:42 left</span>
+    <button class="btn small" type="button" data-go="player">Open</button>
+  </div>
+</div>
+
+<div class="sheet-wrap" id="sheetWrap" hidden>
+  <div class="scrim" data-close></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t" id="sheet">
+    <h2 id="sh-t">Your mix</h2>
+    <p class="muted small">Volume is capped for your safety.</p>
+    <label class="slider"><span>Lo-fi</span><input type="range" min="0" max="100" value="30"><output>30</output></label>
+    <label class="slider"><span>Piano</span><input type="range" min="0" max="100" value="0"><output>0</output></label>
+    <label class="slider"><span>Chimes</span><input type="range" min="0" max="100" value="10"><output>10</output></label>
+    <label class="slider"><span>Rain or rumble</span><input type="range" min="0" max="100" value="40"><output>40</output></label>
+    <label class="slider"><span>Calm to Alert</span><input type="range" min="0" max="100" value="10"><output>10</output></label>
+    <div class="actions row"><button class="btn ghost" type="button">Reset</button><button class="btn primary" type="button" data-close id="sheetDone">Done</button></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
