@@ -15,10 +15,10 @@ export const TOOL_DEFS = Object.freeze([
       properties: {
         score: INT('Burnout score, 0 to 100.', 0, 100),
         at: INT('Epoch seconds of the reading.', 0, 4102444800),
-        commitsPerHour: INT('Commits in the last hour.', 0, 120),
-        sessionMinutes: INT('Minutes since the session began.', 0, 720),
-        buildFailures: INT('Consecutive failed builds or tests.', 0, 10),
-        dirtyFiles: INT('Uncommitted files.', 0, 200),
+        commits_per_hour: INT('Commits in the last hour.', 0, 120),
+        session_minutes: INT('Minutes since the session began.', 0, 720),
+        build_failures: INT('Consecutive failed builds or tests.', 0, 10),
+        dirty_files: INT('Uncommitted files.', 0, 200),
         degraded: { type: 'boolean', description: 'True when a signal could not be read.' },
       },
       required: ['score', 'at'],
@@ -33,11 +33,12 @@ export const TOOL_DEFS = Object.freeze([
   },
 ]);
 
-const SIGNAL_KEYS = ['commitsPerHour', 'sessionMinutes', 'buildFailures', 'dirtyFiles'];
+// Tool arguments are snake_case (gateway rule); the stored signals keep their camelCase names.
+const SIGNAL_KEYS = Object.freeze({ commits_per_hour: 'commitsPerHour', session_minutes: 'sessionMinutes', build_failures: 'buildFailures', dirty_files: 'dirtyFiles' });
 
 function toIntensity(args) {
   const signals = {};
-  for (const k of SIGNAL_KEYS) if (args[k] !== undefined) signals[k] = args[k];
+  for (const [arg, key] of Object.entries(SIGNAL_KEYS)) if (args[arg] !== undefined) signals[key] = args[arg];
   return {
     version: 1, at: args.at, score: args.score,
     ...(Object.keys(signals).length > 0 ? { signals } : {}),

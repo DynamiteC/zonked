@@ -106,7 +106,7 @@ test('store: a corrupt or oversize file on disk is ignored, not trusted', () => 
 
 test('tools: report and suggestion, unknown tool, bad args, non-object call', () => {
   const { store } = freshStore();
-  assert.equal(runTool(store, { tool: 'zonked_report_intensity', arguments: { score: 70, at: 5, dirtyFiles: 3 } }).ok, true);
+  assert.equal(runTool(store, { tool: 'zonked_report_intensity', arguments: { score: 70, at: 5, dirty_files: 3 } }).ok, true);
   assert.equal(runTool(store, { tool: 'zonked_get_suggestion' }).ready, true);
   assert.equal(runTool(store, { tool: 'rm_rf' }).ok, false);
   assert.equal(runTool(store, { tool: 'zonked_report_intensity', arguments: { score: NaN, at: 5 } }).ok, false);

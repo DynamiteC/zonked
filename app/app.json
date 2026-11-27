@@ -5,7 +5,7 @@
   "description": "Acoustic recovery companion: binaural beats, noise and lo-fi layers made by a no_std Rust WASM engine, with hearing safety limits built in.",
   "author": "Zonked contributors",
   "license": "MIT",
-  "minKiroCrewVersion": "0.13.0",
+  "minKiroCrewVersion": "0.13.1",
   "iconPath": "assets/icon.png",
   "heroImage": "assets/hero.png",
   "screenshots": [
@@ -49,22 +49,22 @@
               "minimum": 0,
               "maximum": 4102444800
             },
-            "commitsPerHour": {
+            "commits_per_hour": {
               "type": "integer",
               "minimum": 0,
               "maximum": 120
             },
-            "sessionMinutes": {
+            "session_minutes": {
               "type": "integer",
               "minimum": 0,
               "maximum": 720
             },
-            "buildFailures": {
+            "build_failures": {
               "type": "integer",
               "minimum": 0,
               "maximum": 10
             },
-            "dirtyFiles": {
+            "dirty_files": {
               "type": "integer",
               "minimum": 0,
               "maximum": 200
