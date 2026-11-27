@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Template } from '@zonked-web/catalog/types';
 import type { PlayerSnapshot } from '@zonked-web/app/player';
+import type { TimerSpec } from '@zonked-web/app/timers';
 import { useReducedMotion } from '@zonked-web/app/useReducedMotion';
 import { SAFETY_KEY, writeFlag } from '@zonked-web/storage/prefs';
 import type { CalmSession } from '@zonked-web/ui/calm/useCalmSession';
@@ -50,11 +51,11 @@ export function useCalmSession(): CalmSession {
     setGate(false);
   }, []);
   const playTemplate = useCallback(
-    (t: Template, minutes: number | null) =>
+    (t: Template, timer: number | TimerSpec | null) =>
       guarded(() => {
         player.setQueue([t]);
         void player.playTemplate(t).then((ok) => {
-          if (ok && minutes !== null) player.startTimer({ kind: 'countdown', minutes });
+          if (ok && timer !== null) player.startTimer(typeof timer === 'number' ? { kind: 'countdown', minutes: timer } : timer);
         });
       }),
     [player, guarded],

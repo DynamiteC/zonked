@@ -1,6 +1,6 @@
 import { jsxs as r, jsx as t } from "react/jsx-runtime";
 import { useState as f, useEffect as y, useRef as x } from "react";
-import { C as e, W as S, X as M, Y as k, O as C } from "./chunk-crewLink-CfXmg-3g.mjs";
+import { C as e, W as S, X as M, Y as k, O as C } from "./chunk-crewLink-CU32qOP4.mjs";
 const D = ["Fresh", "Warming up", e.crewBreak];
 function v(c) {
   return c === null || !Number.isFinite(c) || c < 40 ? 0 : c < 60 ? 1 : 2;

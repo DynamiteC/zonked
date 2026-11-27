@@ -252,8 +252,8 @@ function Gt(t, e, n, s) {
     const xe = r[C];
     (xe === "@" || xe === "+" && C > 0) && (o = C);
   }
-  const a = o < 0 ? r : r.slice(0, o), u = o < 0 ? "" : r.slice(o + 1), m = a === "" ? null : se(a), y = u === "" ? null : se(u), f = i < 0 ? null : se(n.slice(i + 1)), w = a !== "" && m === null, P = o >= 0 && y === null, z = i >= 0 && f === null;
-  return w || P || z || r === "" ? !1 : (m !== null && (s.carrier = ie(t, e, "carrier", m, l.carrierMin, l.carrierMax)), y !== null && (s.beat = ie(t, e, "beat", y, l.beatMin, l.beatMax)), f !== null && (s.gain = ie(t, e, "gain", f, l.gainMin, l.gainMax)), !0);
+  const a = o < 0 ? r : r.slice(0, o), u = o < 0 ? "" : r.slice(o + 1), m = a === "" ? null : se(a), y = u === "" ? null : se(u), f = i < 0 ? null : se(n.slice(i + 1)), b = a !== "" && m === null, P = o >= 0 && y === null, z = i >= 0 && f === null;
+  return b || P || z || r === "" ? !1 : (m !== null && (s.carrier = ie(t, e, "carrier", m, l.carrierMin, l.carrierMax)), y !== null && (s.beat = ie(t, e, "beat", y, l.beatMin, l.beatMax)), f !== null && (s.gain = ie(t, e, "gain", f, l.gainMin, l.gainMax)), !0);
 }
 function Zt(t, e, n, s) {
   const i = n.indexOf("/"), r = Yt(i < 0 ? n : n.slice(0, i));
@@ -454,8 +454,13 @@ back:  200+9/0.4 pink/10    # coming back up
   endTitle: "Done for now.",
   endLine: (t, e) => `${t} played for ${e < 1 ? "under a minute" : e === 1 ? "1 minute" : `${e} minutes`}.`,
   endNote: "Go at your own pace.",
+  feelQuestion: "How was that?",
+  feelCalmer: "Calmer",
+  feelSame: "Same",
+  feelNot: "Not for me",
+  feelSaved: "Noted. This stays on this device.",
   starterTitle: "Pick a starter sound",
-  preview: "Preview",
+  preview: "Hear 10 s",
   previewing: "Playing a short preview",
   safetyTitle: "Before you start",
   safetyLines: [
@@ -501,7 +506,14 @@ back:  200+9/0.4 pink/10    # coming back up
   panelStopped: "Stopped.",
   panelOpenPage: "Zonked is open on the page. Use Stop there.",
   restCount: "Rest days count too.",
-  timerChips: ["15 min", "30 min", "60 min", "Until I stop", "Sleep fade"],
+  timerChips: ["15 min", "30 min", "60 min", "Until I stop", "Sleep fade", "Focus sprint"],
+  sprintName: "Focus sprint",
+  sprintTitle: "Focus sprint",
+  sprintLine: "25 minutes of sound, a soft chime, then a 5 minute break on a calmer sound.",
+  sprintStart: "Start a sprint",
+  sprintFocusLeft: "Focus",
+  sprintBreakLeft: "Break",
+  sprintWhy: "The timed break is the likely help here, more than the beat.",
   breathe: "Breathe in, breathe out",
   breatheIn: "Breathe in",
   breatheOut: "Breathe out",
@@ -561,6 +573,13 @@ back:  200+9/0.4 pink/10    # coming back up
   resetEntryHint: "Slow breathing with soft sound.",
   resetTitle: "A short pause",
   resetIntro: "Ninety seconds of slow breathing with a soft sound. Stop any time.",
+  breatheEntry: "Breathe, 5 minutes",
+  breatheEntryHint: "Many people find slow breathing calming.",
+  breatheTitle: "Breathe, 5 minutes",
+  breatheIntro: "Many people find slow breathing calming. Soft noise, nothing to follow. Stop any time.",
+  breatheDoneLine: "That was 5 minutes of slow breathing.",
+  breatheAgain: "Breathe again",
+  breatheLeft: (t) => `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")} left`,
   resetStart: "Begin",
   resetLeft: (t) => `${t} s left`,
   resetDoneLine: "That was 90 seconds of slow breathing.",
@@ -573,7 +592,7 @@ back:  200+9/0.4 pink/10    # coming back up
   crewBeatHint: "Higher beats feel alert, lower beats feel calm.",
   weekOf: (t) => `${t} of 7 days`,
   forget: "Forget my data",
-  forgetHint: "Removes your answers, nature choice and your own sounds from this device.",
+  forgetHint: "Removes your answers, how-it-felt notes, nature choice and your own sounds from this device.",
   natureHead: "Nature sounds",
   natureIntro: "Add a recording of nature under your session. Pick one, then use the slider to set the mix.",
   natureFree: "Free to use, public domain",
@@ -651,7 +670,7 @@ function ei(t) {
   return `${hn[e]} (score ${Math.round(n)}), so the sound ${o}.`;
 }
 const me = "zonked.timer.v1", pn = 2.5, Fe = 0.1, $e = 6, O = { countdownMin: 30, sleepMin: 30, focusMin: 25, breakMin: 5 }, mn = 1, fn = 720, gn = 500, fe = ["none", "countdown", "sleep-fade", "pomodoro"], yn = { kind: "none", running: !1, remainingSec: 0, totalSec: 0 }, Q = (t, e) => typeof t == "number" && Number.isFinite(t) ? Math.min(fn, Math.max(mn, t)) : e;
-class wn {
+class bn {
   constructor(e, n = null) {
     c(this, "listeners", /* @__PURE__ */ new Set());
     c(this, "spec", null);
@@ -805,7 +824,7 @@ class wn {
       }
   }
 }
-const bn = {
+const wn = {
   now: () => Date.now(),
   setInterval: (t, e) => window.setInterval(t, e),
   clearInterval: (t) => window.clearInterval(t)
@@ -898,7 +917,7 @@ class An {
     c(this, "startedAt", 0);
     c(this, "timer", null);
     var a;
-    this.engine = e, this.clock = n, this.onSession = s, this.toEvents = i.toEvents, this.timers = new wn(n, i.storage === void 0 ? En() : i.storage), this.timers.subscribe(() => {
+    this.engine = e, this.clock = n, this.onSession = s, this.toEvents = i.toEvents, this.timers = new bn(n, i.storage === void 0 ? En() : i.storage), this.timers.subscribe(() => {
       const u = this.timers.state().phase;
       this.playing && u === "break" && this.lastPhase !== "break" && (this.breakCount += 1), this.lastPhase = u, this.emit();
     }), this.timers.onEnd = (u) => {
@@ -1112,7 +1131,7 @@ class An {
     this.gainScale = n.gainScale;
     const s = e.beatHz + (pn - e.beatHz) * n.beatMix, i = Math.min(s, vn), r = h(s + (i - s) * this.breakMix, 0.5, 40), o = this.beatOverride ?? r, a = this.noiseOverride, u = h(e.gain + this.gainTrim, 0, R), m = this.source === "crew" ? Math.min(u, this.crewLevel, this.userCeiling) : u;
     this.heardRaw = m;
-    const y = this.muted ? 0 : m, w = Object.keys(this.layerOverrides).length > 0 ? { ...e.layers ?? H, ...this.layerOverrides } : e.layers;
+    const y = this.muted ? 0 : m, b = Object.keys(this.layerOverrides).length > 0 ? { ...e.layers ?? H, ...this.layerOverrides } : e.layers;
     return {
       ...e,
       beatHz: o,
@@ -1120,7 +1139,7 @@ class An {
       ...(a == null ? void 0 : a.noiseLevel) !== void 0 ? { noiseLevel: a.noiseLevel } : {},
       // Defense in depth: a non-finite gain (forged crew state) is silence, never NaN.
       gain: q(Math.min(R, y * n.gainScale), 0),
-      ...w !== void 0 ? { layers: w } : {}
+      ...b !== void 0 ? { layers: b } : {}
     };
   }
   slewBreak(e) {
@@ -1353,23 +1372,23 @@ const Yn = 5, Gn = 600;
 function j(t, e, n) {
   return Math.min(n, Math.max(e, t));
 }
-function we(t) {
+function be(t) {
   return typeof t == "object" && t !== null && !Array.isArray(t);
 }
 function Zn(t) {
   return t < 40 ? "focus" : t < 60 ? "flow" : t < 80 ? "recovery" : "decompress";
 }
 function ut(t) {
-  if (!we(t) || t.version !== 1) return null;
+  if (!be(t) || t.version !== 1) return null;
   const e = t.burnout, n = t.target;
-  if (!we(e) || !we(n)) return null;
+  if (!be(e) || !be(n)) return null;
   const s = e.score, i = n.beatHz, r = n.carrierHz, o = n.gain, a = n.transitionSec;
   if (![s, i, r, o, a].every((z) => typeof z == "number" && Number.isFinite(z)))
     return null;
-  const u = j(s, 0, 100), m = Zn(u), y = n.presetId, f = t.sbg, w = t.at, P = Vn(t.why);
+  const u = j(s, 0, 100), m = Zn(u), y = n.presetId, f = t.sbg, b = t.at, P = Vn(t.why);
   return {
     version: 1,
-    at: typeof w == "number" && Number.isFinite(w) ? Math.trunc(w) : 0,
+    at: typeof b == "number" && Number.isFinite(b) ? Math.trunc(b) : 0,
     burnout: { score: u, level: m },
     target: {
       ...typeof y == "string" && y.length > 0 && y.length <= 64 ? { presetId: y } : {},
@@ -1494,23 +1513,23 @@ const is = "" + new URL("assets/worklet-CT8dHE_F.js", import.meta.url).href, rs 
 function S(t, e, n, s) {
   return typeof t != "number" || !Number.isFinite(t) ? s : t < e ? e : t > n ? n : t;
 }
-const pt = (t, e = k.carrierHz.def) => S(t, k.carrierHz.min, k.carrierHz.max, e), mt = (t, e = k.beatHz.def) => S(t, k.beatHz.min, k.beatHz.max, e), ft = (t, e = 0) => S(t, k.gain.min, k.gain.max, e), gt = (t, e = 0) => S(t, k.noiseLevel.min, k.noiseLevel.max, e), yt = (t, e = k.rampSec.def) => S(t, k.rampSec.min, k.rampSec.max, e), b = Z, E = (t, e) => S(t, b.level.min, b.level.max, e), ee = (t, e = 0) => S(typeof t == "number" ? Math.round(t) : t, 0, b.enumMax, e), Ve = (t, e) => S(t, b.bpm.min, b.bpm.max, e);
-function wt(t) {
+const pt = (t, e = k.carrierHz.def) => S(t, k.carrierHz.min, k.carrierHz.max, e), mt = (t, e = k.beatHz.def) => S(t, k.beatHz.min, k.beatHz.max, e), ft = (t, e = 0) => S(t, k.gain.min, k.gain.max, e), gt = (t, e = 0) => S(t, k.noiseLevel.min, k.noiseLevel.max, e), yt = (t, e = k.rampSec.def) => S(t, k.rampSec.min, k.rampSec.max, e), w = Z, E = (t, e) => S(t, w.level.min, w.level.max, e), ee = (t, e = 0) => S(typeof t == "number" ? Math.round(t) : t, 0, w.enumMax, e), Ve = (t, e) => S(t, w.bpm.min, w.bpm.max, e);
+function bt(t) {
   const e = H, n = t ?? e;
   return {
     lofiLevel: E(n.lofiLevel, e.lofiLevel),
     lofiWarmth: E(n.lofiWarmth, e.lofiWarmth),
     crackle: E(n.crackle, e.crackle),
     instLevel: E(n.instLevel, e.instLevel),
-    instKind: S(typeof n.instKind == "number" ? Math.round(n.instKind) : n.instKind, 0, b.instKindMax, e.instKind),
-    instRootHz: S(n.instRootHz, b.instRootHz.min, b.instRootHz.max, e.instRootHz),
+    instKind: S(typeof n.instKind == "number" ? Math.round(n.instKind) : n.instKind, 0, w.instKindMax, e.instKind),
+    instRootHz: S(n.instRootHz, w.instRootHz.min, w.instRootHz.max, e.instRootHz),
     instScale: ee(n.instScale, e.instScale),
     instBpm: Ve(n.instBpm, e.instBpm),
     padLevel: E(n.padLevel, e.padLevel),
     padChord: ee(n.padChord, e.padChord),
-    padRootHz: S(n.padRootHz, b.padRootHz.min, b.padRootHz.max, e.padRootHz),
+    padRootHz: S(n.padRootHz, w.padRootHz.min, w.padRootHz.max, e.padRootHz),
     chimeLevel: E(n.chimeLevel, e.chimeLevel),
-    chimeRatePerMin: S(n.chimeRatePerMin, b.chimeRatePerMin.min, b.chimeRatePerMin.max, e.chimeRatePerMin),
+    chimeRatePerMin: S(n.chimeRatePerMin, w.chimeRatePerMin.min, w.chimeRatePerMin.max, e.chimeRatePerMin),
     percLevel: E(n.percLevel, e.percLevel),
     percBpm: Ve(n.percBpm, e.percBpm),
     percPattern: ee(n.percPattern, e.percPattern),
@@ -1518,18 +1537,18 @@ function wt(t) {
     tapeWow: E(n.tapeWow, e.tapeWow),
     pianoPedal: E(n.pianoPedal, e.pianoPedal),
     breathDepth: E(n.breathDepth, e.breathDepth),
-    breathRateHz: S(n.breathRateHz, b.breathRateHz.min, b.breathRateHz.max, e.breathRateHz),
+    breathRateHz: S(n.breathRateHz, w.breathRateHz.min, w.breathRateHz.max, e.breathRateHz),
     stereoWidth: E(n.stereoWidth, e.stereoWidth),
     panDepth: E(n.panDepth, e.panDepth),
-    panRateHz: S(n.panRateHz, b.panRateHz.min, b.panRateHz.max, e.panRateHz)
+    panRateHz: S(n.panRateHz, w.panRateHz.min, w.panRateHz.max, e.panRateHz)
   };
 }
-const bt = { binaural: 0, monaural: 1, isochronic: 2 }, vt = { off: 0, white: 1, pink: 2, brown: 3, violet: 4 };
+const wt = { binaural: 0, monaural: 1, isochronic: 2 }, vt = { off: 0, white: 1, pink: 2, brown: 3, violet: 4 };
 function as(t, e) {
   e[d.lofiLevel] = t.lofiLevel, e[d.lofiWarmth] = t.lofiWarmth, e[d.crackle] = t.crackle, e[d.instLevel] = t.instLevel, e[d.instKind] = t.instKind, e[d.instRootHz] = t.instRootHz, e[d.instScale] = t.instScale, e[d.instBpm] = t.instBpm, e[d.padLevel] = t.padLevel, e[d.padChord] = t.padChord, e[d.padRootHz] = t.padRootHz, e[d.chimeLevel] = t.chimeLevel, e[d.chimeRatePerMin] = t.chimeRatePerMin, e[d.percLevel] = t.percLevel, e[d.percBpm] = t.percBpm, e[d.percPattern] = t.percPattern, e[d.lofiProgression] = t.lofiProgression, e[d.tapeWow] = t.tapeWow, e[d.pianoPedal] = t.pianoPedal, e[d.breathDepth] = t.breathDepth, e[d.breathRateHz] = t.breathRateHz, e[d.stereoWidth] = t.stereoWidth, e[d.panDepth] = t.panDepth, e[d.panRateHz] = t.panRateHz;
 }
 function cs(t, e, n) {
-  return n[d.carrierHz] = pt(t.carrierHz), n[d.beatHz] = mt(t.beatHz), n[d.gain] = ft(t.gain), n[d.mode] = bt[t.mode] ?? 0, n[d.noiseKind] = vt[t.noise] ?? 0, n[d.noiseLevel] = gt(t.noiseLevel), n[d.rampSec] = yt(e), n[d.reserved] = 0, as(wt(t.layers), n), n;
+  return n[d.carrierHz] = pt(t.carrierHz), n[d.beatHz] = mt(t.beatHz), n[d.gain] = ft(t.gain), n[d.mode] = wt[t.mode] ?? 0, n[d.noiseKind] = vt[t.noise] ?? 0, n[d.noiseLevel] = gt(t.noiseLevel), n[d.rampSec] = yt(e), n[d.reserved] = 0, as(bt(t.layers), n), n;
 }
 function Ye(t, e) {
   return {
@@ -1537,9 +1556,9 @@ function Ye(t, e) {
     beatHz: mt(t.beatHz, e == null ? void 0 : e.beatHz),
     noise: t.noise in vt ? t.noise : (e == null ? void 0 : e.noise) ?? "off",
     noiseLevel: gt(t.noiseLevel, e == null ? void 0 : e.noiseLevel),
-    mode: t.mode in bt ? t.mode : (e == null ? void 0 : e.mode) ?? "binaural",
+    mode: t.mode in wt ? t.mode : (e == null ? void 0 : e.mode) ?? "binaural",
     gain: ft(t.gain, e == null ? void 0 : e.gain),
-    ...t.layers !== void 0 ? { layers: wt(t.layers) } : {}
+    ...t.layers !== void 0 ? { layers: bt(t.layers) } : {}
   };
 }
 class ls {
@@ -1643,13 +1662,13 @@ class fs {
     this.ctx = e, await e.audioWorklet.addModule(is);
     const n = await fetch(rs);
     if (!n.ok) throw new Error(`wasm fetch failed: ${n.status}`);
-    const s = await n.arrayBuffer(), i = typeof SharedArrayBuffer < "u" && this._status.crossOriginIsolated, r = i ? new SharedArrayBuffer(os) : void 0, o = i ? hs() : void 0, a = new AudioWorkletNode(e, "zonked-dsp", { numberOfInputs: 0, outputChannelCount: [2] }), u = new Promise((w, P) => {
+    const s = await n.arrayBuffer(), i = typeof SharedArrayBuffer < "u" && this._status.crossOriginIsolated, r = i ? new SharedArrayBuffer(os) : void 0, o = i ? hs() : void 0, a = new AudioWorkletNode(e, "zonked-dsp", { numberOfInputs: 0, outputChannelCount: [2] }), u = new Promise((b, P) => {
       a.port.onmessage = (z) => {
         const C = z.data;
-        C.type === "ready" ? w() : C.type === "error" ? P(new Error(C.message ?? "worklet init failed")) : this.onWorkletMessage(z.data);
+        C.type === "ready" ? b() : C.type === "error" ? P(new Error(C.message ?? "worklet init failed")) : this.onWorkletMessage(z.data);
       };
     });
-    a.port.postMessage({ type: "init", wasm: s, sab: r, tele: o, sampleRate: e.sampleRate }), await u, a.port.onmessage = (w) => this.onWorkletMessage(w.data);
+    a.port.postMessage({ type: "init", wasm: s, sab: r, tele: o, sampleRate: e.sampleRate }), await u, a.port.onmessage = (b) => this.onWorkletMessage(b.data);
     const m = e.createGain();
     m.gain.value = 0;
     const y = e.createGain(), f = e.createWaveShaper();
@@ -1743,7 +1762,7 @@ const Xe = 15, ue = (t) => {
   "seekforward",
   "seekbackward"
 ];
-function ws(t, e) {
+function bs(t, e) {
   switch (t) {
     case "play":
       return () => e.play();
@@ -1801,14 +1820,14 @@ function Qe(t, e, n = navigator) {
     } catch {
     }
 }
-function bs(t, e = navigator) {
+function ws(t, e = navigator) {
   const n = ue(e);
   if (n === void 0) return () => {
   };
   Mt(null, e);
   for (const s of Je)
     try {
-      n.setActionHandler(s, ws(s, t));
+      n.setActionHandler(s, bs(s, t));
     } catch {
     }
   return () => {
@@ -2017,8 +2036,8 @@ function zs(t = globalThis.indexedDB) {
     async saveScript(i, r) {
       const o = await s();
       if (o === null) return e.saveScript(i, r);
-      const a = kt(i, r), u = o.transaction(I, "readwrite"), m = u.objectStore(I), f = (await x(m.getAll())).filter(nt).find((z) => z.name === a), w = { name: a, text: r, updatedAt: Date.now() }, P = await x(m.put(f ? { ...w, id: f.id } : w));
-      return await F(u), { ...w, id: Number(P) };
+      const a = kt(i, r), u = o.transaction(I, "readwrite"), m = u.objectStore(I), f = (await x(m.getAll())).filter(nt).find((z) => z.name === a), b = { name: a, text: r, updatedAt: Date.now() }, P = await x(m.put(f ? { ...b, id: f.id } : b));
+      return await F(u), { ...b, id: Number(P) };
     },
     async listScripts() {
       const i = await s();
@@ -2082,7 +2101,7 @@ const Cs = 5, Ns = (t) => xt(t);
 let ne = null;
 const Ps = () => Ne(ns);
 function Os(t, e, n) {
-  bs({
+  ws({
     // A lock-screen play only resumes after the notice was accepted once.
     play: () => {
       Ps() && !t.snapshot().playing && t.play();
@@ -2106,7 +2125,7 @@ function Os(t, e, n) {
 }
 function de() {
   if (ne !== null) return ne;
-  const t = gs(), e = zs(), n = new An(t, bn, (i) => void e.addLog(i).catch(() => {
+  const t = gs(), e = zs(), n = new An(t, wn, (i) => void e.addLog(i).catch(() => {
   }), { toEvents: Ns }), s = new Ms(void 0, ss());
   return Os(n, t, s), ne = { engine: t, player: n, store: e }, ne;
 }
@@ -2128,7 +2147,7 @@ function Lt() {
   }
   return Ne(Ae);
 }
-function wi(t) {
+function bi(t) {
   Pe(Ae, t);
   for (const e of [...Te])
     try {
@@ -2148,7 +2167,7 @@ function Ds(t) {
 function Fs(t) {
   return typeof EventSource > "u" ? null : new EventSource(t);
 }
-class bi {
+class wi {
   constructor(e) {
     c(this, "es", null);
     c(this, "timer", null);
@@ -2263,20 +2282,20 @@ function Rt(t) {
     for (const e of [...Ce]) e(t);
   }
 }
-function be() {
+function we() {
   ce === "connected" && de().player.crewLost(), Un(), ze = "", Rt("standalone");
 }
 async function ve() {
-  if (He === null || !Lt()) return be();
+  if (He === null || !Lt()) return we();
   try {
     const t = await He.get(Ws), e = ut(t.crew);
-    if (e === null) return be();
+    if (e === null) return we();
     Rt("connected");
     const n = JSON.stringify([e.burnout, e.target, e.why ?? ""]);
     if (n === ze) return;
     ze = n, Kn(de().player, e);
   } catch {
-    be();
+    we();
   }
 }
 function Us(t) {
@@ -2290,7 +2309,7 @@ function ki() {
 }
 export {
   ki as A,
-  bi as B,
+  wi as B,
   Vs as C,
   li as D,
   Js as E,
@@ -2303,7 +2322,7 @@ export {
   ci as L,
   Ee as M,
   mi as N,
-  wi as O,
+  bi as O,
   Se as P,
   yi as Q,
   gi as R,
