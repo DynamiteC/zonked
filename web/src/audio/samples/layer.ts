@@ -8,13 +8,37 @@ import {
 } from './math';
 
 /** Plain result. The layer never throws. */
-export type SampleResult = { ok: true } | { ok: false; error: string };
+export type SampleResult = { ok: true; note?: string } | { ok: false; error: string };
+
+/** Firefox can leave decodeAudioData unsettled for some MP3s. Past this, a made-in-code sound plays instead. */
+export const DECODE_TIMEOUT_MS = 8000;
+const DECODE_TIMEOUT = 'decode timeout';
+
+/** Closest made-in-code sound for each recording. */
+export const SYNTH_FALLBACK: Readonly<Record<string, SynthId>> = {
+  rain: 'rainroof', lightrain: 'rainroof', thunder: 'rainroof', veranda: 'rainroof', window: 'rainroof', storm: 'rainroof', fire: 'rainroof',
+  stream: 'waterfall', ocean: 'waterfall', rapids: 'waterfall', waves: 'waterfall', pebbles: 'waterfall', creek: 'waterfall', trickle: 'waterfall', fountain: 'waterfall',
+  forest: 'wind', birds: 'wind', breeze: 'wind', hum: 'wind',
+  chimes: 'bowl', koshi: 'bowl', gong: 'bowl',
+};
+
+function decodeWithin(ctx: BaseAudioContext, bytes: ArrayBuffer, ms: number): Promise<AudioBuffer> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(DECODE_TIMEOUT)), ms);
+    ctx.decodeAudioData(bytes).then(
+      (b) => { clearTimeout(timer); resolve(b); },
+      (e: unknown) => { clearTimeout(timer); reject(e instanceof Error ? e : new Error(String(e))); },
+    );
+  });
+}
 
 export interface LayerDeps {
   getBus: () => SampleBus | null;
   fetchBytes: (url: string) => Promise<ArrayBuffer>;
   baseUrl: string;
   origin: string;
+  /** Test hook. Defaults to DECODE_TIMEOUT_MS. */
+  decodeTimeoutMs?: number;
 }
 
 interface Active { id: string; src: AudioBufferSourceNode | SynthHandle; gain: GainNode }
@@ -55,10 +79,11 @@ export function createSampleLayer(deps: LayerDeps) {
     if (url === null) return fail('unknown sample');
     try {
       const bytes = await deps.fetchBytes(url);
-      const buf = await bus.ctx.decodeAudioData(bytes);
+      const buf = await decodeWithin(bus.ctx, bytes, deps.decodeTimeoutMs ?? DECODE_TIMEOUT_MS);
       buffers.set(id, buf);
       return { ok: true };
-    } catch {
+    } catch (e) {
+      if (e instanceof Error && e.message === DECODE_TIMEOUT) return fail(DECODE_TIMEOUT);
       return fail('sample unavailable: check the connection or reinstall the app files');
     }
   }
@@ -137,7 +162,13 @@ export function createSampleLayer(deps: LayerDeps) {
       const mine = ++token;
       if (SAMPLES.some((s) => s.id === id && s.kind === 'synth')) return startSynth(bus, id as SynthId, lvl, mine);
       const loaded = await ensureLoaded(bus, id);
-      if (!loaded.ok) return loaded;
+      const alt = SYNTH_FALLBACK[id];
+      if (!loaded.ok && loaded.error === DECODE_TIMEOUT && alt !== undefined && mine === token) {
+        const r = await startSynth(bus, alt, lvl, mine);
+        const name = (SAMPLES.find((x) => x.id === alt)?.label ?? alt).replace(' (synth)', '').toLowerCase();
+        return r.ok ? { ok: true, note: `The recording could not load in this browser, so a made-in-code sound (${name}) plays instead.` } : r;
+      }
+      if (!loaded.ok) return loaded.error === DECODE_TIMEOUT ? fail('sample unavailable: this browser could not decode it') : loaded;
       const buffer = buffers.get(id);
       if (buffer === undefined || mine !== token) return buffer === undefined ? fail('sample unavailable') : { ok: true };
       return begin(bus, id, buffer, lvl, true);

@@ -48,3 +48,6 @@ export interface AudioEngine {
   /** Called whenever status changes. Returns an unsubscribe function. */
   onStatus(listener: (s: EngineStatus) => void): () => void;
 }
+
+/** Engine error text when the browser has no AudioWorklet. The UI maps it to a plain message. */
+export const AUDIO_UNSUPPORTED = 'audio-unsupported';

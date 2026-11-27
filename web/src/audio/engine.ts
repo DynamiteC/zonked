@@ -1,6 +1,7 @@
 import workletUrl from './worklet.ts?worker&url';
 import wasmUrl from '../wasm/dsp_core.wasm?url';
 import type { Voice } from '../sbg/types';
+import { AUDIO_UNSUPPORTED } from './types';
 import type { AudioContextStateLike, AudioEngine, EngineStats, EngineStatus, TelemetryReader } from './types';
 import {
   PARAM_COUNT, PARAM_SAB_BYTES, ParamWriter, clampRamp, clampVoice, voiceToParams,
@@ -83,6 +84,7 @@ export class ZonkedAudioEngine implements AudioEngine {
   private async build(): Promise<void> {
     const ctx = new AudioContext({ latencyHint: 'interactive' });
     this.ctx = ctx;
+    if (typeof AudioWorkletNode === 'undefined' || ctx.audioWorklet === undefined) throw new Error(AUDIO_UNSUPPORTED);
     await ctx.audioWorklet.addModule(workletUrl);
     const res = await fetch(wasmUrl);
     if (!res.ok) throw new Error(`wasm fetch failed: ${res.status}`);

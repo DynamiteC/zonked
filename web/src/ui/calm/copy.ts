@@ -191,6 +191,7 @@ export const CALM = {
   mineRemoveAll: 'Remove all my sounds',
   mineAdded: 'Added. It stays on this device.',
   offline: 'Zonked works offline. Nothing to do.',
+  unsupported: 'This browser cannot play Zonked sound. Try a recent Chrome, Edge, Firefox or Safari.',
   errorAudio: 'Sound could not start. Tap Play to try again.',
   errorStorage: 'We could not save this on your device. Your session still works.',
   loading: 'Loading',

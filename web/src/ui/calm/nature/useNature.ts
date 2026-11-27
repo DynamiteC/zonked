@@ -52,6 +52,7 @@ export function useNature(s: CalmSession): Nature {
       m.setBlend(ref.current.blend);
       const r = await begin(id, ref.current.level);
       if (!r.ok) return void setMessage(r.error);
+      if (r.note !== undefined) setMessage(r.note);
       setActiveNature(id);
       setOn(id);
       const next = { ...ref.current, id };

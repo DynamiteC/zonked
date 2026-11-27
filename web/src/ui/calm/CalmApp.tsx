@@ -26,6 +26,7 @@ import { today, useCalmData } from './useCalmData';
 import { useCalmSession } from './useCalmSession';
 import { useCrewBridge } from './useCrewBridge';
 import { useFeel } from './useFeel';
+import { AUDIO_UNSUPPORTED } from '../../audio/types';
 import { useSprint } from './useSprint';
 import { useFavorite } from './useFavorite';
 import './calm.css';
@@ -86,6 +87,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   return (
     <div className="c-app" data-theme={look.theme} data-contrast={look.highContrast ? 'high' : 'normal'} data-view={view} data-dim={dim ? 'true' : 'false'} data-motion={still ? 'off' : 'on'} data-playing={s.snap.playing ? 'true' : 'false'}>
       <TopBar />
+      <EngineNotice engine={engine} />
       {crew.view.source === 'demo' && <p className="c-badge-sim" role="status" data-testid="demo-badge">{CALM.crewDemoBadge}</p>}
       <main id="c-main" className="c-main" tabIndex={-1}>
         <Suspense fallback={<p className="c-loading" role="status">{CALM.loading}</p>}>
@@ -218,6 +220,18 @@ function useStudioShortcut(onStudio: () => void): void {
     window.addEventListener('keydown', on);
     return () => window.removeEventListener('keydown', on);
   }, [onStudio]);
+}
+
+/** Plain words when the sound engine cannot start. The rest of the app stays usable. */
+function EngineNotice({ engine }: { readonly engine: AudioEngine }): React.JSX.Element | null {
+  const [err, setErr] = useState<string | null>(() => (engine.status.state === 'error' ? (engine.status.error ?? '') : null));
+  useEffect(() => engine.onStatus((st) => setErr(st.state === 'error' ? (st.error ?? '') : null)), [engine]);
+  if (err === null) return null;
+  return (
+    <p className="c-note" role="status" data-testid="engine-notice">
+      {err === AUDIO_UNSUPPORTED ? CALM.unsupported : CALM.errorAudio}
+    </p>
+  );
 }
 
 function TopBar(): React.JSX.Element {
