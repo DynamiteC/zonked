@@ -9,7 +9,7 @@
 .cm-eyes{transform:translateZ(16px)}
 .cm-plates{transform:translateZ(8px)}
 .cm-motes{transform:translateZ(46px);pointer-events:none}
-.cm-eye{transform-box:fill-box;transform-origin:center;animation:cm-blink 5s infinite}
+.cm-eye{transform-box:fill-box;transform-origin:center;transform:scaleY(var(--eye,1));animation:cm-blink 5s infinite}
 .cm-mote{animation:cm-drift 7s ease-in-out infinite;opacity:.8}
 .cm-z{position:absolute;right:6%;top:6%;font-size:1.6em;font-weight:700;color:#5E5668;opacity:0;font-size:calc(var(--cm-s,1) * 28px)}
 .cm-idle .cm-body{animation:cm-float 5s ease-in-out infinite}
@@ -24,7 +24,7 @@
 .cm-still .cm-head{transition:none;transform:none}
 .cm-still.cm-sleepy .cm-eye{transform:scaleY(.3)}
 .cm-still .cm-mote{opacity:.5}
-@keyframes cm-blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
+@keyframes cm-blink{0%,92%,100%{transform:scaleY(var(--eye,1))}95%{transform:scaleY(.08)}}
 @keyframes cm-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3%)}}
 @keyframes cm-bounce{0%,100%{transform:translateY(0) scale(1,1)}30%{transform:translateY(-7%) scale(.98,1.03)}60%{transform:translateY(0) scale(1.03,.97)}}
 @keyframes cm-drift{0%,100%{transform:translate(0,0);opacity:.3}50%{transform:translate(6px,-14px);opacity:.9}}
@@ -32,3 +32,26 @@
 @keyframes cm-zee{0%{opacity:0;transform:translate(0,10px)}30%{opacity:.8}100%{opacity:0;transform:translate(10px,-30px)}}
 @keyframes cm-breathe{0%,100%{transform:scale(1);filter:brightness(1)}40%{transform:scale(1.06);filter:brightness(1.03)}}
 @media (prefers-reduced-motion:reduce){.cm-body,.cm-eye,.cm-mote,.cm-z,.cm-ear-glow{animation:none}.cm-head{transition:none;transform:none}}
+
+.cm-stage{--bp:0;--lv:0;--sw:9s}
+.cm-sway{position:absolute;inset:0;transform-style:preserve-3d;translate:0 calc(-6% - var(--bp) * 5px);scale:.84;transform-origin:50% 50%;animation:cm-sway var(--sw) ease-in-out infinite}
+.cm-bodyl{transform:translateZ(-24px)}
+.cm-chest{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(calc(var(--bp) * -10px)) scale(calc(1 + var(--bp) * .045))}
+.cm-band{transform:translateZ(26px)}
+.cm-ripples{transform:translateZ(-18px);pointer-events:none}
+.cm-ripple{transform-box:fill-box;transform-origin:center;opacity:0;animation:cm-rip 3.2s ease-out infinite}
+.cm-driven .cm-body{animation:none}
+.cm-s-calm{--eye:.55;--sw:10s}
+.cm-s-sleep{--eye:.28;--sw:13s}
+.cm-s-focus{--eye:.82;--sw:11s}
+.cm-s-nature{--eye:.62;--sw:9s}
+.cm-s-sleep .cm-mote{fill:#CCD6FF}
+.cm-s-nature .cm-mote{fill:#D8F2C8}
+.cm-s-focus .cm-mote{fill:#FFD9A0}
+.cm-ear-glow{filter:drop-shadow(0 0 calc(2px + var(--lv) * 10px) rgba(111,214,207,calc(.25 + var(--lv) * .6)))}
+.cm-cue{margin:.4em 0 0;text-align:center;font-size:.95rem;letter-spacing:.04em;opacity:.85}
+@keyframes cm-sway{0%,100%{rotate:-1.6deg}50%{rotate:1.6deg}}
+@keyframes cm-rip{0%{opacity:0;transform:scale(.7)}30%{opacity:calc(var(--lv) * .7)}100%{opacity:0;transform:scale(1.7)}}
+.cm-still .cm-sway,.cm-still .cm-ripple{animation:none}
+.cm-still .cm-ripple{opacity:calc(var(--lv) * .35)}
+@media (prefers-reduced-motion:reduce){.cm-sway,.cm-ripple{animation:none}}

@@ -43,6 +43,7 @@ export function FaceLayer({ id }: IdProps): JSX.Element {
         <circle cx="256" cy="256" r="204" fill={`url(#${id}-gold)`} />
         <circle cx="256" cy="256" r="204" fill={`url(#${id}-shade)`} />
       </g>
+      <path clipPath={`url(#${id}-disc)`} fillRule="evenodd" fill="#C8731F" opacity="0.26" d="M0 0H512V512H0ZM40 238a196 196 0 1 0 392 0a196 196 0 1 0 -392 0Z" />
       <rect x="52" y="52" width="408" height="408" fill="#000" filter={`url(#${id}-grain)`} opacity="0.1" clipPath={`url(#${id}-disc)`} />
       <circle cx="256" cy="256" r="198" fill="none" stroke="#FFF3D0" strokeOpacity="0.55" strokeWidth="5" strokeDasharray="280 1000" strokeLinecap="round" transform="rotate(-150 256 256)" />
     </svg>
