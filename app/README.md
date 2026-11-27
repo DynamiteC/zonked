@@ -8,7 +8,7 @@ Trust the app when you enable it. Kiro Crew asks before an app may register agen
 
 ## Private and local
 
-- No account, no analytics, no remote calls. Sound is made in your browser.
+- No account, no analytics, no network at run time. The engine makes beats, noise, lo-fi and piano in your browser. Seven short CC0 or public domain nature loops (about 1.4 MB, MP3, lazy loaded, precached) play only when chosen, and each is listed in `docs/SAMPLES-LICENSES.md`. Wind, waterfall and flute are synthesized. Your own sound file never leaves your device.
 - The small backend binds to the loopback address only and stores one small memory file in the app data folder.
 - The crew link is optional. The app works fully without it.
 
@@ -21,7 +21,7 @@ Trust the app when you enable it. Kiro Crew asks before an app may register agen
 
 ## Crew agents
 
-Three agents ship with the app: a burnout sentinel, an acoustic sequencer and a DSP verifier. The sentinel can run shell commands through the `execute_bash` tool. The App Kit docs describe no way to restrict shell commands for an app agent. A Kiro CLI `allowedCommands` setting exists, but it is an approval list, not a sandbox, so it is not used. The four allowed commands are limited by the prompt only. For that reason its scheduled check ships switched off. Turn it on only if you accept that. Even when on, an agent can only send a 0-100 score; the backend picks one of four fixed safe sound bands, one step at a time.
+The three agents run only inside a Kiro Crew host. Without one, you can run the app on its own and try the simulated crew feed (real bridge, real app) from the repo README. Three agents ship with the app: a burnout sentinel, an acoustic sequencer and a DSP verifier. The sentinel can run shell commands through the `execute_bash` tool. The App Kit docs describe no way to restrict shell commands for an app agent. A Kiro CLI `allowedCommands` setting exists, but it is an approval list, not a sandbox, so it is not used. The four allowed commands are limited by the prompt only. For that reason its scheduled check ships switched off. Turn it on only if you accept that. Even when on, an agent can only send a 0-100 score; the backend picks one of four fixed safe sound bands, one step at a time.
 
 ## Build
 

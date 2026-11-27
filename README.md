@@ -14,9 +14,22 @@ License: MIT ([`LICENSE`](LICENSE), [`NOTICE`](NOTICE)). Not a medical device.
 > npm run demo:crew
 > ```
 >
-> This builds the bridge, then starts the bridge, a fake crew feed and the app preview. Open <http://localhost:4173/?crew=1>, or switch on "Connect to Kiro Crew on this computer" in Advanced. Watch the badge change to **Crew Synced** and the burnout steps move. The app follows the crew after you press **Follow crew**.
+> This is a simulated crew feed, with the real bridge and the real app. It builds the bridge, then starts the bridge, the simulated feed and the app preview. The three agents run only inside a Kiro Crew host. Without one, you can run this demo, the bridge tests and the app in standalone mode. Open <http://localhost:4173/?crew=1>, or switch on "Connect to Kiro Crew on this computer" in Advanced. Watch the badge change to **Crew Synced** and the burnout steps move. The app follows the crew after you press **Follow crew**.
 >
 > The demo starts the bridge with `--min-transition 5`, which is for demos only. The default minimum transition is 30 s. For a hosted copy of the app, start the bridge with `--origin <site>` so it accepts that origin.
+
+## First sound: how many taps
+
+| Path | Taps |
+|---|---|
+| Returning person | 1 |
+| Skip path | 2 |
+| Normal first run | 5 |
+
+## What is tested and what is not
+
+- Tested: Rust unit tests, web unit tests, browser checks (Playwright, Chromium), offline reload, and the CSP and header harness.
+- Not tested: listening by ear, Firefox, Safari, real phones, and a live Kiro Crew host.
 
 ## Quick start (60 s)
 
@@ -40,7 +53,7 @@ Zonked resurrects two old things. One is SBaGen (1998), the `.sbg` brainwave seq
 
 ## Free, private, for everyone
 
-Zonked is a free sound sanctuary for people easing stress, AI and work burnout, focus strain and sleep trouble. No account, no ads, no tracking, no network. The sound is made on your device and the app works offline.
+Zonked is a free sound sanctuary for people easing stress, AI and work burnout, focus strain and sleep trouble. No account, no ads, no tracking, no network at run time. The engine makes the sound on your device, plus seven bundled nature loops that play only when chosen. The app works offline.
 
 The Sanctuary panel (More menu) holds:
 
@@ -95,7 +108,7 @@ Presets: Deep Focus (40 Hz gamma), Flow State (18 Hz beta), AI Burnout Reset (10
 
 ## The library
 
-Everything below is generated or synthesized in the browser. No audio file is ever loaded or fetched.
+Sound comes from the engine and a few bundled loops. The engine makes beats, noise, lo-fi and piano itself. Seven short CC0 or public domain nature loops (about 1.4 MB, MP3, lazy loaded, precached for offline) ship in the repo and play only when chosen. Each is listed with source and licence in `docs/SAMPLES-LICENSES.md`. Wind, waterfall and flute are synthesized in the browser. A person's own sound file never leaves their device. No network at run time.
 
 ### Templates
 
@@ -176,7 +189,7 @@ node dist/src/cli.js --state ../.zonked-state.json
 
 3. Open the PWA. The badge changes from **Standalone** to **Crew Synced** and the burnout meter follows the score. Stop the bridge and the app keeps playing in standalone mode.
 
-No agents handy? Demo the loop with the fake crew:
+No Kiro Crew host handy? Demo the loop with the simulated crew feed (real bridge, real app, no agents):
 
 ```bash
 node crew-bridge/scripts/fake-crew.mjs --state .zonked-state.json --step-sec 20

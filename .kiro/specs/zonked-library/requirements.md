@@ -38,6 +38,6 @@ Project brief: `brief.md`. Contracts: `contracts.md`. Base spec: `../zonked-core
 
 ## L5 Security and release
 - L5.1 The CSP, COOP, COEP, CORP and other headers shall be unchanged in effect.
-- L5.2 No network request for audio files shall occur; E2E asserts none.
+- L5.2 No network request for audio files to another origin shall occur. Bundled same-origin loops listed in `docs/SAMPLES-LICENSES.md` load only when chosen.
 - L5.3 E2E shall cover audio output with layers, offline reload, timers, shortcuts, and the loopback bridge from the https page.
 - L5.4 Docs, deck and demo video shall be refreshed.

@@ -12,7 +12,7 @@ Design goals, in priority order:
 2. Works fully offline and standalone. The Crew layer is optional.
 3. Deterministic, allocation-free audio. A `no_std` Rust core compiled to a 38,564 byte WASM module (8,631 bytes before the layers).
 4. Untrusted input everywhere: `.sbg` text, state files, bridge messages.
-5. Zero third-party runtime services: no analytics, no remote scripts, no CDN, and no audio files. Every sound is synthesized.
+5. Zero third-party runtime services: no analytics, no remote scripts, no CDN, and no network at run time. The engine synthesizes beats, noise, lo-fi and piano. Seven bundled CC0 or public domain nature loops (about 1.4 MB, lazy loaded, precached) play only when chosen.
 
 Non-goals: medical claims, accounts, cloud sync, mobile native builds.
 
@@ -211,7 +211,7 @@ The mascot is redrawn as `web/public/logo.svg` with separable eye elements. The 
 | Subagents | Build time | Parallel specialists built DSP, bridge, audio layer, parser, UI and docs against the shared contracts |
 | `AGENTS.md` | repo root | The map: layout, hard rules, commands, workflow |
 
-Crew agents exchange data only through files, so no agent needs network access and each step can be inspected, replayed and tested with `crew-bridge/scripts/fake-crew.mjs`.
+Crew agents exchange data only through files, so no agent needs network access and each step can be inspected, replayed and tested with `crew-bridge/scripts/fake-crew.mjs`, a simulated crew feed (real bridge, real app). The three agents run only inside a Kiro Crew host.
 
 ## 8. Offline strategy
 
@@ -229,7 +229,7 @@ Layered, each layer sufficient for its own bound:
 - Bridge: loopback bind, Host allow-list, Origin allow-list, GET/HEAD/OPTIONS only, read-only toward the project.
 - Parsers: hard size and count limits, line-numbered diagnostics, never execute input.
 - DSP: clamps, non-finite sanitizing, limiter, zero panics. The layer bus is soft-limited to 0.6 before the master gain, so layers cannot raise the worst case above 0.935 before the limiter.
-- Library: no audio files and no remote audio. All layer sound is synthesized in the WASM module and the CSP `default-src 'self'` would block a remote media request anyway. Template data is built in code, not fetched. Timer state in localStorage is parsed defensively (version check, clamped minutes) and restores paused.
+- Library: no remote audio. Layer sound is synthesized in the WASM module. Seven bundled nature loops (about 1.4 MB, MP3, same origin, listed in `docs/SAMPLES-LICENSES.md`) load only when chosen. A person's own sound file stays on their device. The CSP `default-src 'self'` would block a remote media request anyway. Template data is built in code, not fetched. Timer state in localStorage is parsed defensively (version check, clamped minutes) and restores paused.
 
 A static audit (`web/scripts/audit-security.mjs`) fails on `eval`, `new Function`, inline scripts, `innerHTML` assignment, external URLs and header drift. The threat model is in `docs/LLD.md`.
 
@@ -426,7 +426,7 @@ The mascot is a button (`.mascot`, with a `.mascot-tilt` wrapper) hosting the SV
 
 ## Sound v2
 
-All sound is still synthesized in `dsp-core`. No audio file is ever fetched.
+Layer sound is synthesized in `dsp-core`. The only audio files are the seven bundled nature loops (about 1.4 MB, lazy loaded, precached, same origin), fetched only when a person picks one. Nothing is fetched from another origin.
 
 - New noise colour: violet (noise kind 4). Its level is capped at half the slider, because violet is bright.
 - Lo-fi chord progressions (7 of them, plus the old static bed), with tape wow and flutter.

@@ -17,7 +17,7 @@ Output: `media/zonked-demo.mp4` and `media/zonked-demo.webm`, 1280x720. The pict
 
 ## Honesty note
 
-The crew beat uses `crew-bridge/scripts/fake-crew.mjs` (run with `--transition-sec 5`) against a bridge started with `--min-transition 5`. Both flags are for demos only. The panes show the real agent definitions and the real command output.
+The crew beat is a simulated crew feed (real bridge, real app). It uses `crew-bridge/scripts/fake-crew.mjs` (run with `--transition-sec 5`) against a bridge started with `--min-transition 5`. Both flags are for demos only. The three agents run only inside a Kiro Crew host. The panes show the real agent definitions and the real command output.
 
 ## Privacy rules for the recording
 
