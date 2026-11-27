@@ -16,6 +16,8 @@ import type { JourneyProgress, Profile } from './data';
 import { SafetyNotice } from './SafetyNotice';
 import { Screens } from './CalmScreens';
 import { InfoCard } from './InfoCard';
+import { useNature } from './nature/useNature';
+import { forgetNature } from './nature/forget';
 import { toDayNumber } from './data';
 import { today, useCalmData } from './useCalmData';
 import { useCalmSession } from './useCalmSession';
@@ -46,6 +48,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   const s = useCalmSession(engine, clock, store);
   const data = useCalmData(s.store, s.snap.playing);
   const crew = useCrewBridge(s.player, bridgeCreate);
+  const nature = useNature(s);
   const [view, setView] = useState<View>('today');
   const [journeyId, setJourneyId] = useState<string | null>(null);
   const active = useRef<ActiveDay | null>(null);
@@ -67,6 +70,8 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   };
   const forget = (): void => {
     clearAll(data.storage);
+    nature.stop();
+    void forgetNature();
     data.setProfile(DEFAULT_PROFILE);
     setView('today');
   };
@@ -93,6 +98,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
               s={s}
               data={data}
               crewInfo={crew}
+              nature={nature}
               still={still}
               fav={fav}
               last={last.template}

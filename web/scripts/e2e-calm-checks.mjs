@@ -92,9 +92,9 @@ export async function runCalmChecks(h) {
       await nav(s.page, 'Today').click();
       const text = await s.page.getByTestId('week-text').innerText();
       h.assert(!CHAIN.test(text), `week text: ${text}`);
-      const dots = await s.page.locator('.c-dots').innerText();
+      const dots = await s.page.locator('.c-main .c-dots').innerText();
       h.assert(!CHAIN.test(dots), `dots text: ${dots}`);
-      h.assert((await s.page.locator('.c-dots li').count()) === 7, 'not 7 dots');
+      h.assert((await s.page.locator('.c-main .c-dots li').count()) === 7, 'not 7 dots');
     } finally {
       await s.context.close();
     }

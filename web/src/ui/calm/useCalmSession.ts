@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { AudioEngine } from '../../audio/types';
 import { Player, realClock } from '../../app/player';
 import type { Clock, PlayerSnapshot } from '../../app/player';
+import { installE2E } from '../../app/e2e';
 import { reportPlaying } from '../../app/swUpdate';
 import { useReducedMotion, safeStorage } from '../../app/useReducedMotion';
 import { useSessionPlumbing } from '../../app/useSessionPlumbing';
@@ -51,6 +52,7 @@ export function useCalmSession(engine: AudioEngine, clock: Clock = realClock, st
   const acceptedNow = useRef(accepted);
 
   useEffect(() => player.subscribe(setSnap), [player]);
+  useEffect(() => void installE2E(window, engine, () => player.snapshot().presetId, player), [engine, player]);
   useEffect(() => reportPlaying(snap.playing), [snap.playing]);
   useEffect(() => () => void player.stop(), [player]);
 

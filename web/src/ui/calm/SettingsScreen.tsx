@@ -38,6 +38,7 @@ export function SettingsScreen({ gentle, reduceMotion, reduced = false, onGentle
         <button type="button" className="c-btn c-link" onClick={onForget}>
           {CALM.forget}
         </button>
+        <p className="c-muted">{CALM.forgetHint}</p>
       </div>
       <p className="c-muted">{CALM.offline}</p>
     </div>

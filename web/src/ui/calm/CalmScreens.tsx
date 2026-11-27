@@ -7,6 +7,7 @@ import { today } from './useCalmData';
 import { toDayNumber } from './data';
 import type { CalmSession } from './useCalmSession';
 import type { CrewInfo } from './useCrewBridge';
+import type { Nature } from './nature/useNature';
 import { Today } from './Today';
 
 const JourneyList = lazy(() => import('./Journeys').then((m) => ({ default: m.JourneyList })));
@@ -14,6 +15,7 @@ const JourneyDetail = lazy(() => import('./Journeys').then((m) => ({ default: m.
 const Library = lazy(() => import('./Library').then((m) => ({ default: m.Library })));
 const PlayerScreen = lazy(() => import('./PlayerScreen').then((m) => ({ default: m.PlayerScreen })));
 const CrewScreen = lazy(() => import('./CrewScreen').then((m) => ({ default: m.CrewScreen })));
+const NatureScreen = lazy(() => import('./nature/NatureScreen').then((m) => ({ default: m.NatureScreen })));
 const SettingsScreen = lazy(() => import('./SettingsScreen').then((m) => ({ default: m.SettingsScreen })));
 
 export interface Handlers {
@@ -32,6 +34,7 @@ interface Props {
   readonly s: CalmSession;
   readonly data: CalmData;
   readonly crewInfo: CrewInfo;
+  readonly nature: Nature;
   readonly still: boolean;
   readonly fav: { readonly on: boolean; readonly toggle: () => void };
   readonly last: Template | null;
@@ -39,7 +42,7 @@ interface Props {
 }
 
 /** Picks the screen for the current view. Only Today is in the first chunk. */
-export function Screens({ view, journeyId, s, data, crewInfo, still, fav, last, handlers: h }: Props): React.JSX.Element {
+export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav, last, handlers: h }: Props): React.JSX.Element {
   switch (view) {
     case 'journeys':
       return <JourneyList progress={data.progress} onOpen={h.openJourney} reduced={still} />;
@@ -58,8 +61,10 @@ export function Screens({ view, journeyId, s, data, crewInfo, still, fav, last, 
       );
     case 'library':
       return <Library store={s.store} logs={data.logs} reduced={still} onNature={() => h.go('nature')} onPlay={h.play} onPlayMix={h.onMix} />;
+    case 'nature':
+      return <NatureScreen nature={nature} reduced={still} onBack={() => h.go('library')} />;
     case 'player':
-      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} />;
+      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} />;
     case 'crew':
       return <CrewScreen crew={crewInfo} burnout={s.snap.burnout} />;
     case 'settings':

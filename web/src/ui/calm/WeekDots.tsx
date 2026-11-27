@@ -38,7 +38,7 @@ export function WeekDots({ week, hasHistory = true, joinedToday = false, compact
           );
         })}
       </ul>
-      <p className="c-muted" data-testid="week-text">
+      <p className="c-muted" data-testid={compact ? undefined : 'week-text'}>
         {weekText(week, hasHistory, joined)}
       </p>
     </div>

@@ -200,3 +200,16 @@
   .c-tabbar { padding-bottom: 8px; }
   .c-nav { min-height: 56px; }
 }
+
+/* Nature and My sounds */
+.c-slider { display: grid; gap: 4px; margin: 12px 0; }
+.c-slider label { font-weight: 600; }
+.c-slider input[type="range"] { width: 100%; min-height: 44px; accent-color: var(--c-teal); }
+.c-nature-tiles li { display: grid; gap: 4px; align-content: start; }
+.c-credit { margin: 0; padding: 12px; border-radius: 12px; background: var(--c-surface); border: 1px solid var(--c-line); font-size: 0.875rem; }
+.c-credit dt { color: var(--c-soft); }
+.c-credit dd { margin: 0 0 6px; }
+.c-nature-quick { text-align: left; }
+.c-own-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+.c-own-row .c-row-card { min-height: 56px; }
+@media (min-width: 900px) { .c-nature-tiles { grid-template-columns: repeat(3, 1fr); } }

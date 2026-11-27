@@ -4,6 +4,9 @@ import type { Player, PlayerSnapshot } from '../../app/player';
 import { SOUND_MENU } from '../../catalog/soundMenu';
 import { CALM, EVIDENCE } from './copy';
 import { TimerChips } from './TimerChips';
+import { NatureControls } from './nature/NatureScreen';
+import { loadPrefs } from './nature/prefs';
+import type { Nature } from './nature/useNature';
 
 const CalmMascot = lazy(() => import('./mascot').then((m) => ({ default: m.CalmMascot })));
 
@@ -40,9 +43,10 @@ interface Props {
   readonly favorite: boolean;
   readonly onToggle: () => void;
   readonly onFavorite: () => void;
+  readonly nature: Nature;
 }
 
-export function PlayerScreen({ player, snap, still, favorite, onToggle, onFavorite }: Props): React.JSX.Element {
+export function PlayerScreen({ player, snap, still, favorite, onToggle, onFavorite, nature }: Props): React.JSX.Element {
   const [why, setWhy] = useState(false);
   const sound = SOUND_MENU.find((s) => s.templateId === snap.templateId);
   const evidence = sound?.evidence ?? 'mixed';
@@ -60,6 +64,7 @@ export function PlayerScreen({ player, snap, still, favorite, onToggle, onFavori
         </button>
       </div>
       <TimerChips timer={snap.timer} player={player} />
+      <NatureQuick nature={nature} />
       <p className="c-muted">{CALM.volumeCapped}</p>
       <section className="c-why">
         <button type="button" className="c-btn c-link" aria-expanded={why} aria-controls="c-why-box" onClick={() => setWhy((v) => !v)}>
@@ -71,5 +76,19 @@ export function PlayerScreen({ player, snap, still, favorite, onToggle, onFavori
         </div>
       </section>
     </div>
+  );
+}
+
+/** One tap adds the remembered nature sound (rain at first). Blend and level show once it is on. */
+function NatureQuick({ nature }: { readonly nature: Nature }): React.JSX.Element {
+  const remembered = nature.prefs.id ?? loadPrefs().id ?? 'rain';
+  return (
+    <section className="c-card c-nature-quick" aria-label={CALM.natureHead}>
+      <button type="button" className="c-btn" data-testid="player-nature" aria-pressed={nature.on !== null} onClick={() => (nature.on === null ? nature.start(remembered) : nature.stop())}>
+        {nature.on === null ? `${CALM.natureAdd}: ${remembered.startsWith('own:') ? CALM.mineTitle : remembered}` : CALM.natureOff}
+      </button>
+      {nature.on !== null && <NatureControls nature={nature} />}
+      <p className="c-status" role="status">{nature.message}</p>
+    </section>
   );
 }
