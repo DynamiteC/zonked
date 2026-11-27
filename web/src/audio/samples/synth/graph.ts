@@ -5,9 +5,13 @@ import {
   ATTACK_SEC, BREATH, HARMONIC, RELEASE_SEC, makePlanner, noteLength,
 } from './flute';
 import type { Note } from './flute';
-import { BED_SECONDS, renderBed } from './render';
+import { BED_SECONDS } from './render';
+import { renderAnyBed } from './beds';
+import type { AnyBedKind } from './beds';
+import { strikeHandle } from './strikes-graph';
+import type { StrikeKind } from './strikes';
 
-export type SynthId = 'wind' | 'waterfall' | 'flute';
+export type SynthId = AnyBedKind | StrikeKind | 'flute';
 
 export interface SynthHandle {
   connect(dest: AudioNode): unknown;
@@ -37,11 +41,11 @@ function loopSource(ctx: BaseAudioContext, data: Float32Array): AudioBufferSourc
   return src;
 }
 
-function bedHandle(ctx: BaseAudioContext, kind: 'wind' | 'waterfall', seed: number): SynthHandle {
+function bedHandle(ctx: BaseAudioContext, kind: AnyBedKind, seed: number): SynthHandle {
   const mix = ctx.createGain();
   mix.gain.value = BED_MIX;
   const sources = BED_SECONDS.map((secs, i) => {
-    const src = loopSource(ctx, renderBed(kind, ctx.sampleRate, seed + i * 7919, secs));
+    const src = loopSource(ctx, renderAnyBed(kind, ctx.sampleRate, seed + i * 7919, secs));
     src.connect(mix);
     src.start();
     return src;
@@ -127,5 +131,7 @@ function fluteHandle(ctx: BaseAudioContext, seed: number): SynthHandle {
 
 export function buildSynth(ctx: BaseAudioContext, id: SynthId, seed: number): SynthHandle {
   const s = Math.trunc(clampFinite(seed, 0, 2 ** 31, 1));
-  return id === 'flute' ? fluteHandle(ctx, s) : bedHandle(ctx, id, s);
+  if (id === 'flute') return fluteHandle(ctx, s);
+  if (id === 'bowl' || id === 'softchimes') return strikeHandle(ctx, id, s);
+  return bedHandle(ctx, id, s);
 }

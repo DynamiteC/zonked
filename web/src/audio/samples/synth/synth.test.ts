@@ -115,7 +115,7 @@ describe('flute', () => {
 describe('catalog', () => {
   it('lists the synths next to the loops with plain names', () => {
     const synth = SAMPLES.filter((s) => s.kind === 'synth');
-    expect(synth.map((s) => s.id)).toEqual(['wind', 'waterfall', 'flute']);
+    expect(synth.map((s) => s.id)).toEqual(['wind', 'waterfall', 'flute', 'rainroof', 'bowl', 'softchimes', 'crackle', 'brown', 'swell', 'crickets']);
     expect(synth.find((s) => s.id === 'flute')?.label).toBe('Soft flute (synth)');
     for (const s of synth) expect((s.note ?? '').length).toBeGreaterThan(5);
   });

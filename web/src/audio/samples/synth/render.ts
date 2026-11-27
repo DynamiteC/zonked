@@ -11,14 +11,14 @@ export const BED_PEAK = 0.25;
 const SEAM_SEC = 0.25;
 
 /** Pick `count` frequencies k/T inside [lo, hi] Hz so a sine fits a whole number of times in T seconds. */
-function loopFreqs(seconds: number, lo: number, hi: number, count: number, rng: () => number): number[] {
+export function loopFreqs(seconds: number, lo: number, hi: number, count: number, rng: () => number): number[] {
   const kMin = Math.max(1, Math.ceil(lo * seconds));
   const kMax = Math.max(kMin, Math.floor(hi * seconds));
   return Array.from({ length: count }, () => (kMin + Math.floor(rng() * (kMax - kMin + 1))) / seconds);
 }
 
 /** Smooth positive curve built from slow sines. Output in [floor, 1]. */
-function slowCurve(n: number, sr: number, freqs: number[], rng: () => number, floor: number): Float32Array {
+export function slowCurve(n: number, sr: number, freqs: number[], rng: () => number, floor: number): Float32Array {
   const phases = freqs.map(() => rng() * 2 * Math.PI);
   const out = new Float32Array(n);
   for (let i = 0; i < n; i++) {

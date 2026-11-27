@@ -18,8 +18,14 @@ export default defineConfig({
       injectRegister: false,
       includeAssets: ['favicon.svg', 'logo.svg', 'apple-touch-icon.png'],
       workbox: {
-        // samples/*.json are the nature loops (about 1.4 MB). They are fetched lazily but precached for offline play.
-        globPatterns: ['**/*.{html,js,css,wasm,svg,png,webmanifest,ico,woff2}', 'samples/*.mp3.json'],
+        // Only the 6 starter loops are precached (about 1.2 MB). The other loops are cached on first play by the
+        // runtime rule below, same origin and samples path only, so first load and install size stay small.
+        globPatterns: ['**/*.{html,js,css,wasm,svg,png,webmanifest,ico,woff2}', 'samples/{rain,stream,ocean,forest,birds,breeze}.mp3.json'],
+        runtimeCaching: [{
+          urlPattern: ({ url, sameOrigin }) => sameOrigin && /^\/samples\/[a-z]+\.mp3\.json$/.test(url.pathname),
+          handler: 'CacheFirst',
+          options: { cacheName: 'zonked-samples', cacheableResponse: { statuses: [200] }, expiration: { maxEntries: 40 } },
+        }],
         maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
