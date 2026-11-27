@@ -1,6 +1,6 @@
 import { useId, useRef, type CSSProperties, type JSX } from 'react';
 import './mascot.css';
-import { Defs, EarsLayer, EyesLayer, FaceLayer, MotesLayer, PlatesLayer, ShadowLayer } from './layers';
+import { Defs, EyesLayer, FaceLayer, MotesLayer, PlatesLayer, ShadowLayer } from './layers';
 import { BandLayer, BodyLayer, RippleLayer } from './layersExtra';
 import type { CalmMascotProps } from './types';
 import { useParallax } from './useParallax';
@@ -37,7 +37,6 @@ export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = '
         <div className="cm-sway">
           <div className="cm-head">
             <RippleLayer />
-            <EarsLayer id={id} />
             <FaceLayer id={id} />
             <EyesLayer id={id} />
             <PlatesLayer id={id} mood={mood} />

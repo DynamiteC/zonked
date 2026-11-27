@@ -69,14 +69,18 @@ const STARS: ReadonlyArray<readonly [number, number, number, number]> = [
 ];
 
 /** Night sky with slow stars, a moon with a faint halo and a dark ridge. */
-export function SleepScene(): JSX.Element {
+export function SleepScene({ id }: SceneProps): JSX.Element {
   return (
     <>
+      <defs>
+        <radialGradient id={`${id}-mg`} cx="0.5" cy="0.5" r="0.5"><stop offset="0" stopColor="var(--e)" stopOpacity="0.55" /><stop offset="1" stopColor="var(--e)" stopOpacity="0" /></radialGradient>
+        <radialGradient id={`${id}-md`} cx="0.38" cy="0.34" r="0.8"><stop offset="0" stopColor="#FFFFFF" stopOpacity="0.9" /><stop offset="0.45" stopColor="var(--e)" /><stop offset="1" stopColor="var(--e)" stopOpacity="0.7" /></radialGradient>
+      </defs>
       <rect width="320" height="200" className="va" />
       <rect y="90" width="320" height="110" className="vb" opacity="0.5" />
-      <circle className="ve vl-halo" cx="232" cy="62" r="38" opacity="0.12" />
-      <circle className="ve" cx="232" cy="62" r="18" />
-      <circle className="va" cx="239" cy="58" r="15" opacity="0.28" />
+      <circle className="vl-halo" cx="232" cy="62" r="56" fill={`url(#${id}-mg)`} />
+      <circle cx="232" cy="62" r="19" fill={`url(#${id}-md)`} />
+      <g className="va" opacity="0.14"><circle cx="226" cy="68" r="4" /><circle cx="238" cy="56" r="3" /><circle cx="233" cy="72" r="2" /></g>
       {STARS.map(([x, y, r, s], i) => (
         <circle key={`${x}-${y}`} className={`vf ${i % 2 ? 'vl-twinkle' : 'vl-twinkle2'}`} style={d(s)} cx={x} cy={y} r={r} />
       ))}

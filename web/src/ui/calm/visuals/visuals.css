@@ -29,7 +29,7 @@
 @keyframes vl-cloud{0%,100%{transform:translateX(-4px)}50%{transform:translateX(4px)}}
 @keyframes vl-sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
 @keyframes vl-twinkle{0%,100%{opacity:.35}50%{opacity:1}}
-@keyframes vl-halo{0%,100%{opacity:.1}50%{opacity:.16}}
+@keyframes vl-halo{0%,100%{opacity:.82}50%{opacity:.9}}
 @keyframes vl-wglow{0%,100%{opacity:.92}50%{opacity:1}}
 @keyframes vl-shimmer{0%,100%{opacity:.15}50%{opacity:.55}}
 @keyframes vl-fall{0%,100%{transform:translateY(0px);opacity:0}15%{opacity:.5}85%{opacity:.5}99%{transform:translateY(40px);opacity:0}}

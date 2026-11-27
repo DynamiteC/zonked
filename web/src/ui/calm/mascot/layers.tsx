@@ -17,24 +17,6 @@ export function ShadowLayer(): JSX.Element {
   );
 }
 
-/** Ear transducers, behind the face. */
-export function EarsLayer({ id }: IdProps): JSX.Element {
-  return (
-    <svg className="cm-layer cm-ears" viewBox={VB} aria-hidden="true" focusable="false">
-      <g className="cm-ear-glow" fill={`url(#${id}-gold)`} stroke="#9A5416" strokeWidth="5">
-        <rect x="14" y="206" width="52" height="100" rx="24" />
-        <rect x="446" y="206" width="52" height="100" rx="24" />
-      </g>
-      <g fill={INK} opacity="0.7">
-        <rect x="32" y="236" width="16" height="10" rx="5" />
-        <rect x="32" y="266" width="16" height="10" rx="5" />
-        <rect x="464" y="236" width="16" height="10" rx="5" />
-        <rect x="464" y="266" width="16" height="10" rx="5" />
-      </g>
-    </svg>
-  );
-}
-
 /** The round ochre body: painted gradient, soft watercolor edge, light rim, faint grain. */
 export function FaceLayer({ id }: IdProps): JSX.Element {
   return (

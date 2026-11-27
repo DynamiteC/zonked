@@ -4,7 +4,6 @@
 .cm-head{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .25s ease-out;filter:drop-shadow(0 6px 10px rgba(42,36,51,.25))}
 .cm-layer{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .cm-shadow{transform:translateZ(-40px)}
-.cm-ears{transform:translateZ(-12px)}
 .cm-face{transform:translateZ(0)}
 .cm-eyes{transform:translateZ(16px)}
 .cm-plates{transform:translateZ(8px)}
