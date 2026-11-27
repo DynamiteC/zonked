@@ -4,7 +4,15 @@
   "displayName": "Zonked",
   "description": "Acoustic recovery companion: binaural beats, noise and lo-fi layers made by a no_std Rust WASM engine, with hearing safety limits built in.",
   "author": "Zonked contributors",
+  "license": "MIT",
+  "minKiroCrewVersion": "0.13.0",
   "iconPath": "assets/icon.png",
+  "heroImage": "assets/hero.png",
+  "screenshots": [
+    "assets/screenshots/screenshot-today.png",
+    "assets/screenshots/screenshot-player.png",
+    "assets/screenshots/screenshot-safety.png"
+  ],
   "tags": [
     "audio",
     "focus",

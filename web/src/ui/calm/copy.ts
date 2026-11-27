@@ -30,6 +30,7 @@ export const CALM = {
     'Zonked fades in slowly.',
     'Zonked is not a medical device.',
     'Stop any time.',
+    'Stop if anything feels uncomfortable.',
   ],
   safetyAccept: 'I understand, start',
   notMedical: 'Zonked is not a medical device.',
@@ -48,13 +49,14 @@ export const CALM = {
   emptyFavorites: 'Tap the heart on any sound to keep it here.',
   emptyMixes: 'Make a mix in the player, then save it here.',
   emptyRecent: 'Your recent sessions show up here.',
-  streakReturn: 'Welcome back. Pick up where you like.',
+  welcomeBack: 'Welcome back. Pick up where you like.',
+  firstWeek: 'Your week starts here. Rest days count too.',
   restCount: 'Rest days count too.',
   timerChips: ['15 min', '30 min', '60 min', 'Until I stop', 'Sleep fade'],
   breathe: 'Breathe in, breathe out',
   breatheIn: 'Breathe in',
   breatheOut: 'Breathe out',
-  whyTitle: 'Why this works',
+  whyTitle: 'What the research says',
   whyBody:
     'Some small studies suggest slow beats may help people relax. Results vary and may not happen for you. Zonked is not a medical device.',
   volumeCapped: 'Volume is capped for your safety.',
@@ -120,7 +122,7 @@ export const FEELINGS: readonly { readonly id: string; readonly label: string }[
 ];
 
 export const EVIDENCE: Readonly<Record<string, string>> = {
-  strong: 'Good studies agree.',
+  strong: 'Several studies exist.',
   mixed: 'Studies disagree.',
   preliminary: 'Early, small studies.',
   limited: 'Very little research.',

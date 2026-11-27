@@ -63,7 +63,7 @@ export const JOURNEYS: readonly Journey[] = Object.freeze([
   }),
   make({
     id: 'easier-sleep',
-    title: '14 Nights to Easier Sleep',
+    title: '14 Nights of Wind-Down Sound',
     blurb: '14 nights of slow sound for winding down. Rest nights included.',
     situation: 'cant-sleep',
     vibe: 'dreamy',

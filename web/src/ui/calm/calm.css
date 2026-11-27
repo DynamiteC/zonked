@@ -146,8 +146,8 @@
 
 @media (min-width: 900px) {
   .c-app { padding-left: 200px; }
-  .c-main { max-width: 900px; padding: 8px 40px 100px; }
-  .c-tabbar { top: 0; bottom: 0; right: auto; width: 200px; flex-direction: column; justify-content: flex-start; gap: 6px; padding: 80px 12px; border-top: 0; border-right: 1px solid var(--c-line); }
+  .c-main { max-width: 900px; padding: 8px 40px 150px; }
+  .c-tabbar { top: 0; bottom: 0; right: auto; width: 200px; background: color-mix(in srgb, var(--c-surface) 55%, transparent); flex-direction: column; justify-content: flex-start; gap: 6px; padding: 80px 12px; border-top: 0; border-right: 1px solid var(--c-line); }
   .c-nav { flex: none; text-align: left; padding: 0 16px; font-size: 1rem; min-height: 48px; }
   .c-mini { left: 212px; right: auto; bottom: 16px; width: 360px; }
   .c-list { grid-template-columns: 1fr 1fr; }

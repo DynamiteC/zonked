@@ -4,6 +4,7 @@ import type { Template } from '../../catalog/types';
 import type { View } from './CalmChrome';
 import type { CalmData } from './useCalmData';
 import { today } from './useCalmData';
+import { toDayNumber } from './data';
 import type { CalmSession } from './useCalmSession';
 import type { CrewInfo } from './useCrewBridge';
 import { Today } from './Today';
@@ -78,6 +79,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, still, fav, handle
           week={data.week}
           progress={data.progress}
           reduced={still}
+          hasHistory={data.logs.some((l) => toDayNumber(l.startedAt) < today())}
           crewConnected={crewInfo.enabled && crewInfo.status === 'connected'}
           onPlay={h.play}
           onOpenJourney={h.openJourney}

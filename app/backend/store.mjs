@@ -13,6 +13,8 @@ export function resolveDataDir(explicit) {
   return resolve(dirname(fileURLToPath(import.meta.url)), '..', 'data');
 }
 
+let tmpCounter = 0;
+
 export function createStore(dataDir, clock = () => Math.floor(Date.now() / 1000)) {
   const file = join(dataDir, FILE);
   const read = () => {
@@ -25,7 +27,7 @@ export function createStore(dataDir, clock = () => Math.floor(Date.now() / 1000)
   };
   const write = (memory) => {
     mkdirSync(dataDir, { recursive: true });
-    const tmp = `${file}.tmp`;
+    const tmp = `${file}.${process.pid}.${tmpCounter++}.tmp`;
     writeFileSync(tmp, JSON.stringify(memory), { mode: 0o600 });
     renameSync(tmp, file);
   };

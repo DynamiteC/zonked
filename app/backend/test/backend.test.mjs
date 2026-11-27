@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, readFileSync, existsSync, readdirSync } from 'node:fs';
 import { createHash, createHmac } from 'node:crypto';
 import http from 'node:http';
 import { tmpdir } from 'node:os';
@@ -199,4 +199,39 @@ test('proxy verifier: empty secret and stale timestamp are refused', () => {
   assert.equal(v({ method: 'GET', target: '/', body: Buffer.alloc(0), signature: '1:ab', nonce: 'a'.repeat(32) }), false);
   const w = createProxyV2Verifier('s');
   assert.equal(w({ method: 'GET', target: '/', body: Buffer.alloc(0), signature: '1:ab', nonce: 'a'.repeat(32), now: 1000 }), false);
+});
+
+test('first report starts from flow and moves one band only', () => {
+  const next = advance(emptyMemory(), { at: 1, score: 95, signals: {}, degraded: false }, 100);
+  assert.equal(next.level, 'recovery');
+  assert.equal(advance(emptyMemory(), { at: 1, score: 10, signals: {}, degraded: false }, 100).level, 'focus');
+});
+
+test('targetFor: NaN transition falls back to the floor', () => {
+  assert.equal(targetFor('flow', NaN).transitionSec, 30);
+});
+
+test('proxy verifier: a full nonce cache evicts the oldest instead of locking out', () => {
+  const secret = 's';
+  const v = createProxyV2Verifier(secret, { maxEntries: 2 });
+  const now = 1000;
+  const send = (n) => {
+    const nonce = n.toString(16).padStart(32, '0');
+    const bh = createHash('sha256').update(Buffer.alloc(0)).digest('hex');
+    const sig = createHmac('sha256', secret).update(`v2:${now}:${nonce}:GET:/x:${bh}`).digest('hex');
+    return v({ method: 'GET', target: '/x', body: Buffer.alloc(0), signature: `${now}:${sig}`, nonce, now });
+  };
+  assert.equal(send(1), true);
+  assert.equal(send(2), true);
+  assert.equal(send(3), true);
+  assert.equal(send(3), false);
+  assert.equal(send(1), true);
+});
+
+test('store: temp files get unique names and none are left behind', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'zk-be-'));
+  const store = createStore(dir, () => 5);
+  store.report(rep());
+  store.report(rep());
+  assert.deepEqual(readdirSync(dir), ['crew-memory.json']);
 });

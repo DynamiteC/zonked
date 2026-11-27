@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { AudioEngine, EngineStatus } from '../../audio/types';
 import { MOTION_KEY, SAFETY_KEY } from '../../storage/prefs';
 import { createStore } from '../../storage/db';
-import { createLocalStorage, saveProfile, weekStats } from './data';
+import { JOURNEYS, createLocalStorage, saveProfile, weekStats } from './data';
 import type { Profile } from './data';
 import { MODE_KEY, readMode } from './mode';
 import { ModeRoot } from './ModeRoot';
@@ -116,8 +116,16 @@ describe('week display', () => {
     expect(document.body.textContent).not.toMatch(/lost|missed|broke|streak/i);
   });
 
-  it('a quiet week says welcome back', () => {
-    expect(weekText(weekStats([], 20_000))).toBe(CALM.streakReturn);
+  it('a quiet week says welcome back only when there is history', () => {
+    expect(weekText(weekStats([], 20_000))).toBe(CALM.welcomeBack);
+    expect(weekText(weekStats([], 20_000), false)).toBe(CALM.firstWeek);
+    expect(CALM.firstWeek).not.toMatch(/welcome back/i);
+  });
+
+  it('safety lines tell people to stop if uncomfortable; research heading is neutral', () => {
+    expect(CALM.safetyLines).toContain('Stop if anything feels uncomfortable.');
+    expect(CALM.whyTitle).toBe('What the research says');
+    expect(JSON.stringify(JOURNEYS)).not.toMatch(/Easier Sleep/);
   });
 
   it('greets by the clock without a name', () => {

@@ -19,7 +19,9 @@ export function createProxyV2Verifier(secret, { maxEntries = 4096 } = {}) {
     const given = Buffer.from(signature.slice(sep + 1), 'utf8');
     if (given.length !== expected.length || !timingSafeEqual(given, expected)) return false;
     for (const [key, expiry] of seen) if (expiry < now) seen.delete(key);
-    if (seen.has(nonce) || seen.size >= maxEntries) return false;
+    if (seen.has(nonce)) return false;
+    // Evict the oldest nonce (Map keeps insertion order) instead of locking everyone out.
+    if (seen.size >= maxEntries) seen.delete(seen.keys().next().value);
     seen.set(nonce, Number(ts) + MAX_SKEW_SECONDS);
     return true;
   };

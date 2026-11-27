@@ -16,6 +16,8 @@ interface Props {
   readonly progress: ProgressMap;
   readonly reduced: boolean;
   readonly crewConnected: boolean;
+  /** True once at least one session is logged; gates the welcome-back line. */
+  readonly hasHistory?: boolean;
   readonly now?: () => Date;
   readonly onPlay: (t: Template) => void;
   readonly onOpenJourney: (id: string) => void;
@@ -27,7 +29,7 @@ function dayLine(progress: ProgressMap, id: string, total: number): string {
   return done === 0 ? 'Not started' : `Day ${Math.min(total, done + 1)} of ${total}`;
 }
 
-export function Today({ profile, week, progress, reduced, crewConnected, now = realNow, onPlay, onOpenJourney, onGo }: Props): React.JSX.Element {
+export function Today({ profile, week, progress, reduced, crewConnected, hasHistory = true, now = realNow, onPlay, onOpenJourney, onGo }: Props): React.JSX.Element {
   const [skip, setSkip] = useState(0);
   const recs = useMemo(() => recommendTemplates(profileToRecommendation(profile, now()), 5), [profile, now]);
   const pick = recs[skip % Math.max(1, recs.length)];
@@ -35,7 +37,7 @@ export function Today({ profile, week, progress, reduced, crewConnected, now = r
     <div className="c-today">
       <div className="c-hero c-hero-sm">
         <Suspense fallback={null}>
-          <CalmMascot mood="idle" size={96} reducedMotion={reduced} />
+          <CalmMascot mood="idle" size={128} reducedMotion={reduced} />
         </Suspense>
       </div>
       <h1 className="c-greet" data-testid="greeting">
@@ -58,7 +60,7 @@ export function Today({ profile, week, progress, reduced, crewConnected, now = r
       )}
       <section className="c-card" aria-labelledby="c-goal-h">
         <h2 id="c-goal-h" className="c-h3">{`Your goal: ${GOAL_LABEL[profile.goal]}`}</h2>
-        <WeekDots week={week} />
+        <WeekDots week={week} hasHistory={hasHistory} />
       </section>
       <section aria-labelledby="c-for-h">
         <h2 id="c-for-h" className="c-h3">

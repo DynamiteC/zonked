@@ -82,6 +82,11 @@ export function Onboarding({ playing, reduced, onAccept, onPreview, onStop, onFi
       )}
       {step === 4 && (
         <>
+          <div className="c-hero">
+            <Suspense fallback={null}>
+              <CalmMascot mood="idle" size={120} reducedMotion={reduced} />
+            </Suspense>
+          </div>
           <SafetyNotice
             onAccept={() => {
               onAccept();

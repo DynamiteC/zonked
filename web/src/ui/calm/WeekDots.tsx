@@ -5,14 +5,14 @@ const LETTERS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'] as const;
 const NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const;
 const WORD: Readonly<Record<DayState, string>> = { listened: 'listened', rest: 'rest day', today: 'today', upcoming: 'coming up' };
 
-export function weekText(w: WeekStats): string {
-  if (w.quietWeek) return CALM.streakReturn;
+export function weekText(w: WeekStats, hasHistory = true): string {
+  if (w.quietWeek) return hasHistory ? CALM.welcomeBack : CALM.firstWeek;
   const n = w.daysListened;
   return `${n} ${n === 1 ? 'day' : 'days'} this week. ${CALM.restCount}`;
 }
 
 /** Seven days, Monday first. State shows in a word for screen readers and in the dot shape. Never a chain. */
-export function WeekDots({ week }: { readonly week: WeekStats }): React.JSX.Element {
+export function WeekDots({ week, hasHistory = true }: { readonly week: WeekStats; readonly hasHistory?: boolean }): React.JSX.Element {
   return (
     <div className="c-week">
       <ul className="c-dots" aria-label="This week">
@@ -26,7 +26,7 @@ export function WeekDots({ week }: { readonly week: WeekStats }): React.JSX.Elem
         ))}
       </ul>
       <p className="c-muted" data-testid="week-text">
-        {weekText(week)}
+        {weekText(week, hasHistory)}
       </p>
     </div>
   );

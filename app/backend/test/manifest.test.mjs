@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { TOOL_DEFS } from '../tools.mjs';
@@ -53,4 +53,12 @@ test('stdio server answers a real tools/list over a pipe', async () => {
   });
   child.kill();
   assert.equal(reply.result.tools.length, 2);
+});
+
+test('store listing: license, version floor, hero, screenshots and built bundle exist', () => {
+  assert.equal(manifest.license, 'MIT');
+  assert.match(manifest.minKiroCrewVersion, /^\d+\.\d+\.\d+$/);
+  for (const p of [manifest.heroImage, ...manifest.screenshots, `ui/${manifest.ui.entry}`, `ui/${manifest.contributes.panelTabs[0].entry}`, 'README.md']) {
+    assert.equal(existsSync(`${root}${p}`), true, p);
+  }
 });

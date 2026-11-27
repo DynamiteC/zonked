@@ -101,7 +101,7 @@ export function targetFor(level, transitionSec) {
     beatHz: clamp(band.beatHz, ...SAFETY.beat),
     carrierHz: clamp(band.carrierHz, ...SAFETY.carrier),
     gain: 0.5,
-    transitionSec: clamp(transitionSec, MIN_TRANSITION_SEC, MAX_TRANSITION_SEC),
+    transitionSec: clamp(Number.isFinite(transitionSec) ? transitionSec : MIN_TRANSITION_SEC, MIN_TRANSITION_SEC, MAX_TRANSITION_SEC),
     breathe: band.breathe,
   };
 }
@@ -116,7 +116,7 @@ export const emptyMemory = () => ({ version: VERSION, level: null, pending: null
 export function advance(memory, intensity, now) {
   const wanted = levelForScore(intensity.score);
   const last = { at: intensity.at, score: intensity.score, signals: intensity.signals, degraded: intensity.degraded };
-  if (memory.level === null) return { ...memory, level: wanted, changedAt: now, last, pending: null, pendingCount: 0, transitionSec: 60 };
+  if (memory.level === null) return { ...memory, level: stepToward('flow', wanted), changedAt: now, last, pending: null, pendingCount: 0, transitionSec: 60 };
   if (wanted === memory.level) return { ...memory, last, pending: null, pendingCount: 0 };
   const count = memory.pending === wanted ? memory.pendingCount + 1 : 1;
   const next = { ...memory, last, pending: wanted, pendingCount: Math.min(count, 1000) };
