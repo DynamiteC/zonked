@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import type { Plugin } from 'vite';
 
 // The audio engine, the AudioWorklet and dsp_core.wasm are imported straight from
@@ -48,9 +49,34 @@ function swapSessionHook(): Plugin {
   };
 }
 
+// Lib mode also inlines the fonts into the css as data: URIs. This plugin moves them out into
+// real .woff2 files (the dashboard serves .woff2) and points the css at them.
+function fontsAsFiles(): Plugin {
+  return {
+    name: 'zonked-fonts-as-files',
+    enforce: 'post',
+    generateBundle: {
+      order: 'post',
+      handler(_o, bundle) {
+      for (const item of Object.values(bundle)) {
+        if (item.type !== 'asset' || !item.fileName.endsWith('.css')) continue;
+        let css = String(item.source);
+        css = css.replace(/url\(["']?data:font\/woff2;base64,([A-Za-z0-9+/=]+)["']?\)/g, (_m, b64: string) => {
+          const bytes = Buffer.from(b64, 'base64');
+          const name = `assets/atkinson-${createHash('sha256').update(bytes).digest('hex').slice(0, 8)}.woff2`;
+          this.emitFile({ type: 'asset', fileName: name, source: bytes });
+          return `url("./${name}")`;
+        });
+        item.source = css;
+      }
+      },
+    },
+  };
+}
+
 export default defineConfig({
   base: './',
-  plugins: [wasmAsFile(), swapSessionHook(), react()],
+  plugins: [wasmAsFile(), swapSessionHook(), fontsAsFiles(), react()],
   resolve: { alias: { '@zonked-web': webSrc } },
   server: { fs: { allow: ['..', '../..'] } },
   build: {

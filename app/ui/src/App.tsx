@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './fonts.css';
 import { CalmApp } from '@zonked-web/ui/calm/CalmApp';
 import { getSession, setPageMounted } from './engine/session';
 import { ensureStyles } from './engine/styles';

@@ -1,5 +1,5 @@
-var St = Object.defineProperty;
-var kt = (n, e, t) => e in n ? St(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
+var Mt = Object.defineProperty;
+var kt = (n, e, t) => e in n ? Mt(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
 var c = (n, e, t) => kt(n, typeof e != "symbol" ? e + "" : e, t);
 import * as Lt from "@kirocrew/app-sdk";
 import { useState as Ce, useEffect as Qe } from "react";
@@ -156,7 +156,7 @@ const Os = {
   restDay: "Rest day",
   restart: "Restart journey",
   startJourney: "Start this journey",
-  libraryTitle: "Library",
+  libraryTitle: "Sounds",
   searchLabel: "Search sounds",
   searchEmpty: "Nothing matched. Try fewer words.",
   tabs: ["Feeling", "Sound", "Favorites", "My mixes", "Recent"],
@@ -199,6 +199,10 @@ const Os = {
   crewIntro: "Your coding session can watch itself and ease the sound. When you have been working hard, Zonked slowly moves toward calmer sound. You stay in control.",
   crewSwitch: "Let Crew ease the sound",
   crewOff: "Not connected",
+  crewWhyOff: "Crew is not connected because the local feed is not running, or the Crew switch on this page is off. Zonked works fully without it.",
+  crewStep1: "Start the local feed on your computer: run the crew bridge in your project folder.",
+  crewStep2: "Turn on the Crew switch on this page.",
+  crewDisabled: "The switch is on, but no feed answers yet. Crew stays off until step 1 is done.",
   crewOn: "Connected",
   crewBreak: "Time for a break",
   crewPrivacy: "Nothing leaves your computer.",
@@ -207,6 +211,11 @@ const Os = {
   gentle: "Keep sounds extra gentle",
   gentleHint: "Picks softer sounds and keeps the screen still.",
   reduceMotion: "Reduce motion",
+  themeLabel: "Off keeps the dark night look.",
+  themeLight: "Use the day look",
+  contrast: "High contrast",
+  contrastHint: "Black and white with thicker lines.",
+  weekOf: (n) => `${n} of 7 days`,
   forget: "Forget my data",
   forgetHint: "Removes your answers, nature choice and your own sounds from this device.",
   natureHead: "Nature sounds",
@@ -235,7 +244,7 @@ const Os = {
   errorAudio: "Sound could not start. Tap Play to try again.",
   errorStorage: "We could not save this on your device. Your session still works.",
   loading: "Loading",
-  nav: ["Today", "Journeys", "Library", "Crew", "Settings"],
+  nav: ["Today", "Sounds", "Crew", "You"],
   sounds: (n) => `${n} ${n === 1 ? "sound" : "sounds"}`
 }, Ns = {
   focus: "Focus",
@@ -800,7 +809,7 @@ function wn(n, e, t) {
 function De(n) {
   return be.find((e) => e.id === n) ?? be[0];
 }
-class Mn {
+class Sn {
   constructor(e, t, s, i = {}) {
     c(this, "listeners", /* @__PURE__ */ new Set());
     c(this, "mode");
@@ -1186,7 +1195,7 @@ class Mn {
     for (const t of this.listeners) t(e);
   }
 }
-const Sn = 1, ve = 200, kn = 60, me = 240, st = ["off", "white", "pink", "brown", "violet"], Ln = ["binaural", "monaural", "isochronic"], En = ["template", "preset", "custom", "mix"], Rn = ["none", "countdown", "sleep-fade", "pomodoro"], we = (n, e, t) => n < e ? e : n > t ? t : n;
+const Mn = 1, ve = 200, kn = 60, me = 240, st = ["off", "white", "pink", "brown", "violet"], Ln = ["binaural", "monaural", "isochronic"], En = ["template", "preset", "custom", "mix"], Rn = ["none", "countdown", "sleep-fade", "pomodoro"], we = (n, e, t) => n < e ? e : n > t ? t : n;
 function _(n) {
   return typeof n == "object" && n !== null && !Array.isArray(n);
 }
@@ -1256,7 +1265,7 @@ function Cn(n) {
   };
 }
 function On(n, e) {
-  if (!_(n) || p(n, "v") !== Sn) return null;
+  if (!_(n) || p(n, "v") !== Mn) return null;
   const t = it(p(n, "id")), s = Cn(n);
   if (t === null || s === null) return null;
   const i = z(p(n, "createdAt"), 0, e + 864e5, e), r = z(p(n, "updatedAt"), 0, e + 864e5, i);
@@ -1305,7 +1314,7 @@ function Fs() {
     He(Fe, r), e(r);
   }, n];
 }
-const xn = "" + new URL("assets/worklet-CT8dHE_F.js", import.meta.url).href, _n = new URL(new URL("assets/dsp_core.wasm.json", import.meta.url).href).href, S = {
+const xn = "" + new URL("assets/worklet-CT8dHE_F.js", import.meta.url).href, _n = new URL(new URL("assets/dsp_core.wasm.json", import.meta.url).href).href, M = {
   carrierHz: { min: 20, max: 1500, def: 200 },
   beatHz: { min: 0.5, max: 40, def: 10 },
   gain: { min: 0, max: 0.85 },
@@ -1345,10 +1354,10 @@ const xn = "" + new URL("assets/worklet-CT8dHE_F.js", import.meta.url).href, _n 
   panDepth: 30,
   panRateHz: 31
 }, Bn = 4 + re * 4;
-function M(n, e, t, s) {
+function S(n, e, t, s) {
   return typeof n != "number" || !Number.isFinite(n) ? s : n < e ? e : n > t ? t : n;
 }
-const at = (n, e = S.carrierHz.def) => M(n, S.carrierHz.min, S.carrierHz.max, e), ot = (n, e = S.beatHz.def) => M(n, S.beatHz.min, S.beatHz.max, e), ct = (n, e = 0) => M(n, S.gain.min, S.gain.max, e), lt = (n, e = 0) => M(n, S.noiseLevel.min, S.noiseLevel.max, e), ut = (n, e = S.rampSec.def) => M(n, S.rampSec.min, S.rampSec.max, e), v = Y, L = (n, e) => M(n, v.level.min, v.level.max, e), J = (n, e = 0) => M(typeof n == "number" ? Math.round(n) : n, 0, v.enumMax, e), Ke = (n, e) => M(n, v.bpm.min, v.bpm.max, e);
+const at = (n, e = M.carrierHz.def) => S(n, M.carrierHz.min, M.carrierHz.max, e), ot = (n, e = M.beatHz.def) => S(n, M.beatHz.min, M.beatHz.max, e), ct = (n, e = 0) => S(n, M.gain.min, M.gain.max, e), lt = (n, e = 0) => S(n, M.noiseLevel.min, M.noiseLevel.max, e), ut = (n, e = M.rampSec.def) => S(n, M.rampSec.min, M.rampSec.max, e), v = Y, L = (n, e) => S(n, v.level.min, v.level.max, e), J = (n, e = 0) => S(typeof n == "number" ? Math.round(n) : n, 0, v.enumMax, e), Ke = (n, e) => S(n, v.bpm.min, v.bpm.max, e);
 function dt(n) {
   const e = T, t = n ?? e;
   return {
@@ -1356,15 +1365,15 @@ function dt(n) {
     lofiWarmth: L(t.lofiWarmth, e.lofiWarmth),
     crackle: L(t.crackle, e.crackle),
     instLevel: L(t.instLevel, e.instLevel),
-    instKind: M(typeof t.instKind == "number" ? Math.round(t.instKind) : t.instKind, 0, v.instKindMax, e.instKind),
-    instRootHz: M(t.instRootHz, v.instRootHz.min, v.instRootHz.max, e.instRootHz),
+    instKind: S(typeof t.instKind == "number" ? Math.round(t.instKind) : t.instKind, 0, v.instKindMax, e.instKind),
+    instRootHz: S(t.instRootHz, v.instRootHz.min, v.instRootHz.max, e.instRootHz),
     instScale: J(t.instScale, e.instScale),
     instBpm: Ke(t.instBpm, e.instBpm),
     padLevel: L(t.padLevel, e.padLevel),
     padChord: J(t.padChord, e.padChord),
-    padRootHz: M(t.padRootHz, v.padRootHz.min, v.padRootHz.max, e.padRootHz),
+    padRootHz: S(t.padRootHz, v.padRootHz.min, v.padRootHz.max, e.padRootHz),
     chimeLevel: L(t.chimeLevel, e.chimeLevel),
-    chimeRatePerMin: M(t.chimeRatePerMin, v.chimeRatePerMin.min, v.chimeRatePerMin.max, e.chimeRatePerMin),
+    chimeRatePerMin: S(t.chimeRatePerMin, v.chimeRatePerMin.min, v.chimeRatePerMin.max, e.chimeRatePerMin),
     percLevel: L(t.percLevel, e.percLevel),
     percBpm: Ke(t.percBpm, e.percBpm),
     percPattern: J(t.percPattern, e.percPattern),
@@ -1372,10 +1381,10 @@ function dt(n) {
     tapeWow: L(t.tapeWow, e.tapeWow),
     pianoPedal: L(t.pianoPedal, e.pianoPedal),
     breathDepth: L(t.breathDepth, e.breathDepth),
-    breathRateHz: M(t.breathRateHz, v.breathRateHz.min, v.breathRateHz.max, e.breathRateHz),
+    breathRateHz: S(t.breathRateHz, v.breathRateHz.min, v.breathRateHz.max, e.breathRateHz),
     stereoWidth: L(t.stereoWidth, e.stereoWidth),
     panDepth: L(t.panDepth, e.panDepth),
-    panRateHz: M(t.panRateHz, v.panRateHz.min, v.panRateHz.max, e.panRateHz)
+    panRateHz: S(t.panRateHz, v.panRateHz.min, v.panRateHz.max, e.panRateHz)
   };
 }
 const ht = { binaural: 0, monaural: 1, isochronic: 2 }, pt = { off: 0, white: 1, pink: 2, brown: 3, violet: 4 };
@@ -1415,9 +1424,9 @@ function Wn(n) {
 function Ks() {
   return mt;
 }
-const Me = 0.85, Ws = 2, $s = 0.3, qs = 0.15, js = 0.4, $n = 0.6, $e = 0.95, G = (n, e, t) => n < e ? e : n > t ? t : n;
+const Se = 0.85, Ws = 2, $s = 0.3, qs = 0.15, js = 0.4, $n = 0.6, $e = 0.95, G = (n, e, t) => n < e ? e : n > t ? t : n;
 function qn(n, e = 0) {
-  return Number.isFinite(n) ? G(n, 0, Me) : G(Number.isFinite(e) ? e : 0, 0, Me);
+  return Number.isFinite(n) ? G(n, 0, Se) : G(Number.isFinite(e) ? e : 0, 0, Se);
 }
 function jn(n, e = 0) {
   return Number.isFinite(n) ? G(n, 0, 1) : G(Number.isFinite(e) ? e : 0, 0, 1);
@@ -1426,7 +1435,7 @@ function Us(n) {
   return 1 - $n * jn(n);
 }
 function Vs(n) {
-  return qn(n) / Me;
+  return qn(n) / Se;
 }
 function Un(n = 2049) {
   const e = Math.max(3, n | 0), t = new Float32Array(e);
@@ -1985,18 +1994,18 @@ function ys(n, e, t) {
 }
 function ce() {
   if (ee !== null) return ee;
-  const n = Qn(), e = ps(), t = new Mn(n, pn, (i) => void e.addLog(i).catch(() => {
+  const n = Qn(), e = ps(), t = new Sn(n, pn, (i) => void e.addLog(i).catch(() => {
   }), { toEvents: fs }), s = new rs(void 0, In());
   return ys(t, n, s), ee = { engine: n, player: t, store: e }, ee;
 }
 let se = 0;
-const Se = /* @__PURE__ */ new Set(), Ys = () => se > 0;
+const Me = /* @__PURE__ */ new Set(), Ys = () => se > 0;
 function Gs(n) {
-  return Se.add(n), () => void Se.delete(n);
+  return Me.add(n), () => void Me.delete(n);
 }
 function Zs(n) {
   se = Math.max(0, se + (n ? 1 : -1));
-  for (const e of Se) e(se > 0);
+  for (const e of Me) e(se > 0);
 }
 const Xs = () => ce().engine.getStats(), Js = () => ce().engine.status.state, bs = 5, vs = 600;
 function q(n, e, t) {
@@ -2031,7 +2040,7 @@ function bt(n) {
     sbg: typeof f == "string" && f.length <= A.maxBytes ? f : null
   };
 }
-const Ms = "http://localhost:43210/events", Ss = 7e4, ks = 1e3, Ls = 3e4, ke = "zonked.crew.v1", Le = /* @__PURE__ */ new Set();
+const Ss = "http://localhost:43210/events", Ms = 7e4, ks = 1e3, Ls = 3e4, ke = "zonked.crew.v1", Le = /* @__PURE__ */ new Set();
 function vt() {
   try {
     if (typeof location < "u" && new URLSearchParams(location.search).get("crew") === "1")
@@ -2094,7 +2103,7 @@ class ei {
     const e = this.deps.create ?? Rs;
     let t = null;
     try {
-      t = e(this.deps.url ?? Ms);
+      t = e(this.deps.url ?? Ss);
     } catch {
       t = null;
     }
@@ -2111,7 +2120,7 @@ class ei {
     });
   }
   handleState(e) {
-    if (typeof e != "string" || e.length > Ss) return;
+    if (typeof e != "string" || e.length > Ms) return;
     let t;
     try {
       t = JSON.parse(e);
@@ -2169,21 +2178,21 @@ const Ae = /* @__PURE__ */ new Set(), ni = () => ae;
 function si(n) {
   return Ae.add(n), () => void Ae.delete(n);
 }
-function Mt(n) {
+function St(n) {
   if (n !== ae) {
     ae = n;
     for (const e of [...Ae]) e(n);
   }
 }
 function ge() {
-  ae === "connected" && ce().player.crewLost(), Re = "", Mt("standalone");
+  ae === "connected" && ce().player.crewLost(), Re = "", St("standalone");
 }
 async function ye() {
   if (Ee === null || !vt()) return ge();
   try {
     const n = await Ee.get(Ts), e = bt(n.crew);
     if (e === null) return ge();
-    Mt("connected");
+    St("connected");
     const t = JSON.stringify([e.burnout, e.target]);
     if (t === Re) return;
     Re = t, ce().player.applyCrew(e);
@@ -2211,7 +2220,7 @@ export {
   jn as H,
   Ks as I,
   qs as L,
-  Me as M,
+  Se as M,
   Nn as S,
   Is as T,
   ce as a,

@@ -1,6 +1,6 @@
-import { jsxs as m, jsx as o } from "react/jsx-runtime";
-import { g as h, b as p, p as v, r as $, P as D, J as I } from "./chunk-App-CzOQ23by.mjs";
-import { C as d } from "./chunk-crewLink-Cq0htOCx.mjs";
+import { jsxs as u, jsx as o } from "react/jsx-runtime";
+import { g as h, b as p, p as v, r as $, P as D, J as I } from "./chunk-App-ikZzyVmD.mjs";
+import { C as d } from "./chunk-crewLink-Br6qeo5M.mjs";
 const g = 3, C = Object.freeze([]);
 function E(e, s) {
   const i = new RegExp(`^${e.replace(/[^a-z0-9-]/g, "")}-\\d{2}$`);
@@ -21,34 +21,34 @@ function T(e, s, i) {
 function x(e, s, i, t, n) {
   return T(E(e.family, n), s, t.extraGentle) ?? J(i, v(t), n);
 }
-function j(e, s, i, t = p()) {
+function w(e, s, i, t = p()) {
   const n = h(s);
   if (n === void 0) return C;
   const c = [];
-  for (const l of n.days) {
-    if (l.kind === "rest") continue;
-    const u = x(l, c.length, n, e, t);
-    u !== void 0 && c.push(u);
+  for (const m of n.days) {
+    if (m.kind === "rest") continue;
+    const l = x(m, c.length, n, e, t);
+    l !== void 0 && c.push(l);
   }
   return Object.freeze(c);
 }
 const b = (e) => e.days.length;
 function P({ progress: e, onOpen: s, reduced: i = !1 }) {
-  return /* @__PURE__ */ m("div", { children: [
+  return /* @__PURE__ */ u("div", { children: [
     /* @__PURE__ */ o(D, { title: d.journeysTitle, reduced: i }),
     /* @__PURE__ */ o("p", { className: "c-lead", children: d.journeysEmpty }),
-    /* @__PURE__ */ o("ul", { className: "c-list", children: I.map((t, n) => {
-      var l;
-      const c = ((l = e[t.id]) == null ? void 0 : l.doneDays.length) ?? 0;
-      return /* @__PURE__ */ o("li", { children: /* @__PURE__ */ m("button", { type: "button", className: `c-journey-card c-wide c-j${n % 6 + 1}`, onClick: () => s(t.id), children: [
+    /* @__PURE__ */ o("ul", { className: "c-list", children: I.map((t) => {
+      var c;
+      const n = ((c = e[t.id]) == null ? void 0 : c.doneDays.length) ?? 0;
+      return /* @__PURE__ */ o("li", { children: /* @__PURE__ */ u("button", { type: "button", className: "c-journey-card c-wide", onClick: () => s(t.id), children: [
         /* @__PURE__ */ o("b", { children: t.title }),
         /* @__PURE__ */ o("small", { children: t.blurb }),
-        /* @__PURE__ */ o("em", { children: c === 0 ? d.dayZero(b(t)) : `${c} of ${b(t)} done` })
+        /* @__PURE__ */ o("em", { children: n === 0 ? d.dayZero(b(t)) : `${n} of ${b(t)} done` })
       ] }) }, t.id);
     }) })
   ] });
 }
-function w(e, s) {
+function M(e, s) {
   let i = 0;
   return e.days.map((t, n) => {
     if (t.kind === "rest") return { no: n + 1, rest: !0, templateId: void 0 };
@@ -57,19 +57,19 @@ function w(e, s) {
   });
 }
 function S(e) {
-  var u;
+  var l;
   const s = h(e.id);
   if (s === void 0) return /* @__PURE__ */ o("p", { className: "c-empty", children: d.journeysEmpty });
-  const i = e.progress[e.id], t = p(), n = w(s, (i == null ? void 0 : i.pickedIds) ?? []), c = (u = n.find((a) => !a.rest && !((i == null ? void 0 : i.doneDays.includes(a.no)) ?? !1))) == null ? void 0 : u.no, l = () => e.onStartJourney(e.id, { startedAt: e.todayDay, doneDays: [], pickedIds: j(e.profile, e.id, e.todayDay) });
-  return /* @__PURE__ */ m("div", { children: [
+  const i = e.progress[e.id], t = p(), n = M(s, (i == null ? void 0 : i.pickedIds) ?? []), c = (l = n.find((a) => !a.rest && !((i == null ? void 0 : i.doneDays.includes(a.no)) ?? !1))) == null ? void 0 : l.no, m = () => e.onStartJourney(e.id, { startedAt: e.todayDay, doneDays: [], pickedIds: w(e.profile, e.id, e.todayDay) });
+  return /* @__PURE__ */ u("div", { children: [
     /* @__PURE__ */ o("button", { type: "button", className: "c-btn c-link c-back", onClick: e.onBack, children: d.back }),
     /* @__PURE__ */ o("h1", { className: "c-h1", children: s.title }),
     /* @__PURE__ */ o("p", { className: "c-lead", children: s.blurb }),
-    i === void 0 ? /* @__PURE__ */ o("button", { type: "button", className: "c-btn c-primary", "data-testid": "journey-start", onClick: l, children: d.startJourney }) : /* @__PURE__ */ o("ol", { className: "c-days", children: n.map((a) => {
+    i === void 0 ? /* @__PURE__ */ o("button", { type: "button", className: "c-btn c-primary", "data-testid": "journey-start", onClick: m, children: d.startJourney }) : /* @__PURE__ */ o("ol", { className: "c-days", children: n.map((a) => {
       const y = i.doneDays.includes(a.no), r = a.templateId === void 0 ? void 0 : t.find((f) => f.id === a.templateId), k = a.rest ? d.restDay : (r == null ? void 0 : r.name) ?? "Session", N = a.rest ? "" : `${(r == null ? void 0 : r.recommendedMinutes) ?? 0} min`;
-      return /* @__PURE__ */ m("li", { className: `c-day${a.rest ? " c-rest" : ""}${y ? " c-done" : ""}${a.no === c ? " c-now" : ""}`, children: [
+      return /* @__PURE__ */ u("li", { className: `c-day${a.rest ? " c-rest" : ""}${y ? " c-done" : ""}${a.no === c ? " c-now" : ""}`, children: [
         /* @__PURE__ */ o("span", { className: "c-badge", "aria-hidden": "true", children: a.no }),
-        /* @__PURE__ */ m("span", { className: "c-d-text", children: [
+        /* @__PURE__ */ u("span", { className: "c-d-text", children: [
           /* @__PURE__ */ o("b", { children: `Day ${a.no}${y ? `, ${d.done}` : ""}` }),
           /* @__PURE__ */ o("small", { children: [k, N].filter((f) => f !== "").join(", ") })
         ] }),

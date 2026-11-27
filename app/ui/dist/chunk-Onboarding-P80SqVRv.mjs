@@ -1,7 +1,7 @@
 import { jsxs as d, jsx as e, Fragment as L } from "react/jsx-runtime";
 import { useId as M, useMemo as _, useState as f, useRef as x, useEffect as G, Suspense as B, lazy as P } from "react";
-import { C as n, G as R, T as z, D as F } from "./chunk-crewLink-Cq0htOCx.mjs";
-import { r as V, p as j, D as W, S as q, G as Q, T as U, a as Y } from "./chunk-App-CzOQ23by.mjs";
+import { C as n, G as R, T as z, D as F } from "./chunk-crewLink-Br6qeo5M.mjs";
+import { r as V, p as j, D as W, S as q, G as Q, T as U, a as Y } from "./chunk-App-ikZzyVmD.mjs";
 function C({ legend: t, options: l, value: c, onChange: i }) {
   const o = M();
   return /* @__PURE__ */ d("fieldset", { className: "c-choices", children: [
@@ -55,7 +55,7 @@ function J({ profile: t, playing: l, onPreview: c, onStop: i, onStart: o }) {
     }, children: n.start }) })
   ] });
 }
-const K = P(() => import("./chunk-mascot-gE-i7l4L.mjs").then((t) => ({ default: t.CalmMascot }))), y = (t, l) => t.map((c) => ({ value: c, label: l[c] })), X = { 1: n.goalTitle, 2: n.whenTitle, 3: n.listenTitle };
+const K = P(() => import("./chunk-mascot-BnpJf37G.mjs").then((t) => ({ default: t.CalmMascot }))), y = (t, l) => t.map((c) => ({ value: c, label: l[c] })), X = { 1: n.goalTitle, 2: n.whenTitle, 3: n.listenTitle };
 function S({ mood: t, size: l, reduced: c }) {
   return /* @__PURE__ */ e("div", { className: "c-hero", children: /* @__PURE__ */ e(B, { fallback: null, children: /* @__PURE__ */ e(K, { mood: t, size: l, reducedMotion: c }) }) });
 }

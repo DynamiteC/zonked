@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './fonts.css';
 import type { PlayerSnapshot } from '@zonked-web/app/player';
 import { CALM } from '@zonked-web/ui/calm/copy';
 import { getSession, isPageOpen, isSafetyAccepted, onPageOpen } from './engine/session';

@@ -12,7 +12,7 @@ import { getSession, isSafetyAccepted } from './session';
  * so unmounting the page never stops the sound. Only React state is created here.
  */
 export function useCalmSession(): CalmSession {
-  const { player, store } = getSession();
+  const { player, store, engine } = getSession();
   const [snap, setSnap] = useState<PlayerSnapshot>(() => player.snapshot());
   const [accepted, setAccepted] = useState(isSafetyAccepted);
   const [gate, setGate] = useState(false);
@@ -64,5 +64,5 @@ export function useCalmSession(): CalmSession {
     else guarded(() => void player.play());
   }, [player, guarded]);
 
-  return { player, store, snap, accepted, gate, reduced, setReduced, userReduced, guarded, accept, cancelGate, playTemplate, toggle };
+  return { engine, player, store, snap, accepted, gate, reduced, setReduced, userReduced, guarded, accept, cancelGate, playTemplate, toggle };
 }
