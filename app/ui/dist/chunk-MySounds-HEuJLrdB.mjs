@@ -1,7 +1,7 @@
 import { jsxs as m, jsx as s } from "react/jsx-runtime";
 import { useRef as b, useState as v, useCallback as d, useEffect as y } from "react";
-import { C as o } from "./chunk-crewLink-Ciq_3_Yk.mjs";
-import { I as w, l as N, v as k, i as A, j as C, k as g, M as O } from "./chunk-App-C8Du80ID.mjs";
+import { C as o } from "./chunk-crewLink-uOIAoAgB.mjs";
+import { I as w, l as N, v as k, i as A, j as C, k as g, M as O } from "./chunk-App-CbF7SXEB.mjs";
 const M = (a) => `${(a / (1024 * 1024)).toFixed(1)} MB`;
 async function S(a) {
   if (a.size > O) return "This file is bigger than 8 MB.";

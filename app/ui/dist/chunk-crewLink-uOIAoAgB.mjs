@@ -473,6 +473,7 @@ back:  200+9/0.4 pink/10    # coming back up
     "Stop any time.",
     "Stop if anything feels uncomfortable."
   ],
+  safetyLimits: "Built-in limits: carrier tone 20 to 1500 Hz, beat at most 40 Hz, volume always capped.",
   safetyAccept: "I understand, start",
   notMedical: "Zonked is not a medical device.",
   dailyEyebrow: "Your session for today",
@@ -600,6 +601,7 @@ back:  200+9/0.4 pink/10    # coming back up
   natureFree: "Free to use, public domain",
   natureMade: "Made by Zonked in code. No recording is used.",
   natureCredits: "Credits",
+  natureCreditsPick: "Pick a sound",
   natureBlend: "More nature, softer beats",
   natureLevel: "Nature volume",
   natureAdd: "Add nature sound",

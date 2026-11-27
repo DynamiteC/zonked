@@ -1,7 +1,7 @@
-import { jsx as i, jsxs as y, Fragment as Ce } from "react/jsx-runtime";
-import { lazy as z, Suspense as U, useRef as _, useState as N, useEffect as L, useCallback as T, useMemo as H, useSyncExternalStore as hn } from "react";
-import { C as d, P as fn, s as pt, p as pn, g as gn, b as Ge, G as bn, L as yn, F as We, d as gt, D as vn, c as fe, a as Ke, e as wn, f as kn, h as bt, E as Sn, r as Mn, i as An, j as yt, k as Nn, u as En, w as Tn, S as Ln, l as Cn, o as On, B as Rn, m as zn, n as pe, q as Dn, t as _n, v as qe, x as J, y as vt, z as In, A as Pn, H as Bn, I as Hn, J as Ue, M as Fn } from "./chunk-crewLink-Ciq_3_Yk.mjs";
-function b(e) {
+import { jsx as i, jsxs as b, Fragment as Ce } from "react/jsx-runtime";
+import { lazy as D, Suspense as U, useRef as _, useState as N, useEffect as L, useCallback as T, useMemo as F, useSyncExternalStore as fn } from "react";
+import { C as d, P as pn, s as pt, p as gn, g as bn, b as We, G as yn, L as vn, F as Ge, d as gt, D as wn, c as fe, a as Ke, e as kn, f as Sn, h as bt, E as Mn, r as An, i as Nn, j as yt, k as En, u as Tn, w as Ln, S as Cn, l as On, o as Rn, B as Dn, m as zn, n as pe, q as _n, t as In, v as qe, x as J, y as vt, z as Pn, A as Bn, H as Fn, I as Hn, J as Ue, M as xn } from "./chunk-crewLink-uOIAoAgB.mjs";
+function y(e) {
   return {
     modes: ["binaural"],
     noises: [["off", 0]],
@@ -13,7 +13,7 @@ function b(e) {
     ...e
   };
 }
-const E = (e, t) => e[(t % e.length + e.length) % e.length], xn = [98, 110, 123.5, 87.3, 103.8, 130.8], jn = [196, 220, 247, 175, 165, 262], $n = {
+const E = (e, t) => e[(t % e.length + e.length) % e.length], jn = [98, 110, 123.5, 87.3, 103.8, 130.8], $n = [196, 220, 247, 175, 165, 262], Wn = {
   calm: [4, 3],
   warm: [6, 2],
   dreamy: [4, 3],
@@ -25,11 +25,11 @@ const E = (e, t) => e[(t % e.length + e.length) % e.length], xn = [98, 110, 123.
   lofi: [1, 2, 5],
   minimal: [7, 4]
 }, Gn = (e) => [...e].reduce((t, n) => (t * 31 + n.charCodeAt(0)) % 9973, 7);
-function Wn(e, t, n) {
-  const a = Gn(e) + n;
-  return { prog: E($n[t], a), key: E(xn, a), pianoRoot: E(jn, a >> 1) };
-}
 function Kn(e, t, n) {
+  const a = Gn(e) + n;
+  return { prog: E(Wn[t], a), key: E(jn, a), pianoRoot: E($n, a >> 1) };
+}
+function qn(e, t, n) {
   const a = e === "dreamy" || e === "ethereal" || e === "calm";
   return {
     breathDepth: E([0.45, 0.4, 0.3, 0.2, 0.1], t - 1),
@@ -39,7 +39,7 @@ function Kn(e, t, n) {
     panRateHz: 0.03 + 0.01 * (n % 4)
   };
 }
-const qn = {
+const Un = {
   lofi: (e, t) => ({
     lofiLevel: 0.45,
     lofiWarmth: E([0.5, 0.6, 0.7], e),
@@ -79,15 +79,15 @@ const qn = {
     percPattern: E([0, 3, 4, 7], e)
   })
 };
-function Un(e, t, n = { prog: 0, key: 110, pianoRoot: 220 }) {
-  return e.reduce((a, o) => ({ ...a, ...qn[o](t, n) }), {});
+function Yn(e, t, n = { prog: 0, key: 110, pianoRoot: 220 }) {
+  return e.reduce((a, s) => ({ ...a, ...Un[s](t, n) }), {});
 }
 const Ye = (e) => Math.round(e * 1e3) / 1e3, ge = (e) => Math.min(40, Math.max(0.5, e));
-function Yn(e, t, n, a, o) {
-  const s = Math.min(5, Math.max(1, t * 0.15));
+function Vn(e, t, n, a, s) {
+  const o = Math.min(5, Math.max(1, t * 0.15));
   if (e === "plateau") {
-    const l = [{ t: 0, beat: n, ramp: !0 }, { t: s, beat: a, ramp: o !== void 0 }];
-    return o !== void 0 && l.push({ t: t - s, beat: a, ramp: !0 }, { t, beat: o, ramp: !1 }), l;
+    const l = [{ t: 0, beat: n, ramp: !0 }, { t: o, beat: a, ramp: s !== void 0 }];
+    return s !== void 0 && l.push({ t: t - o, beat: a, ramp: !0 }, { t, beat: s, ramp: !1 }), l;
   }
   if (e === "ramp-down" || e === "ramp-up")
     return [{ t: 0, beat: n, ramp: !0 }, { t: t * 0.7, beat: a, ramp: !1 }];
@@ -99,14 +99,14 @@ function Yn(e, t, n, a, o) {
     return c < 3 ? [{ t: c * r, beat: u, ramp: !1 }, { t: c * r + r * 0.75, beat: u, ramp: !0 }] : [{ t: c * r, beat: u, ramp: !1 }];
   }).flat();
 }
-function Vn(e, t, n, a, o) {
-  const s = (t % 3 - 1) * e.jitter, r = ge(e.to + s), l = E(e.noises, t >> 1), c = E(e.layers, t * 2 + (t >> 1)), u = E(e.vibes, t), f = Un(c, t, Wn(e.slug, u, t)), k = Object.keys(f).length > 0, S = k ? { ...f, ...Kn(u, e.intensity, t) } : f;
-  return Yn(e.shape, n, ge(e.from), r, e.ret).map((M) => ({
+function Jn(e, t, n, a, s) {
+  const o = (t % 3 - 1) * e.jitter, r = ge(e.to + o), l = E(e.noises, t >> 1), c = E(e.layers, t * 2 + (t >> 1)), u = E(e.vibes, t), f = Yn(c, t, Kn(e.slug, u, t)), k = Object.keys(f).length > 0, S = k ? { ...f, ...qn(u, e.intensity, t) } : f;
+  return Vn(e.shape, n, ge(e.from), r, e.ret).map((M) => ({
     atMin: Ye(M.t),
     beatHz: Ye(ge(M.beat)),
     carrierHz: a,
     gain: e.gain,
-    mode: o,
+    mode: s,
     noise: l[0],
     noiseLevel: l[1],
     ...k ? { layers: S } : {},
@@ -124,57 +124,57 @@ function ee(e) {
 }
 function me(e, t) {
   if (t > 3) return !1;
-  const n = e.every((s, r) => {
+  const n = e.every((o, r) => {
     var l;
-    return r === 0 || Math.abs(s.beatHz - (((l = e[r - 1]) == null ? void 0 : l.beatHz) ?? s.beatHz)) <= 4;
-  }), a = e.every((s) => s.mode === "isochronic" || s.beatHz >= 12 && s.beatHz <= 20), o = e.every((s) => {
+    return r === 0 || Math.abs(o.beatHz - (((l = e[r - 1]) == null ? void 0 : l.beatHz) ?? o.beatHz)) <= 4;
+  }), a = e.every((o) => o.mode === "isochronic" || o.beatHz >= 12 && o.beatHz <= 20), s = e.every((o) => {
     var r, l;
-    return (((r = s.layers) == null ? void 0 : r.crackle) ?? 0) === 0 && (((l = s.layers) == null ? void 0 : l.percBpm) ?? 0) <= 100;
+    return (((r = o.layers) == null ? void 0 : r.crackle) ?? 0) === 0 && (((l = o.layers) == null ? void 0 : l.percBpm) ?? 0) <= 100;
   });
-  return n && a && o;
+  return n && a && s;
 }
-function Jn(e, t) {
+function Xn(e, t) {
   const n = e.adjectives.length, a = t * 7 % (n * e.nouns.length);
   return `${E(e.adjectives, a)} ${E(e.nouns, Math.floor(a / n))}`;
 }
-const Xn = (e) => String(e).padStart(2, "0"), Zn = { binaural: "Binaural", monaural: "Monaural", isochronic: "Isochronic" }, Qn = ["lofi", "instrument", "pad", "chimes", "percussion"];
-function ea(e, t, n, a, o) {
-  const s = o[0], r = [`${Zn[e]}, ${t} Hz carrier, ${n} minutes, ${a} mood`];
-  s !== void 0 && s.noise !== "off" && s.noiseLevel > 0 && r.push(`${s.noise} noise`);
-  const l = o[o.length - 1];
-  s !== void 0 && l !== void 0 && s.beatHz !== l.beatHz && r.push(`beat ${s.beatHz} to ${l.beatHz} Hz`);
-  const c = ee(o).filter((u) => Qn.includes(u));
+const Zn = (e) => String(e).padStart(2, "0"), wt = { binaural: "Binaural", monaural: "Monaural", isochronic: "Isochronic" }, Qn = ["lofi", "instrument", "pad", "chimes", "percussion"];
+function ea(e, t, n, a, s) {
+  const o = s[0], r = [`${wt[e]}, ${t} Hz carrier, ${n} minutes, ${a} mood`];
+  o !== void 0 && o.noise !== "off" && o.noiseLevel > 0 && r.push(`${o.noise} noise`);
+  const l = s[s.length - 1];
+  o !== void 0 && l !== void 0 && o.beatHz !== l.beatHz && r.push(`beat ${o.beatHz} to ${l.beatHz} Hz`);
+  const c = ee(s).filter((u) => Qn.includes(u));
   return c.length > 0 && r.push(c.join(" and ")), `${r.join(", ")}.`;
 }
 function ta(e, t, n, a) {
-  const o = E(t.mins, n), s = E(t.carriers, n * 3 + 1), r = E(t.modes, n + (n >> 2)), l = Vn(t, n, o, s, r), c = t.to < 4 ? "delta" : t.to < 8 ? "theta" : t.to < 12 ? "alpha" : t.to < 30 ? "beta" : "gamma";
+  const s = E(t.mins, n), o = E(t.carriers, n * 3 + 1), r = E(t.modes, n + (n >> 2)), l = Jn(t, n, s, o, r), c = t.to < 4 ? "delta" : t.to < 8 ? "theta" : t.to < 12 ? "alpha" : t.to < 30 ? "beta" : "gamma";
   return {
-    id: `${e.prefix}-${t.slug}-${Xn(n + 1)}`,
-    name: Jn(e, a),
+    id: `${e.prefix}-${t.slug}-${Zn(n + 1)}`,
+    name: Xn(e, a),
     category: e.category,
     vibe: E(t.vibes, n),
     tags: [t.slug, c, r, ...t.tags],
     layerTags: ee(l),
     situations: t.situations,
-    recommendedMinutes: o,
+    recommendedMinutes: s,
     intensity: t.intensity,
     adhdFriendly: me(l, t.intensity),
     stages: l,
-    reasonTemplate: `${t.reason} ${ea(r, s, o, E(t.vibes, n), l)}`,
+    reasonTemplate: `${t.reason.replace("{tone}", wt[r])} ${ea(r, o, s, E(t.vibes, n), l)}`,
     source: "original",
     ...t.breath !== void 0 ? { breath: t.breath } : {}
   };
 }
 function na(e) {
   let t = 0;
-  const n = e.archs.flatMap((a) => Array.from({ length: a.count }, (o, s) => ta(e, a, s, t++)));
+  const n = e.archs.flatMap((a) => Array.from({ length: a.count }, (s, o) => ta(e, a, o, t++)));
   return aa(n);
 }
 function aa(e) {
   const t = /* @__PURE__ */ new Map();
   return e.map((n) => {
-    const a = n.reasonTemplate.replaceAll("{minutes}", String(n.recommendedMinutes)), o = (t.get(a) ?? 0) + 1;
-    return t.set(a, o), o === 1 ? n : { ...n, reasonTemplate: `${n.reasonTemplate} Alternate take ${o}.` };
+    const a = n.reasonTemplate.replaceAll("{minutes}", String(n.recommendedMinutes)), s = (t.get(a) ?? 0) + 1;
+    return t.set(a, s), s === 1 ? n : { ...n, reasonTemplate: `${n.reasonTemplate} Alternate take ${s}.` };
   });
 }
 const sa = {
@@ -183,7 +183,7 @@ const sa = {
   adjectives: ["Steady", "Anchored", "Level", "Even", "Tidy", "Calm", "Focused", "Plain", "Settled", "Patient", "Smooth", "Constant"],
   nouns: ["Anchor", "Rail", "Tracks", "Rhythm", "Metronome", "Lane", "Thread", "Pulse", "Desk", "Checklist", "Runway", "Keel"],
   archs: [
-    b({
+    y({
       slug: "smr-steady",
       shape: "plateau",
       from: 12,
@@ -201,7 +201,7 @@ const sa = {
       jitter: 0.4,
       reason: "Steady SMR-range pulse with no changes to track, for {minutes} minutes."
     }),
-    b({
+    y({
       slug: "beta-anchor",
       shape: "plateau",
       from: 14,
@@ -219,7 +219,7 @@ const sa = {
       jitter: 0.5,
       reason: "A constant low-beta pulse that never changes."
     }),
-    b({
+    y({
       slug: "cadence-pulse",
       shape: "plateau",
       from: 14,
@@ -236,7 +236,7 @@ const sa = {
       count: 4,
       reason: "Gentle soft percussion at a fixed 60 to 100 bpm cadence keeps tempo without surprises."
     }),
-    b({
+    y({
       slug: "quiet-bed",
       shape: "plateau",
       from: 13,
@@ -254,7 +254,7 @@ const sa = {
       jitter: 0,
       reason: "A fixed warm bed with nothing that changes, so it fades into the background."
     }),
-    b({
+    y({
       slug: "start-ramp",
       shape: "ramp-up",
       from: 11,
@@ -272,7 +272,7 @@ const sa = {
       jitter: 0.2,
       reason: "A slow climb from 4 Hz with no sudden steps."
     }),
-    b({
+    y({
       slug: "sprint-steps",
       shape: "ladder",
       from: 13,
@@ -297,7 +297,7 @@ const sa = {
   adjectives: ["Sharp", "Deep", "Clear", "Lucid", "Bright", "Keen", "Locked", "Precise", "Crisp", "Direct", "Tuned", "Honed"],
   nouns: ["Beam", "Signal", "Compass", "Engine", "Vector", "Prism", "Forge", "Spire", "Circuit", "Current", "Summit", "Scope"],
   archs: [
-    b({
+    y({
       slug: "alpha-beta",
       shape: "plateau",
       from: 11,
@@ -314,7 +314,7 @@ const sa = {
       count: 5,
       reason: "A pulse on the alpha-beta border for {minutes} minutes."
     }),
-    b({
+    y({
       slug: "deep-beta",
       shape: "plateau",
       from: 15,
@@ -331,7 +331,7 @@ const sa = {
       count: 5,
       reason: "A steady beta-band pulse for long work blocks."
     }),
-    b({
+    y({
       slug: "gamma-edge",
       shape: "ramp-up",
       from: 18,
@@ -348,7 +348,7 @@ const sa = {
       count: 4,
       reason: "A short climb to the high-beta and low-gamma edge."
     }),
-    b({
+    y({
       slug: "flow-ramp",
       shape: "ramp-up",
       from: 10,
@@ -365,7 +365,7 @@ const sa = {
       count: 4,
       reason: "A slow glide from alpha into beta."
     }),
-    b({
+    y({
       slug: "reading-calm",
       shape: "plateau",
       from: 10,
@@ -382,7 +382,7 @@ const sa = {
       count: 4,
       reason: "Gentle alpha for reading and study."
     }),
-    b({
+    y({
       slug: "sprint-pulse",
       shape: "ladder",
       from: 12,
@@ -406,7 +406,7 @@ const sa = {
   adjectives: ["Mending", "Tender", "Restoring", "Kind", "Balmy", "Soothing", "Renewing", "Warming", "Settled", "Easing", "Gentle", "Whole"],
   nouns: ["Balm", "Spring", "Embrace", "Garden", "Shelter", "Glow", "Rain", "Hearth", "Sunrise", "Quilt", "Oasis", "Haven"],
   archs: [
-    b({
+    y({
       slug: "tension-release",
       shape: "ramp-down",
       from: 14,
@@ -421,9 +421,9 @@ const sa = {
       intensity: 2,
       gain: 0.42,
       count: 5,
-      reason: "Slides from beta down to alpha over {minutes} minutes."
+      reason: "Starts at a busier pace and slows to a relaxed one over {minutes} minutes."
     }),
-    b({
+    y({
       slug: "restore-theta",
       shape: "plateau",
       from: 9,
@@ -440,7 +440,7 @@ const sa = {
       count: 5,
       reason: "Steady theta with a soft drone."
     }),
-    b({
+    y({
       slug: "heart-calm",
       shape: "plateau",
       from: 10,
@@ -459,7 +459,7 @@ const sa = {
       breath: { inSec: 5, outSec: 5 },
       reason: "A slow rhythm of 6 breaths per minute to follow."
     }),
-    b({
+    y({
       slug: "ache-ease",
       shape: "wave",
       from: 10,
@@ -476,7 +476,7 @@ const sa = {
       count: 4,
       reason: "Slow alpha-theta swells that feel like a rocking tide."
     }),
-    b({
+    y({
       slug: "soothe-glide",
       shape: "ramp-down",
       from: 12,
@@ -493,7 +493,7 @@ const sa = {
       count: 4,
       reason: "A soft pad with a gliding beat."
     }),
-    b({
+    y({
       slug: "sunrise-lift",
       shape: "ramp-up",
       from: 7,
@@ -517,7 +517,7 @@ const sa = {
   adjectives: ["Waking", "Silver", "Nebula", "Astral", "Twilight", "Aware", "Hollow", "Starlit", "Liminal", "Vivid", "Opal", "Drifting"],
   nouns: ["Gate", "Compass", "Mirror", "Skyway", "Threshold", "Door", "Voyage", "Lens", "Bridge", "Beacon", "Garden", "Orbit"],
   archs: [
-    b({
+    y({
       slug: "wbtb-theta",
       shape: "plateau",
       from: 9,
@@ -535,7 +535,7 @@ const sa = {
       count: 6,
       reason: "Theta plateau with a light return, built for wake-back-to-bed lucid practice."
     }),
-    b({
+    y({
       slug: "rem-ladder",
       shape: "ladder",
       from: 8,
@@ -552,7 +552,7 @@ const sa = {
       count: 5,
       reason: "Steps down through theta in four stages."
     }),
-    b({
+    y({
       slug: "aware-wave",
       shape: "wave",
       from: 5,
@@ -569,7 +569,7 @@ const sa = {
       count: 5,
       reason: "Slow swings between theta and alpha."
     }),
-    b({
+    y({
       slug: "dream-drift",
       shape: "ramp-down",
       from: 10,
@@ -586,7 +586,7 @@ const sa = {
       count: 5,
       reason: "A slow descent over {minutes} minutes."
     }),
-    b({
+    y({
       slug: "astral-calm",
       shape: "plateau",
       from: 10,
@@ -610,7 +610,7 @@ const sa = {
   adjectives: ["Open", "Rooted", "Sacred", "Luminous", "Patient", "Clear", "Boundless", "Inner", "Mindful", "Sunlit", "Hallowed", "Silent"],
   nouns: ["Cushion", "Temple", "Breath", "Mountain", "Lotus", "Stillpoint", "Horizon", "Sanctuary", "River", "Candle", "Grove", "Bowl"],
   archs: [
-    b({
+    y({
       slug: "alpha-sit",
       shape: "plateau",
       from: 12,
@@ -626,9 +626,9 @@ const sa = {
       intensity: 2,
       gain: 0.42,
       count: 5,
-      reason: "Wakeful alpha for a {minutes} minute seated sit."
+      reason: "{tone} calm and wide awake for a {minutes} minute seated sit."
     }),
-    b({
+    y({
       slug: "theta-descent",
       shape: "ramp-down",
       from: 10,
@@ -645,7 +645,7 @@ const sa = {
       count: 5,
       reason: "Glides from alpha to theta."
     }),
-    b({
+    y({
       slug: "schumann-hold",
       shape: "plateau",
       from: 12,
@@ -664,7 +664,7 @@ const sa = {
       jitter: 0,
       reason: "Rests on the 7.83 Hz Schumann resonance, then returns to wakefulness."
     }),
-    b({
+    y({
       slug: "breath-pacer",
       shape: "plateau",
       from: 9,
@@ -682,7 +682,7 @@ const sa = {
       breath: { inSec: 5.45, outSec: 5.45 },
       reason: "Pair the 5.5 breaths per minute pacer with a slow theta pulse."
     }),
-    b({
+    y({
       slug: "bell-silence",
       shape: "plateau",
       from: 10,
@@ -699,7 +699,7 @@ const sa = {
       count: 4,
       reason: "Sparse chimes over a quiet alpha-theta border."
     }),
-    b({
+    y({
       slug: "delta-glide",
       shape: "ramp-down",
       from: 6,
@@ -723,7 +723,7 @@ const sa = {
   adjectives: ["Quiet", "Slow", "Velvet", "Hushed", "Moonlit", "Soft", "Drowsy", "Still", "Dim", "Gentle", "Fading", "Lulled"],
   nouns: ["Harbor", "Tide", "Pillow", "Lantern", "Blanket", "Meadow", "Lullaby", "Cabin", "Drift", "Hearth", "Cove", "Evening"],
   archs: [
-    b({
+    y({
       slug: "onset-delta",
       shape: "ramp-down",
       from: 9,
@@ -740,7 +740,7 @@ const sa = {
       count: 6,
       reason: "Glides from alpha to delta over {minutes} minutes."
     }),
-    b({
+    y({
       slug: "drift-theta",
       shape: "ramp-down",
       from: 8,
@@ -757,7 +757,7 @@ const sa = {
       count: 5,
       reason: "A slow theta drift with a soft pad."
     }),
-    b({
+    y({
       slug: "deep-delta",
       shape: "plateau",
       from: 6,
@@ -775,7 +775,7 @@ const sa = {
       jitter: 0.2,
       reason: "Holds steady delta."
     }),
-    b({
+    y({
       slug: "nap-reset",
       shape: "plateau",
       from: 10,
@@ -793,7 +793,7 @@ const sa = {
       count: 4,
       reason: "A short nap sound that sinks to theta and returns after {minutes} minutes."
     }),
-    b({
+    y({
       slug: "breath-down",
       shape: "ramp-down",
       from: 7,
@@ -811,7 +811,7 @@ const sa = {
       breath: { inSec: 4, outSec: 6 },
       reason: "Pair slow 4-in, 6-out breathing with a falling beat."
     }),
-    b({
+    y({
       slug: "rain-bed",
       shape: "plateau",
       from: 5,
@@ -835,7 +835,7 @@ const sa = {
   adjectives: ["Neon", "Cozy", "Mellow", "Golden", "Hazy", "Crisp", "Cloudy", "Dusty", "Amber", "Breezy", "Sleepy", "Plush"],
   nouns: ["Cafe", "Rooftop", "Cassette", "Window", "Terrace", "Playlist", "Sunday", "Skyline", "Studio", "Porch", "Alley", "Lounge"],
   archs: [
-    b({
+    y({
       slug: "lofi-study",
       shape: "plateau",
       from: 12,
@@ -852,7 +852,7 @@ const sa = {
       count: 6,
       reason: "Warm lo-fi bed with a soft pluck for easy, steady company."
     }),
-    b({
+    y({
       slug: "warm-glow",
       shape: "plateau",
       from: 11,
@@ -869,7 +869,7 @@ const sa = {
       count: 4,
       reason: "A warm pad and a gentle alpha pulse for a soft landing."
     }),
-    b({
+    y({
       slug: "bright-air",
       shape: "plateau",
       from: 13,
@@ -886,7 +886,7 @@ const sa = {
       count: 4,
       reason: "Airy bells over a light alpha-beta border."
     }),
-    b({
+    y({
       slug: "ether-float",
       shape: "wave",
       from: 10,
@@ -903,7 +903,7 @@ const sa = {
       count: 4,
       reason: "Slow swells with chimes for a floating, spacious mood."
     }),
-    b({
+    y({
       slug: "minimal-hum",
       shape: "plateau",
       from: 10,
@@ -921,7 +921,7 @@ const sa = {
       jitter: 0,
       reason: "Just a pulse and a noise bed, nothing to attend to."
     }),
-    b({
+    y({
       slug: "spark-groove",
       shape: "plateau",
       from: 14,
@@ -945,7 +945,7 @@ const sa = {
   adjectives: ["Unplugged", "Offline", "Cooled", "Rested", "Idle", "Paused", "Unwound", "Mellow", "Eased", "Reset", "Spare", "Soft"],
   nouns: ["Break", "Commit", "Cooldown", "Terminal", "Standup", "Branch", "Window", "Stretch", "Merge", "Buffer", "Release", "Cache"],
   archs: [
-    b({
+    y({
       slug: "screen-down",
       shape: "ramp-down",
       from: 18,
@@ -962,7 +962,7 @@ const sa = {
       count: 5,
       reason: "Steps down from beta to alpha after a long review or generation run."
     }),
-    b({
+    y({
       slug: "micro-break",
       shape: "plateau",
       from: 11,
@@ -980,7 +980,7 @@ const sa = {
       count: 4,
       reason: "A {minutes} minute reset between tasks."
     }),
-    b({
+    y({
       slug: "post-sprint",
       shape: "ramp-down",
       from: 20,
@@ -997,7 +997,7 @@ const sa = {
       count: 4,
       reason: "A long fall from high beta to theta after an intense push."
     }),
-    b({
+    y({
       slug: "eye-rest",
       shape: "plateau",
       from: 10,
@@ -1015,7 +1015,7 @@ const sa = {
       breath: { inSec: 4, outSec: 6 },
       reason: "Close your eyes and follow a slow 4-in, 6-out breath."
     }),
-    b({
+    y({
       slug: "lofi-unwind",
       shape: "plateau",
       from: 10,
@@ -1032,7 +1032,7 @@ const sa = {
       count: 5,
       reason: "Slow lo-fi bed to decompress while you do something light."
     }),
-    b({
+    y({
       slug: "commute-decompress",
       shape: "ramp-down",
       from: 14,
@@ -1050,31 +1050,31 @@ const sa = {
       reason: "Closes the work day with a calm descent that works over speakers."
     })
   ]
-}, se = (e) => Math.round(e * 1e3) / 1e3, oe = (e) => Math.min(40, Math.max(0.5, e)), wt = (e) => e.segs.reduce((t, n) => t + n[0], 0) * (e.scale ?? 1);
+}, se = (e) => Math.round(e * 1e3) / 1e3, oe = (e) => Math.min(40, Math.max(0.5, e)), kt = (e) => e.segs.reduce((t, n) => t + n[0], 0) * (e.scale ?? 1);
 function Ve(e, t) {
   const n = e.carrier ?? 200;
-  return e.carrierEnd === void 0 ? n : Math.round(n + (e.carrierEnd - n) * t / Math.max(wt(e), 1));
+  return e.carrierEnd === void 0 ? n : Math.round(n + (e.carrierEnd - n) * t / Math.max(kt(e), 1));
 }
 function ma(e) {
   const t = [], [n, a] = e.noise ?? ["off", 0];
-  let o = 0;
-  return e.segs.forEach((s, r) => {
-    const l = s[1] !== s[2], c = e.segs[r + 1];
+  let s = 0;
+  return e.segs.forEach((o, r) => {
+    const l = o[1] !== o[2], c = e.segs[r + 1];
     t.push({
-      atMin: se(o / 60),
-      beatHz: se(oe(s[1])),
-      carrierHz: Ve(e, o),
+      atMin: se(s / 60),
+      beatHz: se(oe(o[1])),
+      carrierHz: Ve(e, s),
       gain: e.gain ?? 0.5,
       mode: e.mode ?? "binaural",
       noise: n,
       noiseLevel: a,
       ramp: l
-    }), o += s[0] * (e.scale ?? 1), l && (c === void 0 || oe(c[1]) !== oe(s[2])) && t.push({ ...t[t.length - 1], atMin: se(o / 60), beatHz: se(oe(s[2])), carrierHz: Ve(e, o), ramp: !1 });
+    }), s += o[0] * (e.scale ?? 1), l && (c === void 0 || oe(c[1]) !== oe(o[2])) && t.push({ ...t[t.length - 1], atMin: se(s / 60), beatHz: se(oe(o[2])), carrierHz: Ve(e, s), ramp: !1 });
   }), t;
 }
 const ha = (e, t) => e.replaceAll("{minutes}", String(t)).replaceAll("{duration}", `${t} minutes`);
 function fa(e) {
-  const t = ma(e), n = Math.max(1, Math.round(wt(e) / 60));
+  const t = ma(e), n = Math.max(1, Math.round(kt(e) / 60));
   return {
     id: e.id,
     name: e.name,
@@ -1226,7 +1226,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     segs: ga,
     noise: ["white", 0.4],
     tags: ["alpha", "theta", "creative"],
-    reason: "{duration} that drift back and forth between 10 and 6 Hz."
+    reason: "Drifts back and forth between 10 and 6 Hz."
   }),
   O({
     id: "android-wakeful-relax",
@@ -1238,7 +1238,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     segs: [[120, 12, 7.83], [780, 7.83, 7.83]],
     noise: ["white", 0.4],
     tags: ["alpha", "zen"],
-    reason: "{duration} parked at 7.83 Hz with white noise."
+    reason: "Parked at 7.83 Hz with white noise."
   }),
   O({
     id: "android-schumann",
@@ -1262,7 +1262,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     segs: [[600, 15, 10], [4800, 10, 10]],
     noise: ["white", 0.4],
     tags: ["alpha", "astral"],
-    reason: "A ten minute slide from 15 to 10 Hz, then a long steady alpha rest."
+    reason: "A ten minute slide from 15 to 10 Hz, then a long steady, calm rest."
   }),
   O({
     id: "android-interval-pulse",
@@ -1333,7 +1333,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     intensity: 2,
     segs: ba,
     tags: ["alpha", "smr"],
-    reason: "{duration} of beats crossing between alpha and the low SMR band."
+    reason: "Beats crossing between a calm pace and the low SMR band."
   }),
   O({
     id: "android-lucid-dreams-2",
@@ -1372,7 +1372,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     noise: re,
     scale: 0.5,
     tags: ["theta", "short"],
-    reason: "The Mind Bridge shape squeezed into {duration}."
+    reason: "The Mind Bridge shape made shorter."
   }),
   O({
     id: "android-wakeful-relax-5",
@@ -1426,7 +1426,7 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     noise: ke,
     gain: 0.5,
     tags: ["delta", "nap", "schedule"],
-    reason: "A fast fall to 4 Hz, a long hold, then a slow climb. {duration} in all."
+    reason: "A fast fall to 4 Hz, a long hold, then a slow climb."
   }),
   be({
     id: "gnaural-airplane-aid",
@@ -1454,13 +1454,13 @@ const re = ["white", 0.3], ke = ["pink", 0.3], Se = ["brown", 0.3], Je = [
     carrier: 200,
     gain: 0.5,
     tags: ["beta", "gamma", "schedule"],
-    reason: "Five steps from alpha up to a 28.5 Hz middle, then back down, in {duration}."
+    reason: "Five steps from alpha up to a 28.5 Hz middle, then back down."
   })
 ];
 function ka() {
   return [...va, ...wa].map(fa);
 }
-const kt = [
+const St = [
   { id: "lofi", name: "Lo-fi", blurb: "Warm, slow chords with a tape and vinyl feel, like a quiet study radio.", mood: "warm", defaultLevel: 0.5, layerKeys: ["lofiLevel", "lofiProgression", "tapeWow", "crackle"], templateId: "starter-lofi", evidence: "preference" },
   { id: "piano", name: "Soft piano", blurb: "A soft piano playing gentle, slow phrases with long ringing notes.", mood: "calm", defaultLevel: 0.45, layerKeys: ["instLevel", "instKind", "pianoPedal"], templateId: "starter-piano", evidence: "preference" },
   { id: "violet", name: "Violet hiss", blurb: "A thin, bright hiss, like gentle static. Keep it quiet.", mood: "bright", defaultLevel: 0.3, layerKeys: [], templateId: "starter-violet", evidence: "limited" },
@@ -1490,7 +1490,7 @@ function Ma(e, t) {
 }
 const Aa = { warm: "warm", calm: "calm", bright: "bright", deep: "deep", dreamy: "dreamy", neutral: "minimal" };
 function Na(e) {
-  const t = Ma(e.id, e.defaultLevel), n = Object.keys(t.layers).length > 0, o = [{
+  const t = Ma(e.id, e.defaultLevel), n = Object.keys(t.layers).length > 0, s = [{
     atMin: 0,
     beatHz: 8,
     carrierHz: 200,
@@ -1507,18 +1507,18 @@ function Na(e) {
     category: "vibes",
     vibe: Aa[e.mood] ?? "calm",
     tags: ["starter", "sound-first", e.id],
-    layerTags: ee(o),
+    layerTags: ee(s),
     situations: ["quick-reset", "heal-stress"],
     recommendedMinutes: 20,
     intensity: 1,
-    adhdFriendly: me(o, 1),
-    stages: o,
+    adhdFriendly: me(s, 1),
+    stages: s,
     reasonTemplate: e.blurb,
     source: "original"
   };
 }
 function Ea() {
-  return kt.map(Na);
+  return St.map(Na);
 }
 function Ta() {
   return [
@@ -1569,39 +1569,39 @@ function Ra(e, t, n) {
   const a = Math.max(1, t);
   if (e <= a)
     return n.push(`Fits your ${a} minutes (${e} min).`), 15 * (0.6 + 0.4 * (e / a));
-  const o = (e - a) / a;
-  return n.push(`Runs ${e} min, longer than your ${a}; you can stop any time.`), Math.max(0, 15 * (1 - o * 1.5)) - (o > 0.5 ? 5 : 0);
-}
-function za(e, t, n) {
-  return t.deviceType === "speaker" ? Ze(e) ? (n.push("Warning: binaural beats need headphones. A speaker will not deliver the effect; pick an isochronic or monaural template if you can."), -8) : (n.push("Isochronic or monaural beats work over speakers."), 10) : (n.push(t.deviceType === "bluetooth" ? "Good over Bluetooth headphones." : "Headphones suit every beat type."), Ze(e) ? 10 : 8);
+  const s = (e - a) / a;
+  return n.push(`Runs ${e} min, longer than your ${a}; you can stop any time.`), Math.max(0, 15 * (1 - s * 1.5)) - (s > 0.5 ? 5 : 0);
 }
 function Da(e, t, n) {
-  const a = e.intensity > 3 || Me(e) || Ae(e), o = t.sensorySensitivity;
-  return o === "low" ? { pts: 10, sensitive: !1 } : o === "medium" ? { pts: e.intensity <= 3 ? a ? 7 : 10 : 4, sensitive: !1 } : a ? (n.push("Relaxed filter: this one is stronger or has percussion or crackle, shown because too few gentle matches exist."), { pts: 0, sensitive: !0 }) : (n.push("Gentle: low intensity, no percussion or crackle."), { pts: e.intensity <= 2 ? 10 : 7, sensitive: !1 });
+  return t.deviceType === "speaker" ? Ze(e) ? (n.push("Warning: binaural beats need headphones. A speaker will not deliver the effect; pick an isochronic or monaural template if you can."), -8) : (n.push("Isochronic or monaural beats work over speakers."), 10) : (n.push(t.deviceType === "bluetooth" ? "Good over Bluetooth headphones." : "Headphones suit every beat type."), Ze(e) ? 10 : 8);
+}
+function za(e, t, n) {
+  const a = e.intensity > 3 || Me(e) || Ae(e), s = t.sensorySensitivity;
+  return s === "low" ? { pts: 10, sensitive: !1 } : s === "medium" ? { pts: e.intensity <= 3 ? a ? 7 : 10 : 4, sensitive: !1 } : a ? (n.push("Relaxed filter: this one is stronger or has percussion or crackle, shown because too few gentle matches exist."), { pts: 0, sensitive: !0 }) : (n.push("Gentle: low intensity, no percussion or crackle."), { pts: e.intensity <= 2 ? 10 : 7, sensitive: !1 });
 }
 function _a(e, t) {
   const n = [e.reasonTemplate.replace("{minutes}", String(e.recommendedMinutes))], a = e.situations.includes(t.situation);
-  let o = 0;
-  a ? (o += 40, n.push(`Made for: ${t.situation}.`)) : n.push(`Related option: not built for ${t.situation}, but close in mood.`), t.vibe === void 0 ? o += 7 : t.vibe === e.vibe && (o += 15, n.push(`Matches your ${t.vibe} vibe.`)), o += Ra(e.recommendedMinutes, t.availableMinutes, n);
-  const s = (La[e.category][Ca[t.timeOfDay]] ?? 0) * 10;
-  o += s, s >= 8 && n.push(`Suits the ${t.timeOfDay}.`), e.intensity >= 4 && t.timeOfDay === "night" && (o -= 5), o += za(e, t, n);
-  const r = Da(e, t, n);
-  return o += r.pts, { template: e, score: Math.max(0, Oa(o)), reasons: n, sensitive: r.sensitive, onSituation: a };
+  let s = 0;
+  a ? (s += 40, n.push(`Made for: ${t.situation}.`)) : n.push(`Related option: not built for ${t.situation}, but close in mood.`), t.vibe === void 0 ? s += 7 : t.vibe === e.vibe && (s += 15, n.push(`Matches your ${t.vibe} vibe.`)), s += Ra(e.recommendedMinutes, t.availableMinutes, n);
+  const o = (La[e.category][Ca[t.timeOfDay]] ?? 0) * 10;
+  s += o, o >= 8 && n.push(`Suits the ${t.timeOfDay}.`), e.intensity >= 4 && t.timeOfDay === "night" && (s -= 5), s += Da(e, t, n);
+  const r = za(e, t, n);
+  return s += r.pts, { template: e, score: Math.max(0, Oa(s)), reasons: n, sensitive: r.sensitive, onSituation: a };
 }
 const Ia = (e, t) => t.score - e.score || (e.template.id < t.template.id ? -1 : e.template.id > t.template.id ? 1 : 0);
 function Qe(e, t = 5, n = P()) {
-  const a = Math.max(1, Math.floor(t)), o = n.map((c) => _a(c, e)).sort(Ia), s = [
-    o.filter((c) => c.onSituation && !c.sensitive),
-    o.filter((c) => !c.sensitive),
-    o
-  ], r = s.find((c) => c.length >= a) ?? o, l = r.slice(0, a);
-  return r !== s[0] && l.forEach((c) => {
+  const a = Math.max(1, Math.floor(t)), s = n.map((c) => _a(c, e)).sort(Ia), o = [
+    s.filter((c) => c.onSituation && !c.sensitive),
+    s.filter((c) => !c.sensitive),
+    s
+  ], r = o.find((c) => c.length >= a) ?? s, l = r.slice(0, a);
+  return r !== o[0] && l.forEach((c) => {
     c.onSituation || c.reasons.push("Filters relaxed: too few exact matches, so close alternatives are included.");
   }), l.map((c) => ({ template: c.template, score: c.score, reasons: c.reasons }));
 }
-function St(e) {
-  const t = Math.max(0, Math.ceil(e)), n = Math.floor(t / 60), a = Math.floor(n / 60), o = (s) => String(s).padStart(2, "0");
-  return a > 0 ? `${a}:${o(n % 60)}:${o(t % 60)}` : `${o(n)}:${o(t % 60)}`;
+function Mt(e) {
+  const t = Math.max(0, Math.ceil(e)), n = Math.floor(t / 60), a = Math.floor(n / 60), s = (o) => String(o).padStart(2, "0");
+  return a > 0 ? `${a}:${s(n % 60)}:${s(t % 60)}` : `${s(n)}:${s(t % 60)}`;
 }
 const et = {
   today: "M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z",
@@ -1630,53 +1630,53 @@ const et = {
 function Oe({ name: e, size: t = 22 }) {
   return /* @__PURE__ */ i("svg", { className: "c-icon", width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", focusable: "false", children: /* @__PURE__ */ i("path", { d: et[e] ?? et.wave }) });
 }
-const Pa = z(() => import("./chunk-mascot-CT3408M2.mjs").then((e) => ({ default: e.CalmMascot })));
+const Pa = D(() => import("./chunk-mascot-suXXzKOI.mjs").then((e) => ({ default: e.CalmMascot })));
 function Re({ size: e, mood: t = "idle", reduced: n }) {
   return /* @__PURE__ */ i(U, { fallback: /* @__PURE__ */ i("span", { className: "c-mascot-gap", style: { width: e, height: e } }), children: /* @__PURE__ */ i(Pa, { mood: t, size: e, reducedMotion: n }) });
 }
 function Ba({ title: e, reduced: t }) {
-  return /* @__PURE__ */ y("header", { className: "c-pagehead", children: [
+  return /* @__PURE__ */ b("header", { className: "c-pagehead", children: [
     /* @__PURE__ */ i(Re, { size: 72, reduced: t }),
     /* @__PURE__ */ i("h1", { className: "c-h1", children: e })
   ] });
 }
-const Ha = [
+const Fa = [
   { view: "today", label: d.nav[0], icon: "today" },
   { view: "library", label: d.nav[1], icon: "library" },
   { view: "crew", label: d.nav[2], icon: "crew" },
   { view: "settings", label: d.nav[3], icon: "settings" }
 ];
-function Fa({ view: e, onGo: t, reduced: n = !1 }) {
+function Ha({ view: e, onGo: t, reduced: n = !1 }) {
   const a = e === "journey" || e === "journeys" ? "today" : e === "nature" ? "library" : e === "reset" || e === "breathe" ? "today" : e;
-  return /* @__PURE__ */ y("nav", { className: "c-tabbar", "aria-label": "Main", children: [
-    /* @__PURE__ */ y("div", { className: "c-rail-brand", "aria-hidden": "true", children: [
+  return /* @__PURE__ */ b("nav", { className: "c-tabbar", "aria-label": "Main", children: [
+    /* @__PURE__ */ b("div", { className: "c-rail-brand", "aria-hidden": "true", children: [
       /* @__PURE__ */ i(Re, { size: 40, reduced: n }),
       /* @__PURE__ */ i("span", { className: "c-brand", children: d.brand })
     ] }),
-    Ha.map((o) => /* @__PURE__ */ y("button", { type: "button", className: "c-nav", "aria-current": a === o.view ? "page" : void 0, onClick: () => t(o.view), children: [
-      /* @__PURE__ */ i(Oe, { name: o.icon }),
-      /* @__PURE__ */ i("span", { children: o.label })
-    ] }, o.view))
+    Fa.map((s) => /* @__PURE__ */ b("button", { type: "button", className: "c-nav", "aria-current": a === s.view ? "page" : void 0, onClick: () => t(s.view), children: [
+      /* @__PURE__ */ i(Oe, { name: s.icon }),
+      /* @__PURE__ */ i("span", { children: s.label })
+    ] }, s.view))
   ] });
 }
 function xa(e, t = null) {
-  var s;
+  var o;
   if (e.templateName !== null) return e.templateName;
-  const n = e.source === "crew", a = n ? t ?? e.presetId : e.presetId, o = (s = fn.find((r) => r.id === a)) == null ? void 0 : s.name;
-  return o === void 0 ? d.brand : n ? `Crew: ${o}` : o;
+  const n = e.source === "crew", a = n ? t ?? e.presetId : e.presetId, s = (o = pn.find((r) => r.id === a)) == null ? void 0 : o.name;
+  return s === void 0 ? d.brand : n ? `Crew: ${s}` : s;
 }
 function ja({ snap: e, crewPresetId: t = null, onOpen: n, onStop: a }) {
   if (!e.playing) return null;
-  const o = e.timer.kind !== "none" && e.timer.running ? St(e.timer.remainingSec) : "";
-  return /* @__PURE__ */ y("div", { className: "c-mini", role: "group", "aria-label": "Now playing", children: [
-    /* @__PURE__ */ y("button", { type: "button", className: "c-btn c-link c-mini-open", onClick: n, children: [
+  const s = e.timer.kind !== "none" && e.timer.running ? Mt(e.timer.remainingSec) : "";
+  return /* @__PURE__ */ b("div", { className: "c-mini", role: "group", "aria-label": "Now playing", children: [
+    /* @__PURE__ */ b("button", { type: "button", className: "c-btn c-link c-mini-open", onClick: n, children: [
       xa(e, t),
-      o !== "" && /* @__PURE__ */ i("span", { className: "c-digits", children: ` ${o}` })
+      s !== "" && /* @__PURE__ */ i("span", { className: "c-digits", children: ` ${s}` })
     ] }),
     /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-small", "data-testid": "mini-stop", onClick: a, children: d.stop })
   ] });
 }
-const $a = ["focus", "calm", "sleep", "study", "recover", "curious"], Ga = ["morning", "afternoon", "evening", "night", "anytime"], Wa = ["headphones", "speakers", "bluetooth", "unsure"], Ka = {
+const $a = ["focus", "calm", "sleep", "study", "recover", "curious"], Wa = ["morning", "afternoon", "evening", "night", "anytime"], Ga = ["headphones", "speakers", "bluetooth", "unsure"], Ka = {
   "sleep-onset-delta": 6,
   "sleep-drift-theta": 5,
   "sleep-deep-delta": 5,
@@ -1701,18 +1701,18 @@ function Ua(e) {
 function Ya(e) {
   return Object.freeze({ kind: "session", family: e, variants: Ua(e) });
 }
-function G(...e) {
+function W(...e) {
   return Object.freeze(e.map((t) => t === "rest" ? qa : Ya(t)));
 }
-const ye = (e, t) => Array.from({ length: t }, () => e), W = (e) => Object.freeze(e), Mt = Object.freeze([
-  W({
+const ye = (e, t) => Array.from({ length: t }, () => e), G = (e) => Object.freeze(e), At = Object.freeze([
+  G({
     id: "calm-evenings",
     title: "7 Calm Evenings",
     blurb: "7 short evenings of slow sound. About 20 minutes each.",
     situation: "heal-stress",
     vibe: "calm",
     minutes: 20,
-    days: G(
+    days: W(
       "healing-soothe-glide",
       "meditation-breath-pacer",
       "vibe-warm-glow",
@@ -1722,23 +1722,23 @@ const ye = (e, t) => Array.from({ length: t }, () => e), W = (e) => Object.freez
       "healing-soothe-glide"
     )
   }),
-  W({
+  G({
     id: "focus-mornings",
     title: "5 Focus Mornings",
     blurb: "5 mornings of steady sound to start work. About 30 minutes each.",
     situation: "deep-work",
     vibe: "bright",
     minutes: 30,
-    days: G("focus-alpha-beta", "focus-alpha-beta", "focus-sprint-pulse", "rest", "focus-deep-beta")
+    days: W("focus-alpha-beta", "focus-alpha-beta", "focus-sprint-pulse", "rest", "focus-deep-beta")
   }),
-  W({
+  G({
     id: "easier-sleep",
     title: "14 Nights of Wind-Down Sound",
     blurb: "14 nights of slow sound for winding down. Rest nights included.",
     situation: "cant-sleep",
     vibe: "dreamy",
     minutes: 45,
-    days: G(
+    days: W(
       ...ye("sleep-drift-theta", 4),
       "rest",
       ...ye("sleep-onset-delta", 4),
@@ -1747,14 +1747,14 @@ const ye = (e, t) => Array.from({ length: t }, () => e), W = (e) => Object.freez
       "sleep-onset-delta"
     )
   }),
-  W({
+  G({
     id: "study-sprint",
     title: "Study Sprint Week",
     blurb: "A week of short study blocks with breaks. About 25 minutes each.",
     situation: "deep-work",
     vibe: "minimal",
     minutes: 25,
-    days: G(
+    days: W(
       "focus-sprint-pulse",
       "focus-alpha-beta",
       "recovery-micro-break",
@@ -1764,23 +1764,23 @@ const ye = (e, t) => Array.from({ length: t }, () => e), W = (e) => Object.freez
       "meditation-alpha-sit"
     )
   }),
-  W({
+  G({
     id: "after-work-reset",
     title: "After-Work Reset",
     blurb: "5 evenings to step out of work mode. About 20 minutes each.",
     situation: "ai-burnout",
     vibe: "warm",
     minutes: 20,
-    days: G("recovery-post-sprint", "recovery-lofi-unwind", "recovery-micro-break", "rest", "recovery-lofi-unwind")
+    days: W("recovery-post-sprint", "recovery-lofi-unwind", "recovery-micro-break", "rest", "recovery-lofi-unwind")
   }),
-  W({
+  G({
     id: "gentle-routine",
     title: "Gentle Routine",
     blurb: "Gentle routine for steady attention. About 25 minutes each.",
     situation: "adhd-focus",
     vibe: "grounded",
     minutes: 25,
-    days: G(
+    days: W(
       "adhd-smr-steady",
       "recovery-micro-break",
       "adhd-smr-steady",
@@ -1791,8 +1791,8 @@ const ye = (e, t) => Array.from({ length: t }, () => e), W = (e) => Object.freez
     )
   })
 ]);
-function ui(e) {
-  return Mt.find((t) => t.id === e);
+function bi(e) {
+  return At.find((t) => t.id === e);
 }
 const Va = {
   focus: { situation: "deep-work", vibe: "bright", minutes: 25 },
@@ -1811,70 +1811,70 @@ function Xa(e) {
   return e < 12 ? "morning" : e >= 12 && e < 17 ? "afternoon" : e >= 17 && e < 21 ? "evening" : "night";
 }
 function Za(e, t = /* @__PURE__ */ new Date()) {
-  const n = Va[e.goal], a = e.timeOfDay === "anytime" ? Xa(t.getHours()) : e.timeOfDay, o = {
+  const n = Va[e.goal], a = e.timeOfDay === "anytime" ? Xa(t.getHours()) : e.timeOfDay, s = {
     situation: n.situation,
     availableMinutes: n.minutes,
     timeOfDay: a,
     sensorySensitivity: e.extraGentle ? "high" : "medium",
     deviceType: Ja[e.device]
   };
-  return Object.freeze(n.vibe === void 0 ? o : { ...o, vibe: n.vibe });
+  return Object.freeze(n.vibe === void 0 ? s : { ...s, vibe: n.vibe });
 }
-const Qa = 3, es = 864e5, At = 4;
+const Qa = 3, es = 864e5, Nt = 4;
 function Y(e) {
   if (!Number.isFinite(e)) return 0;
   const t = new Date(e).getTimezoneOffset() * 6e4;
   return Math.floor((e - t) / es);
 }
-const Nt = (e) => Number.isInteger(e) && e >= 0 && e < 1e7;
+const Et = (e) => Number.isInteger(e) && e >= 0 && e < 1e7;
 function ts(e) {
-  return Number.isFinite(e) ? Math.min(7, Math.max(1, Math.floor(e))) : At;
+  return Number.isFinite(e) ? Math.min(7, Math.max(1, Math.floor(e))) : Nt;
 }
 function ns(e) {
   return e - (e + 3) % 7;
 }
 function as(e, t, n) {
   const a = /* @__PURE__ */ new Map();
-  for (const s of e) {
-    if (!Nt(s.day) || s.day < t || s.day > n) continue;
-    const r = Number.isFinite(s.minutes) && s.minutes > 0 ? s.minutes : 0;
-    a.set(s.day, (a.get(s.day) ?? 0) + r);
+  for (const o of e) {
+    if (!Et(o.day) || o.day < t || o.day > n) continue;
+    const r = Number.isFinite(o.minutes) && o.minutes > 0 ? o.minutes : 0;
+    a.set(o.day, (a.get(o.day) ?? 0) + r);
   }
-  const o = /* @__PURE__ */ new Set();
-  return a.forEach((s, r) => {
-    s >= Qa && o.add(r);
-  }), o;
+  const s = /* @__PURE__ */ new Set();
+  return a.forEach((o, r) => {
+    o >= Qa && s.add(r);
+  }), s;
 }
 function ss(e, t, n) {
   return n.has(e) ? "listened" : e === t ? "today" : e > t ? "upcoming" : "rest";
 }
-function os(e, t, n = At) {
+function os(e, t, n = Nt) {
   const a = ts(n);
-  if (!Nt(t)) {
+  if (!Et(t)) {
     const l = Object.freeze(Array.from({ length: 7 }, () => "upcoming"));
     return Object.freeze({ daysListened: 0, goalDays: a, goalMet: !1, quietWeek: !0, dots: l });
   }
-  const o = ns(t), s = as(e, o, t), r = Object.freeze(Array.from({ length: 7 }, (l, c) => ss(o + c, t, s)));
+  const s = ns(t), o = as(e, s, t), r = Object.freeze(Array.from({ length: 7 }, (l, c) => ss(s + c, t, o)));
   return Object.freeze({
-    daysListened: s.size,
+    daysListened: o.size,
     goalDays: a,
-    goalMet: s.size >= a,
-    quietWeek: s.size === 0,
+    goalMet: o.size >= a,
+    quietWeek: o.size === 0,
     dots: r
   });
 }
-const he = "zonked.feel.v1", rs = ["calmer", "same", "not"], Et = 64 * 1024, is = 1e7, ls = /^[a-z0-9-]{1,80}$/, tt = 4, nt = 12, cs = (e) => rs.some((t) => t === e);
-function Tt(e) {
+const he = "zonked.feel.v1", rs = ["calmer", "same", "not"], Tt = 64 * 1024, is = 1e7, ls = /^[a-z0-9-]{1,80}$/, tt = 4, nt = 12, cs = (e) => rs.some((t) => t === e);
+function Lt(e) {
   if (typeof e != "object" || e === null || Array.isArray(e)) return;
   const { id: t, a: n, day: a } = e;
   if (!(typeof t != "string" || !ls.test(t) || !cs(n)) && !(typeof a != "number" || !Number.isInteger(a) || a < 0 || a > is))
     return { id: t, a: n, day: a };
 }
-function Lt(e) {
+function Ct(e) {
   if (!Array.isArray(e)) return [];
   const t = [];
   for (const n of e.slice(-500)) {
-    const a = Tt(n);
+    const a = Lt(n);
     a !== void 0 && t.push(a);
   }
   return t;
@@ -1882,20 +1882,20 @@ function Lt(e) {
 function us(e) {
   try {
     const t = e.get(he);
-    if (t === null || t.length > Et) return [];
+    if (t === null || t.length > Tt) return [];
     const n = JSON.parse(t);
     if (typeof n != "object" || n === null) return [];
     const a = n;
-    return a.v === 1 ? Lt(a.entries) : [];
+    return a.v === 1 ? Ct(a.entries) : [];
   } catch {
     return [];
   }
 }
 function ds(e, t) {
-  let n = Lt(t);
+  let n = Ct(t);
   try {
     let a = JSON.stringify({ v: 1, entries: n });
-    for (; a.length > Et && n.length > 0; )
+    for (; a.length > Tt && n.length > 0; )
       n = n.slice(Math.ceil(n.length / 10)), a = JSON.stringify({ v: 1, entries: n });
     return e.set(he, a), !0;
   } catch {
@@ -1903,7 +1903,7 @@ function ds(e, t) {
   }
 }
 function ms(e, t) {
-  const n = Tt(t);
+  const n = Lt(t);
   return n === void 0 ? e : [...e, n].slice(-500);
 }
 function hs(e) {
@@ -1920,12 +1920,12 @@ function fs(e, t) {
 const ps = (e) => e.reasons.some((t) => t.startsWith("Made for:")) && !e.reasons.some((t) => t.startsWith("Filters relaxed"));
 function gs(e, t, n) {
   if (n.length === 0) return e;
-  const a = Math.max(0, ...e.map((u) => u.template.intensity)), o = e.some((u) => Me(u.template)), s = e.some((u) => Ae(u.template)), r = new Set(e.map((u) => u.template.id)), c = t.filter(
-    (u) => r.has(u.template.id) || ps(u) && u.template.intensity <= a && (o || !Me(u.template)) && (s || !Ae(u.template))
+  const a = Math.max(0, ...e.map((u) => u.template.intensity)), s = e.some((u) => Me(u.template)), o = e.some((u) => Ae(u.template)), r = new Set(e.map((u) => u.template.id)), c = t.filter(
+    (u) => r.has(u.template.id) || ps(u) && u.template.intensity <= a && (s || !Me(u.template)) && (o || !Ae(u.template))
   ).map((u, f) => ({ r: u, i: f, s: u.score + fs(n, u.template.id) }));
   return c.sort((u, f) => f.s - u.s || u.i - f.i), c.slice(0, e.length).map((u) => u.r);
 }
-const ze = "zonked.profile.v1", De = "zonked.journeys.v1", _e = "zonked.last.v1", Ct = 32 * 1024, Ot = 1, bs = 1e7, ys = /^[a-z0-9-]{1,64}$/, Rt = Object.freeze({
+const De = "zonked.profile.v1", ze = "zonked.journeys.v1", _e = "zonked.last.v1", Ot = 32 * 1024, Rt = 1, bs = 1e7, ys = /^[a-z0-9-]{1,64}$/, Dt = Object.freeze({
   goal: "curious",
   timeOfDay: "anytime",
   device: "unsure",
@@ -1935,42 +1935,42 @@ const ze = "zonked.profile.v1", De = "zonked.journeys.v1", _e = "zonked.last.v1"
 function zt(e, t) {
   try {
     const n = e.get(t);
-    if (n === null || n.length > Ct) return;
+    if (n === null || n.length > Ot) return;
     const a = JSON.parse(n);
-    return Ie(a) && a.v === Ot ? a : void 0;
+    return Ie(a) && a.v === Rt ? a : void 0;
   } catch {
     return;
   }
 }
-function Dt(e, t, n) {
+function _t(e, t, n) {
   try {
-    const a = JSON.stringify({ v: Ot, ...n });
-    return a.length > Ct ? !1 : (e.set(t, a), !0);
+    const a = JSON.stringify({ v: Rt, ...n });
+    return a.length > Ot ? !1 : (e.set(t, a), !0);
   } catch {
     return !1;
   }
 }
-function _t(e) {
-  const { goal: t, timeOfDay: n, device: a, extraGentle: o, createdAt: s } = e;
-  if (!(!ve($a, t) || !ve(Ga, n) || !ve(Wa, a)) && !(typeof o != "boolean" || !Ne(s, Number.MAX_SAFE_INTEGER)))
-    return Object.freeze({ goal: t, timeOfDay: n, device: a, extraGentle: o, createdAt: s });
+function It(e) {
+  const { goal: t, timeOfDay: n, device: a, extraGentle: s, createdAt: o } = e;
+  if (!(!ve($a, t) || !ve(Wa, n) || !ve(Ga, a)) && !(typeof s != "boolean" || !Ne(o, Number.MAX_SAFE_INTEGER)))
+    return Object.freeze({ goal: t, timeOfDay: n, device: a, extraGentle: s, createdAt: o });
 }
 function ws(e) {
-  const t = zt(e, ze);
-  return (t && _t(t)) ?? Rt;
+  const t = zt(e, De);
+  return (t && It(t)) ?? Dt;
 }
 function ks(e, t) {
-  const n = _t({ ...t });
-  return n !== void 0 && Dt(e, ze, { ...n });
+  const n = It({ ...t });
+  return n !== void 0 && _t(e, De, { ...n });
 }
-function It(e, t) {
-  const n = Mt.find((c) => c.id === e);
+function Pt(e, t) {
+  const n = At.find((c) => c.id === e);
   if (n === void 0 || !Ie(t) || !Ne(t.startedAt, bs)) return;
-  const { doneDays: a, pickedIds: o } = t;
-  if (!Array.isArray(a) || !Array.isArray(o) || o.length > n.days.length) return;
-  const s = a, r = o;
-  if (!s.every((c) => Ne(c, n.days.length) && c >= 1) || !r.every((c) => typeof c == "string" && ys.test(c))) return;
-  const l = [...new Set(s)].sort((c, u) => c - u);
+  const { doneDays: a, pickedIds: s } = t;
+  if (!Array.isArray(a) || !Array.isArray(s) || s.length > n.days.length) return;
+  const o = a, r = s;
+  if (!o.every((c) => Ne(c, n.days.length) && c >= 1) || !r.every((c) => typeof c == "string" && ys.test(c))) return;
+  const l = [...new Set(o)].sort((c, u) => c - u);
   return Object.freeze({
     startedAt: t.startedAt,
     doneDays: Object.freeze(l),
@@ -1978,25 +1978,25 @@ function It(e, t) {
   });
 }
 function Ss(e) {
-  const t = zt(e, De), n = t == null ? void 0 : t.journeys;
+  const t = zt(e, ze), n = t == null ? void 0 : t.journeys;
   if (!Ie(n)) return vs;
   const a = {};
-  for (const [o, s] of Object.entries(n)) {
-    const r = It(o, s);
-    r !== void 0 && (a[o] = r);
+  for (const [s, o] of Object.entries(n)) {
+    const r = Pt(s, o);
+    r !== void 0 && (a[s] = r);
   }
   return Object.freeze(a);
 }
 function Ms(e, t) {
   const n = {};
-  for (const [a, o] of Object.entries(t)) {
-    const s = It(a, o);
-    s !== void 0 && (n[a] = s);
+  for (const [a, s] of Object.entries(t)) {
+    const o = Pt(a, s);
+    o !== void 0 && (n[a] = o);
   }
-  return Dt(e, De, { journeys: n });
+  return _t(e, ze, { journeys: n });
 }
 function As(e) {
-  for (const t of [ze, De, _e, he])
+  for (const t of [De, ze, _e, he])
     try {
       e.remove(t);
     } catch {
@@ -2017,76 +2017,76 @@ function Ns(e) {
     const n = "zonked.probe";
     return t.setItem(n, "1"), t.removeItem(n), {
       get: (a) => t.getItem(a),
-      set: (a, o) => t.setItem(a, o),
+      set: (a, s) => t.setItem(a, s),
       remove: (a) => t.removeItem(a)
     };
   } catch {
     return at();
   }
 }
-const Pt = /^[a-z0-9-]{1,80}$/;
+const Bt = /^[a-z0-9-]{1,80}$/;
 function Es(e) {
   try {
     const t = e.get(_e);
-    return t !== null && Pt.test(t) ? t : null;
+    return t !== null && Bt.test(t) ? t : null;
   } catch {
     return null;
   }
 }
 function Ts(e, t) {
   try {
-    Pt.test(t) && e.set(_e, t);
+    Bt.test(t) && e.set(_e, t);
   } catch {
   }
 }
 const Ls = 60, Cs = 400;
 function Os(e, t, n = null) {
-  const a = _(null), [o, s] = N(null);
+  const a = _(null), [s, o] = N(null);
   L(() => {
     if (e.playing) {
-      s(null), a.current = e.templateId === null ? null : { id: (n == null ? void 0 : n.id) ?? e.templateId, name: (n == null ? void 0 : n.name) ?? e.templateName ?? d.brand, minutes: e.elapsedSec / 60 };
+      o(null), a.current = e.templateId === null ? null : { id: (n == null ? void 0 : n.id) ?? e.templateId, name: (n == null ? void 0 : n.name) ?? e.templateName ?? d.brand, minutes: e.elapsedSec / 60 };
       return;
     }
     const l = a.current;
     if (a.current = null, !t || l === null || l.minutes * 60 < Ls) return;
-    const c = window.setTimeout(() => s({ ...l, minutes: Math.round(l.minutes) }), Cs);
+    const c = window.setTimeout(() => o({ ...l, minutes: Math.round(l.minutes) }), Cs);
     return () => window.clearTimeout(c);
   }, [e.playing, e.templateId, e.templateName, e.elapsedSec, t, n == null ? void 0 : n.id, n == null ? void 0 : n.name]);
-  const r = T(() => s(null), []);
-  return H(() => ({ card: o, dismiss: r }), [o, r]);
+  const r = T(() => o(null), []);
+  return F(() => ({ card: s, dismiss: r }), [s, r]);
 }
 const Rs = [
   ["calmer", d.feelCalmer],
   ["same", d.feelSame],
   ["not", d.feelNot]
 ];
-function zs({ onFeel: e }) {
+function Ds({ onFeel: e }) {
   const [t, n] = N(!1);
-  return t ? /* @__PURE__ */ i("p", { className: "c-muted", role: "status", "data-testid": "feel-saved", children: d.feelSaved }) : /* @__PURE__ */ y("div", { role: "group", "aria-labelledby": "c-feel-q", className: "c-feel", "data-testid": "feel-row", children: [
+  return t ? /* @__PURE__ */ i("p", { className: "c-muted", role: "status", "data-testid": "feel-saved", children: d.feelSaved }) : /* @__PURE__ */ b("div", { role: "group", "aria-labelledby": "c-feel-q", className: "c-feel", "data-testid": "feel-row", children: [
     /* @__PURE__ */ i("p", { id: "c-feel-q", className: "c-muted", children: d.feelQuestion }),
-    /* @__PURE__ */ i("div", { className: "c-chips", children: Rs.map(([a, o]) => /* @__PURE__ */ i("button", { type: "button", className: "c-tchip", "data-testid": `feel-${a}`, onClick: () => {
+    /* @__PURE__ */ i("div", { className: "c-chips", children: Rs.map(([a, s]) => /* @__PURE__ */ i("button", { type: "button", className: "c-tchip", "data-testid": `feel-${a}`, onClick: () => {
       e(a), n(!0);
-    }, children: o }, a)) })
+    }, children: s }, a)) })
   ] });
 }
-function Ds({ info: e, onAgain: t, onClose: n, firstRun: a = !1, onFeel: o }) {
-  const s = _(null);
+function zs({ info: e, onAgain: t, onClose: n, firstRun: a = !1, onFeel: s }) {
+  const o = _(null);
   return L(() => {
     var r;
-    return (r = s.current) == null ? void 0 : r.focus();
-  }, []), /* @__PURE__ */ i("div", { className: "c-overlay", onKeyDown: (r) => r.key === "Escape" && n(), children: /* @__PURE__ */ y("div", { className: "c-dialog c-end", role: "dialog", "aria-modal": "true", "aria-labelledby": "c-end-title", "data-testid": "end-card", children: [
+    return (r = o.current) == null ? void 0 : r.focus();
+  }, []), /* @__PURE__ */ i("div", { className: "c-overlay", onKeyDown: (r) => r.key === "Escape" && n(), children: /* @__PURE__ */ b("div", { className: "c-dialog c-end", role: "dialog", "aria-modal": "true", "aria-labelledby": "c-end-title", "data-testid": "end-card", children: [
     /* @__PURE__ */ i("h2", { id: "c-end-title", className: "c-h1", children: d.endTitle }),
     /* @__PURE__ */ i("p", { children: d.endLine(e.name, e.minutes) }),
     /* @__PURE__ */ i("p", { className: "c-muted", children: d.endNote }),
-    o !== void 0 && /* @__PURE__ */ i(zs, { onFeel: o }),
+    s !== void 0 && /* @__PURE__ */ i(Ds, { onFeel: s }),
     a && /* @__PURE__ */ i("p", { className: "c-note", "data-testid": "first-run-note", children: d.studioNote }),
-    /* @__PURE__ */ y("div", { className: "c-actions", children: [
-      /* @__PURE__ */ i("button", { ref: s, type: "button", className: "c-btn c-primary", "data-testid": "end-again", onClick: t, children: d.playAgain }),
+    /* @__PURE__ */ b("div", { className: "c-actions", children: [
+      /* @__PURE__ */ i("button", { ref: o, type: "button", className: "c-btn c-primary", "data-testid": "end-again", onClick: t, children: d.playAgain }),
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn", "data-testid": "end-close", onClick: n, children: d.close })
     ] })
   ] }) });
 }
-const Bt = 20;
+const Ft = 20;
 function _s(e) {
   if (e.kind === "sleep-fade") return 4;
   if (e.kind === "pomodoro") return 5;
@@ -2095,15 +2095,15 @@ function _s(e) {
   return t === 15 ? 0 : t === 30 ? 1 : t === 60 ? 2 : -1;
 }
 function Is({ timer: e, player: t, onSprint: n, onSprintEnd: a }) {
-  const o = (r) => {
+  const s = (r) => {
     if (r === 5) return e.kind === "pomodoro" ? a == null ? void 0 : a() : n == null ? void 0 : n();
-    a == null || a(), r <= 2 ? t.startTimer({ kind: "countdown", minutes: [15, 30, 60][r] ?? 15 }) : r === 3 ? t.stopTimer() : t.startTimer({ kind: "sleep-fade", minutes: Bt });
-  }, s = _s(e);
-  return /* @__PURE__ */ y("div", { children: [
-    /* @__PURE__ */ i("div", { className: "c-chips", role: "radiogroup", "aria-label": "Timer", children: d.timerChips.map((r, l) => l === 5 && n === void 0 ? null : /* @__PURE__ */ i("button", { type: "button", role: "radio", "aria-checked": s === l, className: "c-tchip", onClick: () => o(l), children: r }, r)) }),
-    e.kind !== "none" && e.running && /* @__PURE__ */ y("p", { className: "c-time", "data-testid": "time-left", children: [
+    a == null || a(), r <= 2 ? t.startTimer({ kind: "countdown", minutes: [15, 30, 60][r] ?? 15 }) : r === 3 ? t.stopTimer() : t.startTimer({ kind: "sleep-fade", minutes: Ft });
+  }, o = _s(e);
+  return /* @__PURE__ */ b("div", { children: [
+    /* @__PURE__ */ i("div", { className: "c-chips", role: "group", "aria-label": "Timer", children: d.timerChips.map((r, l) => l === 5 && n === void 0 ? null : /* @__PURE__ */ i("button", { type: "button", "aria-pressed": o === l, className: "c-tchip", onClick: () => s(l), children: r }, r)) }),
+    e.kind !== "none" && e.running && /* @__PURE__ */ b("p", { className: "c-time", "data-testid": "time-left", children: [
       e.kind === "pomodoro" ? `${e.phase === "break" ? d.sprintBreakLeft : d.sprintFocusLeft} ` : "",
-      St(e.remainingSec)
+      Mt(e.remainingSec)
     ] })
   ] });
 }
@@ -2113,7 +2113,7 @@ function Ps({ onAccept: e, onCancel: t }) {
     var r;
     return (r = n.current) == null ? void 0 : r.focus();
   }, []);
-  const s = /* @__PURE__ */ y("div", { className: "c-safety", onKeyDown: (r) => {
+  const o = /* @__PURE__ */ b("div", { className: "c-safety", onKeyDown: (r) => {
     var l;
     if (t !== void 0) {
       if (r.key === "Escape")
@@ -2126,21 +2126,22 @@ function Ps({ onAccept: e, onCancel: t }) {
   }, children: [
     /* @__PURE__ */ i("h2", { id: "c-safety-title", children: d.safetyTitle }),
     /* @__PURE__ */ i("ul", { className: "c-safe-list", children: d.safetyLines.map((r) => /* @__PURE__ */ i("li", { children: r }, r)) }),
-    /* @__PURE__ */ y("div", { className: "c-actions c-row", children: [
+    /* @__PURE__ */ i("p", { className: "c-limits", "data-testid": "safety-limits", children: d.safetyLimits }),
+    /* @__PURE__ */ b("div", { className: "c-actions c-row", children: [
       t !== void 0 && /* @__PURE__ */ i("button", { ref: a, type: "button", className: "c-btn", onClick: t, children: d.back }),
       /* @__PURE__ */ i("button", { ref: n, type: "button", className: "c-btn c-primary", "data-testid": "calm-safety-accept", onClick: e, children: d.safetyAccept })
     ] })
   ] });
-  return t === void 0 ? s : /* @__PURE__ */ i("div", { className: "c-overlay", children: /* @__PURE__ */ i("div", { className: "c-dialog", role: "dialog", "aria-modal": "true", "aria-labelledby": "c-safety-title", children: s }) });
+  return t === void 0 ? o : /* @__PURE__ */ i("div", { className: "c-overlay", children: /* @__PURE__ */ i("div", { className: "c-dialog", role: "dialog", "aria-modal": "true", "aria-labelledby": "c-safety-title", children: o }) });
 }
-const Bs = 1, Hs = 720;
-function Fs(e) {
+const Bs = 1, Fs = 720;
+function Hs(e) {
   const t = (e.endedAt - e.startedAt) / 6e4;
-  return Number.isFinite(t) && t >= Bs ? Math.min(Hs, t) : 0;
+  return Number.isFinite(t) && t >= Bs ? Math.min(Fs, t) : 0;
 }
 const xs = 200, Z = (e = Date.now) => Y(e());
 function js(e, t) {
-  const n = H(() => Ns(), []), [a, o] = N(() => ws(n)), [s, r] = N(() => Ss(n)), [l, c] = N([]), [u, f] = N(0);
+  const n = F(() => Ns(), []), [a, s] = N(() => ws(n)), [o, r] = N(() => Ss(n)), [l, c] = N([]), [u, f] = N(0);
   L(() => {
     let w = !0;
     return e.listLogs(xs).then((m) => w && c(m)).catch(() => {
@@ -2148,12 +2149,12 @@ function js(e, t) {
       w = !1;
     };
   }, [e, u, t]);
-  const k = H(() => {
-    const w = l.map((m) => ({ day: Y(m.startedAt), minutes: Fs(m) }));
+  const k = F(() => {
+    const w = l.map((m) => ({ day: Y(m.startedAt), minutes: Hs(m) }));
     return os(w, Z());
   }, [l]), S = T(
     (w) => {
-      o(w), ks(n, w);
+      s(w), ks(n, w);
     },
     [n]
   ), M = T(
@@ -2165,9 +2166,9 @@ function js(e, t) {
     },
     [n]
   ), v = T(() => f((w) => w + 1), []);
-  return { storage: n, profile: a, progress: s, week: k, logs: l, setProfile: S, setJourney: M, refresh: v };
+  return { storage: n, profile: a, progress: o, week: k, logs: l, setProfile: S, setJourney: M, refresh: v };
 }
-const Ht = 15e3, Ft = 6e4, ce = [
+const Ht = 15e3, xt = 6e4, ce = [
   { score: 22, level: "focus", beatHz: 40, carrierHz: 200, gain: 0.45, transitionSec: 5, why: "Simulated: a fresh start. The pretend load is low, so the sound stays steady." },
   { score: 48, level: "flow", beatHz: 18, carrierHz: 220, gain: 0.4, transitionSec: 8, why: "Simulated: the pretend load is building. The beat eases down to 18 Hz." },
   { score: 70, level: "recovery", beatHz: 10, carrierHz: 200, gain: 0.32, transitionSec: 8, why: "Simulated: the pretend load is high. The beat slows to 10 Hz and the sound softens." },
@@ -2184,95 +2185,95 @@ function $s(e, t) {
     why: n.why
   };
 }
-function Gs(e, t) {
-  return pn(JSON.parse(JSON.stringify($s(e, t))));
+function Ws(e, t) {
+  return gn(JSON.parse(JSON.stringify($s(e, t))));
 }
-const xt = {
+const jt = {
   now: () => Date.now(),
   setTimer: (e, t) => setTimeout(e, t),
   clearTimer: (e) => clearTimeout(e)
 };
-let ue = [], jt = xt;
-function $t() {
-  for (const e of ue) jt.clearTimer(e);
+let ue = [], $t = jt;
+function Wt() {
+  for (const e of ue) $t.clearTimer(e);
   ue = [];
 }
 function st(e, t, n, a) {
-  const o = a.now(), s = Gs(t, Math.trunc(o / 1e3));
-  if (s === null) return;
+  const s = a.now(), o = Ws(t, Math.trunc(s / 1e3));
+  if (o === null) return;
   const r = t >= ce.length - 1;
-  pt({ state: s, source: "demo", changedAtMs: o, snoozeUntilMs: 0, demoNextAtMs: n + (r ? Ft : (t + 1) * Ht) }), e.applyCrew(s), e.followCrew();
+  pt({ state: o, source: "demo", changedAtMs: s, snoozeUntilMs: 0, demoNextAtMs: n + (r ? xt : (t + 1) * Ht) }), e.applyCrew(o), e.followCrew();
 }
 function Gt(e) {
-  $t(), pt({ state: null, source: "none", changedAtMs: 0, snoozeUntilMs: 0, demoNextAtMs: null }), e.crewLost();
+  Wt(), pt({ state: null, source: "none", changedAtMs: 0, snoozeUntilMs: 0, demoNextAtMs: null }), e.crewLost();
 }
-function Ws(e, t = xt) {
-  $t(), jt = t;
+function Gs(e, t = jt) {
+  Wt(), $t = t;
   const n = t.now();
   st(e, 0, n, t), e.snapshot().playing || e.play();
   for (let a = 1; a < ce.length; a += 1) ue.push(t.setTimer(() => st(e, a, n, t), a * Ht));
-  ue.push(t.setTimer(() => Gt(e), Ft));
+  ue.push(t.setTimer(() => Gt(e), xt));
 }
 const Ks = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], ot = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], qs = { listened: "listened", rest: "rest day", today: "today", upcoming: "coming up" };
 function Us(e, t = !0, n = !1) {
   return e.quietWeek && n && !t ? d.joinedLine : e.quietWeek ? t ? d.welcomeBack : d.firstWeek : `${d.weekOf(e.daysListened)}. ${d.restCount}`;
 }
 function Ys({ week: e, hasHistory: t = !0, joinedToday: n = !1, compact: a = !1 }) {
-  const o = n && !t && e.quietWeek;
-  return /* @__PURE__ */ y("div", { className: a ? "c-week c-week-compact" : "c-week", children: [
-    /* @__PURE__ */ i("ul", { className: "c-dots", "aria-label": "This week", children: e.dots.map((s, r) => {
-      const l = o && s === "today";
-      return /* @__PURE__ */ y("li", { className: `c-dot c-dot-${s}${l ? " c-dot-joined" : ""}`, "data-state": s, children: [
-        /* @__PURE__ */ i("span", { className: "c-mark", "aria-hidden": "true", children: l || s === "listened" ? /* @__PURE__ */ i(Oe, { name: "check", size: 16 }) : "" }),
+  const s = n && !t && e.quietWeek;
+  return /* @__PURE__ */ b("div", { className: a ? "c-week c-week-compact" : "c-week", children: [
+    /* @__PURE__ */ i("ul", { className: "c-dots", "aria-label": "This week", children: e.dots.map((o, r) => {
+      const l = s && o === "today";
+      return /* @__PURE__ */ b("li", { className: `c-dot c-dot-${o}${l ? " c-dot-joined" : ""}`, "data-state": o, children: [
+        /* @__PURE__ */ i("span", { className: "c-mark", "aria-hidden": "true", children: l || o === "listened" ? /* @__PURE__ */ i(Oe, { name: "check", size: 16 }) : "" }),
         /* @__PURE__ */ i("span", { className: "c-dayname", "aria-hidden": "true", children: Ks[r] }),
-        /* @__PURE__ */ i("span", { className: "c-sr", children: `${ot[r]}, ${l ? d.joinedToday : qs[s]}` })
+        /* @__PURE__ */ i("span", { className: "c-sr", children: `${ot[r]}, ${l ? d.joinedToday : qs[o]}` })
       ] }, ot[r]);
     }) }),
-    /* @__PURE__ */ i("p", { className: "c-muted", "data-testid": a ? void 0 : "week-text", children: Us(e, t, o) })
+    /* @__PURE__ */ i("p", { className: "c-muted", "data-testid": a ? void 0 : "week-text", children: Us(e, t, s) })
   ] });
 }
 const Vs = () => /* @__PURE__ */ new Date(), Js = [], Xs = ["focus", "study"];
-function Zs({ profile: e, week: t, reduced: n, crewConnected: a, hasHistory: o = !0, joinedToday: s = !1, now: r = Vs, last: l = null, feel: c = Js, onSprint: u, onPlay: f, onGo: k, onReset: S, onBreathe: M }) {
-  const [v, w] = N(0), m = H(() => {
+function Zs({ profile: e, week: t, reduced: n, crewConnected: a, hasHistory: s = !0, joinedToday: o = !1, now: r = Vs, last: l = null, feel: c = Js, onSprint: u, onPlay: f, onGo: k, onReset: S, onBreathe: M }) {
+  const [v, w] = N(0), m = F(() => {
     const p = Za(e, r());
     return gs(Qe(p, 5), c.length === 0 ? [] : Qe(p, 12), c);
   }, [e, r, c]), h = m[v % Math.max(1, m.length)];
-  return /* @__PURE__ */ y("div", { className: "c-today", children: [
-    /* @__PURE__ */ y("header", { className: "c-pagehead", children: [
+  return /* @__PURE__ */ b("div", { className: "c-today", children: [
+    /* @__PURE__ */ b("header", { className: "c-pagehead", children: [
       /* @__PURE__ */ i(Re, { size: 72, reduced: n }),
-      /* @__PURE__ */ i("h1", { className: "c-greet", "data-testid": "greeting", children: gn(r().getHours()) })
+      /* @__PURE__ */ i("h1", { className: "c-greet", "data-testid": "greeting", children: bn(r().getHours()) })
     ] }),
     l !== null && l.id !== (h == null ? void 0 : h.template.id) && /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-wide c-again", "data-testid": "play-again", onClick: () => f(l), children: `${d.playAgain}: ${l.name}` }),
-    h !== void 0 && /* @__PURE__ */ y("section", { className: "c-daily", "aria-labelledby": "c-daily-h", children: [
+    h !== void 0 && /* @__PURE__ */ b("section", { className: "c-daily", "aria-labelledby": "c-daily-h", children: [
       /* @__PURE__ */ i("p", { className: "c-eyebrow", children: d.dailyEyebrow }),
       /* @__PURE__ */ i("h2", { id: "c-daily-h", children: h.template.name }),
-      /* @__PURE__ */ i("p", { className: "c-muted", children: `${h.template.recommendedMinutes} min. ${Ge(h.reasons[0] ?? d.suggested)}` }),
-      /* @__PURE__ */ y("div", { className: "c-actions", children: [
+      /* @__PURE__ */ i("p", { className: "c-muted", children: `${h.template.recommendedMinutes} min. ${We(h.reasons[0] ?? d.suggested)}` }),
+      /* @__PURE__ */ b("div", { className: "c-actions", children: [
         /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-primary", "data-testid": "today-play", onClick: () => f(h.template), children: d.start }),
         /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link", onClick: () => w((p) => p + 1), children: d.notThisOne })
       ] })
     ] }),
-    u !== void 0 && h !== void 0 && Xs.includes(e.goal) && /* @__PURE__ */ y("button", { type: "button", className: "c-link-card c-sprint-entry", "data-testid": "today-sprint", onClick: () => u(h.template), children: [
+    u !== void 0 && h !== void 0 && Xs.includes(e.goal) && /* @__PURE__ */ b("button", { type: "button", className: "c-link-card c-sprint-entry", "data-testid": "today-sprint", onClick: () => u(h.template), children: [
       /* @__PURE__ */ i("b", { children: d.sprintTitle }),
       /* @__PURE__ */ i("small", { children: d.sprintLine })
     ] }),
-    /* @__PURE__ */ y("button", { type: "button", className: "c-link-card c-reset-entry", "data-testid": "today-reset", onClick: S, children: [
+    /* @__PURE__ */ b("button", { type: "button", className: "c-link-card c-reset-entry", "data-testid": "today-reset", onClick: S, children: [
       /* @__PURE__ */ i("b", { children: d.resetEntry }),
       /* @__PURE__ */ i("small", { children: d.resetEntryHint })
     ] }),
-    M !== void 0 && e.goal === "calm" && /* @__PURE__ */ y("button", { type: "button", className: "c-link-card c-breathe-entry", "data-testid": "today-breathe", onClick: M, children: [
+    M !== void 0 && e.goal === "calm" && /* @__PURE__ */ b("button", { type: "button", className: "c-link-card c-breathe-entry", "data-testid": "today-breathe", onClick: M, children: [
       /* @__PURE__ */ i("b", { children: d.breatheEntry }),
       /* @__PURE__ */ i("small", { children: d.breatheEntryHint })
     ] }),
-    /* @__PURE__ */ y("section", { "aria-labelledby": "c-goal-h", children: [
-      /* @__PURE__ */ i("h2", { id: "c-goal-h", className: "c-h3", children: `Your goal: ${bn[e.goal]}` }),
-      /* @__PURE__ */ i(Ys, { week: t, hasHistory: o, joinedToday: s })
+    /* @__PURE__ */ b("section", { "aria-labelledby": "c-goal-h", children: [
+      /* @__PURE__ */ i("h2", { id: "c-goal-h", className: "c-h3", children: `Your goal: ${yn[e.goal]}` }),
+      /* @__PURE__ */ i(Ys, { week: t, hasHistory: s, joinedToday: o })
     ] }),
-    /* @__PURE__ */ y("section", { "aria-labelledby": "c-for-h", children: [
+    /* @__PURE__ */ b("section", { "aria-labelledby": "c-for-h", children: [
       /* @__PURE__ */ i("h2", { id: "c-for-h", className: "c-h3", children: d.forYou }),
-      /* @__PURE__ */ i("ul", { className: "c-rows", children: m.slice(0, 3).map((p) => /* @__PURE__ */ i("li", { children: /* @__PURE__ */ y("button", { type: "button", className: "c-mini-card", onClick: () => f(p.template), children: [
+      /* @__PURE__ */ i("ul", { className: "c-rows", children: m.slice(0, 3).map((p) => /* @__PURE__ */ i("li", { children: /* @__PURE__ */ b("button", { type: "button", className: "c-mini-card", onClick: () => f(p.template), children: [
         /* @__PURE__ */ i("b", { children: p.template.name }),
-        /* @__PURE__ */ i("small", { children: Ge(p.reasons[0] ?? d.suggested) }),
+        /* @__PURE__ */ i("small", { children: We(p.reasons[0] ?? d.suggested) }),
         /* @__PURE__ */ i("em", { children: `${p.template.recommendedMinutes} min` })
       ] }) }, p.template.id)) })
     ] }),
@@ -2281,7 +2282,7 @@ function Zs({ profile: e, week: t, reduced: n, crewConnected: a, hasHistory: o =
     a && /* @__PURE__ */ i("p", { className: "c-crew-chip", role: "status", children: "Crew connected: easing the sound" })
   ] });
 }
-const Qs = "calm-breathe-5", Wt = 5, eo = 0.5, to = 20, we = {
+const Qs = "calm-breathe-5", Kt = 5, eo = 0.5, to = 20, we = {
   atMin: 0,
   beatHz: eo,
   carrierHz: to,
@@ -2299,7 +2300,7 @@ const Qs = "calm-breathe-5", Wt = 5, eo = 0.5, to = 20, we = {
   tags: ["breathing", "no-beat"],
   layerTags: ee([we]),
   situations: ["meditate", "quick-reset"],
-  recommendedMinutes: Wt,
+  recommendedMinutes: Kt,
   intensity: 1,
   adhdFriendly: me([we], 1),
   stages: [we],
@@ -2311,8 +2312,8 @@ function so(e) {
   const [t, n] = N(0);
   if (L(() => {
     if (n(0), !e) return;
-    const o = window.setInterval(() => n((s) => s + 1), 1e3);
-    return () => window.clearInterval(o);
+    const s = window.setInterval(() => n((o) => o + 1), 1e3);
+    return () => window.clearInterval(s);
   }, [e]), !e) return ao;
   const a = t % 8;
   return { label: a < 4 ? "Breathe in" : "Breathe out", count: 4 - a % 4 };
@@ -2323,14 +2324,14 @@ function ro({ label: e, on: t, announce: n }) {
 }
 const io = 0.5, lo = 1.25, K = (e, t) => Number.isFinite(e) ? e : t, q = (e, t, n) => Math.max(t, Math.min(n, e)), rt = (e) => (1 - Math.cos(Math.PI * q(e, 0, 1))) / 2;
 function co(e, t = 4, n = 4) {
-  const a = q(K(t, 4), 0.5, 30), o = q(K(n, 4), 0.5, 30), s = a + o, l = (K(e, 0) % s + s) % s;
+  const a = q(K(t, 4), 0.5, 30), s = q(K(n, 4), 0.5, 30), o = a + s, l = (K(e, 0) % o + o) % o;
   if (l < a) return rt(l / a);
-  const c = Math.min(io, o / 4), u = q((l - a) / (o - c), 0, 1);
+  const c = Math.min(io, s / 4), u = q((l - a) / (s - c), 0, 1);
   return 1 - rt(1 - Math.pow(1 - u, lo));
 }
 function uo(e, t = 4, n = 4) {
-  const a = q(K(t, 4), 0.5, 30), o = a + q(K(n, 4), 0.5, 30);
-  return (K(e, 0) % o + o) % o < a ? "Breathe in" : "Breathe out";
+  const a = q(K(t, 4), 0.5, 30), s = a + q(K(n, 4), 0.5, 30);
+  return (K(e, 0) % s + s) % s < a ? "Breathe in" : "Breathe out";
 }
 const it = { phase: 0, label: "Breathe in" }, mo = 4e-3;
 function ho(e) {
@@ -2341,26 +2342,26 @@ function ho(e) {
       return;
     }
     let a = 0;
-    const o = performance.now(), s = (r) => {
-      const l = (r - o) / 1e3, c = co(l), u = uo(l);
-      n((f) => u === f.label && Math.abs(c - f.phase) < mo ? f : { phase: c, label: u }), a = requestAnimationFrame(s);
+    const s = performance.now(), o = (r) => {
+      const l = (r - s) / 1e3, c = co(l), u = uo(l);
+      n((f) => u === f.label && Math.abs(c - f.phase) < mo ? f : { phase: c, label: u }), a = requestAnimationFrame(o);
     };
-    return a = requestAnimationFrame(s), () => {
+    return a = requestAnimationFrame(o), () => {
       cancelAnimationFrame(a);
     };
   }, [e]), t;
 }
-function di({ label: e, className: t, live: n = !0 }) {
+function yi({ label: e, className: t, live: n = !0 }) {
   return /* @__PURE__ */ i("p", { className: t ?? "cm-cue", ...n ? { "aria-live": "polite", role: "status" } : {}, children: e });
 }
-const Kt = 8 * 1024 * 1024, qt = 600, fo = 20, po = 2, go = 0.45, bo = 1e-4;
+const qt = 8 * 1024 * 1024, Ut = 600, fo = 20, po = 2, go = 0.45, bo = 1e-4;
 function yo(e) {
-  var o;
-  const t = ((o = e[0]) == null ? void 0 : o.length) ?? 0, n = new Float32Array(t), a = Math.max(1, e.length);
-  for (const s of e) {
-    const r = Math.min(t, s.length);
+  var s;
+  const t = ((s = e[0]) == null ? void 0 : s.length) ?? 0, n = new Float32Array(t), a = Math.max(1, e.length);
+  for (const o of e) {
+    const r = Math.min(t, o.length);
     for (let l = 0; l < r; l++) {
-      const c = s[l] ?? 0;
+      const c = o[l] ?? 0;
       n[l] = (n[l] ?? 0) + (Number.isFinite(c) ? c : 0) / a;
     }
   }
@@ -2368,21 +2369,21 @@ function yo(e) {
 }
 function vo(e, t) {
   const n = e.length - t, a = e.slice(0, n);
-  for (let o = 0; o < t; o++) {
-    const s = (o + 0.5) / t * (Math.PI / 2);
-    a[o] = (e[o] ?? 0) * Math.sin(s) + (e[n + o] ?? 0) * Math.cos(s);
+  for (let s = 0; s < t; s++) {
+    const o = (s + 0.5) / t * (Math.PI / 2);
+    a[s] = (e[s] ?? 0) * Math.sin(o) + (e[n + s] ?? 0) * Math.cos(o);
   }
   return a;
 }
-function Ut(e, t) {
+function Yt(e, t) {
   if (!Number.isFinite(t) || t <= 0 || e.length === 0) return { ok: !1, error: "This file has no sound in it." };
   const n = yo(e), a = n.length / t;
-  if (a > qt) return { ok: !1, error: "This file is longer than 10 minutes." };
-  let o = 0;
-  for (const l of n) o = Math.max(o, Math.abs(l));
-  if (o < bo) return { ok: !1, error: "This file is silent." };
-  const s = go / o;
-  for (let l = 0; l < n.length; l++) n[l] = (n[l] ?? 0) * s;
+  if (a > Ut) return { ok: !1, error: "This file is longer than 10 minutes." };
+  let s = 0;
+  for (const l of n) s = Math.max(s, Math.abs(l));
+  if (s < bo) return { ok: !1, error: "This file is silent." };
+  const o = go / s;
+  for (let l = 0; l < n.length; l++) n[l] = (n[l] ?? 0) * o;
   if (a < fo) return { ok: !0, data: n, loop: !1 };
   const r = Math.min(Math.round(po * t), Math.floor(n.length / 4));
   return { ok: !0, data: vo(n, r), loop: !0 };
@@ -2445,14 +2446,14 @@ const ie = [
   gong: "bowl"
 };
 function So(e, t, n) {
-  return new Promise((a, o) => {
-    const s = setTimeout(() => o(new Error(X)), n);
+  return new Promise((a, s) => {
+    const o = setTimeout(() => s(new Error(X)), n);
     e.decodeAudioData(t).then(
       (r) => {
-        clearTimeout(s), a(r);
+        clearTimeout(o), a(r);
       },
       (r) => {
-        clearTimeout(s), o(r instanceof Error ? r : new Error(String(r)));
+        clearTimeout(o), s(r instanceof Error ? r : new Error(String(r)));
       }
     );
   });
@@ -2460,10 +2461,10 @@ function So(e, t, n) {
 const B = (e) => ({ ok: !1, error: e }), Mo = 20261128, Ao = /^[a-z]+$/;
 function No(e) {
   const t = /* @__PURE__ */ new Map(), n = /* @__PURE__ */ new Map();
-  let a = null, o = 0, s = null, r = 0, l = 0;
-  const c = () => a === null ? 0 : s ?? wn(o);
+  let a = null, s = 0, o = null, r = 0, l = 0;
+  const c = () => a === null ? 0 : o ?? kn(s);
   function u(m) {
-    m.duck.gain.setTargetAtTime(gt(c()), m.ctx.currentTime, vn);
+    m.duck.gain.setTargetAtTime(gt(c()), m.ctx.currentTime, wn);
   }
   function f(m) {
     if (!Ao.test(m) || !ie.some((h) => h.id === m)) return null;
@@ -2495,9 +2496,9 @@ function No(e) {
   }
   function M(m, h) {
     const p = h.ctx.currentTime, g = m.gain.gain;
-    g.cancelScheduledValues(p), g.setValueAtTime(g.value, p), g.linearRampToValueAtTime(0, p + We);
+    g.cancelScheduledValues(p), g.setValueAtTime(g.value, p), g.linearRampToValueAtTime(0, p + Ge);
     try {
-      m.src.stop(p + We + 0.05);
+      m.src.stop(p + Ge + 0.05);
     } catch {
     }
     m.src.onended = () => {
@@ -2505,13 +2506,13 @@ function No(e) {
     };
   }
   function v(m, h, p, g, A) {
-    a !== null && M(a, m), o = fe(g, o);
+    a !== null && M(a, m), s = fe(g, s);
     const C = m.ctx.createBufferSource(), R = m.ctx.createGain();
-    C.buffer = p, C.loop = A, R.gain.setValueAtTime(0, m.ctx.currentTime), R.gain.linearRampToValueAtTime(o, m.ctx.currentTime + Ke), C.connect(R), R.connect(m.input);
-    const F = { id: h, src: C, gain: R };
+    C.buffer = p, C.loop = A, R.gain.setValueAtTime(0, m.ctx.currentTime), R.gain.linearRampToValueAtTime(s, m.ctx.currentTime + Ke), C.connect(R), R.connect(m.input);
+    const H = { id: h, src: C, gain: R };
     return A || (C.onended = () => {
-      C.disconnect(), R.disconnect(), a === F && (a = null, u(m));
-    }), C.start(), a = F, u(m), { ok: !0 };
+      C.disconnect(), R.disconnect(), a === H && (a = null, u(m));
+    }), C.start(), a = H, u(m), { ok: !0 };
   }
   async function w(m, h, p, g) {
     let A;
@@ -2521,21 +2522,21 @@ function No(e) {
       return B("sample unavailable: reinstall the app files");
     }
     if (g !== r) return { ok: !0 };
-    a !== null && M(a, m), o = fe(p, o);
+    a !== null && M(a, m), s = fe(p, s);
     const C = A(m.ctx, h, Mo + l++), R = m.ctx.createGain();
-    return R.gain.setValueAtTime(0, m.ctx.currentTime), R.gain.linearRampToValueAtTime(o, m.ctx.currentTime + Ke), C.connect(R), R.connect(m.input), a = { id: h, src: C, gain: R }, u(m), { ok: !0 };
+    return R.gain.setValueAtTime(0, m.ctx.currentTime), R.gain.linearRampToValueAtTime(s, m.ctx.currentTime + Ke), C.connect(R), R.connect(m.input), a = { id: h, src: C, gain: R }, u(m), { ok: !0 };
   }
   return {
     list: () => ie,
     async start(m, h) {
-      var F;
+      var H;
       const p = e.getBus();
       if (p === null) return B("start the sound first");
       const g = ++r;
       if (ie.some((x) => x.id === m && x.kind === "synth")) return w(p, m, h, g);
       const A = await S(p, m), C = ko[m];
       if (!A.ok && A.error === X && C !== void 0 && g === r) {
-        const x = await w(p, C, h, g), V = (((F = ie.find((ae) => ae.id === C)) == null ? void 0 : F.label) ?? C).replace(" (synth)", "").toLowerCase();
+        const x = await w(p, C, h, g), V = (((H = ie.find((ae) => ae.id === C)) == null ? void 0 : H.label) ?? C).replace(" (synth)", "").toLowerCase();
         return x.ok ? { ok: !0, note: `The recording could not load in this browser, so a made-in-code sound (${V}) plays instead.` } : x;
       }
       if (!A.ok) return A.error === X ? B("sample unavailable: this browser could not decode it") : A;
@@ -2548,14 +2549,14 @@ function No(e) {
       return A === null ? B("start the sound first") : (r++, v(A, m, h, p, g));
     },
     setLevel(m) {
-      o = fe(m, o);
+      s = fe(m, s);
       const h = e.getBus();
       if (h === null || a === null) return;
       const p = a.gain.gain;
-      p.cancelScheduledValues(h.ctx.currentTime), p.setTargetAtTime(o, h.ctx.currentTime, yn), u(h);
+      p.cancelScheduledValues(h.ctx.currentTime), p.setTargetAtTime(s, h.ctx.currentTime, vn), u(h);
     },
     setBlend(m) {
-      s = kn(m, s ?? 0);
+      o = Sn(m, o ?? 0);
       const h = e.getBus();
       h !== null && u(h);
     },
@@ -2577,36 +2578,40 @@ const $ = No({
   fetchBytes: Eo,
   baseUrl: "./",
   origin: typeof location > "u" ? "" : location.href
-}), Yt = () => $.list(), To = (e, t) => $.start(e, t), Lo = (e) => $.setLevel(e), Co = () => $.stop(), Oo = (e) => $.setBlend(e), Ro = () => $.playing();
-async function zo(e, t, n) {
+}), Vt = () => $.list(), To = (e, t) => $.start(e, t), Lo = (e) => $.setLevel(e), Co = () => $.stop(), Oo = (e) => $.setBlend(e), Ro = () => $.playing();
+async function Do(e, t, n) {
   const a = bt();
   if (a === null) return { ok: !1, error: "start the sound first" };
   try {
-    const o = await a.ctx.decodeAudioData(t.slice(0)), s = Array.from({ length: o.numberOfChannels }, (c, u) => o.getChannelData(u)), r = Ut(s, o.sampleRate);
+    const s = await a.ctx.decodeAudioData(t.slice(0)), o = Array.from({ length: s.numberOfChannels }, (c, u) => s.getChannelData(u)), r = Yt(o, s.sampleRate);
     if (!r.ok) return r;
-    const l = a.ctx.createBuffer(1, r.data.length, o.sampleRate);
+    const l = a.ctx.createBuffer(1, r.data.length, s.sampleRate);
     return l.getChannelData(0).set(r.data), $.startBuffer(e, l, n, r.loop);
   } catch {
     return { ok: !1, error: "This file could not be played." };
   }
 }
-const Vt = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const Jt = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  MAX_SAMPLE_LEVEL: Fn,
+  MAX_SAMPLE_LEVEL: xn,
   duckGain: gt,
-  listSamples: Yt,
+  listSamples: Vt,
   playingSample: Ro,
   setBlend: Oo,
   setSampleLevel: Lo,
-  startOwn: zo,
+  startOwn: Do,
   startSample: To,
   stopSample: Co
-}, Symbol.toStringTag, { value: "Module" })), Pe = "zonked.nature.v1", Jt = 0.3, Xt = 0.4, Zt = 0.85, lt = { id: null, blend: Jt, level: Xt }, ct = (e, t, n, a) => typeof e == "number" && Number.isFinite(e) ? Math.min(n, Math.max(t, e)) : a;
-function Do(e) {
+}, Symbol.toStringTag, { value: "Module" })), zo = ["Water", "Rain", "Wind and birds", "Fire and bells", "Made in code"], _o = /* @__PURE__ */ new Set(["rain", "lightrain", "thunder", "veranda", "window", "storm"]), Io = /* @__PURE__ */ new Set(["forest", "birds", "breeze", "hum"]), Po = /* @__PURE__ */ new Set(["fire", "chimes", "koshi", "gong"]);
+function Bo(e) {
+  return e.kind === "synth" ? "Made in code" : _o.has(e.id) ? "Rain" : Io.has(e.id) ? "Wind and birds" : Po.has(e.id) ? "Fire and bells" : "Water";
+}
+const Pe = "zonked.nature.v1", Xt = 0.3, Zt = 0.4, Qt = 0.85, lt = { id: null, blend: Xt, level: Zt }, ct = (e, t, n, a) => typeof e == "number" && Number.isFinite(e) ? Math.min(n, Math.max(t, e)) : a;
+function Fo(e) {
   if (e === null || e.length > 400) return lt;
   try {
     const t = JSON.parse(e);
-    return { id: typeof t.id == "string" && /^(own:)?[a-z0-9]{3,40}$/.test(t.id) ? t.id : null, blend: ct(t.blend, 0, 1, Jt), level: ct(t.level, 0, Zt, Xt) };
+    return { id: typeof t.id == "string" && /^(own:)?[a-z0-9]{3,40}$/.test(t.id) ? t.id : null, blend: ct(t.blend, 0, 1, Xt), level: ct(t.level, 0, Qt, Zt) };
   } catch {
     return lt;
   }
@@ -2617,9 +2622,9 @@ const Be = () => {
   } catch {
     return null;
   }
-}, Qt = () => {
+}, en = () => {
   var e;
-  return Do(((e = Be()) == null ? void 0 : e.getItem(Pe)) ?? null);
+  return Fo(((e = Be()) == null ? void 0 : e.getItem(Pe)) ?? null);
 };
 function ut(e) {
   var t;
@@ -2628,161 +2633,180 @@ function ut(e) {
   } catch {
   }
 }
-function _o() {
+function Ho() {
   var e;
   try {
     (e = Be()) == null || e.removeItem(Pe);
   } catch {
   }
 }
-const Io = { wind: "breeze", waterfall: "rapids", flute: "wave" }, Po = z(() => import("./chunk-MySounds-DqwYCvdJ.mjs").then((e) => ({ default: e.MySounds }))), Bo = z(() => import("./chunk-Credits-DPx8sHN3.mjs").then((e) => ({ default: e.Credits })));
-function Ee({ id: e, label: t, value: n, max: a, onChange: o }) {
-  return /* @__PURE__ */ y("div", { className: "c-slider", children: [
+const xo = { wind: "breeze", waterfall: "rapids", flute: "wave" }, jo = D(() => import("./chunk-MySounds-HEuJLrdB.mjs").then((e) => ({ default: e.MySounds }))), $o = D(() => import("./chunk-Credits-D1b708mb.mjs").then((e) => ({ default: e.Credits })));
+function Ee({ id: e, label: t, value: n, max: a, onChange: s }) {
+  return /* @__PURE__ */ b("div", { className: "c-slider", children: [
     /* @__PURE__ */ i("label", { htmlFor: e, children: t }),
-    /* @__PURE__ */ i("input", { id: e, type: "range", min: 0, max: a, step: 0.05, value: n, "aria-valuetext": `${Math.round(n / a * 100)} percent`, onChange: (s) => o(Number(s.currentTarget.value)) })
+    /* @__PURE__ */ i("input", { id: e, type: "range", min: 0, max: a, step: 0.05, value: n, "aria-valuetext": `${Math.round(n / a * 100)} percent`, onChange: (o) => s(Number(o.currentTarget.value)) })
   ] });
 }
-function He({ nature: e }) {
-  return /* @__PURE__ */ y("div", { className: "c-nature-controls", children: [
+function Fe({ nature: e }) {
+  return /* @__PURE__ */ b("div", { className: "c-nature-controls", children: [
     /* @__PURE__ */ i(Ee, { id: "c-blend", label: d.natureBlend, value: e.prefs.blend, max: 1, onChange: e.setBlend }),
-    /* @__PURE__ */ i(Ee, { id: "c-nlevel", label: d.natureLevel, value: e.prefs.level, max: Zt, onChange: e.setLevel })
+    /* @__PURE__ */ i(Ee, { id: "c-nlevel", label: d.natureLevel, value: e.prefs.level, max: Qt, onChange: e.setLevel })
   ] });
 }
-function Ho({ nature: e, reduced: t, onBack: n }) {
-  const [a, o] = N(null);
-  return /* @__PURE__ */ y("div", { className: "c-nature", children: [
+function Wo({ s: e, i: t, nature: n }) {
+  return /* @__PURE__ */ i("li", { children: /* @__PURE__ */ b("button", { type: "button", className: `c-tile c-g${t % 6 + 1}`, "data-testid": `nature-${e.id}`, "aria-pressed": n.on === e.id, onClick: () => n.start(e.id), children: [
+    /* @__PURE__ */ i(Oe, { name: xo[e.id] ?? e.id }),
+    /* @__PURE__ */ i("span", { className: "c-tile-name", children: e.label }),
+    /* @__PURE__ */ i("span", { className: "c-tile-mood", children: e.note ?? (e.kind === "synth" ? d.natureMade : d.natureFree) }),
+    n.on === e.id && /* @__PURE__ */ i("span", { className: "c-tile-count", children: d.natureOn })
+  ] }) });
+}
+function Go({ samples: e }) {
+  const [t, n] = N(""), a = e.find((s) => s.id === t);
+  return /* @__PURE__ */ b("section", { className: "c-credits-foot", "aria-label": d.natureCredits, children: [
+    /* @__PURE__ */ i("label", { htmlFor: "c-credit-pick", children: d.natureCredits }),
+    /* @__PURE__ */ b("select", { id: "c-credit-pick", value: t, onChange: (s) => n(s.currentTarget.value), children: [
+      /* @__PURE__ */ i("option", { value: "", children: d.natureCreditsPick }),
+      e.map((s) => /* @__PURE__ */ i("option", { value: s.id, children: s.label }, s.id))
+    ] }),
+    a !== void 0 && /* @__PURE__ */ i(U, { fallback: null, children: /* @__PURE__ */ i($o, { id: a.id, synth: a.kind === "synth" }) })
+  ] });
+}
+function Ko({ nature: e, reduced: t, onBack: n }) {
+  const a = Vt();
+  return /* @__PURE__ */ b("div", { className: "c-nature", children: [
     /* @__PURE__ */ i(Ba, { title: d.natureHead, reduced: t }),
     /* @__PURE__ */ i("p", { className: "c-lead", children: d.natureIntro }),
-    /* @__PURE__ */ i("ul", { className: "c-tiles c-nature-tiles", children: Yt().map((s, r) => /* @__PURE__ */ y("li", { children: [
-      /* @__PURE__ */ y("button", { type: "button", className: `c-tile c-g${r % 6 + 1}`, "data-testid": `nature-${s.id}`, "aria-pressed": e.on === s.id, onClick: () => e.start(s.id), children: [
-        /* @__PURE__ */ i(Oe, { name: Io[s.id] ?? s.id }),
-        /* @__PURE__ */ i("span", { className: "c-tile-name", children: s.label }),
-        /* @__PURE__ */ i("span", { className: "c-tile-mood", children: s.kind === "synth" ? s.note ?? d.natureMade : d.natureFree }),
-        e.on === s.id && /* @__PURE__ */ i("span", { className: "c-tile-count", children: d.natureOn })
-      ] }),
-      /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link c-small", "aria-expanded": a === s.id, onClick: () => o(a === s.id ? null : s.id), children: `${d.natureCredits}: ${s.label}` }),
-      a === s.id && /* @__PURE__ */ i(U, { fallback: null, children: /* @__PURE__ */ i(Bo, { id: s.id, synth: s.kind === "synth" }) })
-    ] }, s.id)) }),
-    /* @__PURE__ */ i(He, { nature: e }),
-    e.on !== null && /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-wide", "data-testid": "nature-stop", onClick: e.stop, children: d.natureOff }),
+    /* @__PURE__ */ b("div", { className: "c-sticky", "data-testid": "nature-sticky", children: [
+      /* @__PURE__ */ i(Fe, { nature: e }),
+      e.on !== null && /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-wide", "data-testid": "nature-stop", onClick: e.stop, children: d.natureOff })
+    ] }),
+    zo.map((s) => {
+      const o = a.filter((r) => Bo(r) === s);
+      return o.length === 0 ? null : /* @__PURE__ */ b("section", { "aria-labelledby": `c-ng-${s.replaceAll(" ", "-")}`, children: [
+        /* @__PURE__ */ i("h2", { className: "c-h3", id: `c-ng-${s.replaceAll(" ", "-")}`, children: s }),
+        /* @__PURE__ */ i("ul", { className: "c-tiles c-nature-tiles", children: o.map((r) => /* @__PURE__ */ i(Wo, { s: r, i: a.indexOf(r), nature: e }, r.id)) })
+      ] }, s);
+    }),
     /* @__PURE__ */ i("p", { className: "c-status", role: "status", "data-testid": "nature-message", children: e.message }),
     /* @__PURE__ */ i("p", { className: "c-note", children: d.natureNote }),
-    /* @__PURE__ */ i(U, { fallback: null, children: /* @__PURE__ */ i(Po, { nature: e }) }),
+    /* @__PURE__ */ i(Go, { samples: a }),
+    /* @__PURE__ */ i(U, { fallback: null, children: /* @__PURE__ */ i(jo, { nature: e }) }),
     /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link c-back", onClick: n, children: d.natureBack })
   ] });
 }
-const Fo = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const qo = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  NatureControls: He,
-  NatureScreen: Ho,
+  NatureControls: Fe,
+  NatureScreen: Ko,
   Slider: Ee
-}, Symbol.toStringTag, { value: "Module" })), xo = ["cant-sleep", "lucid-dream"], jo = ["adhd-focus", "deep-work", "ai-burnout"];
-function en(e, t) {
-  if (t) return "nature";
-  const n = e === null ? void 0 : P().find((o) => o.id === e), a = (n == null ? void 0 : n.situations) ?? [];
-  return a.some((o) => xo.includes(o)) ? "sleep" : a.some((o) => jo.includes(o)) ? "focus" : "calm";
-}
-const $o = 400;
+}, Symbol.toStringTag, { value: "Module" })), Uo = ["cant-sleep", "lucid-dream"], Yo = ["adhd-focus", "deep-work", "ai-burnout"];
 function tn(e, t) {
+  if (t) return "nature";
+  const n = e === null ? void 0 : P().find((s) => s.id === e), a = (n == null ? void 0 : n.situations) ?? [];
+  return a.some((s) => Uo.includes(s)) ? "sleep" : a.some((s) => Yo.includes(s)) ? "focus" : "calm";
+}
+const Vo = 400;
+function nn(e, t) {
   const [n, a] = N(0);
   return L(() => {
     if (!t) {
       a(0);
       return;
     }
-    let o = !0;
-    const s = window.setInterval(() => {
+    let s = !0;
+    const o = window.setInterval(() => {
       e.getStats().then((r) => {
         const l = Number.isFinite(r.rms) ? Math.min(1, Math.max(0, r.rms * 4)) : 0;
-        o && a((c) => c * 0.6 + l * 0.4);
+        s && a((c) => c * 0.6 + l * 0.4);
       }).catch(() => {
       });
-    }, $o);
+    }, Vo);
     return () => {
-      o = !1, window.clearInterval(s);
+      s = !1, window.clearInterval(o);
     };
   }, [e, t]), n;
 }
-const Go = z(() => import("./chunk-mascot-CT3408M2.mjs").then((e) => ({ default: e.CalmMascot }))), Wo = z(() => import("./chunk-visuals-B0CqKfY2.mjs").then((e) => ({ default: e.SceneLoop }))), Ko = z(() => import("./chunk-mascot-CT3408M2.mjs").then((e) => ({ default: e.BreathCue })));
-function Fe({ still: e, playing: t, situation: n, theme: a, level: o, announce: s = !0 }) {
+const Jo = D(() => import("./chunk-mascot-suXXzKOI.mjs").then((e) => ({ default: e.CalmMascot }))), Xo = D(() => import("./chunk-visuals-B0CqKfY2.mjs").then((e) => ({ default: e.SceneLoop }))), Zo = D(() => import("./chunk-mascot-suXXzKOI.mjs").then((e) => ({ default: e.BreathCue })));
+function He({ still: e, playing: t, situation: n, theme: a, level: s, announce: o = !0 }) {
   const r = ho(t && !e), l = so(t && e), c = t && !e;
-  return /* @__PURE__ */ y(Ce, { children: [
-    /* @__PURE__ */ i("div", { className: "c-stage", "data-testid": "breath-ring", "data-still": e ? "true" : "false", "data-situation": n, children: /* @__PURE__ */ y(U, { fallback: null, children: [
-      /* @__PURE__ */ i("div", { className: "c-stage-scene", children: /* @__PURE__ */ i(Wo, { situation: n, reducedMotion: e, theme: a }) }),
+  return /* @__PURE__ */ b(Ce, { children: [
+    /* @__PURE__ */ i("div", { className: "c-stage", "data-testid": "breath-ring", "data-still": e ? "true" : "false", "data-situation": n, children: /* @__PURE__ */ b(U, { fallback: null, children: [
+      /* @__PURE__ */ i("div", { className: "c-stage-scene", children: /* @__PURE__ */ i(Xo, { situation: n, reducedMotion: e, theme: a }) }),
       /* @__PURE__ */ i("div", { className: "c-stage-mascot", children: /* @__PURE__ */ i(
-        Go,
+        Jo,
         {
           mood: t ? "breathing" : "idle",
           size: 190,
           reducedMotion: e,
           situation: n,
           breathPhase: c ? r.phase : void 0,
-          level: t ? o : 0
+          level: t ? s : 0
         }
       ) })
     ] }) }),
-    /* @__PURE__ */ y("div", { className: "c-cue", children: [
-      c ? /* @__PURE__ */ i(U, { fallback: null, children: /* @__PURE__ */ i(Ko, { label: r.label, className: "c-cue-text", live: !1 }) }) : t ? /* @__PURE__ */ i("p", { className: "c-cue-text", "data-testid": "breath-counter", children: oo(l) }) : /* @__PURE__ */ i("p", { className: "c-cue-text", children: d.breathe }),
-      /* @__PURE__ */ i(ro, { label: c ? r.label : l.label, on: t, announce: s })
+    /* @__PURE__ */ b("div", { className: "c-cue", children: [
+      c ? /* @__PURE__ */ i(U, { fallback: null, children: /* @__PURE__ */ i(Zo, { label: r.label, className: "c-cue-text", live: !1 }) }) : t ? /* @__PURE__ */ i("p", { className: "c-cue-text", "data-testid": "breath-counter", children: oo(l) }) : /* @__PURE__ */ i("p", { className: "c-cue-text", children: d.breathe }),
+      /* @__PURE__ */ i(ro, { label: c ? r.label : l.label, on: t, announce: o })
     ] })
   ] });
 }
-function qo({ engine: e, theme: t, announce: n = !0, sprint: a, player: o, snap: s, still: r, favorite: l, onToggle: c, onFavorite: u, nature: f }) {
+function Qo({ engine: e, theme: t, announce: n = !0, sprint: a, player: s, snap: o, still: r, favorite: l, onToggle: c, onFavorite: u, nature: f }) {
   var p;
-  const [k, S] = N(!1), M = tn(e, s.playing), v = kt.find((g) => g.templateId === s.templateId), w = (v == null ? void 0 : v.evidence) ?? "mixed", m = en(((p = a == null ? void 0 : a.focus) == null ? void 0 : p.id) ?? s.templateId, f.on !== null), h = P().find((g) => {
+  const [k, S] = N(!1), M = nn(e, o.playing), v = St.find((g) => g.templateId === o.templateId), w = (v == null ? void 0 : v.evidence) ?? "mixed", m = tn(((p = a == null ? void 0 : a.focus) == null ? void 0 : p.id) ?? o.templateId, f.on !== null), h = P().find((g) => {
     var A;
-    return g.id === (((A = a == null ? void 0 : a.focus) == null ? void 0 : A.id) ?? s.templateId);
+    return g.id === (((A = a == null ? void 0 : a.focus) == null ? void 0 : A.id) ?? o.templateId);
   });
-  return /* @__PURE__ */ y("div", { className: "c-player", children: [
-    /* @__PURE__ */ i("h1", { className: "c-h1", children: s.templateName ?? d.brand }),
-    /* @__PURE__ */ i(Fe, { still: r, playing: s.playing, situation: m, theme: t, level: M, announce: n }),
-    /* @__PURE__ */ y("div", { className: "c-controls", children: [
-      /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-round c-big", "data-testid": "player-toggle", onClick: c, children: s.playing ? d.stop : d.play }),
+  return /* @__PURE__ */ b("div", { className: "c-player", children: [
+    /* @__PURE__ */ i("h1", { className: "c-h1", children: o.templateName ?? d.brand }),
+    /* @__PURE__ */ i(He, { still: r, playing: o.playing, situation: m, theme: t, level: M, announce: n }),
+    /* @__PURE__ */ b("div", { className: "c-controls", children: [
+      /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-round c-big", "data-testid": "player-toggle", onClick: c, children: o.playing ? d.stop : d.play }),
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-round", "aria-pressed": l, onClick: u, children: l ? d.saved : d.favorite })
     ] }),
     /* @__PURE__ */ i(
       Is,
       {
-        timer: s.timer,
-        player: o,
+        timer: o.timer,
+        player: s,
         ...a !== void 0 && h !== void 0 ? { onSprint: () => a.start(h), onSprintEnd: a.cancel } : {}
       }
     ),
-    /* @__PURE__ */ i(Uo, { nature: f }),
+    /* @__PURE__ */ i(er, { nature: f }),
     /* @__PURE__ */ i("p", { className: "c-muted", children: d.volumeCapped }),
-    /* @__PURE__ */ y("section", { className: "c-why", children: [
+    /* @__PURE__ */ b("section", { className: "c-why", children: [
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link", "aria-expanded": k, "aria-controls": "c-why-box", onClick: () => S((g) => !g), children: d.whyTitle }),
-      /* @__PURE__ */ y("div", { id: "c-why-box", hidden: !k, children: [
+      /* @__PURE__ */ b("div", { id: "c-why-box", hidden: !k, children: [
         /* @__PURE__ */ i("p", { children: d.whyBody }),
-        /* @__PURE__ */ i("p", { children: `Evidence: ${w}. ${Sn[w] ?? ""}` })
+        /* @__PURE__ */ i("p", { children: `Evidence: ${w}. ${Mn[w] ?? ""}` })
       ] })
     ] })
   ] });
 }
-function Uo({ nature: e }) {
-  const t = e.prefs.id ?? Qt().id ?? "rain";
-  return /* @__PURE__ */ y("section", { className: "c-card c-nature-quick", "aria-label": d.natureHead, children: [
+function er({ nature: e }) {
+  const t = e.prefs.id ?? en().id ?? "rain";
+  return /* @__PURE__ */ b("section", { className: "c-card c-nature-quick", "aria-label": d.natureHead, children: [
     /* @__PURE__ */ i("button", { type: "button", className: "c-btn", "data-testid": "player-nature", "aria-pressed": e.on !== null, onClick: () => e.on === null ? e.start(t) : e.stop(), children: e.on === null ? `${d.natureAdd}: ${t.startsWith("own:") ? d.mineTitle : t}` : d.natureOff }),
-    e.on !== null && /* @__PURE__ */ i(He, { nature: e }),
+    e.on !== null && /* @__PURE__ */ i(Fe, { nature: e }),
     /* @__PURE__ */ i("p", { className: "c-status", role: "status", children: e.message })
   ] });
 }
-const Yo = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const tr = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  PlayerScreen: qo,
-  Stage: Fe
-}, Symbol.toStringTag, { value: "Module" })), Vo = 90, Jo = "android-wakeful-relax-5", nn = {
+  PlayerScreen: Qo,
+  Stage: He
+}, Symbol.toStringTag, { value: "Module" })), nr = 90, ar = "android-wakeful-relax-5", an = {
   kind: "reset",
-  seconds: Vo,
-  template: () => P().find((e) => e.id === Jo),
+  seconds: nr,
+  template: () => P().find((e) => e.id === ar),
   title: d.resetTitle,
   intro: d.resetIntro,
   done: d.resetDoneLine,
   again: d.resetAgain,
   left: d.resetLeft
-}, Xo = {
+}, sr = {
   kind: "breathe",
-  seconds: Wt * 60,
+  seconds: Kt * 60,
   template: () => no,
   title: d.breatheTitle,
   intro: d.breatheIntro,
@@ -2790,11 +2814,11 @@ const Yo = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   again: d.breatheAgain,
   left: d.breatheLeft
 };
-function Zo(e, t = nn) {
-  const [n, a] = N("idle"), [o, s] = N(t.seconds), r = _(0), { player: l, guarded: c, playTemplate: u } = e, f = T(() => {
+function or(e, t = an) {
+  const [n, a] = N("idle"), [s, o] = N(t.seconds), r = _(0), { player: l, guarded: c, playTemplate: u } = e, f = T(() => {
     const w = t.template();
     w !== void 0 && c(() => {
-      r.current = Date.now() + t.seconds * 1e3, s(t.seconds), a("running"), u(w, null);
+      r.current = Date.now() + t.seconds * 1e3, o(t.seconds), a("running"), u(w, null);
     });
   }, [c, u, t]), k = T(() => {
     a("idle"), l.stop();
@@ -2803,8 +2827,8 @@ function Zo(e, t = nn) {
     if (n !== "running") return;
     const w = window.setInterval(() => {
       const m = Math.ceil((r.current - Date.now()) / 1e3);
-      if (m > 0) return s(m);
-      window.clearInterval(w), s(0), a("done"), l.stop();
+      if (m > 0) return o(m);
+      window.clearInterval(w), o(0), a("done"), l.stop();
     }, 1e3);
     return () => window.clearInterval(w);
   }, [n, l]);
@@ -2813,47 +2837,47 @@ function Zo(e, t = nn) {
     n !== "running" ? S.current = !1 : M ? S.current = !0 : S.current && a("idle");
   }, [n, M]);
   const v = _(n);
-  return v.current = n, L(() => () => void (v.current === "running" && l.stop()), [l]), { phase: n, left: o, begin: f, stop: k };
+  return v.current = n, L(() => () => void (v.current === "running" && l.stop()), [l]), { phase: n, left: s, begin: f, stop: k };
 }
-function dt({ s: e, still: t, theme: n, announce: a, onBack: o, plan: s = nn }) {
-  const r = Zo(e, s), l = tn(e.engine, e.snap.playing), c = en(e.snap.templateId, !1);
-  return r.phase === "done" ? /* @__PURE__ */ i(Qo, { plan: s, onAgain: r.begin, onBack: o }) : /* @__PURE__ */ y("div", { className: "c-player c-reset", "data-testid": "reset-screen", "data-kind": s.kind, "data-phase": r.phase, children: [
-    /* @__PURE__ */ i("h1", { className: "c-h1", children: s.title }),
-    r.phase === "idle" && /* @__PURE__ */ i("p", { className: "c-lead", children: s.intro }),
-    /* @__PURE__ */ i(Fe, { still: t, playing: r.phase === "running" && e.snap.playing, situation: c, theme: n, level: l, announce: a }),
-    r.phase === "running" ? /* @__PURE__ */ y(Ce, { children: [
-      /* @__PURE__ */ i("p", { className: "c-muted c-digits", "data-testid": "reset-left", "aria-hidden": "true", children: s.left(r.left) }),
+function dt({ s: e, still: t, theme: n, announce: a, onBack: s, plan: o = an }) {
+  const r = or(e, o), l = nn(e.engine, e.snap.playing), c = tn(e.snap.templateId, !1);
+  return r.phase === "done" ? /* @__PURE__ */ i(rr, { plan: o, onAgain: r.begin, onBack: s }) : /* @__PURE__ */ b("div", { className: "c-player c-reset", "data-testid": "reset-screen", "data-kind": o.kind, "data-phase": r.phase, children: [
+    /* @__PURE__ */ i("h1", { className: "c-h1", children: o.title }),
+    r.phase === "idle" && /* @__PURE__ */ i("p", { className: "c-lead", children: o.intro }),
+    /* @__PURE__ */ i(He, { still: t, playing: r.phase === "running" && e.snap.playing, situation: c, theme: n, level: l, announce: a }),
+    r.phase === "running" ? /* @__PURE__ */ b(Ce, { children: [
+      /* @__PURE__ */ i("p", { className: "c-muted c-digits", "data-testid": "reset-left", "aria-hidden": "true", children: o.left(r.left) }),
       /* @__PURE__ */ i("div", { className: "c-controls", children: /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-round c-big", "data-testid": "reset-stop", onClick: r.stop, children: d.stop }) })
-    ] }) : /* @__PURE__ */ y("div", { className: "c-actions", children: [
+    ] }) : /* @__PURE__ */ b("div", { className: "c-actions", children: [
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-primary", "data-testid": "reset-begin", onClick: r.begin, children: d.resetStart }),
-      /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link", onClick: o, children: d.resetBack })
+      /* @__PURE__ */ i("button", { type: "button", className: "c-btn c-link", onClick: s, children: d.resetBack })
     ] }),
     /* @__PURE__ */ i("p", { className: "c-muted", children: d.volumeCapped })
   ] });
 }
-function Qo({ plan: e, onAgain: t, onBack: n }) {
+function rr({ plan: e, onAgain: t, onBack: n }) {
   const a = _(null);
   return L(() => {
-    var o;
-    return (o = a.current) == null ? void 0 : o.focus();
-  }, []), /* @__PURE__ */ y("div", { className: "c-end c-reset", "data-testid": "reset-end", children: [
+    var s;
+    return (s = a.current) == null ? void 0 : s.focus();
+  }, []), /* @__PURE__ */ b("div", { className: "c-end c-reset", "data-testid": "reset-end", children: [
     /* @__PURE__ */ i("h1", { className: "c-h1", children: d.endTitle }),
     /* @__PURE__ */ i("p", { children: e.done }),
     /* @__PURE__ */ i("p", { className: "c-muted", children: d.endNote }),
-    /* @__PURE__ */ y("div", { className: "c-actions", children: [
+    /* @__PURE__ */ b("div", { className: "c-actions", children: [
       /* @__PURE__ */ i("button", { ref: a, type: "button", className: "c-btn c-primary", "data-testid": "reset-back", onClick: n, children: d.resetBack }),
       /* @__PURE__ */ i("button", { type: "button", className: "c-btn", "data-testid": "reset-again", onClick: t, children: e.again })
     ] })
   ] });
 }
-const er = z(() => import("./chunk-Journeys-BzM3Bw1J.mjs").then((e) => ({ default: e.JourneyList }))), tr = z(() => import("./chunk-Journeys-BzM3Bw1J.mjs").then((e) => ({ default: e.JourneyDetail }))), nr = z(() => import("./chunk-Library-D-d_I5bX.mjs").then((e) => ({ default: e.Library }))), ar = z(() => Promise.resolve().then(() => Yo).then((e) => ({ default: e.PlayerScreen }))), sr = z(() => import("./chunk-CrewScreen-Bg9Zg21_.mjs").then((e) => ({ default: e.CrewScreen }))), or = z(() => Promise.resolve().then(() => Fo).then((e) => ({ default: e.NatureScreen }))), rr = z(() => import("./chunk-SettingsScreen-DJLEg2s-.mjs").then((e) => ({ default: e.SettingsScreen })));
-function ir({ view: e, journeyId: t, s: n, data: a, crewInfo: o, nature: s, still: r, fav: l, last: c, look: u, prefs: f, onPrefs: k, feel: S, sprint: M, handlers: v }) {
+const ir = D(() => import("./chunk-Journeys-BNvWU4Ow.mjs").then((e) => ({ default: e.JourneyList }))), lr = D(() => import("./chunk-Journeys-BNvWU4Ow.mjs").then((e) => ({ default: e.JourneyDetail }))), cr = D(() => import("./chunk-Library-SKl6bhXS.mjs").then((e) => ({ default: e.Library }))), ur = D(() => Promise.resolve().then(() => tr).then((e) => ({ default: e.PlayerScreen }))), dr = D(() => import("./chunk-CrewScreen-Ba4EAfv7.mjs").then((e) => ({ default: e.CrewScreen }))), mr = D(() => Promise.resolve().then(() => qo).then((e) => ({ default: e.NatureScreen }))), hr = D(() => import("./chunk-SettingsScreen-CSTE8EvG.mjs").then((e) => ({ default: e.SettingsScreen })));
+function fr({ view: e, journeyId: t, s: n, data: a, crewInfo: s, nature: o, still: r, fav: l, last: c, look: u, prefs: f, onPrefs: k, feel: S, sprint: M, handlers: v }) {
   switch (e) {
     case "journeys":
-      return /* @__PURE__ */ i(er, { progress: a.progress, onOpen: v.openJourney, reduced: r });
+      return /* @__PURE__ */ i(ir, { progress: a.progress, onOpen: v.openJourney, reduced: r });
     case "journey":
       return /* @__PURE__ */ i(
-        tr,
+        lr,
         {
           id: t ?? "",
           profile: a.profile,
@@ -2866,31 +2890,31 @@ function ir({ view: e, journeyId: t, s: n, data: a, crewInfo: o, nature: s, stil
         }
       );
     case "library":
-      return /* @__PURE__ */ i(nr, { store: n.store, logs: a.logs, reduced: r, onNature: () => v.go("nature"), onPlay: v.play, onPlayMix: v.onMix, onBreathe: () => v.go("breathe") });
+      return /* @__PURE__ */ i(cr, { store: n.store, logs: a.logs, reduced: r, onNature: () => v.go("nature"), onPlay: v.play, onPlayMix: v.onMix, onBreathe: () => v.go("breathe") });
     case "nature":
-      return /* @__PURE__ */ i(or, { nature: s, reduced: r, onBack: () => v.go("library") });
+      return /* @__PURE__ */ i(mr, { nature: o, reduced: r, onBack: () => v.go("library") });
     case "player":
-      return /* @__PURE__ */ i(ar, { player: n.player, snap: n.snap, still: r, favorite: l.on, onToggle: n.toggle, onFavorite: l.toggle, nature: s, engine: n.engine, theme: u.theme, announce: f.announce, sprint: M });
+      return /* @__PURE__ */ i(ur, { player: n.player, snap: n.snap, still: r, favorite: l.on, onToggle: n.toggle, onFavorite: l.toggle, nature: o, engine: n.engine, theme: u.theme, announce: f.announce, sprint: M });
     case "reset":
       return /* @__PURE__ */ i(dt, { s: n, still: r, theme: u.theme, announce: f.announce, onBack: () => v.go("today") });
     case "breathe":
-      return /* @__PURE__ */ i(dt, { s: n, still: r, theme: u.theme, announce: f.announce, onBack: () => v.go("today"), plan: Xo });
+      return /* @__PURE__ */ i(dt, { s: n, still: r, theme: u.theme, announce: f.announce, onBack: () => v.go("today"), plan: sr });
     case "crew":
       return /* @__PURE__ */ i(
-        sr,
+        dr,
         {
-          crew: o,
+          crew: s,
           overridden: n.snap.overridden,
-          onDemo: () => n.guarded(() => Ws(n.player)),
+          onDemo: () => n.guarded(() => Gs(n.player)),
           onStopDemo: () => Gt(n.player),
-          onNotNow: () => An(n.player),
-          onResume: () => Mn(n.player),
+          onNotNow: () => Nn(n.player),
+          onResume: () => An(n.player),
           onFollow: () => n.player.followCrew()
         }
       );
     case "settings":
       return /* @__PURE__ */ i(
-        rr,
+        hr,
         {
           gentle: a.profile.extraGentle,
           reduceMotion: n.userReduced,
@@ -2913,7 +2937,7 @@ function ir({ view: e, journeyId: t, s: n, data: a, crewInfo: o, nature: s, stil
           reduced: r,
           hasHistory: a.logs.some((w) => Y(w.startedAt) < Z()),
           joinedToday: Y(a.profile.createdAt) === Z(),
-          crewConnected: o.enabled && o.status === "connected",
+          crewConnected: s.enabled && s.status === "connected",
           last: c,
           feel: S,
           onSprint: (w) => {
@@ -2928,8 +2952,8 @@ function ir({ view: e, journeyId: t, s: n, data: a, crewInfo: o, nature: s, stil
       );
   }
 }
-const lr = "zonked.look.v1", an = "zonked.theme.v2", Q = { choice: "dark", dim: null, announce: !0 }, cr = ["system", "light", "dark", "contrast"], ur = (e) => typeof e == "string" && cr.includes(e);
-function sn(e) {
+const pr = "zonked.look.v1", sn = "zonked.theme.v2", Q = { choice: "dark", dim: null, announce: !0 }, gr = ["system", "light", "dark", "contrast"], br = (e) => typeof e == "string" && gr.includes(e);
+function on(e) {
   if (e === null) return null;
   try {
     const t = JSON.parse(e.slice(0, 400));
@@ -2938,67 +2962,67 @@ function sn(e) {
     return null;
   }
 }
-function dr(e) {
-  const t = sn(e);
+function yr(e) {
+  const t = on(e);
   return t === null ? Q : {
-    choice: ur(t.choice) ? t.choice : Q.choice,
+    choice: br(t.choice) ? t.choice : Q.choice,
     dim: typeof t.dim == "boolean" ? t.dim : null,
     announce: t.announce !== !1
   };
 }
-function mr(e) {
-  const t = sn(e);
+function vr(e) {
+  const t = on(e);
   if (t === null) return Q;
   const n = t.highContrast === !0 ? "contrast" : t.theme === "light" ? "light" : "dark";
   return { ...Q, choice: n };
 }
-const hr = (e) => e.getHours() >= 19 || e.getHours() < 7, fr = (e, t = /* @__PURE__ */ new Date()) => e.dim ?? hr(t), pr = () => typeof window.matchMedia == "function" && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-function gr(e, t) {
+const wr = (e) => e.getHours() >= 19 || e.getHours() < 7, kr = (e, t = /* @__PURE__ */ new Date()) => e.dim ?? wr(t), Sr = () => typeof window.matchMedia == "function" && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+function Mr(e, t) {
   return e.choice === "contrast" ? { theme: t, highContrast: !0 } : { theme: e.choice === "system" ? t : e.choice, highContrast: !1 };
 }
-function br() {
+function Ar() {
   try {
-    const e = window.localStorage.getItem(an);
-    return e !== null ? dr(e) : mr(window.localStorage.getItem(lr));
+    const e = window.localStorage.getItem(sn);
+    return e !== null ? yr(e) : vr(window.localStorage.getItem(pr));
   } catch {
     return Q;
   }
 }
-function yr() {
-  const [e, t] = N(br), [n, a] = N(pr);
+function Nr() {
+  const [e, t] = N(Ar), [n, a] = N(Sr);
   L(() => {
     var l;
     if (typeof window.matchMedia != "function") return;
-    const s = window.matchMedia("(prefers-color-scheme: light)"), r = () => a(s.matches ? "light" : "dark");
-    return (l = s.addEventListener) == null || l.call(s, "change", r), () => {
+    const o = window.matchMedia("(prefers-color-scheme: light)"), r = () => a(o.matches ? "light" : "dark");
+    return (l = o.addEventListener) == null || l.call(o, "change", r), () => {
       var c;
-      return (c = s.removeEventListener) == null ? void 0 : c.call(s, "change", r);
+      return (c = o.removeEventListener) == null ? void 0 : c.call(o, "change", r);
     };
   }, []);
-  const o = T((s) => {
-    t(s);
+  const s = T((o) => {
+    t(o);
     try {
-      window.localStorage.setItem(an, JSON.stringify(s));
+      window.localStorage.setItem(sn, JSON.stringify(o));
     } catch {
     }
   }, []);
-  return { look: gr(e, n), prefs: e, dim: fr(e), setPrefs: o };
+  return { look: Mr(e, n), prefs: e, dim: kr(e), setPrefs: s };
 }
 let de = null;
 const mt = () => de, ht = (e) => void (de = e);
-function vr() {
-  de !== null && (de = null, Promise.resolve().then(() => Vt).then((e) => e.stopSample()).catch(() => {
+function Er() {
+  de !== null && (de = null, Promise.resolve().then(() => Jt).then((e) => e.stopSample()).catch(() => {
   }));
 }
-const wr = "zonked.mysounds.v1", kr = 5, Sr = 20 * 1024 * 1024, D = "sounds", Mr = 60, I = (e) => ({ ok: !1, error: e }), Ar = "Your device could not store this sound. Remove one and try again.", on = (e) => /^own:[a-z0-9]{6,40}$/.test(e);
-function Nr(e) {
-  const t = e.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, Mr);
+const Tr = "zonked.mysounds.v1", Lr = 5, Cr = 20 * 1024 * 1024, z = "sounds", Or = 60, I = (e) => ({ ok: !1, error: e }), Rr = "Your device could not store this sound. Remove one and try again.", rn = (e) => /^own:[a-z0-9]{6,40}$/.test(e);
+function Dr(e) {
+  const t = e.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, Or);
   return t === "" ? "My sound" : t;
 }
-function Er(e) {
+function zr(e) {
   return new Promise((t, n) => {
-    const a = e.open(wr, 1);
-    a.onupgradeneeded = () => void a.result.createObjectStore(D, { keyPath: "id" }), a.onsuccess = () => t(a.result), a.onerror = () => n(a.error ?? new Error("open failed")), a.onblocked = () => n(new Error("blocked"));
+    const a = e.open(Tr, 1);
+    a.onupgradeneeded = () => void a.result.createObjectStore(z, { keyPath: "id" }), a.onsuccess = () => t(a.result), a.onerror = () => n(a.error ?? new Error("open failed")), a.onblocked = () => n(new Error("blocked"));
   });
 }
 function xe(e) {
@@ -3016,55 +3040,55 @@ async function ne(e, t, n) {
   if (e === null) return I("This browser cannot keep sounds on your device.");
   let a = null;
   try {
-    return a = await Er(e), { ok: !0, value: await t(a) };
-  } catch (o) {
-    if (o instanceof RangeError) return I(o.message === "count" ? "You can keep 5 sounds. Remove one first." : "Your sounds would use more than 20 MB. Remove one first.");
-    const s = o instanceof DOMException && o.name === "QuotaExceededError";
-    return I(s ? Ar : n);
+    return a = await zr(e), { ok: !0, value: await t(a) };
+  } catch (s) {
+    if (s instanceof RangeError) return I(s.message === "count" ? "You can keep 5 sounds. Remove one first." : "Your sounds would use more than 20 MB. Remove one first.");
+    const o = s instanceof DOMException && s.name === "QuotaExceededError";
+    return I(o ? Rr : n);
   } finally {
     a == null || a.close();
   }
 }
-async function mi(e = te()) {
-  return ne(e, async (t) => (await xe(t.transaction(D).objectStore(D).getAll())).map((a) => ({ id: a.id, name: a.name, size: a.size })), "Your sounds could not be read.");
+async function vi(e = te()) {
+  return ne(e, async (t) => (await xe(t.transaction(z).objectStore(z).getAll())).map((a) => ({ id: a.id, name: a.name, size: a.size })), "Your sounds could not be read.");
 }
-async function Tr(e, t = te()) {
-  if (!on(e)) return I("Unknown sound.");
-  const n = await ne(t, async (a) => await xe(a.transaction(D).objectStore(D).get(e)), "Your sound could not be read.");
+async function _r(e, t = te()) {
+  if (!rn(e)) return I("Unknown sound.");
+  const n = await ne(t, async (a) => await xe(a.transaction(z).objectStore(z).get(e)), "Your sound could not be read.");
   return n.ok ? n.value === void 0 ? I("That sound is gone.") : { ok: !0, value: n.value.bytes } : n;
 }
-async function hi(e, t, n = te()) {
-  if (t.byteLength > Kt) return I("This file is bigger than 8 MB.");
-  const o = { id: `own:${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`, name: Nr(e), size: t.byteLength, bytes: t };
-  return ne(n, async (s) => {
-    const r = await xe(s.transaction(D).objectStore(D).getAll());
-    if (r.length >= kr) throw new RangeError("count");
-    if (r.reduce((c, u) => c + u.size, 0) + o.size > Sr) throw new RangeError("total");
-    const l = s.transaction(D, "readwrite");
-    return l.objectStore(D).put(o), await je(l), { id: o.id, name: o.name, size: o.size };
+async function wi(e, t, n = te()) {
+  if (t.byteLength > qt) return I("This file is bigger than 8 MB.");
+  const s = { id: `own:${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`, name: Dr(e), size: t.byteLength, bytes: t };
+  return ne(n, async (o) => {
+    const r = await xe(o.transaction(z).objectStore(z).getAll());
+    if (r.length >= Lr) throw new RangeError("count");
+    if (r.reduce((c, u) => c + u.size, 0) + s.size > Cr) throw new RangeError("total");
+    const l = o.transaction(z, "readwrite");
+    return l.objectStore(z).put(s), await je(l), { id: s.id, name: s.name, size: s.size };
   }, "Your sound could not be saved.");
 }
-async function fi(e, t = te()) {
+async function ki(e, t = te()) {
   return ne(t, async (n) => {
-    const a = n.transaction(D, "readwrite");
-    return a.objectStore(D).delete(e), await je(a), !0;
+    const a = n.transaction(z, "readwrite");
+    return a.objectStore(z).delete(e), await je(a), !0;
   }, "That sound could not be removed.");
 }
-async function Lr(e = te()) {
+async function Ir(e = te()) {
   return ne(e, async (t) => {
-    const n = t.transaction(D, "readwrite");
-    return n.objectStore(D).clear(), await je(n), !0;
+    const n = t.transaction(z, "readwrite");
+    return n.objectStore(z).clear(), await je(n), !0;
   }, "Your sounds could not be removed.");
 }
-const Cr = async (e) => {
+const Pr = async (e) => {
   const t = typeof OfflineAudioContext > "u" ? void 0 : OfflineAudioContext;
   if (t === void 0) throw new Error("no decoder");
   const n = await new t(1, 1, 44100).decodeAudioData(e.slice(0));
-  return { channels: Array.from({ length: n.numberOfChannels }, (a, o) => n.getChannelData(o)), sampleRate: n.sampleRate };
+  return { channels: Array.from({ length: n.numberOfChannels }, (a, s) => n.getChannelData(s)), sampleRate: n.sampleRate };
 };
-async function pi(e, t = Cr) {
-  var s;
-  if (e.byteLength > Kt) return I("This file is bigger than 8 MB.");
+async function Si(e, t = Pr) {
+  var o;
+  if (e.byteLength > qt) return I("This file is bigger than 8 MB.");
   if (e.byteLength === 0) return I("This file is empty.");
   let n;
   try {
@@ -3072,56 +3096,56 @@ async function pi(e, t = Cr) {
   } catch {
     return I("This file is not a sound this browser can read.");
   }
-  if ((((s = n.channels[0]) == null ? void 0 : s.length) ?? 0) / n.sampleRate > qt) return I("This file is longer than 10 minutes.");
-  const o = Ut(n.channels, n.sampleRate);
-  return o.ok ? { ok: !0, value: !0 } : I(o.error);
+  if ((((o = n.channels[0]) == null ? void 0 : o.length) ?? 0) / n.sampleRate > Ut) return I("This file is longer than 10 minutes.");
+  const s = Yt(n.channels, n.sampleRate);
+  return s.ok ? { ok: !0, value: !0 } : I(s.error);
 }
-const le = () => Promise.resolve().then(() => Vt);
-async function Or(e, t) {
+const le = () => Promise.resolve().then(() => Jt);
+async function Br(e, t) {
   const n = await le();
-  if (!on(e)) return n.startSample(e, t);
-  const a = await Tr(e);
+  if (!rn(e)) return n.startSample(e, t);
+  const a = await _r(e);
   return a.ok ? n.startOwn(e, a.value, t) : { ok: !1, error: a.error };
 }
-function Rr(e) {
-  const [t, n] = N(Qt), [a, o] = N(mt), [s, r] = N(""), l = _(t);
+function Fr(e) {
+  const [t, n] = N(en), [a, s] = N(mt), [o, r] = N(""), l = _(t);
   l.current = t;
   const { player: c, guarded: u } = e;
   L(() => {
-    e.snap.playing || (vr(), o(null));
+    e.snap.playing || (Er(), s(null));
   }, [e.snap.playing]);
   const f = T(
     async (m) => {
       if (r(""), c.snapshot().playing || await c.play(), !c.snapshot().playing) return void r(d.errorAudio);
       (await le()).setBlend(l.current.blend);
-      const p = await Or(m, l.current.level);
+      const p = await Br(m, l.current.level);
       if (!p.ok) return void r(p.error);
-      p.note !== void 0 && r(p.note), ht(m), o(m);
+      p.note !== void 0 && r(p.note), ht(m), s(m);
       const g = { ...l.current, id: m };
       n(g), ut(g);
     },
     [c]
   ), k = T((m) => u(() => void f(m)), [u, f]), S = T(() => {
-    ht(null), o(null), le().then((m) => m.stopSample());
+    ht(null), s(null), le().then((m) => m.stopSample());
   }, []), M = T((m, h) => {
     const p = { ...l.current, ...m };
     n(p), ut(p), mt() !== null && le().then(h);
   }, []), v = T((m) => M({ blend: m }, (h) => h.setBlend(m)), [M]), w = T((m) => M({ level: m }, (h) => h.setSampleLevel(m)), [M]);
-  return { prefs: t, on: a, message: s, start: k, stop: S, setBlend: v, setLevel: w };
+  return { prefs: t, on: a, message: o, start: k, stop: S, setBlend: v, setLevel: w };
 }
-async function zr() {
-  _o(), await Lr();
+async function Hr() {
+  Ho(), await Ir();
 }
-function Dr() {
-  const { player: e, store: t, engine: n } = yt(), [a, o] = N(() => e.snapshot()), [s, r] = N(Nn), [l, c] = N(!1), [u, f, k] = En(), S = _(null), M = _(s);
-  L(() => (o(e.snapshot()), e.subscribe(o)), [e]);
+function xr() {
+  const { player: e, store: t, engine: n } = yt(), [a, s] = N(() => e.snapshot()), [o, r] = N(En), [l, c] = N(!1), [u, f, k] = Tn(), S = _(null), M = _(o);
+  L(() => (s(e.snapshot()), e.subscribe(s)), [e]);
   const v = T(
     (g) => {
       M.current ? g() : (S.current = g, c(!0));
     },
     []
   ), w = T(() => {
-    Tn(Ln, !0), M.current = !0, r(!0), c(!1);
+    Ln(Cn, !0), M.current = !0, r(!0), c(!1);
     const g = S.current;
     S.current = null, g == null || g();
   }, []), m = T(() => {
@@ -3136,28 +3160,28 @@ function Dr() {
   ), p = T(() => {
     e.snapshot().playing ? e.stop() : v(() => void e.play());
   }, [e, v]);
-  return { engine: n, player: e, store: t, snap: a, accepted: s, gate: l, reduced: u, setReduced: f, userReduced: k, guarded: v, accept: w, cancelGate: m, playTemplate: h, toggle: p };
+  return { engine: n, player: e, store: t, snap: a, accepted: o, gate: l, reduced: u, setReduced: f, userReduced: k, guarded: v, accept: w, cancelGate: m, playTemplate: h, toggle: p };
 }
-function _r(e, t) {
-  const [n, a] = N("standalone"), [o, s] = N(() => Cn());
-  L(() => On(s), []), L(() => {
+function jr(e, t) {
+  const [n, a] = N("standalone"), [s, o] = N(() => On());
+  L(() => Rn(o), []), L(() => {
     let l = !1;
-    const c = new Rn({
+    const c = new Dn({
       ...t !== void 0 ? { create: t } : {},
       onStatus: (u) => {
-        a(u), u === "standalone" && (pe().source !== "demo" && e.crewLost(), l && _n(), l = !1);
+        a(u), u === "standalone" && (pe().source !== "demo" && e.crewLost(), l && In(), l = !1);
       },
       onState: (u) => {
-        l = !0, Dn(e, u);
+        l = !0, _n(e, u);
       }
     });
     return c.start(), () => c.stop();
   }, [e, t]);
-  const r = hn(zn, pe, pe);
-  return { enabled: o, status: n, view: r };
+  const r = fn(zn, pe, pe);
+  return { enabled: s, status: n, view: r };
 }
-function Ir(e, t = Date.now) {
-  const [n, a] = N(() => us(e)), o = T(
+function $r(e, t = Date.now) {
+  const [n, a] = N(() => us(e)), s = T(
     (r, l) => {
       a((c) => {
         const u = ms(c, { id: r, a: l, day: Y(t()) });
@@ -3165,133 +3189,133 @@ function Ir(e, t = Date.now) {
       });
     },
     [e, t]
-  ), s = T(() => {
+  ), o = T(() => {
     hs(e), a([]);
   }, [e]);
-  return H(() => ({ entries: n, answer: o, clear: s }), [n, o, s]);
+  return F(() => ({ entries: n, answer: s, clear: o }), [n, s, o]);
 }
-const Pr = { kind: "pomodoro", focusMin: 25, breakMin: 5 }, Br = ["starter-rain", "starter-deep"], Hr = 0.8, Fr = 6e3, xr = { chimeLevel: 0.25, chimeRatePerMin: 10 };
-function jr(e, t) {
+const Wr = { kind: "pomodoro", focusMin: 25, breakMin: 5 }, Gr = ["starter-rain", "starter-deep"], Kr = 0.8, qr = 6e3, Ur = { chimeLevel: 0.25, chimeRatePerMin: 10 };
+function Yr(e, t) {
   return t.kind !== "pomodoro" ? { phase: "end", action: "cancel" } : e === "focus" && t.phase === "break" ? { phase: "break", action: "break" } : e === "break" && t.phase === "focus" ? { phase: "end", action: "finish" } : { phase: e, action: null };
 }
-function $r(e, t) {
-  const n = Br.find((a) => a !== e);
+function Vr(e, t) {
+  const n = Gr.find((a) => a !== e);
   return t.find((a) => a.id === n);
 }
-function Gr(e, t) {
-  return !Number.isFinite(e) || !Number.isFinite(t) ? 0 : Math.round(Math.min(0, e * Hr - t) * 1e3) / 1e3;
+function Jr(e, t) {
+  return !Number.isFinite(e) || !Number.isFinite(t) ? 0 : Math.round(Math.min(0, e * Kr - t) * 1e3) / 1e3;
 }
-async function Wr(e, t, n = (a, o) => window.setTimeout(a, o)) {
+async function Xr(e, t, n = (a, s) => window.setTimeout(a, s)) {
   const a = e.snapshot().voice.gain;
-  e.setLayerOverride(xr), n(() => e.clearLayerOverrides(), Fr), await e.playTemplate(t) && e.nudgeGain(Gr(a, e.snapshot().voice.gain));
+  e.setLayerOverride(Ur), n(() => e.clearLayerOverrides(), qr), await e.playTemplate(t) && e.nudgeGain(Jr(a, e.snapshot().voice.gain));
 }
-function Kr(e) {
-  const [t, n] = N(null), a = _(!1), { player: o, guarded: s } = e, { playing: r, templateId: l, timer: c } = e.snap, u = T(() => {
-    n(null), o.stopTimer();
-  }, [o]), f = T(
-    (k) => s(() => {
+function Zr(e) {
+  const [t, n] = N(null), a = _(!1), { player: s, guarded: o } = e, { playing: r, templateId: l, timer: c } = e.snap, u = T(() => {
+    n(null), s.stopTimer();
+  }, [s]), f = T(
+    (k) => o(() => {
       a.current = !1;
       const S = () => {
-        o.startTimer(Pr), n({ focus: k, breakId: null, phase: "focus" });
+        s.startTimer(Wr), n({ focus: k, breakId: null, phase: "focus" });
       };
-      if (o.snapshot().playing && o.snapshot().templateId === k.id) return S();
-      o.setQueue([k]), o.playTemplate(k).then((M) => M && S());
+      if (s.snapshot().playing && s.snapshot().templateId === k.id) return S();
+      s.setQueue([k]), s.playTemplate(k).then((M) => M && S());
     }),
-    [o, s]
+    [s, o]
   );
   return L(() => {
     if (t === null) return;
     if (r) a.current = !0;
     else if (a.current) return u();
-    const k = jr(t.phase, c);
+    const k = Yr(t.phase, c);
     if (k.action === "cancel") return n(null);
     if (k.action === null) {
       r && l !== t.focus.id && l !== t.breakId && u();
       return;
     }
     if (k.action === "break") {
-      const S = $r(t.focus.id, P());
-      n({ ...t, phase: "break", breakId: (S == null ? void 0 : S.id) ?? null }), S !== void 0 && Wr(o, S);
+      const S = Vr(t.focus.id, P());
+      n({ ...t, phase: "break", breakId: (S == null ? void 0 : S.id) ?? null }), S !== void 0 && Xr(s, S);
       return;
     }
-    n(null), o.stopTimer(), o.stop();
-  }, [t, r, l, c, o, u]), H(
+    n(null), s.stopTimer(), s.stop();
+  }, [t, r, l, c, s, u]), F(
     () => ({ active: t !== null, phase: (t == null ? void 0 : t.phase) ?? null, focus: (t == null ? void 0 : t.focus) ?? null, start: f, cancel: u }),
     [t, f, u]
   );
 }
 const Te = 500, Le = { v: 1, items: [] };
-function qr(e, t) {
+function Qr(e, t) {
   if (!qe(e) || J(e, "v") !== 1) return Le;
   const n = J(e, "items");
   if (!Array.isArray(n)) return Le;
-  const a = [], o = /* @__PURE__ */ new Set();
-  for (const s of n.slice(0, Te * 2)) {
-    if (!qe(s)) continue;
-    const r = J(s, "kind"), l = vt(J(s, "id"));
+  const a = [], s = /* @__PURE__ */ new Set();
+  for (const o of n.slice(0, Te * 2)) {
+    if (!qe(o)) continue;
+    const r = J(o, "kind"), l = vt(J(o, "id"));
     if (r !== "template" && r !== "mix" || l === null) continue;
     const c = `${r}:${l}`;
-    if (!o.has(c) && (o.add(c), a.push({ kind: r, id: l, at: In(J(s, "at"), 0, t + 864e5, t) }), a.length >= Te))
+    if (!s.has(c) && (s.add(c), a.push({ kind: r, id: l, at: Pn(J(o, "at"), 0, t + 864e5, t) }), a.length >= Te))
       break;
   }
   return { v: 1, items: a };
 }
-function rn(e, t, n) {
+function ln(e, t, n) {
   return e.items.some((a) => a.kind === t && a.id === n);
 }
-function Ur(e, t, n, a) {
-  return rn(e, t, n) ? { v: 1, items: e.items.filter((o) => !(o.kind === t && o.id === n)) } : vt(n) === null || e.items.length >= Te ? e : { v: 1, items: [{ kind: t, id: n, at: a }, ...e.items] };
+function ei(e, t, n, a) {
+  return ln(e, t, n) ? { v: 1, items: e.items.filter((s) => !(s.kind === t && s.id === n)) } : vt(n) === null || e.items.length >= Te ? e : { v: 1, items: [{ kind: t, id: n, at: a }, ...e.items] };
 }
-function Yr(e, t) {
+function ti(e, t) {
   const [n, a] = N(Le);
   L(() => {
-    let s = !0;
-    return e.getRecord("favorites").then((r) => s && a(qr(r, Date.now()))).catch(() => {
+    let o = !0;
+    return e.getRecord("favorites").then((r) => o && a(Qr(r, Date.now()))).catch(() => {
     }), () => {
-      s = !1;
+      o = !1;
     };
   }, [e]);
-  const o = T(() => {
+  const s = T(() => {
     if (t === null) return;
-    const s = Ur(n, "template", t, Date.now());
-    a(s), e.setRecord("favorites", s).catch(() => {
+    const o = ei(n, "template", t, Date.now());
+    a(o), e.setRecord("favorites", o).catch(() => {
     });
   }, [n, t, e]);
-  return { on: t !== null && rn(n, "template", t), toggle: o };
+  return { on: t !== null && ln(n, "template", t), toggle: s };
 }
-const Vr = z(() => import("./chunk-Onboarding-kJNSc7Mq.mjs").then((e) => ({ default: e.Onboarding }))), Jr = (e) => Math.max(180, e * 60 * 0.8);
-function Xr({ engine: e, clock: t, store: n, bridgeCreate: a, onStudio: o }) {
+const ni = D(() => import("./chunk-Onboarding-g0G-_gy-.mjs").then((e) => ({ default: e.Onboarding }))), ai = (e) => Math.max(180, e * 60 * 0.8);
+function si({ engine: e, clock: t, store: n, bridgeCreate: a, onStudio: s }) {
   var $e;
-  const s = Dr(), r = js(s.store, s.snap.playing), l = _r(s.player, a), c = Rr(s), [u, f] = N("today"), [k, S] = N(null), M = _(null), v = Yr(s.store, s.snap.templateId), w = Ir(r.storage), m = Kr(s), h = r.profile.createdAt === 0, p = ti(r.storage), g = Os(s.snap, !h && u !== "reset" && u !== "breathe", m.focus === null ? null : { id: m.focus.id, name: d.sprintName }), A = s.reduced || r.profile.extraGentle, { look: C, prefs: R, dim: F, setPrefs: x } = yr();
-  ni(o);
-  const V = T((j) => f(j), []), { play: ae, playDay: cn, finish: un } = Qr({ s, data: r, last: p, end: g, active: M, setView: f });
-  oi(s.snap.playing, s.snap.elapsedSec, M, r.progress, r.setJourney);
-  const dn = (j) => {
+  const o = xr(), r = js(o.store, o.snap.playing), l = jr(o.player, a), c = Fr(o), [u, f] = N("today"), [k, S] = N(null), M = _(null), v = ti(o.store, o.snap.templateId), w = $r(r.storage), m = Zr(o), h = r.profile.createdAt === 0, p = li(r.storage), g = Os(o.snap, !h && u !== "reset" && u !== "breathe", m.focus === null ? null : { id: m.focus.id, name: d.sprintName }), A = o.reduced || r.profile.extraGentle, { look: C, prefs: R, dim: H, setPrefs: x } = Nr();
+  ci(s);
+  const V = T((j) => f(j), []), { play: ae, playDay: un, finish: dn } = ri({ s: o, data: r, last: p, end: g, active: M, setView: f });
+  mi(o.snap.playing, o.snap.elapsedSec, M, r.progress, r.setJourney);
+  const mn = (j) => {
     S(j), f("journey");
-  }, mn = () => {
-    As(r.storage), w.clear(), c.stop(), zr(), r.setProfile(Rt), f("today");
+  }, hn = () => {
+    As(r.storage), w.clear(), c.stop(), Hr(), r.setProfile(Dt), f("today");
   };
-  return /* @__PURE__ */ y("div", { className: "c-app", "data-theme": C.theme, "data-contrast": C.highContrast ? "high" : "normal", "data-view": u, "data-dim": F ? "true" : "false", "data-motion": A ? "off" : "on", "data-playing": s.snap.playing ? "true" : "false", children: [
-    /* @__PURE__ */ i(si, {}),
-    /* @__PURE__ */ i(ai, { engine: e }),
+  return /* @__PURE__ */ b("div", { className: "c-app", "data-theme": C.theme, "data-contrast": C.highContrast ? "high" : "normal", "data-view": u, "data-dim": H ? "true" : "false", "data-motion": A ? "off" : "on", "data-playing": o.snap.playing ? "true" : "false", children: [
+    /* @__PURE__ */ i(di, {}),
+    /* @__PURE__ */ i(ui, { engine: e }),
     l.view.source === "demo" && /* @__PURE__ */ i("p", { className: "c-badge-sim", role: "status", "data-testid": "demo-badge", children: d.crewDemoBadge }),
     /* @__PURE__ */ i("main", { id: "c-main", className: "c-main", tabIndex: -1, children: /* @__PURE__ */ i(U, { fallback: /* @__PURE__ */ i("p", { className: "c-loading", role: "status", children: d.loading }), children: h ? /* @__PURE__ */ i(
-      Vr,
+      ni,
       {
-        playing: s.snap.playing,
+        playing: o.snap.playing,
         reduced: A,
         initial: r.profile,
-        onAccept: s.accept,
-        onPreview: (j) => s.playTemplate(j, null),
-        onStop: () => void s.player.stop(),
-        onFinish: un
+        onAccept: o.accept,
+        onPreview: (j) => o.playTemplate(j, null),
+        onStop: () => void o.player.stop(),
+        onFinish: dn
       }
     ) : /* @__PURE__ */ i(
-      ir,
+      fr,
       {
         view: u,
         journeyId: k,
-        s,
+        s: o,
         data: r,
         crewInfo: l,
         nature: c,
@@ -3303,51 +3327,51 @@ function Xr({ engine: e, clock: t, store: n, bridgeCreate: a, onStudio: o }) {
         onPrefs: x,
         feel: w.entries,
         sprint: m,
-        handlers: { go: V, play: ae, playDay: cn, openJourney: dn, forget: mn, onStudio: o, onMix: (j) => s.guarded(() => s.player.playMix(j)) }
+        handlers: { go: V, play: ae, playDay: un, openJourney: mn, forget: hn, onStudio: s, onMix: (j) => o.guarded(() => o.player.playMix(j)) }
       }
     ) }) }),
-    !h && u !== "player" && u !== "reset" && u !== "breathe" && /* @__PURE__ */ i(ja, { snap: s.snap, crewPresetId: (($e = l.view.state) == null ? void 0 : $e.target.presetId) ?? null, onOpen: () => V("player"), onStop: () => void s.player.stop() }),
-    !h && /* @__PURE__ */ i(Fa, { view: u, onGo: V, reduced: A }),
-    /* @__PURE__ */ i("p", { className: "c-sr", role: "status", "data-testid": "play-status", children: s.snap.playing ? `Playing. ${d.volumeCapped}` : "Stopped." }),
-    g.card !== null && !s.snap.playing && /* @__PURE__ */ i(Zr, { card: g.card, play: ae, dismiss: g.dismiss, feel: w, firstRun: Y(r.profile.createdAt) === Z() }),
-    s.gate && /* @__PURE__ */ i(Ps, { onAccept: s.accept, onCancel: s.cancelGate })
+    !h && u !== "player" && u !== "reset" && u !== "breathe" && u !== "crew" && /* @__PURE__ */ i(ja, { snap: o.snap, crewPresetId: (($e = l.view.state) == null ? void 0 : $e.target.presetId) ?? null, onOpen: () => V("player"), onStop: () => void o.player.stop() }),
+    !h && /* @__PURE__ */ i(Ha, { view: u, onGo: V, reduced: A }),
+    /* @__PURE__ */ i("p", { className: "c-sr", role: "status", "data-testid": "play-status", children: o.snap.playing ? `Playing. ${d.volumeCapped}` : "Stopped." }),
+    g.card !== null && !o.snap.playing && /* @__PURE__ */ i(oi, { card: g.card, play: ae, dismiss: g.dismiss, feel: w, firstRun: Y(r.profile.createdAt) === Z() }),
+    o.gate && /* @__PURE__ */ i(Ps, { onAccept: o.accept, onCancel: o.cancelGate })
   ] });
 }
-function Zr({ card: e, play: t, dismiss: n, feel: a, firstRun: o }) {
-  return /* @__PURE__ */ i(Ds, { info: e, onAgain: () => ei(e.id, t), onClose: n, firstRun: o, onFeel: (s) => a.answer(e.id, s) });
+function oi({ card: e, play: t, dismiss: n, feel: a, firstRun: s }) {
+  return /* @__PURE__ */ i(zs, { info: e, onAgain: () => ii(e.id, t), onClose: n, firstRun: s, onFeel: (o) => a.answer(e.id, o) });
 }
 function ft(e, t) {
-  return t === null ? null : e === "sleep" ? { kind: "sleep-fade", minutes: Math.max(Bt, t) } : { kind: "countdown", minutes: t };
+  return t === null ? null : e === "sleep" ? { kind: "sleep-fade", minutes: Math.max(Ft, t) } : { kind: "countdown", minutes: t };
 }
-function Qr({ s: e, data: t, last: n, end: a, active: o, setView: s }) {
+function ri({ s: e, data: t, last: n, end: a, active: s, setView: o }) {
   const r = T(
     (u, f = u.recommendedMinutes, k = t.profile.goal) => {
-      o.current = null, n.remember(u.id), a.dismiss(), e.playTemplate(u, ft(k, f)), s("player");
+      s.current = null, n.remember(u.id), a.dismiss(), e.playTemplate(u, ft(k, f)), o("player");
     },
-    [e, n, a, o, s, t.profile.goal]
+    [e, n, a, s, o, t.profile.goal]
   );
   return { play: r, playDay: (u, f, k) => {
-    r(k), o.current = { id: u, no: f, needSec: Jr(k.recommendedMinutes) };
+    r(k), s.current = { id: u, no: f, needSec: ai(k.recommendedMinutes) };
   }, finish: (u, f) => {
     if (t.setProfile(u), !e.snap.playing || e.snap.templateId !== f.id) return r(f, f.recommendedMinutes, u.goal);
-    n.remember(f.id), e.player.startTimer(ft(u.goal, f.recommendedMinutes) ?? { kind: "countdown", minutes: f.recommendedMinutes }), s("player");
+    n.remember(f.id), e.player.startTimer(ft(u.goal, f.recommendedMinutes) ?? { kind: "countdown", minutes: f.recommendedMinutes }), o("player");
   } };
 }
-const ln = (e) => e === null ? null : P().find((t) => t.id === e) ?? null;
-function ei(e, t) {
-  const n = ln(e);
+const cn = (e) => e === null ? null : P().find((t) => t.id === e) ?? null;
+function ii(e, t) {
+  const n = cn(e);
   n !== null && t(n);
 }
-function ti(e) {
-  const [t, n] = N(() => Es(e)), a = H(() => ln(t), [t]), o = T(
-    (s) => {
-      Ts(e, s), n(s);
+function li(e) {
+  const [t, n] = N(() => Es(e)), a = F(() => cn(t), [t]), s = T(
+    (o) => {
+      Ts(e, o), n(o);
     },
     [e]
   );
-  return H(() => ({ template: a, remember: o }), [a, o]);
+  return F(() => ({ template: a, remember: s }), [a, s]);
 }
-function ni(e) {
+function ci(e) {
   L(() => {
     const t = (n) => {
       n.altKey && n.shiftKey && n.code === "KeyS" && (n.preventDefault(), e());
@@ -3355,23 +3379,23 @@ function ni(e) {
     return window.addEventListener("keydown", t), () => window.removeEventListener("keydown", t);
   }, [e]);
 }
-function ai({ engine: e }) {
+function ui({ engine: e }) {
   const [t, n] = N(() => e.status.state === "error" ? e.status.error ?? "" : null);
-  return L(() => e.onStatus((a) => n(a.state === "error" ? a.error ?? "" : null)), [e]), t === null ? null : /* @__PURE__ */ i("p", { className: "c-note", role: "status", "data-testid": "engine-notice", children: t === Pn ? d.unsupported : d.errorAudio });
+  return L(() => e.onStatus((a) => n(a.state === "error" ? a.error ?? "" : null)), [e]), t === null ? null : /* @__PURE__ */ i("p", { className: "c-note", role: "status", "data-testid": "engine-notice", children: t === Bn ? d.unsupported : d.errorAudio });
 }
-function si() {
-  return /* @__PURE__ */ y(Ce, { children: [
+function di() {
+  return /* @__PURE__ */ b(Ce, { children: [
     /* @__PURE__ */ i("a", { className: "c-skip", href: "#c-main", children: "Skip to content" }),
     /* @__PURE__ */ i("header", { className: "c-topbar", children: /* @__PURE__ */ i("span", { className: "c-brand", children: d.brand }) })
   ] });
 }
-function oi(e, t, n, a, o) {
+function mi(e, t, n, a, s) {
   L(() => {
-    const s = n.current, r = s === null ? void 0 : a[s.id];
-    !e || s === null || r === void 0 || t < s.needSec || (n.current = null, r.doneDays.includes(s.no) || o(s.id, { ...r, doneDays: [...r.doneDays, s.no].sort((l, c) => l - c) }));
-  }, [e, t, n, a, o]);
+    const o = n.current, r = o === null ? void 0 : a[o.id];
+    !e || o === null || r === void 0 || t < o.needSec || (n.current = null, r.doneDays.includes(o.no) || s(o.id, { ...r, doneDays: [...r.doneDays, o.no].sort((l, c) => l - c) }));
+  }, [e, t, n, a, s]);
 }
-const ri = {
+const hi = {
   position: "fixed",
   left: 12,
   right: 12,
@@ -3384,42 +3408,42 @@ const ri = {
   fontSize: 14,
   textAlign: "center"
 };
-function gi() {
-  Bn(import.meta.url), Hn();
+function Mi() {
+  Fn(import.meta.url), Hn();
   const { engine: e, store: t } = yt();
   L(() => (Ue(!0), () => Ue(!1)), []);
   const [n, a] = N(!1);
-  return /* @__PURE__ */ y("div", { "data-testid": "zonked-app", style: { height: "100%", minHeight: 0, overflow: "hidden", position: "relative", transform: "translateZ(0)" }, children: [
-    /* @__PURE__ */ i("div", { style: { height: "100%", overflowY: "auto" }, children: /* @__PURE__ */ i(Xr, { engine: e, store: t, onStudio: () => a(!0) }) }),
-    n && /* @__PURE__ */ i("p", { role: "status", style: ri, "data-testid": "studio-note", onClick: () => a(!1), children: "Studio, the advanced mode, is not in the Kiro Crew app yet. Tap to close." })
+  return /* @__PURE__ */ b("div", { "data-testid": "zonked-app", style: { height: "100%", minHeight: 0, overflow: "hidden", position: "relative", transform: "translateZ(0)" }, children: [
+    /* @__PURE__ */ i("div", { style: { height: "100%", overflowY: "auto" }, children: /* @__PURE__ */ i(si, { engine: e, store: t, onStudio: () => a(!0) }) }),
+    n && /* @__PURE__ */ i("p", { role: "status", style: hi, "data-testid": "studio-note", onClick: () => a(!1), children: "Studio, the advanced mode, is not in the Kiro Crew app yet. Tap to close." })
   ] });
 }
 export {
-  di as B,
-  Rt as D,
+  yi as B,
+  Dt as D,
   $a as G,
   Oe as I,
-  Mt as J,
-  Kt as M,
+  At as J,
+  qt as M,
   Le as N,
   Ba as P,
   Ps as S,
-  Ga as T,
-  gi as Z,
-  Wa as a,
+  Wa as T,
+  Mi as Z,
+  Ga as a,
   P as b,
-  qr as c,
-  kt as d,
-  fr as e,
+  Qr as c,
+  St as d,
+  kr as e,
   co as f,
-  ui as g,
+  bi as g,
   uo as h,
-  hi as i,
-  fi as j,
-  Lr as k,
-  mi as l,
+  wi as i,
+  ki as j,
+  Ir as k,
+  vi as l,
   Za as p,
   Qe as r,
   ho as u,
-  pi as v
+  Si as v
 };
