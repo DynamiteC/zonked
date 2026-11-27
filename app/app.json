@@ -1,0 +1,20 @@
+{
+  "name": "zonked",
+  "version": "0.1.0",
+  "displayName": "Zonked",
+  "description": "Acoustic recovery companion: binaural beats, noise and lo-fi layers made by a no_std Rust WASM engine, with hearing safety limits built in.",
+  "author": "Zonked contributors",
+  "iconPath": "assets/icon.png",
+  "tags": ["audio", "focus", "recovery"],
+  "ui": {
+    "entry": "dist/index.mjs",
+    "pages": [
+      {
+        "route": "/apps/zonked",
+        "label": "Zonked",
+        "icon": "AudioLines"
+      }
+    ]
+  },
+  "permissions": {}
+}

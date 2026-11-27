@@ -1,0 +1,40 @@
+{
+  "_comment_name": "kebab-case, at most 128 chars, not a reserved word (system, library, registry, blob, install, register, market)",
+  "name": "my-app",
+  "version": "0.1.0",
+  "displayName": "My App",
+  "description": "One plain sentence. It is cut to two lines in the store.",
+  "author": "your-name",
+  "tags": ["wellness"],
+  "_comment_icon": "top level. 512x512, opaque, plain png",
+  "iconPath": "assets/icon.png",
+  "_comment_paths": "relative paths only: no .. and no absolute path",
+  "agents": ["agents/my-agent.json"],
+  "skills": ["skills/my-skill"],
+  "ui": {
+    "_comment_entry": "relative to ui/. Build output is committed",
+    "entry": "dist/index.mjs",
+    "pages": [
+      { "route": "/apps/my-app", "label": "My App" }
+    ]
+  },
+  "contributes": {
+    "panelTabs": [
+      {
+        "id": "main",
+        "title": "My App",
+        "menuLabel": "My App",
+        "icon": "AudioLines",
+        "entry": "dist/panel.mjs"
+      }
+    ]
+  },
+  "_comment_permissions": "declare every API path and event the UI uses, or the SDK throws. Least privilege",
+  "permissions": {
+    "api": ["/api/status"],
+    "events": ["notification"],
+    "storage": true,
+    "network": false
+  },
+  "platform": { "os": ["macos", "linux"] }
+}
