@@ -104,7 +104,7 @@ export async function runCalmChecks(h) {
     const s = await open(h);
     try {
       await finishOnboarding(s.page);
-      await nav(s.page, 'Settings').click();
+      await nav(s.page, 'You').click();
       await s.page.getByTestId('studio-switch').click();
       await s.page.getByTestId('play-button').waitFor();
       h.assert((await s.page.evaluate(() => localStorage.getItem('zonked.theme.v1'))) === 'studio', 'key not studio');
@@ -130,13 +130,13 @@ export async function runCalmChecks(h) {
     }
   });
 
-  await h.check('C6 375 px width: no sideways scroll on onboarding, Today, Journeys, Library, Settings', async () => {
+  await h.check('C6 375 px width: no sideways scroll on onboarding, Today, Sounds, Crew, You', async () => {
     const s = await open(h, { viewport: { width: 375, height: 740 } });
     try {
       const wide = () => s.page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       h.assert((await wide()) <= 0, 'onboarding overflows');
       await finishOnboarding(s.page);
-      for (const n of ['Today', 'Journeys', 'Library', 'Settings']) {
+      for (const n of ['Today', 'Sounds', 'Crew', 'You']) {
         await nav(s.page, n).click();
         await s.page.waitForTimeout(300);
         h.assert((await wide()) <= 0, `${n} overflows`);

@@ -31,7 +31,7 @@ async function toNature(h) {
   await s.page.getByRole('button', { name: 'Skip, just play' }).click();
   await s.page.getByTestId('calm-safety-accept').click();
   await s.page.getByTestId('player-toggle').waitFor();
-  await nav(s.page, 'Library').click();
+  await nav(s.page, 'Sounds').click();
   await s.page.getByTestId('open-nature').click();
   await s.page.getByTestId('nature-rain').waitFor();
   return s;
