@@ -1,7 +1,7 @@
 import { jsxs as d, jsx as e, Fragment as F } from "react/jsx-runtime";
 import { useState as u, useMemo as g, useEffect as M } from "react";
-import { b as p, P as S, N as $, c as I, I as A, d as D } from "./chunk-App-7MO50ppA.mjs";
-import { C as o, H as R, I as j } from "./chunk-crewLink-BQ1FLTqp.mjs";
+import { b as p, P as S, N as $, c as A, I, d as D } from "./chunk-App-1ky-Zja1.mjs";
+import { C as o, V as R, E as j } from "./chunk-crewLink-CGwtdNl8.mjs";
 function O(a, s = p()) {
   const l = (a.text ?? "").toLowerCase().split(/\s+/).filter((t) => t.length > 0), i = a.layerTags ?? [];
   return s.filter((t) => {
@@ -18,7 +18,7 @@ function x({ list: a, onPlay: s }) {
   ] }) }, l.id)) });
 }
 const N = ({ text: a }) => /* @__PURE__ */ e("p", { className: "c-empty", children: a });
-function G({ onPlay: a }) {
+function V({ onPlay: a }) {
   const [s, l] = u(null), [i, t] = u(0), m = g(() => {
     const r = {};
     for (const v of p()) for (const f of v.situations) r[f] = (r[f] ?? 0) + 1;
@@ -28,7 +28,7 @@ function G({ onPlay: a }) {
     /* @__PURE__ */ e("ul", { className: "c-tiles", children: R.map((r) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ d("button", { type: "button", className: "c-tile", "aria-pressed": s === r.id, onClick: () => {
       l(r.id), t(0);
     }, children: [
-      /* @__PURE__ */ e(A, { name: r.icon }),
+      /* @__PURE__ */ e(I, { name: r.icon }),
       /* @__PURE__ */ e("span", { className: "c-tile-name", children: r.label }),
       /* @__PURE__ */ e("span", { className: "c-tile-mood", children: r.mood }),
       /* @__PURE__ */ e("span", { className: "c-tile-count", children: o.sounds(m[r.id] ?? 0) })
@@ -40,7 +40,7 @@ function G({ onPlay: a }) {
     ] })
   ] });
 }
-function H({ onPlay: a }) {
+function G({ onPlay: a }) {
   const s = p();
   return /* @__PURE__ */ e("ul", { className: "c-list", children: D.map((l) => {
     const i = s.find((t) => t.id === l.templateId);
@@ -55,7 +55,7 @@ function U(a) {
   const [s, l] = u($), [i, t] = u([]);
   return M(() => {
     let m = !0;
-    return a.getRecord("favorites").then((n) => m && l(I(n, Date.now()))).catch(() => {
+    return a.getRecord("favorites").then((n) => m && l(A(n, Date.now()))).catch(() => {
     }), a.listMixes().then((n) => m && t(n)).catch(() => {
     }), () => {
       m = !1;
@@ -77,8 +77,8 @@ function z({ store: a, logs: s, reduced: l = !1, onNature: i, onPlay: t, onPlayM
     y !== "" ? k.length === 0 ? /* @__PURE__ */ e(N, { text: o.searchEmpty }) : /* @__PURE__ */ e(x, { list: k, onPlay: t }) : /* @__PURE__ */ d(F, { children: [
       /* @__PURE__ */ e("div", { className: "c-tabs", role: "tablist", "aria-label": o.libraryTitle, children: o.tabs.map((c, h) => /* @__PURE__ */ e("button", { type: "button", role: "tab", id: `c-tab-${h}`, "aria-selected": n === h, "aria-controls": "c-tabpanel", className: "c-tab", onClick: () => r(h), children: c }, c)) }),
       /* @__PURE__ */ d("div", { id: "c-tabpanel", role: "tabpanel", "aria-labelledby": `c-tab-${n}`, children: [
-        n === 0 && /* @__PURE__ */ e(G, { onPlay: t }),
-        n === 1 && /* @__PURE__ */ e(H, { onPlay: t }),
+        n === 0 && /* @__PURE__ */ e(V, { onPlay: t }),
+        n === 1 && /* @__PURE__ */ e(G, { onPlay: t }),
         n === 2 && (w.length === 0 ? /* @__PURE__ */ e(N, { text: o.emptyFavorites }) : /* @__PURE__ */ e(x, { list: w, onPlay: t })),
         n === 3 && (C.length === 0 ? /* @__PURE__ */ e(N, { text: o.emptyMixes }) : /* @__PURE__ */ e("ul", { className: "c-list", children: C.map((c) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ e("button", { type: "button", className: "c-row-card", onClick: () => m(c), children: /* @__PURE__ */ e("b", { children: c.name }) }) }, c.id)) })),
         n === 4 && (E.length === 0 ? /* @__PURE__ */ e(N, { text: o.emptyRecent }) : /* @__PURE__ */ e("ul", { className: "c-list", children: E.map((c) => /* @__PURE__ */ d("li", { className: "c-row-card", children: [

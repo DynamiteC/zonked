@@ -15,6 +15,7 @@ import { runSanctuaryChecks } from './e2e-sanctuary-checks.mjs';
 import { runCalmChecks } from './e2e-calm-checks.mjs';
 import { runCrewChecks } from './e2e-crew-checks.mjs';
 import { runNatureChecks } from './e2e-nature-checks.mjs';
+import { runResetChecks } from './e2e-reset-checks.mjs';
 
 const results = [];
 const info = [];
@@ -380,6 +381,7 @@ try {
   await runCalmChecks(harness);
   await runNatureChecks(harness);
   await runCrewChecks(harness);
+  await runResetChecks(harness);
   // mixed content against the hosted https page (ZONKED_SITE_URL) (informational only)
   await runMixedContent(harness);
 } catch (e) {

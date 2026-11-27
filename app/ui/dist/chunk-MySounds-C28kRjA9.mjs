@@ -1,9 +1,9 @@
 import { jsxs as m, jsx as s } from "react/jsx-runtime";
 import { useRef as b, useState as v, useCallback as d, useEffect as y } from "react";
-import { C as o } from "./chunk-crewLink-BQ1FLTqp.mjs";
-import { I as w, h as N, v as k, i as A, j as C, k as g, m as O } from "./chunk-App-7MO50ppA.mjs";
-const S = (a) => `${(a / (1024 * 1024)).toFixed(1)} MB`;
-async function T(a) {
+import { C as o } from "./chunk-crewLink-CGwtdNl8.mjs";
+import { I as w, l as N, v as k, i as A, j as C, k as g, M as O } from "./chunk-App-1ky-Zja1.mjs";
+const M = (a) => `${(a / (1024 * 1024)).toFixed(1)} MB`;
+async function S(a) {
   if (a.size > O) return "This file is bigger than 8 MB.";
   try {
     return await a.arrayBuffer();
@@ -11,7 +11,7 @@ async function T(a) {
     return "This file could not be read.";
   }
 }
-function x() {
+function T() {
   const [a, r] = v([]), [l, c] = v(""), n = d(async () => {
     const t = await N();
     t.ok ? r(t.value) : c(t.error);
@@ -20,27 +20,27 @@ function x() {
   const u = d(
     async (t) => {
       c("");
-      const i = await T(t);
+      const i = await S(t);
       if (typeof i == "string") return c(i);
-      const f = await k(i);
-      if (!f.ok) return c(f.error);
+      const h = await k(i);
+      if (!h.ok) return c(h.error);
       const p = await A(t.name, i);
       c(p.ok ? o.mineAdded : p.error), await n();
     },
     [n]
-  ), h = d(async (t) => {
+  ), f = d(async (t) => {
     const i = await C(t);
     i.ok || c(i.error), await n();
   }, [n]), e = d(async () => {
     const t = await g();
     t.ok || c(t.error), await n();
   }, [n]);
-  return { items: a, status: l, add: u, remove: h, removeAll: e };
+  return { items: a, status: l, add: u, remove: f, removeAll: e };
 }
 function j({ nature: a }) {
-  const r = x(), l = b(null), { remove: c, removeAll: n } = r, u = (e) => {
+  const r = T(), l = b(null), { remove: c, removeAll: n } = r, u = (e) => {
     a.on === e && a.stop(), c(e);
-  }, h = () => {
+  }, f = () => {
     a.stop(), n();
   };
   return /* @__PURE__ */ m("section", { className: "c-card c-mine", "aria-labelledby": "c-mine-h", "data-testid": "my-sounds", children: [
@@ -65,11 +65,11 @@ function j({ nature: a }) {
           " ",
           /* @__PURE__ */ s("b", { children: e.name })
         ] }),
-        /* @__PURE__ */ s("small", { children: S(e.size) })
+        /* @__PURE__ */ s("small", { children: M(e.size) })
       ] }),
       /* @__PURE__ */ s("button", { type: "button", className: "c-btn c-small", "data-testid": "mine-remove", "aria-label": `${o.mineRemove} ${e.name}`, onClick: () => u(e.id), children: o.mineRemove })
     ] }, e.id)) }),
-    r.items.length > 0 && /* @__PURE__ */ s("button", { type: "button", className: "c-btn c-link", "data-testid": "mine-remove-all", onClick: h, children: o.mineRemoveAll })
+    r.items.length > 0 && /* @__PURE__ */ s("button", { type: "button", className: "c-btn c-link", "data-testid": "mine-remove-all", onClick: f, children: o.mineRemoveAll })
   ] });
 }
 export {

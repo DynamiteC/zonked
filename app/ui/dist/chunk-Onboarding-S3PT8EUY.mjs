@@ -1,7 +1,7 @@
 import { jsxs as d, jsx as e, Fragment as L } from "react/jsx-runtime";
-import { useId as M, useMemo as _, useState as f, useRef as x, useEffect as G, Suspense as B, lazy as F } from "react";
-import { C as n, G as P, T as R, F as z } from "./chunk-crewLink-BQ1FLTqp.mjs";
-import { r as V, p as j, D as W, S as q, G as Q, T as U, a as Y } from "./chunk-App-7MO50ppA.mjs";
+import { useId as M, useMemo as _, useState as f, useRef as x, useEffect as G, Suspense as B, lazy as P } from "react";
+import { C as n, G as R, T as z, U as F } from "./chunk-crewLink-CGwtdNl8.mjs";
+import { r as V, p as j, D as U, S as W, G as q, T as Q, a as Y } from "./chunk-App-1ky-Zja1.mjs";
 function C({ legend: t, options: l, value: c, onChange: i }) {
   const o = M();
   return /* @__PURE__ */ d("fieldset", { className: "c-choices", children: [
@@ -55,16 +55,16 @@ function J({ profile: t, playing: l, onPreview: c, onStop: i, onStart: o }) {
     }, children: n.start }) })
   ] });
 }
-const K = F(() => import("./chunk-mascot-CORasA8g.mjs").then((t) => ({ default: t.CalmMascot }))), y = (t, l) => t.map((c) => ({ value: c, label: l[c] })), X = { 1: n.goalTitle, 2: n.whenTitle, 3: n.listenTitle };
+const K = P(() => import("./chunk-mascot-CjKHJelf.mjs").then((t) => ({ default: t.CalmMascot }))), y = (t, l) => t.map((c) => ({ value: c, label: l[c] })), X = { 1: n.goalTitle, 2: n.whenTitle, 3: n.listenTitle };
 function S({ mood: t, size: l, reduced: c }) {
   return /* @__PURE__ */ e("div", { className: "c-hero", children: /* @__PURE__ */ e(B, { fallback: null, children: /* @__PURE__ */ e(K, { mood: t, size: l, reducedMotion: c }) }) });
 }
 function Z({ step: t, answers: l, set: c, onBack: i, onNext: o, onSkip: a }) {
   return /* @__PURE__ */ d(L, { children: [
     /* @__PURE__ */ e("h2", { className: "c-h1", children: X[t] }),
-    t === 1 && /* @__PURE__ */ e(C, { legend: n.goalTitle, options: y(Q, P), value: l.goal, onChange: c.goal }),
-    t === 2 && /* @__PURE__ */ e(C, { legend: n.whenTitle, options: y(U, R), value: l.when, onChange: c.when }),
-    t === 3 && /* @__PURE__ */ e(C, { legend: n.listenTitle, options: y(Y, z), value: l.device, onChange: c.device }),
+    t === 1 && /* @__PURE__ */ e(C, { legend: n.goalTitle, options: y(q, R), value: l.goal, onChange: c.goal }),
+    t === 2 && /* @__PURE__ */ e(C, { legend: n.whenTitle, options: y(Q, z), value: l.when, onChange: c.when }),
+    t === 3 && /* @__PURE__ */ e(C, { legend: n.listenTitle, options: y(Y, F), value: l.device, onChange: c.device }),
     t === 3 && /* @__PURE__ */ e("p", { className: "c-note", children: n.listenNote }),
     /* @__PURE__ */ d("div", { className: "c-actions c-row", children: [
       i !== null && /* @__PURE__ */ e("button", { type: "button", className: "c-btn", onClick: i, children: n.back }),
@@ -74,7 +74,7 @@ function Z({ step: t, answers: l, set: c, onBack: i, onNext: o, onSkip: a }) {
   ] });
 }
 const E = ({ onClick: t }) => /* @__PURE__ */ e("button", { type: "button", className: "c-btn c-link", onClick: t, children: n.back });
-function ae({ playing: t, reduced: l, onAccept: c, onPreview: i, onStop: o, onFinish: a, initial: u = W }) {
+function ae({ playing: t, reduced: l, onAccept: c, onPreview: i, onStop: o, onFinish: a, initial: u = U }) {
   const [m, h] = f(1), [b, p] = f(!1), [w, N] = f(u.goal), [v, k] = f(u.timeOfDay), [s, D] = f(u.device), T = { ...u, goal: w, timeOfDay: v, device: s, createdAt: Date.now() }, I = () => {
     c();
     const g = b ? A(T)[0] : void 0;
@@ -100,7 +100,7 @@ function ae({ playing: t, reduced: l, onAccept: c, onPreview: i, onStop: o, onFi
       }
     ),
     m === 4 && /* @__PURE__ */ e(S, { mood: "idle", size: 120, reduced: l }),
-    m === 4 && /* @__PURE__ */ e(q, { onAccept: I }),
+    m === 4 && /* @__PURE__ */ e(W, { onAccept: I }),
     m === 4 && /* @__PURE__ */ e(E, { onClick: O }),
     m === 5 && /* @__PURE__ */ e(J, { profile: T, playing: t, onPreview: i, onStop: o, onStart: (g) => a(T, g) }),
     m === 5 && /* @__PURE__ */ e(E, { onClick: () => h(3) })

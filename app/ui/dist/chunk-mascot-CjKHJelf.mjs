@@ -1,8 +1,8 @@
 import { jsx as e, jsxs as l } from "react/jsx-runtime";
 import { useRef as g, useEffect as $, useId as w } from "react";
-import { B as Z } from "./chunk-useBreath-g1tM8NNc.mjs";
-import { b as I, a as H, u as V } from "./chunk-useBreath-g1tM8NNc.mjs";
-const h = "0 0 512 512", p = "#2A2433";
+import { B as Z } from "./chunk-App-1ky-Zja1.mjs";
+import { f as I, h as H, u as V } from "./chunk-App-1ky-Zja1.mjs";
+const h = "0 0 512 512", f = "#2A2433";
 function C() {
   return /* @__PURE__ */ e("svg", { className: "cm-layer cm-shadow", viewBox: h, "aria-hidden": "true", focusable: "false", children: /* @__PURE__ */ e("ellipse", { cx: "256", cy: "476", rx: "150", ry: "22", fill: "#6B3A12", opacity: "0.2", filter: "blur(6px)" }) });
 }
@@ -20,13 +20,13 @@ function v({ id: t }) {
 function N({ id: t }) {
   const r = (i) => /* @__PURE__ */ l("g", { className: "cm-eye", children: [
     /* @__PURE__ */ e("circle", { cx: i, cy: "172", r: "34", fill: "#FFF6DC" }),
-    /* @__PURE__ */ e("circle", { cx: i, cy: "174", r: "21", fill: p }),
+    /* @__PURE__ */ e("circle", { cx: i, cy: "174", r: "21", fill: f }),
     /* @__PURE__ */ e("circle", { cx: i, cy: "174", r: "21", fill: "none", stroke: "#B4531A", strokeWidth: "3", opacity: "0.6" }),
     /* @__PURE__ */ e("circle", { cx: i - 8, cy: "164", r: "7", fill: "#FFFFFF", opacity: "0.9" }),
     /* @__PURE__ */ e("circle", { cx: i + 9, cy: "184", r: "3", fill: "#FFFFFF", opacity: "0.6" })
   ] });
   return /* @__PURE__ */ l("svg", { className: "cm-layer cm-eyes", viewBox: h, "aria-hidden": "true", focusable: "false", children: [
-    /* @__PURE__ */ e("g", { filter: `url(#${t}-paint)`, children: /* @__PURE__ */ e("path", { d: "M92 170Q92 112 168 114L344 114Q420 112 420 170Q420 230 346 230L300 230Q276 214 256 214Q236 214 212 230L166 230Q92 230 92 170Z", fill: p, stroke: "#8A4A12", strokeWidth: "4", strokeLinejoin: "round" }) }),
+    /* @__PURE__ */ e("g", { filter: `url(#${t}-paint)`, children: /* @__PURE__ */ e("path", { d: "M92 170Q92 112 168 114L344 114Q420 112 420 170Q420 230 346 230L300 230Q276 214 256 214Q236 214 212 230L166 230Q92 230 92 170Z", fill: f, stroke: "#8A4A12", strokeWidth: "4", strokeLinejoin: "round" }) }),
     /* @__PURE__ */ e("path", { d: "M118 126Q256 104 394 126", fill: "none", stroke: "#FFFFFF", strokeOpacity: "0.14", strokeWidth: "6", strokeLinecap: "round" }),
     r(178),
     r(334),
@@ -34,13 +34,13 @@ function N({ id: t }) {
   ] });
 }
 function M({ id: t, mood: r }) {
-  const i = { fill: "none", stroke: p, strokeWidth: 7, strokeLinecap: "round" };
+  const i = { fill: "none", stroke: f, strokeWidth: 7, strokeLinecap: "round" };
   return /* @__PURE__ */ l("svg", { className: "cm-layer cm-plates", viewBox: h, "aria-hidden": "true", focusable: "false", children: [
     /* @__PURE__ */ e("circle", { cx: "132", cy: "276", r: "38", fill: `url(#${t}-blush)` }),
     /* @__PURE__ */ e("circle", { cx: "380", cy: "276", r: "38", fill: `url(#${t}-blush)` }),
     r === "happy" && /* @__PURE__ */ e("path", { className: "cm-mouth", d: "M214 292Q256 340 298 292", ...i }),
     r === "sleepy" && /* @__PURE__ */ e("path", { className: "cm-mouth", d: "M236 304Q256 310 276 304", ...i, strokeWidth: 6 }),
-    r === "breathing" && /* @__PURE__ */ e("ellipse", { className: "cm-mouth", cx: "256", cy: "308", rx: "12", ry: "15", fill: p }),
+    r === "breathing" && /* @__PURE__ */ e("ellipse", { className: "cm-mouth", cx: "256", cy: "308", rx: "12", ry: "15", fill: f }),
     (r === "idle" || r === "listening") && /* @__PURE__ */ e("path", { className: "cm-mouth", d: "M228 296Q256 322 284 296", ...i })
   ] });
 }
@@ -81,7 +81,7 @@ function A({ id: t }) {
     ] })
   ] }) });
 }
-const u = "0 0 512 512", f = "#2A2433";
+const u = "0 0 512 512", p = "#2A2433";
 function L({ id: t }) {
   return /* @__PURE__ */ l("svg", { className: "cm-layer cm-bodyl", viewBox: u, "aria-hidden": "true", focusable: "false", children: [
     /* @__PURE__ */ e("defs", { children: /* @__PURE__ */ l("linearGradient", { id: `${t}-cloth`, x1: "0", y1: "0", x2: "0", y2: "1", children: [
@@ -101,11 +101,11 @@ function L({ id: t }) {
 }
 function B() {
   return /* @__PURE__ */ l("svg", { className: "cm-layer cm-band", viewBox: u, "aria-hidden": "true", focusable: "false", children: [
-    /* @__PURE__ */ e("path", { d: "M44 236C38 -96 474 -96 468 236", fill: "none", stroke: f, strokeWidth: "24", strokeLinecap: "round" }),
+    /* @__PURE__ */ e("path", { d: "M44 236C38 -96 474 -96 468 236", fill: "none", stroke: p, strokeWidth: "24", strokeLinecap: "round" }),
     /* @__PURE__ */ e("path", { d: "M66 190C84 20 428 20 446 190", fill: "none", stroke: "#FFF3D0", strokeOpacity: "0.16", strokeWidth: "5", strokeLinecap: "round" }),
     /* @__PURE__ */ l("g", { className: "cm-ear-glow", children: [
-      /* @__PURE__ */ e("rect", { x: "14", y: "196", width: "60", height: "116", rx: "28", fill: f, stroke: "#8A4A12", strokeWidth: "4" }),
-      /* @__PURE__ */ e("rect", { x: "438", y: "196", width: "60", height: "116", rx: "28", fill: f, stroke: "#8A4A12", strokeWidth: "4" }),
+      /* @__PURE__ */ e("rect", { x: "14", y: "196", width: "60", height: "116", rx: "28", fill: p, stroke: "#8A4A12", strokeWidth: "4" }),
+      /* @__PURE__ */ e("rect", { x: "438", y: "196", width: "60", height: "116", rx: "28", fill: p, stroke: "#8A4A12", strokeWidth: "4" }),
       /* @__PURE__ */ e("rect", { x: "26", y: "222", width: "12", height: "64", rx: "6", fill: "#8FE3D0", opacity: "0.55" }),
       /* @__PURE__ */ e("rect", { x: "474", y: "222", width: "12", height: "64", rx: "6", fill: "#8FE3D0", opacity: "0.55" })
     ] })
