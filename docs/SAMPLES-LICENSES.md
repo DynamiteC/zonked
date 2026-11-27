@@ -60,3 +60,15 @@ both the licence rule and the loop rule, so nothing was added.
   mixes, Joachim Raffel albums): the licence tag was set by an uploader, not shown to come from the author. Skipped.
 - A CC0 Barcelona fountain recording (Albert Murillo, Internet Archive) is steady but is a city fountain with low
   rumble, not a waterfall. Not shipped.
+
+## Made by Zonked
+
+These sounds are made in code at run time from a seeded generator. They ship no audio file, copy nobody's
+recording and need no licence row. The check script reads web/src/audio/samples/catalog.ts and requires every
+entry with kind 'synth' to be listed here, and every row here to exist in the catalog.
+
+| id | Name | How it is made |
+|---|---|---|
+| wind | Soft wind (synth) | White noise through a 200 to 900 Hz band-pass, with gusts at 0.05 to 0.2 Hz. Two loops of 20 s and 14 s play together. |
+| waterfall | Waterfall (synth) | Pink-ish noise low-passed at 6 kHz, plus a 2.5 kHz noise layer with a slow amplitude texture. Two loops of 20 s and 14 s. |
+| flute | Soft flute (synth) | Sine plus a quiet second harmonic and a little breath, in D minor pentatonic, 220 to 880 Hz, one note every 3.2 to 6 s. It does not sound like a real flute. |

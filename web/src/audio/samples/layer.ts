@@ -1,6 +1,7 @@
 import { SAMPLES } from './catalog';
 import type { SampleInfo } from './catalog';
 import type { SampleBus } from './bus';
+import type { SynthHandle, SynthId } from './synth/graph';
 import {
   DUCK_TAU_SEC, FADE_IN_SEC, FADE_OUT_SEC, LEVEL_TAU_SEC,
   blendFromLevel, clampBlend, clampLevel, duckGain,
@@ -16,9 +17,11 @@ export interface LayerDeps {
   origin: string;
 }
 
-interface Active { id: string; src: AudioBufferSourceNode; gain: GainNode }
+interface Active { id: string; src: AudioBufferSourceNode | SynthHandle; gain: GainNode }
 
 const fail = (error: string): SampleResult => ({ ok: false, error });
+/** Fixed base seed. Each start adds one, so a session is repeatable and starts differ. */
+const SESSION_SEED = 20261128;
 const ID_OK = /^[a-z]+$/;
 
 export function createSampleLayer(deps: LayerDeps) {
@@ -28,6 +31,7 @@ export function createSampleLayer(deps: LayerDeps) {
   let level = 0;
   let blend: number | null = null;
   let token = 0;
+  let starts = 0;
 
   const effectiveBlend = (): number => (active === null ? 0 : blend ?? blendFromLevel(level));
 
@@ -77,6 +81,53 @@ export function createSampleLayer(deps: LayerDeps) {
     a.src.onended = () => { a.src.disconnect(); a.gain.disconnect(); };
   }
 
+  function begin(bus: SampleBus, id: string, buffer: AudioBuffer, lvl: number, loop: boolean): SampleResult {
+    if (active !== null) fadeOut(active, bus);
+    level = clampLevel(lvl, level);
+    const src = bus.ctx.createBufferSource();
+    const gain = bus.ctx.createGain();
+    src.buffer = buffer;
+    src.loop = loop;
+    gain.gain.setValueAtTime(0, bus.ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(level, bus.ctx.currentTime + FADE_IN_SEC);
+    src.connect(gain);
+    gain.connect(bus.input);
+    const mine: Active = { id, src, gain };
+    if (!loop) {
+      src.onended = () => {
+        src.disconnect();
+        gain.disconnect();
+        if (active === mine) { active = null; applyDuck(bus); }
+      };
+    }
+    src.start();
+    active = mine;
+    applyDuck(bus);
+    return { ok: true };
+  }
+
+  /** Synth sounds skip the fetch. The code loads on first use, so first load stays small. */
+  async function startSynth(bus: SampleBus, id: SynthId, lvl: number, mine: number): Promise<SampleResult> {
+    let build: typeof import('./synth/graph').buildSynth;
+    try {
+      build = (await import('./synth/graph')).buildSynth;
+    } catch {
+      return fail('sample unavailable: reinstall the app files');
+    }
+    if (mine !== token) return { ok: true };
+    if (active !== null) fadeOut(active, bus);
+    level = clampLevel(lvl, level);
+    const src = build(bus.ctx, id, SESSION_SEED + starts++);
+    const gain = bus.ctx.createGain();
+    gain.gain.setValueAtTime(0, bus.ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(level, bus.ctx.currentTime + FADE_IN_SEC);
+    src.connect(gain);
+    gain.connect(bus.input);
+    active = { id, src, gain };
+    applyDuck(bus);
+    return { ok: true };
+  }
+
   return {
     list: (): readonly SampleInfo[] => SAMPLES,
 
@@ -84,24 +135,20 @@ export function createSampleLayer(deps: LayerDeps) {
       const bus = deps.getBus();
       if (bus === null) return fail('start the sound first');
       const mine = ++token;
+      if (SAMPLES.some((s) => s.id === id && s.kind === 'synth')) return startSynth(bus, id as SynthId, lvl, mine);
       const loaded = await ensureLoaded(bus, id);
       if (!loaded.ok) return loaded;
       const buffer = buffers.get(id);
       if (buffer === undefined || mine !== token) return buffer === undefined ? fail('sample unavailable') : { ok: true };
-      if (active !== null) fadeOut(active, bus);
-      level = clampLevel(lvl, level);
-      const src = bus.ctx.createBufferSource();
-      const gain = bus.ctx.createGain();
-      src.buffer = buffer;
-      src.loop = true;
-      gain.gain.setValueAtTime(0, bus.ctx.currentTime);
-      gain.gain.linearRampToValueAtTime(level, bus.ctx.currentTime + FADE_IN_SEC);
-      src.connect(gain);
-      gain.connect(bus.input);
-      src.start();
-      active = { id, src, gain };
-      applyDuck(bus);
-      return { ok: true };
+      return begin(bus, id, buffer, lvl, true);
+    },
+
+    /** Plays a ready buffer (a person's own sound). Loops, or plays once when `loop` is false. */
+    startBuffer(id: string, buffer: AudioBuffer, lvl: number, loop: boolean): SampleResult {
+      const bus = deps.getBus();
+      if (bus === null) return fail('start the sound first');
+      token++;
+      return begin(bus, id, buffer, lvl, loop);
     },
 
     setLevel(lvl: number): void {
