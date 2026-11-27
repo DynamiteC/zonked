@@ -51,7 +51,7 @@ export function Today({ profile, week, progress, reduced, crewConnected, hasHist
         </button>
       )}
       {pick !== undefined && (
-        <section className="c-card c-daily" aria-labelledby="c-daily-h">
+        <section className="c-daily" aria-labelledby="c-daily-h">
           <p className="c-eyebrow">{CALM.dailyEyebrow}</p>
           <h2 id="c-daily-h">{pick.template.name}</h2>
           <p className="c-muted">{`${pick.template.recommendedMinutes} min. ${pick.reasons[0] ?? CALM.suggested}`}</p>
@@ -65,7 +65,7 @@ export function Today({ profile, week, progress, reduced, crewConnected, hasHist
           </div>
         </section>
       )}
-      <section className="c-card" aria-labelledby="c-goal-h">
+      <section aria-labelledby="c-goal-h">
         <h2 id="c-goal-h" className="c-h3">{`Your goal: ${GOAL_LABEL[profile.goal]}`}</h2>
         <WeekDots week={week} hasHistory={hasHistory} joinedToday={joinedToday} />
       </section>
@@ -73,10 +73,10 @@ export function Today({ profile, week, progress, reduced, crewConnected, hasHist
         <h2 id="c-for-h" className="c-h3">
           {CALM.forYou}
         </h2>
-        <ul className="c-hscroll">
-          {recs.map((r, i) => (
+        <ul className="c-rows">
+          {recs.map((r) => (
             <li key={r.template.id}>
-              <button type="button" className={`c-mini-card c-g${(i % 6) + 1}`} onClick={() => onPlay(r.template)}>
+              <button type="button" className="c-mini-card" onClick={() => onPlay(r.template)}>
                 <b>{r.template.name}</b>
                 <small>{r.reasons[0] ?? CALM.suggested}</small>
                 <em>{`${r.template.recommendedMinutes} min`}</em>
@@ -89,10 +89,10 @@ export function Today({ profile, week, progress, reduced, crewConnected, hasHist
         <h2 id="c-jr-h" className="c-h3">
           {CALM.journeysTitle}
         </h2>
-        <ul className="c-hscroll">
-          {JOURNEYS.map((j, i) => (
+        <ul className="c-rows">
+          {JOURNEYS.map((j) => (
             <li key={j.id}>
-              <button type="button" className={`c-journey-card c-j${(i % 6) + 1}`} onClick={() => onOpenJourney(j.id)}>
+              <button type="button" className="c-journey-card" onClick={() => onOpenJourney(j.id)}>
                 <b>{j.title}</b>
                 <small>{j.blurb}</small>
                 <em>{dayLine(progress, j.id, j.days.length)}</em>
@@ -101,12 +101,11 @@ export function Today({ profile, week, progress, reduced, crewConnected, hasHist
           ))}
         </ul>
       </section>
-      <button type="button" className="c-card c-link-card" onClick={() => onGo('library')}>
-        <b>Browse all sounds</b>
-        <span className="c-muted">{CALM.libraryTitle}</span>
+      <button type="button" className="c-link-card" onClick={() => onGo('library')}>
+        <b>{`Browse all sounds`}</b>
       </button>
       {crewConnected && (
-        <p className="c-card c-crew-chip" role="status">
+        <p className="c-crew-chip" role="status">
           Crew connected: easing the sound
         </p>
       )}

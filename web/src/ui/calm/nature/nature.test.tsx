@@ -45,7 +45,7 @@ const PROFILE: Profile = { goal: 'sleep', timeOfDay: 'night', device: 'headphone
 async function openNature(eng: AudioEngine): Promise<void> {
   render(<ModeRoot engine={eng} store={createStore(undefined)} />);
   await screen.findByTestId('greeting');
-  fireEvent.click(screen.getByRole('button', { name: CALM.nav[2] }));
+  fireEvent.click(screen.getByRole('button', { name: CALM.nav[1] }));
   fireEvent.click(await screen.findByTestId('open-nature'));
   await screen.findByTestId('nature-rain');
 }

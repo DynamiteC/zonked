@@ -2,15 +2,14 @@ import { CALM } from './copy';
 import { Icon } from './icons';
 import type { DayState, WeekStats } from './data';
 
-const LETTERS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'] as const;
+const LETTERS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;
 const NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const;
 const WORD: Readonly<Record<DayState, string>> = { listened: 'listened', rest: 'rest day', today: 'today', upcoming: 'coming up' };
 
 export function weekText(w: WeekStats, hasHistory = true, joinedToday = false): string {
   if (w.quietWeek && joinedToday && !hasHistory) return CALM.joinedLine;
   if (w.quietWeek) return hasHistory ? CALM.welcomeBack : CALM.firstWeek;
-  const n = w.daysListened;
-  return `${n} ${n === 1 ? 'day' : 'days'} this week. ${CALM.restCount}`;
+  return `${CALM.weekOf(w.daysListened)}. ${CALM.restCount}`;
 }
 
 interface Props {
@@ -32,7 +31,10 @@ export function WeekDots({ week, hasHistory = true, joinedToday = false, compact
           return (
             <li key={NAMES[i]} className={`c-dot c-dot-${d}${fill ? ' c-dot-joined' : ''}`} data-state={d}>
               <span className="c-mark" aria-hidden="true">
-                {fill ? <Icon name="check" size={16} /> : LETTERS[i]}
+                {fill || d === 'listened' ? <Icon name="check" size={16} /> : ''}
+              </span>
+              <span className="c-dayname" aria-hidden="true">
+                {LETTERS[i]}
               </span>
               <span className="c-sr">{`${NAMES[i]}, ${fill ? CALM.joinedToday : WORD[d]}`}</span>
             </li>

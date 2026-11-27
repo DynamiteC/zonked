@@ -27,7 +27,7 @@ function TemplateRows({ list, onPlay }: { readonly list: readonly Template[]; re
     <ul className="c-list">
       {list.map((t) => (
         <li key={t.id}>
-          <button type="button" className="c-row-card" onClick={() => onPlay(t)}>
+          <button type="button" className="c-row-card c-row-play" onClick={() => onPlay(t)}>
             <b>{t.name}</b>
             <small>{`${t.recommendedMinutes} min`}</small>
           </button>
@@ -51,9 +51,9 @@ function Feeling({ onPlay }: { readonly onPlay: (t: Template) => void }): React.
   return (
     <>
       <ul className="c-tiles">
-        {FEELINGS.map((f, i) => (
+        {FEELINGS.map((f) => (
           <li key={f.id}>
-            <button type="button" className={`c-tile c-g${(i % 6) + 1}`} aria-pressed={sit === f.id} onClick={() => { setSit(f.id); setPage(0); }}>
+            <button type="button" className="c-tile" aria-pressed={sit === f.id} onClick={() => { setSit(f.id); setPage(0); }}>
               <Icon name={f.icon} />
               <span className="c-tile-name">{f.label}</span>
               <span className="c-tile-mood">{f.mood}</span>
@@ -85,7 +85,7 @@ function Sounds({ onPlay }: { readonly onPlay: (t: Template) => void }): React.J
         const t = pool.find((x) => x.id === s.templateId);
         return (
           <li key={s.id}>
-            <button type="button" className="c-row-card" disabled={t === undefined} onClick={() => t !== undefined && onPlay(t)}>
+            <button type="button" className="c-row-card c-row-play" disabled={t === undefined} onClick={() => t !== undefined && onPlay(t)}>
               <b>{s.name}</b>
               <small>{s.blurb}</small>
               <small>{s.id === 'violet' ? 'Start very quiet.' : EVIDENCE[s.evidence]}</small>
@@ -124,7 +124,7 @@ export function Library({ store, logs, reduced = false, onNature, onPlay, onPlay
     <div>
       <PageHead title={CALM.libraryTitle} reduced={reduced} />
       {onNature !== undefined && (
-        <button type="button" className="c-card c-link-card c-nature-link" data-testid="open-nature" onClick={onNature}>
+        <button type="button" className="c-link-card c-nature-link" data-testid="open-nature" onClick={onNature}>
           <b>{CALM.natureTitle}</b>
           <span className="c-muted">{CALM.natureLine}</span>
         </button>

@@ -14,6 +14,7 @@ import type { Store } from '../../storage/db';
 import { SAFETY_KEY, readFlag, writeFlag } from '../../storage/prefs';
 
 export interface CalmSession {
+  readonly engine: AudioEngine;
   readonly player: Player;
   readonly store: Store;
   readonly snap: PlayerSnapshot;
@@ -99,5 +100,5 @@ export function useCalmSession(engine: AudioEngine, clock: Clock = realClock, st
   actions.current = { 'play-pause': toggle };
   useSessionPlumbing({ player, engine, wake, snap, snapRef, actions });
 
-  return { player, store, snap, accepted, gate, reduced, setReduced, userReduced, guarded, accept, cancelGate, playTemplate, toggle };
+  return { engine, player, store, snap, accepted, gate, reduced, setReduced, userReduced, guarded, accept, cancelGate, playTemplate, toggle };
 }

@@ -19,11 +19,11 @@ export function JourneyList({ progress, onOpen, reduced = false }: ListProps): R
       <PageHead title={CALM.journeysTitle} reduced={reduced} />
       <p className="c-lead">{CALM.journeysEmpty}</p>
       <ul className="c-list">
-        {JOURNEYS.map((j, i) => {
+        {JOURNEYS.map((j) => {
           const done = progress[j.id]?.doneDays.length ?? 0;
           return (
             <li key={j.id}>
-              <button type="button" className={`c-journey-card c-wide c-j${(i % 6) + 1}`} onClick={() => onOpen(j.id)}>
+              <button type="button" className="c-journey-card c-wide" onClick={() => onOpen(j.id)}>
                 <b>{j.title}</b>
                 <small>{j.blurb}</small>
                 <em>{done === 0 ? CALM.dayZero(dayCount(j)) : `${done} of ${dayCount(j)} done`}</em>

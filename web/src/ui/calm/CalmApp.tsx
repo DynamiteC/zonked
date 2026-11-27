@@ -15,7 +15,7 @@ import { EndCard, useEndCard } from './EndCard';
 import type { JourneyProgress, Profile } from './data';
 import { SafetyNotice } from './SafetyNotice';
 import { Screens } from './CalmScreens';
-import { InfoCard } from './InfoCard';
+import { useLook } from './look';
 import { useNature } from './nature/useNature';
 import { forgetNature } from './nature/forget';
 import { toDayNumber } from './data';
@@ -57,10 +57,9 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   const last = useLastPlayed(data.storage);
   const end = useEndCard(s.snap, !onboarding);
   const still = s.reduced || data.profile.extraGentle;
+  const { look, setLook } = useLook();
 
   useStudioShortcut(onStudio);
-  const hasHistory = data.logs.some((l) => toDayNumber(l.startedAt) < today());
-  const joinedToday = toDayNumber(data.profile.createdAt) === today();
   const go = useCallback((v: View) => setView(v), []);
   const { play, playDay, finish } = usePlayActions({ s, data, last, end, active, setView });
   useJourneyDone(s.snap.playing, s.snap.elapsedSec, active, data.progress, data.setJourney);
@@ -77,7 +76,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   };
 
   return (
-    <div className="c-app" data-theme="auto" data-motion={still ? 'off' : 'on'} data-playing={s.snap.playing ? 'true' : 'false'}>
+    <div className="c-app" data-theme={look.theme} data-contrast={look.highContrast ? 'high' : 'normal'} data-view={view} data-motion={still ? 'off' : 'on'} data-playing={s.snap.playing ? 'true' : 'false'}>
       <TopBar />
       <main id="c-main" className="c-main" tabIndex={-1}>
         <Suspense fallback={<p className="c-loading" role="status">{CALM.loading}</p>}>
@@ -102,6 +101,8 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
               still={still}
               fav={fav}
               last={last.template}
+              look={look}
+              onLook={setLook}
               handlers={{ go, play, playDay, openJourney, forget, onStudio, onMix: (m: Mix) => s.guarded(() => s.player.playMix(m)) }}
             />
           )}
@@ -109,9 +110,6 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
       </main>
       {!onboarding && view !== 'player' && <MiniPlayer snap={s.snap} onOpen={() => go('player')} onStop={() => void s.player.stop()} />}
       {!onboarding && <TabBar view={view} onGo={go} reduced={still} />}
-      {!onboarding && view !== 'player' && (
-        <InfoCard profile={data.profile} week={data.week} joinedToday={joinedToday} hasHistory={hasHistory} onPlay={play} />
-      )}
       <p className="c-sr" role="status" data-testid="play-status">
         {s.snap.playing ? `Playing. ${CALM.volumeCapped}` : 'Stopped.'}
       </p>

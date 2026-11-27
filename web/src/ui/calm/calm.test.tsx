@@ -8,7 +8,7 @@ import { JOURNEYS, createLocalStorage, saveProfile, weekStats } from './data';
 import type { Profile } from './data';
 import { MODE_KEY, readMode } from './mode';
 import { ModeRoot } from './ModeRoot';
-import { BreathRing } from './PlayerScreen';
+import { Stage } from './PlayerScreen';
 import { getTemplates } from '../../catalog';
 import { EndCard } from './EndCard';
 import { WeekDots, weekText } from './WeekDots';
@@ -115,7 +115,7 @@ describe('studio switch', () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     await screen.findByTestId('greeting');
     expect(readMode()).toBe('calm');
-    click(CALM.nav[4]);
+    click(CALM.nav[3]);
     fireEvent.click(await screen.findByRole('button', { name: CALM.studioLink }));
     await screen.findByTestId('play-button');
     expect(localStorage.getItem(MODE_KEY)).toBe('studio');
@@ -191,7 +191,7 @@ describe('week display', () => {
     const week = weekStats([{ day: day - 1, minutes: 10 }, { day, minutes: 5 }], day);
     render(<WeekDots week={week} />);
     expect(screen.getAllByRole('listitem')).toHaveLength(7);
-    expect(screen.getByTestId('week-text').textContent).toMatch(/days this week\. Rest days count too\./);
+    expect(screen.getByTestId('week-text').textContent).toMatch(/\d of 7 days\. Rest days count too\./);
     expect(document.body.textContent).not.toMatch(/lost|missed|broke|streak/i);
   });
 
@@ -214,10 +214,10 @@ describe('week display', () => {
 
 describe('reduced motion and gentle mode', () => {
   it('keeps the breathing ring still when asked', () => {
-    render(<BreathRing still playing />);
+    render(<Stage still playing situation="calm" theme="dark" level={0} />);
     const ring = screen.getByTestId('breath-ring');
     expect(ring.getAttribute('data-still')).toBe('true');
-    expect((ring.querySelector('.c-ring') as HTMLElement).style.transition).toBe('none');
+    expect(ring.getAttribute('data-situation')).toBe('calm');
   });
 
   it('turns motion off app-wide when Reduce motion is saved', async () => {
@@ -249,7 +249,7 @@ describe('redesign', () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     await screen.findByTestId('greeting');
     const nav = screen.getByRole('navigation', { name: 'Main' });
-    expect(nav.querySelectorAll('svg.c-icon')).toHaveLength(5);
+    expect(nav.querySelectorAll('svg.c-icon')).toHaveLength(4);
     expect(nav.querySelector('[aria-current="page"]')?.textContent).toBe(CALM.nav[0]);
   });
 
@@ -257,7 +257,7 @@ describe('redesign', () => {
     saveProfile(createLocalStorage(), PROFILE);
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     await screen.findByTestId('greeting');
-    click(CALM.nav[2]);
+    click(CALM.nav[1]);
     await screen.findByText('Focus', { selector: '.c-tile-name' });
     expect(document.querySelectorAll('.c-tile-count')).toHaveLength(8);
     expect(document.querySelector('.c-tile-count')?.textContent).toMatch(/^\d+ sounds?$/);

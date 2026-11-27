@@ -8,10 +8,9 @@ export type View = 'today' | 'journeys' | 'journey' | 'library' | 'player' | 'cr
 
 const TABS: readonly { readonly view: View; readonly label: string; readonly icon: string }[] = [
   { view: 'today', label: CALM.nav[0], icon: 'today' },
-  { view: 'journeys', label: CALM.nav[1], icon: 'journeys' },
-  { view: 'library', label: CALM.nav[2], icon: 'library' },
-  { view: 'crew', label: CALM.nav[3], icon: 'crew' },
-  { view: 'settings', label: CALM.nav[4], icon: 'settings' },
+  { view: 'library', label: CALM.nav[1], icon: 'library' },
+  { view: 'crew', label: CALM.nav[2], icon: 'crew' },
+  { view: 'settings', label: CALM.nav[3], icon: 'settings' },
 ];
 
 interface TabProps {
@@ -21,7 +20,7 @@ interface TabProps {
 }
 
 export function TabBar({ view, onGo, reduced = false }: TabProps): React.JSX.Element {
-  const current: View = view === 'journey' ? 'journeys' : view === 'nature' ? 'library' : view;
+  const current: View = view === 'journey' || view === 'journeys' ? 'today' : view === 'nature' ? 'library' : view;
   return (
     <nav className="c-tabbar" aria-label="Main">
       <div className="c-rail-brand" aria-hidden="true">

@@ -1,38 +1,61 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
-import { breathTimings } from '../../app/neuro';
+import { Suspense, lazy, useState } from 'react';
 import type { Player, PlayerSnapshot } from '../../app/player';
+import type { AudioEngine } from '../../audio/types';
 import { SOUND_MENU } from '../../catalog/soundMenu';
 import { CALM, EVIDENCE } from './copy';
+import { useBreath } from './mascot/useBreath';
 import { TimerChips } from './TimerChips';
 import { NatureControls } from './nature/NatureScreen';
 import { loadPrefs } from './nature/prefs';
 import type { Nature } from './nature/useNature';
+import { sceneFor, useLevel } from './playerScene';
+import type { SceneSituation } from './visuals';
 
 const CalmMascot = lazy(() => import('./mascot').then((m) => ({ default: m.CalmMascot })));
+const SceneLoop = lazy(() => import('./visuals').then((m) => ({ default: m.SceneLoop })));
+const BreathCue = lazy(() => import('./mascot').then((m) => ({ default: m.BreathCue })));
 
-interface RingProps {
+interface StageProps {
   readonly still: boolean;
   readonly playing: boolean;
+  readonly situation: SceneSituation;
+  readonly theme: 'light' | 'dark';
+  readonly level: number;
 }
 
-/** Ring grows on the in-breath and shrinks on the out-breath. Static when motion is reduced or gentle. */
-export function BreathRing({ still, playing }: RingProps): React.JSX.Element {
-  const { inSec, outSec } = breathTimings();
-  const [phase, setPhase] = useState<'in' | 'out'>('in');
-  const dur = phase === 'in' ? inSec : outSec;
-  useEffect(() => {
-    if (still || !playing) return undefined;
-    const id = window.setTimeout(() => setPhase((p) => (p === 'in' ? 'out' : 'in')), Math.max(1, dur) * 1000);
-    return () => window.clearTimeout(id);
-  }, [phase, dur, still, playing]);
-  const scale = still || !playing ? 0.9 : phase === 'in' ? 1 : 0.78;
+/** Scene behind the mascot. Breath is 4 s in and 4 s out. Reduced motion shows still frames. */
+export function Stage({ still, playing, situation, theme, level }: StageProps): React.JSX.Element {
+  const breath = useBreath(playing && !still);
+  const moving = playing && !still;
   return (
-    <div className="c-stage" data-testid="breath-ring" data-still={still ? 'true' : 'false'}>
-      <span className="c-ring" style={{ transform: `scale(${scale})`, transition: still ? 'none' : `transform ${dur}s ease-in-out` }} aria-hidden="true" />
-      <Suspense fallback={null}>
-        <CalmMascot mood={playing ? 'breathing' : 'idle'} size={120} reducedMotion={still} />
-      </Suspense>
-    </div>
+    <>
+      <div className="c-stage" data-testid="breath-ring" data-still={still ? 'true' : 'false'} data-situation={situation}>
+        <Suspense fallback={null}>
+          <div className="c-stage-scene">
+            <SceneLoop situation={situation} reducedMotion={still} theme={theme} />
+          </div>
+          <div className="c-stage-mascot">
+            <CalmMascot
+              mood={playing ? 'breathing' : 'idle'}
+              size={150}
+              reducedMotion={still}
+              situation={situation}
+              breathPhase={moving ? breath.phase : undefined}
+              level={playing ? level : 0}
+            />
+          </div>
+        </Suspense>
+      </div>
+      <div className="c-cue">
+        {moving ? (
+          <Suspense fallback={null}>
+            <BreathCue label={breath.label} className="c-cue-text" />
+          </Suspense>
+        ) : (
+          <p className="c-cue-text">{CALM.breathe}</p>
+        )}
+      </div>
+    </>
   );
 }
 
@@ -44,17 +67,20 @@ interface Props {
   readonly onToggle: () => void;
   readonly onFavorite: () => void;
   readonly nature: Nature;
+  readonly engine: AudioEngine;
+  readonly theme: 'light' | 'dark';
 }
 
-export function PlayerScreen({ player, snap, still, favorite, onToggle, onFavorite, nature }: Props): React.JSX.Element {
+export function PlayerScreen({ engine, theme, player, snap, still, favorite, onToggle, onFavorite, nature }: Props): React.JSX.Element {
   const [why, setWhy] = useState(false);
+  const level = useLevel(engine, snap.playing);
   const sound = SOUND_MENU.find((s) => s.templateId === snap.templateId);
   const evidence = sound?.evidence ?? 'mixed';
+  const situation = sceneFor(snap.templateId, nature.on !== null);
   return (
     <div className="c-player">
       <h1 className="c-h1">{snap.templateName ?? CALM.brand}</h1>
-      <BreathRing still={still} playing={snap.playing} />
-      {still && <p className="c-muted">{CALM.breathe}</p>}
+      <Stage still={still} playing={snap.playing} situation={situation} theme={theme} level={level} />
       <div className="c-controls">
         <button type="button" className="c-btn c-round c-big" data-testid="player-toggle" onClick={onToggle}>
           {snap.playing ? CALM.stop : CALM.play}

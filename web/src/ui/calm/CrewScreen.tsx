@@ -39,7 +39,14 @@ export function CrewScreen({ crew, burnout }: Props): React.JSX.Element {
           ))}
         </ol>
       ) : (
-        <p className="c-note">{CALM.crewOptional}</p>
+        <div data-testid="crew-why-off">
+          <p className="c-why-off">{crew.enabled ? CALM.crewDisabled : CALM.crewWhyOff}</p>
+          <ol className="c-steps">
+            <li>{CALM.crewStep1}</li>
+            <li>{CALM.crewStep2}</li>
+          </ol>
+          <p className="c-note">{CALM.crewOptional}</p>
+        </div>
       )}
       <p className="c-muted">{CALM.crewPrivacy}</p>
     </div>
