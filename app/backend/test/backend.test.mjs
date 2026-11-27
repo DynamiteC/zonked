@@ -5,7 +5,7 @@ import { createHash, createHmac } from 'node:crypto';
 import http from 'node:http';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { advance, emptyMemory, levelForScore, parseMemory, targetFor, validateIntensity, MAX_BODY_BYTES } from '../core.mjs';
+import { advance, emptyMemory, toCrewState, whyFor, levelForScore, parseMemory, targetFor, validateIntensity, MAX_BODY_BYTES } from '../core.mjs';
 import { createStore } from '../store.mjs';
 import { createHandler } from '../server.mjs';
 import { handleMessage } from '../mcp.mjs';
@@ -234,4 +234,13 @@ test('store: temp files get unique names and none are left behind', () => {
   store.report(rep());
   store.report(rep());
   assert.deepEqual(readdirSync(dir), ['crew-memory.json']);
+});
+
+test('why: crew state carries a short plain sentence built from level and score only', () => {
+  const m = advance(emptyMemory(), { at: 1790000000, score: 70, signals: { dirtyFiles: 3 }, degraded: false }, 1000);
+  const st = toCrewState(m, 1001);
+  assert.equal(typeof st.why, 'string');
+  assert.ok(st.why.length > 0 && st.why.length <= 160);
+  assert.ok(!/dirty|file|commit/i.test(st.why));
+  for (const level of ['focus', 'flow', 'recovery', 'decompress']) assert.ok(whyFor(level, 50).length <= 160);
 });

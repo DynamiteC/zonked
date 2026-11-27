@@ -17,6 +17,18 @@ export interface CrewState {
     readonly breathe: boolean;
   };
   readonly sbg: string | null;
+  /** Optional plain sentence for the person. Control characters stripped, at most 160 characters. */
+  readonly why?: string;
+}
+
+export const MAX_WHY_CHARS = 160;
+
+/** Strips control, line-break and bidi-override characters, collapses spaces, caps at 160 code points. Returns null when nothing is left. */
+export function cleanWhy(raw: unknown): string | null {
+  if (typeof raw !== "string") return null;
+  const flat = raw.slice(0, 4096).replace(/[\p{Cc}\u2028\u2029\u202A-\u202E\u2066-\u2069\u200B-\u200F\uFEFF]/gu, " ").replace(/\s+/g, " ").trim();
+  const capped = Array.from(flat).slice(0, MAX_WHY_CHARS).join("").trim();
+  return capped.length > 0 ? capped : null;
 }
 
 export type Validation =
@@ -175,6 +187,7 @@ export function validateState(raw: unknown, opts: ValidateOptions = {}): Validat
   const sbg = readSbg(ctx, own(raw, "sbg"));
   if (Array.isArray(sbg)) return { ok: false, error: sbg[0] ?? "invalid sbg" };
 
+  const why = cleanWhy(own(raw, "why"));
   // The score is the source of truth. A level that disagrees with it is replaced.
   const derived = levelForScore(score);
   if (derived !== level) ctx.warn(`burnout.level ${level} does not match score ${score}, using ${derived}`);
@@ -185,6 +198,7 @@ export function validateState(raw: unknown, opts: ValidateOptions = {}): Validat
     burnout: { score, level: derived },
     target,
     sbg,
+    ...(why === null ? {} : { why }),
   };
   return { ok: true, state, warnings: ctx.warnings };
 }

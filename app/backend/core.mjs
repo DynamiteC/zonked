@@ -125,6 +125,19 @@ export function advance(memory, intensity, now) {
   return { ...next, level: stepToward(memory.level, wanted), changedAt: now, transitionSec: gap >= 2 ? 120 : 60 };
 }
 
+export const MAX_WHY_CHARS = 160;
+
+/** Plain sentence for the person. Built from the level and score only: no signal names, files or messages. */
+export function whyFor(level, score) {
+  const text = {
+    focus: 'Your load looks light, so the sound holds steady.',
+    flow: 'Your load is building, so the sound eases a little.',
+    recovery: 'Your load is high, so the sound moves to a calmer beat.',
+    decompress: 'Your load is very high, so the sound settles to help you rest.',
+  }[level];
+  return `${text} Score ${String(score)}.`.slice(0, MAX_WHY_CHARS);
+}
+
 /** CrewState v1 for the web client, or null before the first report. */
 export function toCrewState(memory, now) {
   if (memory.level === null || memory.last === null) return null;
@@ -134,6 +147,7 @@ export function toCrewState(memory, now) {
     burnout: { score: memory.last.score, level: levelForScore(memory.last.score) },
     target: targetFor(memory.level, memory.transitionSec ?? 60),
     sbg: null,
+    why: whyFor(memory.level, memory.last.score),
   };
 }
 

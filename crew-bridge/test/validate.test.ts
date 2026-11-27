@@ -195,3 +195,17 @@ test("level is derived from score, with a warning on disagreement", () => {
   assert.ok(ok.ok);
   assert.deepEqual(ok.warnings, []);
 });
+
+test("why: control characters stripped, capped at 160, absent when empty", () => {
+  const r = validateState({ ...good(), why: "Load is high.\u0000\n\u202Eevil\u0007 " + "x".repeat(300) });
+  assert.ok(r.ok);
+  const why = r.state.why ?? "";
+  assert.ok(why.length > 0 && why.length <= 160);
+  assert.ok(!/[\u0000-\u001f\u202e]/.test(why));
+  assert.ok(why.startsWith("Load is high. evil"));
+  for (const bad of ["", "   ", "\u0000\u0001", 5, null, {}]) {
+    const q = validateState({ ...good(), why: bad });
+    assert.ok(q.ok);
+    assert.equal("why" in q.state, false);
+  }
+});
