@@ -15,7 +15,7 @@ export const MEDITATION: CategorySpec = {
     arch({
       slug: 'theta-descent', shape: 'ramp-down', from: 10, to: 5, mins: [20, 30, 45], carriers: [160, 180], modes: ['binaural', 'monaural'],
       noises: [['brown', 0.2]], layers: [['drone'], ['drone', 'chimes']], vibes: ['deep', 'ethereal'], situations: ['meditate'],
-      intensity: 2, gain: 0.4, count: 5, reason: 'Glides from alpha to theta for deeper inward attention.',
+      intensity: 2, gain: 0.4, count: 5, reason: 'Glides from alpha to theta.',
     }),
     arch({
       slug: 'schumann-hold', shape: 'plateau', from: 12, to: 7.83, ret: 12, mins: [20, 30], carriers: [180, 200], modes: ['binaural', 'monaural'],
@@ -35,7 +35,7 @@ export const MEDITATION: CategorySpec = {
     arch({
       slug: 'delta-glide', shape: 'ramp-down', from: 6, to: 3, mins: [30, 45, 60], carriers: [130, 150], modes: ['binaural', 'monaural'],
       noises: [['brown', 0.25]], layers: [['drone']], vibes: ['deep', 'minimal'], situations: ['meditate', 'heal-stress'],
-      intensity: 2, gain: 0.38, count: 4, reason: 'A long fall into delta for dissolving, open awareness.',
+      intensity: 2, gain: 0.38, count: 4, reason: 'A long fall into delta.',
     }),
   ],
 };

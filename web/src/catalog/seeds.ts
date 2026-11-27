@@ -62,12 +62,16 @@ function stagesFrom(s: SeedSpec): Stage[] {
   return out;
 }
 
+/** Fills {minutes} and {duration} from the data, so the words never disagree with the length. */
+const withLength = (reason: string, min: number): string => reason.replaceAll('{minutes}', String(min)).replaceAll('{duration}', `${min} minutes`);
+
 function toTemplate(s: SeedSpec): Template {
   const stages = stagesFrom(s);
+  const minutes = Math.max(1, Math.round(totalSec(s) / 60));
   return {
     id: s.id, name: s.name, category: s.category, vibe: s.vibe, tags: [...s.tags, s.source],
-    layerTags: deriveLayerTags(stages), situations: s.situations, recommendedMinutes: Math.max(1, Math.round(totalSec(s) / 60)),
-    intensity: s.intensity, adhdFriendly: isAdhdFriendly(stages, s.intensity), stages, reasonTemplate: s.reason, source: s.source,
+    layerTags: deriveLayerTags(stages), situations: s.situations, recommendedMinutes: minutes,
+    intensity: s.intensity, adhdFriendly: isAdhdFriendly(stages, s.intensity), stages, reasonTemplate: withLength(s.reason, minutes), source: s.source,
   };
 }
 
@@ -107,15 +111,15 @@ const ANDROID: readonly SeedSpec[] = [
   A({ id: 'android-highest-mental-activity', name: 'Spark Burst', category: 'focus', vibe: 'energized', situations: ['deep-work'], intensity: 5,
     segs: [[120, 12, 40], [600, 40, 40], [120, 40, 12]], noise: W, tags: ['gamma', 'boost'], reason: 'Two minutes up to the 40 Hz ceiling, a ten minute hold, two minutes back to 12 Hz.' }),
   A({ id: 'android-unity', name: 'Unity Delta', category: 'meditation', vibe: 'ethereal', situations: ['meditate', 'cant-sleep'], intensity: 1,
-    segs: [[3600, 3.7, 3.7]], noise: B, gain: 0.45, tags: ['delta', 'long'], reason: 'A flat 3.7 Hz hour under brown noise for a wide, quiet mind.' }),
+    segs: [[3600, 3.7, 3.7]], noise: B, gain: 0.45, tags: ['delta', 'long'], reason: 'A flat 3.7 Hz hour under brown noise, wide and quiet.' }),
   A({ id: 'android-morphine', name: 'Morphine Ease', category: 'healing', vibe: 'warm', situations: ['heal-stress'], intensity: 2,
-    segs: [[3600, 10, 10]], noise: P, tags: ['alpha', 'pain'], reason: 'An hour at a steady 10 Hz under pink noise to loosen the body.' }),
+    segs: [[3600, 10, 10]], noise: P, tags: ['alpha', 'pain'], reason: 'An hour at a steady 10 Hz under pink noise.' }),
   A({ id: 'android-learning', name: 'Long Study Bed', category: 'focus', vibe: 'bright', situations: ['deep-work'], intensity: 3,
     segs: [[120, 40, 14], [7080, 14, 14]], gain: 0.5, tags: ['beta', 'study'], reason: 'A two minute lift, then two hours at 14 Hz for long reading blocks.' }),
   A({ id: 'android-creativity', name: 'Creative Waves', category: 'vibes', vibe: 'bright', situations: ['quick-reset', 'deep-work'], intensity: 2,
-    segs: CREATIVITY, noise: ['white', 0.4], tags: ['alpha', 'theta', 'creative'], reason: 'Twenty minutes that drift back and forth between 10 and 6 Hz for loose ideas.' }),
+    segs: CREATIVITY, noise: ['white', 0.4], tags: ['alpha', 'theta', 'creative'], reason: '{duration} that drift back and forth between 10 and 6 Hz.' }),
   A({ id: 'android-wakeful-relax', name: 'Quiet Alert', category: 'meditation', vibe: 'calm', situations: ['meditate', 'quick-reset'], intensity: 1,
-    segs: [[120, 12, 7.83], [780, 7.83, 7.83]], noise: ['white', 0.4], tags: ['alpha', 'zen'], reason: 'Fifteen minutes parked at 7.83 Hz with white noise, calm but awake.' }),
+    segs: [[120, 12, 7.83], [780, 7.83, 7.83]], noise: ['white', 0.4], tags: ['alpha', 'zen'], reason: '{duration} parked at 7.83 Hz with white noise.' }),
   A({ id: 'android-schumann', name: 'Earth Hum', category: 'healing', vibe: 'grounded', situations: ['heal-stress', 'meditate'], intensity: 2,
     segs: [[300, 12, 7.83], [600, 7.83, 7.83], [300, 7.83, 12]], noise: ['white', 0.4], tags: ['alpha', 'earth'], reason: 'Ramps to 7.83 Hz, holds there ten minutes, then climbs back to 12 Hz.' }),
   A({ id: 'android-astral-relax', name: 'Dream Gate Relax', category: 'lucid-dreams', vibe: 'ethereal', situations: ['lucid-dream', 'meditate'], intensity: 2,
@@ -123,7 +127,7 @@ const ANDROID: readonly SeedSpec[] = [
   A({ id: 'android-interval-pulse', name: 'Interval Pulse', category: 'focus', vibe: 'energized', situations: ['deep-work'], intensity: 5,
     segs: HIIT, tags: ['beta', 'gamma', 'interval'], reason: 'Eight short high and low rounds between a warm up and a cool down.' }),
   A({ id: 'android-hallucination', name: 'Hazy Visions', category: 'vibes', vibe: 'ethereal', situations: ['quick-reset'], intensity: 3,
-    segs: [[600, 15, 10]], noise: ['white', 0.2], tags: ['alpha', 'trippy'], reason: 'A single ten minute slide from 15 to 10 Hz for a soft, dreamy mood.' }),
+    segs: [[600, 15, 10]], noise: ['white', 0.2], tags: ['alpha', 'trippy'], reason: 'A single {minutes} minute slide from 15 to 10 Hz, soft and dreamy.' }),
   A({ id: 'android-sleep-induction', name: 'Drift Down', category: 'sleep', vibe: 'calm', situations: ['cant-sleep'], intensity: 1,
     segs: [[360, 9.7, 3.4], [1620, 3.4, 2.4], [1620, 2.4, 3.4]], noise: B, gain: 0.5, tags: ['delta', 'induction'], reason: 'A six minute fall to delta, then a long gentle rise and dip for the rest of the hour.' }),
   A({ id: 'android-lucid-dreams', name: 'Lucid Dream Cycle', category: 'lucid-dreams', vibe: 'dreamy', situations: ['lucid-dream'], intensity: 2,
@@ -131,7 +135,7 @@ const ANDROID: readonly SeedSpec[] = [
   A({ id: 'android-shamanic-rhythm', name: 'Ember Circle', category: 'meditation', vibe: 'grounded', situations: ['meditate', 'heal-stress'], intensity: 2,
     segs: [[300, 9, 4.5], [3000, 4.5, 4.5], [300, 4.5, 9]], noise: ['white', 0.4], tags: ['theta', 'journey'], reason: 'Five minutes down to 4.5 Hz, fifty minutes of hold, five minutes back up.' }),
   A({ id: 'android-smr-sleep', name: 'SMR Sleep Weave', category: 'sleep', vibe: 'minimal', situations: ['cant-sleep', 'heal-stress'], intensity: 2,
-    segs: SMR, tags: ['alpha', 'smr'], reason: 'Forty minutes of beats crossing between alpha and the low SMR band.' }),
+    segs: SMR, tags: ['alpha', 'smr'], reason: '{duration} of beats crossing between alpha and the low SMR band.' }),
   A({ id: 'android-lucid-dreams-2', name: 'Long Lucid Night', category: 'lucid-dreams', vibe: 'deep', situations: ['lucid-dream', 'cant-sleep'], intensity: 2,
     segs: [[600, 9.7, 3.4], [5400, 3.4, 2.4], ...LUCID2_TAIL], noise: P, gain: 0.5, tags: ['delta', 'theta', 'lucid'], reason: 'A delta fall followed by a long night plan with timed theta pulses.' }),
   A({ id: 'android-adhd-cycle', name: 'Focus Cycle', category: 'adhd-control', vibe: 'energized', situations: ['adhd-focus', 'deep-work'], intensity: 3,
@@ -139,11 +143,11 @@ const ANDROID: readonly SeedSpec[] = [
     reason: 'Five minute blocks that swap between 12 and 20 Hz after a 40 Hz opener.' }),
   // Shortened variants of existing Android programs.
   A({ id: 'android-self-hypnosis-short', name: 'Quick Mind Bridge', category: 'meditation', vibe: 'calm', situations: ['meditate', 'quick-reset'], intensity: 2,
-    segs: [[300, 12, 4], [600, 4, 4], [300, 4, 12]], noise: W, scale: 0.5, tags: ['theta', 'short'], reason: 'The Mind Bridge shape squeezed into ten minutes.' }),
+    segs: [[300, 12, 4], [600, 4, 4], [300, 4, 12]], noise: W, scale: 0.5, tags: ['theta', 'short'], reason: 'The Mind Bridge shape squeezed into {duration}.' }),
   A({ id: 'android-wakeful-relax-5', name: 'Five Minute Calm', category: 'work-recovery', vibe: 'calm', situations: ['quick-reset', 'ai-burnout'], intensity: 1,
-    segs: [[120, 12, 7.83], [780, 7.83, 7.83]], noise: ['white', 0.3], scale: 1 / 3, tags: ['alpha', 'short'], reason: 'A five minute Quiet Alert between tasks.' }),
+    segs: [[120, 12, 7.83], [780, 7.83, 7.83]], noise: ['white', 0.3], scale: 1 / 3, tags: ['alpha', 'short'], reason: 'A {minutes} minute Quiet Alert between tasks.' }),
   A({ id: 'android-schumann-short', name: 'Earth Reset', category: 'healing', vibe: 'grounded', situations: ['heal-stress', 'quick-reset'], intensity: 2,
-    segs: [[300, 12, 7.83], [600, 7.83, 7.83], [300, 7.83, 12]], noise: ['white', 0.3], scale: 0.5, tags: ['alpha', 'short'], reason: 'A ten minute version of the Earth Hum shape.' }),
+    segs: [[300, 12, 7.83], [600, 7.83, 7.83], [300, 7.83, 12]], noise: ['white', 0.3], scale: 0.5, tags: ['alpha', 'short'], reason: 'A {minutes} minute version of the Earth Hum shape.' }),
   A({ id: 'android-lucid-dreams-short', name: 'Lucid Nap Cycle', category: 'lucid-dreams', vibe: 'dreamy', situations: ['lucid-dream', 'cant-sleep'], intensity: 2,
     segs: LUCID1.slice(0, 12), gain: 0.5, tags: ['theta', 'lucid', 'short'], reason: 'The opening stretch of the Lucid Dream Cycle, sized for naps.' }),
 ];
@@ -154,13 +158,13 @@ const G = (o: Omit<SeedSpec, 'source'>): SeedSpec => ({ ...o, source: 'gnaural' 
 const GNAURAL: readonly SeedSpec[] = [
   G({ id: 'gnaural-power-nap', name: 'Midday Nap', category: 'sleep', vibe: 'warm', situations: ['quick-reset', 'cant-sleep', 'ai-burnout'], intensity: 1,
     segs: [[13, 11, 8.8], [17, 8.8, 7], [29, 7, 5.2], [38, 5.2, 4.4], [50, 4.4, 4.2], [68, 4.2, 4], [877, 4, 4], [37, 4, 4.2], [32, 4.2, 5.1], [20, 5.1, 6.8], [15, 6.8, 9.8], [4, 9.8, 9.8]],
-    carrier: 164, carrierEnd: 110, noise: P, gain: 0.5, tags: ['delta', 'nap', 'schedule'], reason: 'A fast fall to 4 Hz, a long hold, then a slow climb. Twenty minutes in all.' }),
+    carrier: 164, carrierEnd: 110, noise: P, gain: 0.5, tags: ['delta', 'nap', 'schedule'], reason: 'A fast fall to 4 Hz, a long hold, then a slow climb. {duration} in all.' }),
   G({ id: 'gnaural-airplane-aid', name: 'Long Haul Calm', category: 'meditation', vibe: 'calm', situations: ['meditate', 'quick-reset', 'heal-stress'], intensity: 1,
     segs: [[9, 0.5, 12], [45, 12, 8], [60, 8, 6], [120, 6, 5], [180, 5, 4.3], [180, 4.3, 4], [900, 4, 4], [900, 4, 4.2], [900, 4.2, 3.9], [900, 3.9, 3.9], [400, 3.9, 4.3]],
     carrier: 280, carrierEnd: 140, noise: B, gain: 0.5, tags: ['theta', 'travel', 'schedule'], reason: 'A falling carrier tone over theta beats, built for long seated trips.' }),
   G({ id: 'gnaural-arrive-sharp', name: 'Arrive Sharp', category: 'focus', vibe: 'bright', situations: ['deep-work'], intensity: 4,
     segs: [[236, 10.1, 10.1], [132, 12.1, 12.1], [661, 28.5, 28.5], [209, 5.4, 5.4], [73, 7.3, 7.3]],
-    carrier: 200, gain: 0.5, tags: ['beta', 'gamma', 'schedule'], reason: 'Five steps from alpha up to a 28.5 Hz middle, then back down, in twenty two minutes.' }),
+    carrier: 200, gain: 0.5, tags: ['beta', 'gamma', 'schedule'], reason: 'Five steps from alpha up to a 28.5 Hz middle, then back down, in {duration}.' }),
 ];
 
 /** 21 android-derived and 3 gnaural-derived templates, in stable order. */
