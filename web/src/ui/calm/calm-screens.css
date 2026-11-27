@@ -94,4 +94,4 @@
 .c-why { border-left: 3px solid var(--c-edge); padding-left: 14px; margin: 16px 0; }
 .c-why p { margin: 0; font-size: 1.125rem; }
 .c-demo { margin: 20px 0 8px; }
-.c-badge-sim { display: inline-block; border: 2px solid var(--c-edge); border-radius: 999px; padding: 2px 12px; font-weight: 700; font-size: 0.875rem; margin: 4px 0; }
+.c-badge-sim { align-self: center; display: inline-block; border: 2px solid var(--c-edge); border-radius: 999px; padding: 2px 12px; font-weight: 700; font-size: 0.875rem; margin: 4px 0; }

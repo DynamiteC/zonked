@@ -146,7 +146,7 @@ export async function runCalmChecks(h) {
     }
   });
 
-  await h.check('C7 done-for-now card after a session, Play again and Close work, Today has Play again', async () => {
+  await h.check('C7 done-for-now card after a session, Play again and Close work, Today never shows two buttons for one session', async () => {
     const s = await open(h);
     try {
       await s.page.clock.install();
@@ -163,7 +163,12 @@ export async function runCalmChecks(h) {
       await s.page.getByTestId('end-close').click();
       h.assert((await s.page.getByTestId('end-card').count()) === 0, 'card still shown after Close');
       await nav(s.page, 'Today').click();
-      await s.page.getByTestId('play-again').waitFor();
+      // Play again shows only when the last session differs from today's pick; otherwise one Start.
+      await s.page.getByTestId('today-play').waitFor();
+      const again = await s.page.getByTestId('play-again').count();
+      const pick = await s.page.locator('#c-daily-h').textContent();
+      const label = again > 0 ? await s.page.getByTestId('play-again').textContent() : '';
+      h.assert(again === 0 || !label.includes(pick ?? '?'), `two buttons for one session: ${label} / ${pick}`);
     } finally {
       await s.context.close();
     }

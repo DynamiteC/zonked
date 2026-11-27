@@ -13,6 +13,7 @@ import { runUxChecks } from './e2e-ux-checks.mjs';
 import { runSoundChecks } from './e2e-sound-checks.mjs';
 import { runSanctuaryChecks } from './e2e-sanctuary-checks.mjs';
 import { runCalmChecks } from './e2e-calm-checks.mjs';
+import { runCrewChecks } from './e2e-crew-checks.mjs';
 import { runNatureChecks } from './e2e-nature-checks.mjs';
 
 const results = [];
@@ -378,6 +379,7 @@ try {
   await runSanctuaryChecks(harness);
   await runCalmChecks(harness);
   await runNatureChecks(harness);
+  await runCrewChecks(harness);
   // mixed content against the hosted https page (ZONKED_SITE_URL) (informational only)
   await runMixedContent(harness);
 } catch (e) {

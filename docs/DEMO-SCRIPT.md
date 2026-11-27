@@ -26,3 +26,21 @@ The crew beat is a simulated crew feed (real bridge, real app). It uses `crew-br
 - `git log` is printed with `--format=%h %s`. Author and email lines are never printed.
 - The run aborts if the redacted text or any caption still matches an email, home path, hosting word, session id or git remote pattern.
 - Output files are encoded with all metadata stripped.
+
+## Judge path: 60 seconds, nothing to install
+
+Works on the website and inside the Kiro Crew app. No bridge, no network, no account.
+
+| Time | Do | Show |
+|---|---|---|
+| 0:00 | Open Zonked. Tap Skip, just play. Accept the headphone and volume notice. | Sound fades in over 2 seconds. |
+| 0:10 | Tap Crew in the tab bar. | Idle Crew screen with one yellow button. |
+| 0:15 | Tap Watch the crew work. | The badge Simulated session shows on every screen. Load score 22, beat 40 Hz. |
+| 0:30 | Wait one step (15 s per step). | Score 48, beat 18 Hz. The Why line says the pretend load is building. |
+| 0:45 | Wait. | Score 70, beat 10 Hz. The sound softens. |
+| 1:00 | Wait. | Score 88, beat 6 Hz, quieter. Next change reads: the demo ends. |
+| 1:15 | Tap Stop in the mini player. | Sound ramps down over 250 ms or more. |
+
+Say once: this is a simulated session. The demo never reads your code or your computer. The real Crew reads only git log and git status counts, and Not now pauses it for 30 minutes.
+
+The demo steps are 15 s apart with a 5 s floor on each transition. The real Crew keeps 30 s between changes.

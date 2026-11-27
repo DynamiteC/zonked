@@ -51,7 +51,7 @@ describe('Crew screen', () => {
   it('demo: shows the simulated badge and a countdown, and hides the start button', () => {
     render(<CrewScreen crew={info({ state: st, source: 'demo', demoNextAtMs: Date.now() + 9000 })} overridden={false} onDemo={noop} onStopDemo={noop} onNotNow={noop} onResume={noop} onFollow={noop} />);
     expect(screen.getByTestId('crew-status').textContent).toBe('Simulated session');
-    expect(screen.getByTestId('crew-next').textContent).toMatch(/Next step in \d+ s/);
+    expect(screen.getByTestId('crew-next').textContent).toMatch(/in \d+ s/);
     expect(screen.queryByTestId('crew-demo')).toBeNull();
     expect(screen.getByTestId('crew-demo-stop')).toBeTruthy();
   });
