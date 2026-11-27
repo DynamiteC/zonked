@@ -215,3 +215,55 @@ Nature screen from Library, one tap from the player, Blend slider "More nature, 
 | Two Stop buttons in the app | 1 | 0 |
 
 Skipped: the 2-tap start (brief change 1) was not in this item. Words before first sound were not measured.
+
+## After R1: the design ruling applied
+
+The ruling is in `docs/DESIGN-DECISION.md`. Shots are `docs/ux-shots/after-r1-<screen>-<look>-<size>.png`. Look is dark, light or hc (high contrast). Size is d (1280x800) or m (375x812). Made by `web/scripts/take-r1-shots.mjs` with reduced motion on. Two more come from the Kiro Crew app harness: `after-r1-app-playing-dark-d.png` and `after-r1-app-gate-dark-d.png`.
+
+I opened 14 of the final R1 shots: onboarding m, safety d, today m (dark), player focus d, player calm light d, player nature m, sounds m, crew d, settings hc d, studio d and the app playing shot, plus earlier versions of today d, today m (light) and player sleep d. The rest came from the same script and were not read one by one.
+
+### What changed, screen by screen
+
+| Screen | Before | After R1 |
+|---|---|---|
+| All Calm screens | Pastel gradient cards, drifting gradient page, shadows, pills | Flat night blue page, hairline rows, 8 px corners, one yellow accent |
+| Navigation | Left rail on desktop, 5 bottom tabs, a second info column | Top nav on desktop, 4 bottom tabs on phone: Today, Sounds, Crew, You. Info column removed |
+| Today | Three cards, two scrolling carousels, a gradient link card | One yellow Start, "Play again" as an outline button, plain rows for picks and journeys |
+| Week dots | Letters inside dots | Day names (Mon to Sun) under each dot, a check in a filled dot, text "N of 7 days" |
+| Player | Ring around the mascot | Scene loop for the session (sleep, focus, calm, nature) behind the mascot, breath text "Breathe in" and "Breathe out", cup glow follows the audio level |
+| Sounds | Gradient tiles | Outlined tiles and play-mark rows. The text "Sounds" replaces "Library" |
+| Crew | One line and a note | Plain reason it is off, two numbered steps, a different line when the switch is on but no feed answers |
+| Settings | Two switches | Adds the day look and High contrast switches, saved on this device |
+| Studio | Sharp, mono accents | PC-98 lean: hard offset shadows, dotted heading rules, yellow top bar, same tokens |
+| Mascot | Floating head, side ear pieces, flat moon | Torso with shoulders and collar that fades at the bottom, ink headphone cups that glow with level, painted moon with a soft glow |
+
+### Re-scored first impression
+
+| Surface | Before R1 | After R1 | Why |
+|---|---|---|---|
+| Calm web, desktop | 5 | 5 | Calmer, but the content was already above the fold. One accent, no boxes. |
+| Calm web, phone | 4 | 5 | Single column, answer rows, Next and Skip both in view at 812 px high. |
+| Calm in the Kiro Crew app | 4 | 4 | Same screens, same font, top nav. Seen only through the harness. |
+
+These scores are my own reading, not a user test.
+
+### Scorecard rows I could measure
+
+| Metric | Before | After R1 | How |
+|---|---|---|---|
+| Taps to first sound, Skip path | 2 | 2 | e2e check, unchanged |
+| First load JS plus CSS, gzip | 79.45 KB | 80.04 KB | `check:bundle`, budget 110 KB |
+| Font files, bytes | 0 | 24,828 (12,096 + 12,732) | `web/public/fonts`, separate from the budget. Only the 400 file is preloaded |
+| Control contrast below 3 to 1 | 1.3 to 1 on old borders | 0 in the token table | Computed from hex. Lowest control border is 3.26 on light surface |
+| Text below 4.5 to 1 | 4.36 (teal on pink) | 0 in the token table | Lowest text is 5.88 (ink on surface, light) |
+| Two Stop buttons in the app | 0 | 0 | CSP harness |
+| Gradient and shadow cards on Today | 4 | 0 | Code and shots |
+| Scroll-clipped rows on phone | 2 carousels | 0 | Code and shots |
+
+### Unverified
+
+- Slashed zero: the Latin file draws a slashed zero by default and none of `zero`, `ss01` to `ss05` removed it in a test render. "10:00" shows a slash. The font-feature rule is kept but has no effect.
+- Contrast is computed from hex values, not sampled from pixels. High contrast was not checked with a screen reader.
+- Reduced motion shows still frames in the shots. Live breathing was not captured.
+- The Kiro Crew app was seen through the CSP harness, not the real dashboard.
+- `nature.test` "has a credit row for every shipped sample" fails because another worker added samples. It is outside this item.
