@@ -1,0 +1,100 @@
+# Checks only. No secrets, nothing is published. Read-only token.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            web/package-lock.json
+            crew-bridge/package-lock.json
+            app/ui/package-lock.json
+
+      # The toolchain is read from rust-toolchain.toml, so CI builds with the pinned version.
+      - name: Install Rust toolchain
+        run: rustup show active-toolchain || rustup toolchain install
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            crates/dsp-core/target
+          key: cargo-${{ hashFiles('rust-toolchain.toml', 'crates/dsp-core/Cargo.lock') }}
+
+      - name: Install dependencies (npm ci, install scripts off)
+        run: |
+          npm ci --prefix web
+          npm ci --prefix crew-bridge
+          npm ci --prefix app/ui
+
+      - name: DSP tests
+        run: cargo test --locked --manifest-path crates/dsp-core/Cargo.toml
+
+      - name: DSP lints
+        run: cargo clippy --locked --manifest-path crates/dsp-core/Cargo.toml --all-targets -- -D warnings
+
+      - name: Build the wasm and check it against the pinned hash
+        run: |
+          npm --prefix web run build:wasm
+          test "$(sha256sum web/src/wasm/dsp_core.wasm | cut -d' ' -f1)" = "$(tr -d '[:space:]' < web/src/wasm/dsp_core.wasm.sha256)"
+
+      - name: Type check
+        run: npm --prefix web run typecheck
+
+      - name: Unit tests
+        run: npm --prefix web test
+
+      - name: Bridge tests
+        run: npm --prefix crew-bridge test
+
+      - name: Script tests
+        run: |
+          node --test scripts/
+          npm --prefix web run test:scripts
+
+      - name: Build
+        run: npm --prefix web run build
+
+      - name: Bundle budget
+        run: npm --prefix web run check:bundle
+
+      - name: Sample licences
+        run: node scripts/check-samples.mjs
+
+      - name: Privacy and character rules
+        run: |
+          npm --prefix web run check:privacy
+          node scripts/check-chars.mjs
+          node scripts/check-sizes.mjs
+          node scripts/check-no-buildrs.mjs
+          npm --prefix web run audit:security
+
+      - name: App page is built from the current sources
+        run: npm --prefix app/ui run check:dist
+
+      - name: Dependency audit
+        run: |
+          npm audit --prefix web --audit-level=low
+          npm audit --prefix crew-bridge --audit-level=low
+          npm audit --prefix app/ui --audit-level=low

@@ -106,7 +106,7 @@ They sit under "Made in code" in the same picker. Same steps as above.
 
 ### B3. The Kiro Crew app
 
-1. `cd app/ui && npm install && npm run build`
+1. `cd app/ui && npm ci && npm run build`
 2. `kirocrew app install <repo>/app` (use the path to this repo's `app` folder).
 3. `kirocrew app enable zonked`
 4. When asked, trust the app. Without trust, the agents and tools stay off.

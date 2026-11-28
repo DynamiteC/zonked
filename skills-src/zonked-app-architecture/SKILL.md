@@ -42,7 +42,7 @@ session signals -> burnout-sentinel -> acoustic-sequencer -> .zonked-state.json
 
 Inside Kiro Crew as an app: the app page mounts the same engine and player. The
 app may read or write state through its declared permissions only. Verify the
-exact wiring in `docs/APP-SPIKE.md` and in `app/app.json`; it was still being
+exact wiring in `docs/notes/APP-SPIKE.md` and in `app/app.json`; it was still being
 decided when this skill was written.
 
 Every hop treats its input as untrusted: size caps, schema checks, clamps. The
@@ -89,7 +89,7 @@ files before you report.
 
 - `.kiro/specs/zonked-core/` and `.kiro/specs/zonked-library/`: requirements, design, tasks, contracts.
 - `docs/HLD.md`, `docs/LLD.md`: design as built.
-- `docs/AUDIT-*.md`, `docs/RESEARCH.md`, `docs/SOUNDS.md`.
+- `docs/notes/AUDIT-*.md`, `docs/RESEARCH.md`, `docs/SOUNDS.md`.
 
 Do not widen scope without updating the spec.
 
