@@ -1,37 +1,80 @@
 Zonked
 Copyright (c) 2026 Zonked contributors
 
-Zonked original code, documentation and templates are licensed under the MIT
-License (see LICENSE).
+This file is a plain-language list of who made what. It is not legal advice.
+Where a lawyer is needed, this file says so.
 
-Third-party material is kept apart in legacy/ as reference only. It is not
-imported, compiled, bundled or shipped by the app.
+Scope of the MIT licence
+------------------------
+The MIT License in LICENSE covers Zonked's original code, documentation and
+original templates. It does not cover the items in parts A and B below. Each
+of those keeps its own terms.
 
-1. legacy/android
+A. Shipped third-party material (inside the built app)
+
+1. Font. Atkinson Hyperlegible Next (latin 400 and 700, woff2), copyright The
+   Atkinson Hyperlegible Next Project Authors. SIL Open Font License 1.1. The
+   licence text is in web/public/fonts/OFL.txt and must travel with every copy
+   of the font files.
+
+2. Nature loops. 22 short loops in web/public/samples/, cut and re-encoded from
+   recordings by their authors (21 distinct sources). Each is CC0 1.0 or put in
+   the public domain by its author. Every file, author, source page, licence
+   and hash is listed in docs/SAMPLES-LICENSES.md. Saved copies of the source
+   pages for the public domain files are in docs/legal/samples/. Thank you to
+   the recording authors, even where the licence does not ask for credit. To
+   report a file, see the takedown section in docs/SAMPLES-LICENSES.md.
+
+3. Runtime code. React and React DOM (MIT, Meta Platforms and contributors) in
+   the web app (version 19) and in the Kiro Crew app UI (version 18). The
+   service worker is generated with Workbox (MIT, Google and contributors) by
+   the build. The Rust DSP core (crates/dsp-core) has no dependencies. The
+   crew bridge has no runtime dependencies. Build and test tools (Vite,
+   Vitest, Playwright, TypeScript and others) are dev dependencies and are not
+   shipped. Their licences are in the package lock files.
+
+4. Made in code. The ten made-in-code sounds, the mascot, the icons and the
+   templates written for Zonked are original work under the MIT licence.
+
+B. Reference material that is not shipped
+
+5. legacy/android
    "Binaural Beats Therapy" by Giorgio Regni, an Android app published as the
-   GitHub project GiorgioRegni/Binaural-Beats. License: GNU General Public
-   License version 3, full text in legacy/android/LICENSE. The files in that
-   folder are Giorgio Regni's work, not Zonked's, and stay under the GPLv3.
+   GitHub project GiorgioRegni/Binaural-Beats. GNU General Public License
+   version 3, full text in legacy/android/LICENSE. These files are Giorgio
+   Regni's work and stay under the GPLv3. They are kept for reference only.
+   The app does not import, compile, bundle or ship them.
 
-2. legacy/gnaural
+6. legacy/gnaural
    Three binaural beat schedules in the Gnaural XML format (Power Nap, a
    meditation schedule for airplane travel, and "Arrive sharp"). Each file
-   names Gnaural as its source (see the gnaural.sourceforge.net link in the
-   file header) and carries no license text of its own. They came with the
-   GPLv3 Android app above. Treat them as third-party reference material.
-   Gnaural itself is free software published under the GPL.
+   names Gnaural as its source and carries no licence text. They came with the
+   GPLv3 Android app above. Their terms are unknown, so treat them as
+   third-party reference material. Gnaural is free software published under
+   the GPL.
 
-3. Templates derived from those sources
+C. Credits and lineage
+
+7. Inspiration. Zonked credits three sources of ideas: SBaGen (1998), the
+   `.sbg` brainwave sequence idea, with no SBaGen code used; Gnaural, for
+   binaural beat schedules; and Giorgio Regni's Android app. The author's 2018
+   final-year web application, its research and its yellow mask mascot were
+   made after studying that Android app.
+
+8. Templates whose values came from those sources
    21 templates in web/src/catalog/seeds.ts have source "android" and 3 have
-   source "gnaural". They re-express published frequency and duration values
-   only (beat Hz, step lengths, noise use). They copy no GPLv3 source code and
-   no descriptive text. Template names and descriptions are original wording.
-   A beat frequency or a duration is a number, not expression.
+   source "gnaural". Their step values (beat Hz, step length) follow the
+   published schedules in those sources, with original names and wording. A
+   single frequency or duration is a number, not expression. A long ordered
+   table of values taken from one work is a weaker case. Gnaural files carry
+   no licence, and the Android app is GPLv3. A separate wave of this release
+   (wave C) is replacing these 24 templates with original schedules built by
+   the Zonked archetype generator, and will drop the "android" and "gnaural"
+   ids. Until that is merged, this item stands as written. LAWYER: whether the
+   old tables are a derivative work, and the final wording of this item, need
+   a qualified lawyer. Nothing here is a legal opinion.
 
-4. Lineage
-   Zonked resurrects the 1998 SBaGen sequence idea and the author's 2018
-   final-year web application, binaural beats research and yellow mask
-   mascot. The 2018 work was created after studying Giorgio Regni's GPLv3
-   Android app, which is credited here.
+D. Not a medical device
 
-Zonked is not a medical device.
+Zonked is not a medical device. It does not diagnose, treat, cure or prevent
+anything.
