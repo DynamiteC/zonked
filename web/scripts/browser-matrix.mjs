@@ -11,7 +11,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { chromium, firefox, webkit } from '@playwright/test';
 import { ROOT, WEB, freePort, sleep } from './e2e-lib.mjs';
-import { newSession } from './e2e-helpers.mjs';
+import { newSession, nav } from './e2e-helpers.mjs';
 
 const OUT = join(ROOT, '.work', 'matrix');
 const SHOTS = join(OUT, 'shots');
@@ -112,7 +112,6 @@ async function launch(name) {
 }
 
 const CHECK_LIMIT_MS = 90000;
-const nav = (page, name) => page.getByRole('navigation', { name: 'Main' }).getByRole('button', { name });
 const AC_COUNT = () => {
   window.__acCount = 0;
   const Base = window.AudioContext || window.webkitAudioContext;
