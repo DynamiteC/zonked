@@ -41,6 +41,7 @@ These rules bind every change. A change that breaks one is a defect, even if tes
   - `X-Content-Type-Options: nosniff`
   - `Referrer-Policy: no-referrer`
   - `Cache-Control: public, max-age=31536000, immutable` for hashed `/assets/*`
+- No network at run time. Vetted licensed loops may be bundled; every file is listed in `docs/SAMPLES-LICENSES.md` and checked by `scripts/check-samples.mjs`. No remote audio, no download of any sound at run time.
 - No inline scripts, no inline event handlers, no `eval`, no `new Function`, no `innerHTML` with dynamic data. Inline `style` attributes are allowed; inline `<script>` is not.
 - The `.sbg` parser caps input at 256 KB and 500 events, reports errors with line numbers, and never executes input.
 - Imported files and bridge messages are untrusted. Validate with explicit schemas. Reject unknown versions.

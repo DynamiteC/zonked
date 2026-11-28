@@ -21,7 +21,7 @@ Read `.kiro/steering/zonked-standards.md` first. It is the binding rule set. Thi
 1. `crates/dsp-core` is `#![no_std]`, allocation-free, `O(1)` per 128-sample frame, and must never panic.
 2. Carrier `20-1500 Hz`. Beat offset `0.5-40 Hz`. Master gain `<= 0.85`. Output hard-limited to `[-0.95, 0.95]`. Clamp every input; never reject silently, never exceed.
 3. CSP is `script-src 'self' 'wasm-unsafe-eval'`. `COOP: same-origin` and `COEP: require-corp` ship in `web/public/_headers`.
-4. No `eval`, no `new Function`, no remote scripts, no analytics, no network calls except the optional loopback bridge.
+4. No `eval`, no `new Function`, no remote scripts, no analytics, no network at run time except the optional loopback bridge. Vetted licensed loops may be bundled; every file is listed in `docs/SAMPLES-LICENSES.md` and checked by `scripts/check-samples.mjs`.
 5. Treat `.sbg` files and `.zonked-state.json` as untrusted input. Parse with hard size and count limits.
 6. The web app works fully offline and fully standalone. The bridge only adds a layer.
 

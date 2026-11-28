@@ -214,6 +214,21 @@ function nameFor(spec: CategorySpec, j: number): string {
 
 const pad2 = (n: number): string => String(n).padStart(2, '0');
 
+const MODE_WORD: Record<ToneMode, string> = { binaural: 'Binaural', monaural: 'Monaural', isochronic: 'Isochronic' };
+const EXTRA_TAG: readonly LayerTag[] = ['lofi', 'instrument', 'pad', 'chimes', 'percussion'];
+
+/** What differs between sibling cards: tone type, carrier, noise and layers, read from the data. */
+function variantNote(mode: ToneMode, carrier: number, minutes: number, vibe: Vibe, stages: readonly Stage[]): string {
+  const first = stages[0];
+  const parts = [`${MODE_WORD[mode]}, ${carrier} Hz carrier, ${minutes} minutes, ${vibe} mood`];
+  if (first !== undefined && first.noise !== 'off' && first.noiseLevel > 0) parts.push(`${first.noise} noise`);
+  const last = stages[stages.length - 1];
+  if (first !== undefined && last !== undefined && first.beatHz !== last.beatHz) parts.push(`beat ${first.beatHz} to ${last.beatHz} Hz`);
+  const extras = deriveLayerTags(stages).filter((t) => EXTRA_TAG.includes(t));
+  if (extras.length > 0) parts.push(extras.join(' and '));
+  return `${parts.join(', ')}.`;
+}
+
 function buildOne(spec: CategorySpec, a: Arch, i: number, j: number): Template {
   const m = at(a.mins, i);
   const carrier = at(a.carriers, i * 3 + 1);
@@ -232,7 +247,7 @@ function buildOne(spec: CategorySpec, a: Arch, i: number, j: number): Template {
     intensity: a.intensity,
     adhdFriendly: isAdhdFriendly(stages, a.intensity),
     stages,
-    reasonTemplate: a.reason,
+    reasonTemplate: `${a.reason.replace('{tone}', MODE_WORD[mode])} ${variantNote(mode, carrier, m, at(a.vibes, i), stages)}`,
     source: 'original',
     ...(a.breath !== undefined ? { breath: a.breath } : {}),
   };
@@ -241,5 +256,17 @@ function buildOne(spec: CategorySpec, a: Arch, i: number, j: number): Template {
 /** Expand one category spec into templates in stable order. */
 export function buildCategory(spec: CategorySpec): Template[] {
   let j = 0;
-  return spec.archs.flatMap((a) => Array.from({ length: a.count }, (_, i) => buildOne(spec, a, i, j++)));
+  const list = spec.archs.flatMap((a) => Array.from({ length: a.count }, (_, i) => buildOne(spec, a, i, j++)));
+  return uniqueReasons(list);
+}
+
+/** Cards must not repeat a sentence. Siblings with the very same data get a numbered take. */
+function uniqueReasons(list: Template[]): Template[] {
+  const seen = new Map<string, number>();
+  return list.map((t) => {
+    const key = t.reasonTemplate.replaceAll('{minutes}', String(t.recommendedMinutes));
+    const n = (seen.get(key) ?? 0) + 1;
+    seen.set(key, n);
+    return n === 1 ? t : { ...t, reasonTemplate: `${t.reasonTemplate} Alternate take ${n}.` };
+  });
 }

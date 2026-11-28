@@ -1,6 +1,7 @@
 // Shared helpers for verify-e2e.mjs and record-demo.mjs: build, static server, bridge.
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { closeSync, cpSync, existsSync, mkdtempSync, openSync, readFileSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import net from 'node:net';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -71,16 +72,28 @@ async function waitHttp(url, ms, proc) {
 /** Starts wrangler dev (assets mode); falls back to vite preview. Returns { origin, kind, stop }. */
 export async function startServer() {
   const wrangler = join(WEB, 'node_modules', '.bin', 'wrangler');
+  // Root cause of the old "18 of 21 then ERR_CONNECTION_REFUSED": wrangler dev watches ./dist and
+  // reloads when anything rewrites it (a rebuild, a parallel build). The reload restarts workerd,
+  // which can crash on its SQLite state ("database is locked", SQLITE_BUSY_RECOVERY) and the
+  // server is gone for the rest of the run. Serve a private snapshot of dist with private state.
+  const snap = mkdtempSync(join(tmpdir(), 'zonked-e2e-'));
+  cpSync(join(WEB, 'dist'), join(snap, 'dist'), { recursive: true });
+  // Same wrangler.toml, with the assets directory pointed at the snapshot (the --assets flag
+  // would drop not_found_handling).
+  const cfg = join(snap, 'wrangler.toml');
+  writeFileSync(cfg, readFileSync(join(WEB, 'wrangler.toml'), 'utf8').replace('"./dist"', JSON.stringify(join(snap, 'dist'))));
   const attempts = [
-    ['wrangler dev', (p) => [wrangler, ['dev', '--ip', '127.0.0.1', '--port', String(p), '--show-interactive-dev-session=false']]],
+    ['wrangler dev', (p) => [wrangler, ['dev', '--config', cfg, '--ip', '127.0.0.1', '--port', String(p), '--persist-to', join(snap, 'state'), '--show-interactive-dev-session=false']]],
     ['vite preview', (p) => [join(WEB, 'node_modules', '.bin', 'vite'), ['preview', '--host', '127.0.0.1', '--port', String(p), '--strictPort']]],
   ];
   for (const [kind, mk] of attempts) {
     const port = await freePort();
     const [cmd, args] = mk(port);
+    const logPath = join(tmpdir(), `zonked-e2e-server-${process.pid}.log`);
+    const logFd = openSync(logPath, 'w');
     const proc = spawn(cmd, args, {
       cwd: WEB,
-      stdio: 'ignore',
+      stdio: ['ignore', logFd, logFd],
       detached: true,
       env: { ...process.env, WRANGLER_SEND_METRICS: 'false', CI: '1' },
     });
@@ -91,6 +104,7 @@ export async function startServer() {
         /* already gone */
       }
     };
+    closeSync(logFd);
     try {
       const origin = `http://127.0.0.1:${port}`;
       await waitHttp(`${origin}/`, 60000, proc);

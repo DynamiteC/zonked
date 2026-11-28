@@ -55,18 +55,18 @@ export function NowBar({ snap, detected, speakerWarning, wakeSupported, wakeOn, 
           {announceText(t.kind, t.remainingSec, t.phase, t.finalFade)}
         </span>
         {detected !== 'unknown' && (
-          <Tip label="headphones and Bluetooth" text={`${COPY.tips.device} ${COPY.headphoneNote}`}>
+          <Tip text={`${COPY.tips.device} ${COPY.headphoneNote}`}>
             <span className="pill" data-testid="device-status" data-device={detected}>
               Output: {deviceLabel(detected)}
             </span>
           </Tip>
         )}
-        <Tip label="mute" text={COPY.tips.mute} info={false}>
+        <Tip text={COPY.tips.mute}>
           <button type="button" className="btn" data-testid="mute-button" aria-pressed={snap.muted} onClick={onMute}>
             {snap.muted ? 'Unmute' : 'Mute'}
           </button>
         </Tip>
-        <Tip label="keep awake" text={COPY.tips.wake}>
+        <Tip text={COPY.tips.wake}>
         <button
           type="button"
           className="btn"

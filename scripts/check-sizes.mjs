@@ -10,7 +10,8 @@ export const WARN = 400;
 export const FAIL = 800;
 const COUNTED = /\.(ts|tsx|rs|mjs)$/;
 
-export const counts = (path) => (path.startsWith('legacy/') ? false : COUNTED.test(path));
+// Generated build output (any dist folder) is not source: the 800 line rule does not apply to it.
+export const counts = (path) => (path.startsWith('legacy/') || /(^|\/)dist\//.test(path) ? false : COUNTED.test(path));
 export const level = (lines) => (lines > FAIL ? 'fail' : lines > WARN ? 'warn' : 'ok');
 export const lineCount = (text) => (text === '' ? 0 : text.split('\n').length - (text.endsWith('\n') ? 1 : 0));
 

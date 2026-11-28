@@ -16,6 +16,8 @@ pub const GAIN_TAU_DOWN_MIN: f32 = 0.1;
 /// Time constant of the mode crossfade weights.
 pub const MODE_TAU: f32 = 0.03;
 pub const OUT_LIMIT: f32 = 0.95;
+/// Time constant of the beat voice level (slot 7): 1 to 0 takes about 90 ms, steps at most 1e-3 per sample at 48 kHz.
+pub const BEAT_LEVEL_TAU: f32 = 0.02;
 pub const MAX_FRAMES: usize = 128;
 
 /// Clamp without ever panicking (bounds are constants, `lo <= hi`).

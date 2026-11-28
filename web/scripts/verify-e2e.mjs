@@ -12,6 +12,11 @@ import { runUiChecks } from './e2e-ui-checks.mjs';
 import { runUxChecks } from './e2e-ux-checks.mjs';
 import { runSoundChecks } from './e2e-sound-checks.mjs';
 import { runSanctuaryChecks } from './e2e-sanctuary-checks.mjs';
+import { runCalmChecks } from './e2e-calm-checks.mjs';
+import { runCrewChecks } from './e2e-crew-checks.mjs';
+import { runNatureChecks } from './e2e-nature-checks.mjs';
+import { runResetChecks } from './e2e-reset-checks.mjs';
+import { runGrowthChecks } from './e2e-growth-checks.mjs';
 
 const results = [];
 const info = [];
@@ -127,6 +132,7 @@ try {
   const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
   await context.addInitScript(() => {
     localStorage.setItem('zonked.safety.v1', '1');
+    if (localStorage.getItem('zonked.theme.v1') === null) localStorage.setItem('zonked.theme.v1', 'studio');
     window.__csp = [];
     document.addEventListener('securitypolicyviolation', (e) =>
       window.__csp.push(`${e.violatedDirective} ${e.blockedURI}`),
@@ -373,6 +379,11 @@ try {
   await runUxChecks(page, harness);
   await runSoundChecks(page, harness);
   await runSanctuaryChecks(harness);
+  await runCalmChecks(harness);
+  await runNatureChecks(harness);
+  await runCrewChecks(harness);
+  await runResetChecks(harness);
+  await runGrowthChecks(harness);
   // mixed content against the hosted https page (ZONKED_SITE_URL) (informational only)
   await runMixedContent(harness);
 } catch (e) {

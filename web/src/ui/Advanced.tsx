@@ -9,6 +9,7 @@ import { COPY } from './copy';
 import { CrewToggle } from './CrewToggle';
 import { Hud } from './Hud';
 import { Tip } from './Tip';
+import { RangeField, levelTicks } from './shared/RangeField';
 
 export const ADVANCED_KEY = 'zonked.advanced.v1';
 
@@ -34,10 +35,11 @@ export function Advanced({ snap, engine, bridge, onOpen, player }: Props): React
   return (
     <section className="adv" aria-label="Advanced details">
       <div className="adv-head">
+        <Tip text={COPY.tips.advanced}>
         <button type="button" className="btn" data-testid="advanced-toggle" aria-expanded={open} aria-controls="adv-body" onClick={toggle}>
           {COPY.advanced.open}
         </button>
-        <Tip label={COPY.advanced.open} text={COPY.tips.advanced} />
+        </Tip>
       </div>
       <div id="adv-body" className={open ? 'adv-body' : 'adv-body sr-only'} data-open={open} inert={!open}>
         <p className="meta">{COPY.advanced.hint}</p>
@@ -85,16 +87,17 @@ function AdvSliders({ snap, player }: { snap: PlayerSnapshot; player: { setLayer
       {SLIDERS.map(([id, key, label]) => (
         <div className="slider-row" key={id}>
           <label htmlFor={id}>{label}</label>
-          <input
+          <RangeField
             id={id}
-            data-testid={id}
-            type="range"
+            testId={id}
             min={0}
             max={1}
             step={0.05}
             value={layers[key]}
-            aria-valuetext={`${Math.round(layers[key] * 100)} percent`}
-            onChange={(e) => player.setLayerOverride({ [key]: Number(e.target.value) })}
+            valueText={`${Math.round(layers[key] * 100)} percent`}
+            bubbleText={`${Math.round(layers[key] * 100)}`}
+            ticks={levelTicks()}
+            onChange={(v) => player.setLayerOverride({ [key]: v })}
           />
           <output htmlFor={id}>{Math.round(layers[key] * 100)}</output>
         </div>

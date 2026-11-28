@@ -1,0 +1,213 @@
+/* RangeField: a native range input with a filled track, bubble, ticks and bands.
+   --f is the share of the track (0 to 1). The thumb is 20px, so marks sit on the thumb centre. */
+.rf {
+  --rf-thumb: 20px;
+  --rf-accent: var(--mint, #4fd1c5);
+  --rf-line: var(--line, rgba(255, 255, 255, 0.25));
+  --rf-pos: calc(var(--rf-thumb) / 2 + (100% - var(--rf-thumb)) * var(--f));
+  position: relative;
+  min-width: 0;
+  width: 100%;
+}
+
+.rf-top {
+  position: relative;
+  height: 1.5rem;
+}
+
+.rf-bubble {
+  position: absolute;
+  bottom: 0;
+  left: var(--rf-pos);
+  transform: translateX(-50%);
+  padding: 0.1rem 0.45rem;
+  background: var(--rf-accent);
+  color: var(--rf-bg, var(--bg, #0b0b12));
+  font-family: var(--mono, monospace);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.rf .rf-input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  min-height: 28px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.rf-input:focus {
+  outline: none;
+}
+
+.rf-input::-webkit-slider-runnable-track {
+  height: 8px;
+  border: 1px solid var(--rf-line);
+  background: linear-gradient(to right, var(--rf-accent) calc(var(--rf-thumb) / 2 + (100% - var(--rf-thumb)) * var(--f)), var(--rf-panel, var(--panel, #1a1a24)) 0);
+}
+
+.rf-input::-moz-range-track {
+  height: 8px;
+  border: 1px solid var(--rf-line);
+  background: var(--rf-panel, var(--panel, #1a1a24));
+}
+
+.rf-input::-moz-range-progress {
+  height: 8px;
+  background: var(--rf-accent);
+}
+
+.rf .rf-input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--rf-thumb);
+  height: var(--rf-thumb);
+  margin-top: -7px;
+  border-radius: 50%;
+  border: 2px solid var(--rf-bg, var(--bg, #0b0b12));
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--rf-accent);
+}
+
+.rf .rf-input[type='range']::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--rf-thumb);
+  height: var(--rf-thumb);
+  border-radius: 50%;
+  border: 2px solid var(--rf-bg, var(--bg, #0b0b12));
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--rf-accent);
+}
+
+.rf .rf-input[type='range']:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 1px var(--rf-accent), 0 0 0 5px color-mix(in srgb, var(--rf-accent) 55%, transparent);
+}
+
+.rf .rf-input[type='range']:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 1px var(--rf-accent), 0 0 0 5px color-mix(in srgb, var(--rf-accent) 55%, transparent);
+}
+
+.rf-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Ticks and bands share the thumb-centre coordinate system. */
+.rf-ticks,
+.rf-bands {
+  position: relative;
+  margin: 0 calc(var(--rf-thumb) / 2);
+}
+
+.rf-ticks {
+  height: 1.6rem;
+}
+
+.rf-tick {
+  position: absolute;
+  top: 0;
+  left: calc((100% * var(--f)));
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rf-tick i {
+  display: block;
+  width: 1px;
+  height: 5px;
+  background: var(--rf-line);
+}
+
+.rf-tick b {
+  font-weight: 400;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  color: var(--rf-muted, var(--muted, #a0a0b0));
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.rf-bands {
+  height: 2.1rem;
+}
+
+.rf-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  padding: 0.35rem 0.15rem 0;
+  border-left: 1px solid var(--rf-bg, var(--bg, #0b0b12));
+  background: color-mix(in srgb, var(--rf-accent) 10%, transparent);
+  border-top: 3px solid color-mix(in srgb, var(--rf-accent) 30%, transparent);
+  color: var(--rf-muted, var(--muted, #a0a0b0));
+  font-size: 0.72rem;
+  line-height: 1.2;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rf-band[data-active='true'] {
+  background: color-mix(in srgb, var(--rf-accent) 28%, transparent);
+  border-top-color: var(--rf-accent);
+  color: var(--rf-text, var(--text, #fff));
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rf-band {
+    transition: background-color 0.15s ease;
+  }
+}
+
+@media (forced-colors: active) {
+  .rf-input::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, Highlight calc(var(--rf-thumb) / 2 + (100% - var(--rf-thumb)) * var(--f)), Canvas 0);
+    border-color: CanvasText;
+  }
+  .rf-input::-moz-range-track {
+    background: Canvas;
+    border-color: CanvasText;
+  }
+  .rf-input::-moz-range-progress {
+    background: Highlight;
+  }
+  .rf .rf-input[type='range']::-webkit-slider-thumb,
+  .rf .rf-input[type='range']::-moz-range-thumb {
+    background: ButtonText;
+    border-color: Canvas;
+    box-shadow: none;
+  }
+  .rf .rf-input[type='range']:focus-visible::-webkit-slider-thumb,
+  .rf .rf-input[type='range']:focus-visible::-moz-range-thumb {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+  .rf-bubble {
+    background: Highlight;
+    color: HighlightText;
+  }
+  .rf-band,
+  .rf-tick b {
+    color: CanvasText;
+    border-color: CanvasText;
+    background: Canvas;
+  }
+  .rf-band[data-active='true'] {
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+}

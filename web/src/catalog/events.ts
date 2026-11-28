@@ -34,6 +34,7 @@ function stageEvent(s: Stage, tSec: number, line: number): SbgEvent {
       noiseLevel: clamp(s.noiseLevel, BOUNDS.noiseMin, BOUNDS.noiseMax),
       mode: s.mode,
       gain: clamp(s.gain, BOUNDS.gainMin, BOUNDS.gainMax),
+      ...(s.beatLevel !== undefined ? { beatLevel: clamp(s.beatLevel, 0, 1) } : {}),
       layers: resolveLayers(s.layers),
     },
     ramp: s.ramp,

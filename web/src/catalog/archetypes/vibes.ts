@@ -35,7 +35,7 @@ export const VIBES: CategorySpec = {
     arch({
       slug: 'spark-groove', shape: 'plateau', from: 14, to: 16, mins: [20, 25, 30], carriers: [220, 240, 260], modes: ['isochronic', 'binaural'],
       noises: [['off', 0]], layers: [['perc', 'pluck'], ['perc', 'lofi']], vibes: ['energized', 'bright'], situations: ['deep-work', 'quick-reset'],
-      intensity: 3, gain: 0.42, count: 4, reason: 'A light groove with soft percussion for a bright, steady lift.',
+      intensity: 3, gain: 0.42, count: 4, reason: 'A light groove with soft percussion and a bright, steady feel.',
     }),
   ],
 };

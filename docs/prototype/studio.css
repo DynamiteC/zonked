@@ -1,0 +1,15 @@
+/* Studio theme: sharp edges, hairlines, tabular numbers. Applies to the Studio screen and Studio mode. */
+html[data-mode="studio"] { --c-bg: #0A0B0F; --c-surface: #12141B; --c-surface-2: #181B24; --c-text: #ECECF1; --c-soft: #A9ABB8; --c-line: #2A2D3A; --c-accent: #FFE600; --c-on-accent: #0A0B0F; --c-teal: #2EE6B0; --c-g1: #0A0B0F; --c-g2: #0A0B0F; --c-shadow: none; --c-shadow-up: none; }
+html[data-mode="studio"] .app { animation: none; background: var(--c-bg); }
+html[data-mode="studio"] .btn, html[data-mode="studio"] .chip-btn, html[data-mode="studio"] .card, html[data-mode="studio"] .panel { border-radius: 0; }
+html[data-mode="studio"] .mascot.big, html[data-mode="studio"] .stage-m { animation: none; }
+
+.screen.studio h1 { font-size: 1.5rem; letter-spacing: 0.02em; }
+.panel { border: 1px solid var(--c-line); background: var(--c-surface); padding: 16px; margin: 14px 0; border-radius: 0; }
+.panel h2 { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--c-soft); margin-bottom: 10px; }
+.read { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0; }
+.read div { border: 1px solid var(--c-line); padding: 10px; }
+.read dt { color: var(--c-soft); font-size: 0.8125rem; }
+.read dd { margin: 0; font-size: 1.125rem; font-variant-numeric: tabular-nums; font-family: ui-monospace, Menlo, Consolas, monospace; }
+.screen.studio .btn { border-radius: 0; }
+@media (max-width: 480px) { .read { grid-template-columns: 1fr 1fr; } }

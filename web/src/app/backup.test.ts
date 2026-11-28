@@ -63,6 +63,16 @@ describe('backup file', () => {
     expect(r).toMatchObject({ ok: true, mixes: [], milestones: null });
   });
 
+  it('carries how-it-felt answers and validates them on import', () => {
+    const text = exportBackup([], NO_FAVORITES, NEW_STATE, NOW, [{ id: 'starter-rain', a: 'calmer', day: 5 }]);
+    const r = parseBackup(text, NOW);
+    expect(r).toMatchObject({ ok: true, feel: [{ id: 'starter-rain', a: 'calmer', day: 5 }] });
+    expect(exportBackup([], NO_FAVORITES, NEW_STATE, NOW)).not.toContain('"feel"');
+    const bad = parseBackup(file(env({ feel: [{ id: 'x', a: 'great', day: 1 }, { id: 'ok', a: 'not', day: 2 }, 7] })), NOW);
+    expect(bad).toMatchObject({ ok: true, feel: [{ id: 'ok', a: 'not', day: 2 }] });
+    expect(parseBackup(file(env({})), NOW)).toMatchObject({ ok: true, feel: null });
+  });
+
   it('plans merge and replace with new ids and unique names', () => {
     const a = mix('Calm');
     const imported = [mix('Calm'), mix('Calm')];

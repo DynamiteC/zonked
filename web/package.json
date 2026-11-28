@@ -39,5 +39,10 @@
     "vitest": "^5.1.1",
     "wasm-pack": "^0.15.1",
     "wrangler": "^4.166.0"
+  },
+  "overrides": {
+    "workbox-build": {
+      "glob": "^14.0.6"
+    }
   }
 }

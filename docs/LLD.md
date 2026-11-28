@@ -804,7 +804,7 @@ Headroom is 5.04 KB. The WASM binary (38,564 bytes, 12.93 KB gzip at level 9) is
 
 | Threat | STRIDE | Vector | Mitigation | Residual risk |
 |---|---|---|---|---|
-| Remote audio fetch | Tampering, Information disclosure | A template or script pointing at a remote sound file | Nothing to point at: every layer is synthesized in WASM and templates are code. CSP `default-src 'self'` would refuse a remote media request, and the spec requires E2E to assert no audio request | None known |
+| Remote audio fetch | Tampering, Information disclosure | A template or script pointing at a remote sound file | Nothing to point at: layers are synthesized in WASM, templates are code, and the seven bundled loops are same-origin files listed in `docs/SAMPLES-LICENSES.md`. CSP `default-src 'self'` would refuse a remote media request, and E2E asserts no audio request to another origin | None known |
 | Layer loudness | Harm | All five layers at level 1 plus a loud bed | Per-layer budget, bus soft limit 0.6, tone scale down to 0.5, gain cap 0.85, limiter 0.95, worst case 1.1 pre-limiter times 0.85 = 0.935 | Percussion transients; high sensitivity removes them from recommendations |
 | Corrupt timer state in localStorage | Tampering | A script on the origin writes `zonked.timer.v1` | Version check, kind whitelist, minutes clamped to 1..720, finite checks, restore always paused, parse errors reset to none | A same-origin script can do far more, so this is robustness only |
 | Timer auto-start | Harm | Reload restores a running fade and sound starts suddenly | Restore is paused and the engine starts only from a user gesture (safety gate) | None |

@@ -4,6 +4,7 @@ import type { DeviceType, RecContext, Recommendation, Sensitivity, Situation, Ti
 import { COPY } from './copy';
 import { Drawer } from './Drawer';
 import { Tip } from './Tip';
+import { RangeField } from './shared/RangeField';
 import { SITUATION_LABELS } from './recContext';
 
 export const REC_LIMIT = 6;
@@ -26,8 +27,7 @@ export function Recommender({ ctx, onCtx, onPlay, onClose }: Props): React.JSX.E
     <Drawer id="recommender-panel" title="Find sounds" help={COPY.tips.recommend} testId="recommender-panel" onClose={onClose}>
       <div className="form-grid">
         <span className="tip-field">
-          <label htmlFor="rec-situation">What are you doing?</label>
-          <Tip label="situation" text={COPY.tips.situation} />
+          <Tip text={COPY.tips.situation} controlId="rec-situation"><label htmlFor="rec-situation">What are you doing?</label></Tip>
         </span>
         <select
           id="rec-situation"
@@ -42,22 +42,22 @@ export function Recommender({ ctx, onCtx, onPlay, onClose }: Props): React.JSX.E
           ))}
         </select>
         <span className="tip-field">
-          <label htmlFor="rec-minutes">Time: {ctx.availableMinutes} min</label>
-          <Tip label="time" text={COPY.helper.minutes} />
+          <Tip text={COPY.helper.minutes} controlId="rec-minutes"><label htmlFor="rec-minutes">Time: {ctx.availableMinutes} min</label></Tip>
         </span>
-        <input
+        <RangeField
           id="rec-minutes"
-          data-testid="rec-minutes"
-          type="range"
+          testId="rec-minutes"
           min={5}
           max={120}
           step={5}
           value={ctx.availableMinutes}
-          onChange={(e) => set({ availableMinutes: Number(e.target.value) })}
+          valueText={`${ctx.availableMinutes} minutes`}
+          bubbleText={`${ctx.availableMinutes} min`}
+          ticks={[5, 30, 60, 90, 120].map((v) => ({ value: v, label: String(v) }))}
+          onChange={(v) => set({ availableMinutes: v })}
         />
         <span className="tip-field">
-          <label htmlFor="rec-tod">Time of day</label>
-          <Tip label="time of day" text={COPY.tips.timeOfDay} />
+          <Tip text={COPY.tips.timeOfDay} controlId="rec-tod"><label htmlFor="rec-tod">Time of day</label></Tip>
         </span>
         <select id="rec-tod" value={ctx.timeOfDay} onChange={(e) => set({ timeOfDay: e.target.value as TimeOfDay })}>
           {TIMES.map((t) => (
@@ -67,8 +67,7 @@ export function Recommender({ ctx, onCtx, onPlay, onClose }: Props): React.JSX.E
           ))}
         </select>
         <span className="tip-field">
-          <label htmlFor="rec-sens">Sound sensitivity</label>
-          <Tip label="sound sensitivity" text={COPY.tips.sensitivity} />
+          <Tip text={COPY.tips.sensitivity} controlId="rec-sens"><label htmlFor="rec-sens">Sound sensitivity</label></Tip>
         </span>
         <select
           id="rec-sens"
@@ -82,8 +81,7 @@ export function Recommender({ ctx, onCtx, onPlay, onClose }: Props): React.JSX.E
           ))}
         </select>
         <span className="tip-field">
-          <label htmlFor="rec-device">Listening on</label>
-          <Tip label="listening on" text={COPY.tips.listeningOn} />
+          <Tip text={COPY.tips.listeningOn} controlId="rec-device"><label htmlFor="rec-device">Listening on</label></Tip>
         </span>
         <select id="rec-device" value={ctx.deviceType} onChange={(e) => set({ deviceType: e.target.value as DeviceType })}>
           {DEVICES.map((t) => (

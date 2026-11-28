@@ -4,6 +4,8 @@
  */
 import { NO_FAVORITES, parseFavorites } from './favorites';
 import type { Favorites } from './favorites';
+import { parseFeel } from '../ui/calm/data/feel';
+import type { FeelEntry } from '../ui/calm/data/feel';
 import { parseMilestoneState } from './milestones';
 import type { MilestoneState } from './milestones';
 import { MAX_MIXES, field, isRecord, newMixId, parseMix, uniqueName } from './mixes';
@@ -14,14 +16,14 @@ export const FILE_APP = 'zonked';
 export const FILE_KIND = 'sanctuary';
 
 export type ImportResult =
-  | { readonly ok: true; readonly mixes: Mix[]; readonly favorites: Favorites; readonly milestones: MilestoneState | null; readonly skipped: number }
+  | { readonly ok: true; readonly mixes: Mix[]; readonly favorites: Favorites; readonly milestones: MilestoneState | null; readonly feel: readonly FeelEntry[] | null; readonly skipped: number }
   | { readonly ok: false; readonly error: ImportError };
 
 export type ImportError = 'too-big' | 'not-json' | 'not-zonked' | 'unknown-version' | 'too-many' | 'read-failed';
 
-export function exportBackup(mixes: readonly Mix[], favorites: Favorites, milestones: MilestoneState, now: number): string {
+export function exportBackup(mixes: readonly Mix[], favorites: Favorites, milestones: MilestoneState, now: number, feel: readonly FeelEntry[] = []): string {
   return JSON.stringify(
-    { app: FILE_APP, kind: FILE_KIND, v: 1, exportedAt: now, mixes, favorites, milestones: { v: 1, hidden: milestones.hidden, earned: milestones.earned, reminder: milestones.reminder } },
+    { app: FILE_APP, kind: FILE_KIND, v: 1, exportedAt: now, mixes, favorites, milestones: { v: 1, hidden: milestones.hidden, earned: milestones.earned, reminder: milestones.reminder }, ...(feel.length > 0 ? { feel: parseFeel(feel) } : {}) },
     null,
     2,
   );
@@ -52,11 +54,13 @@ export function parseBackup(text: string, now: number): ImportResult {
     if (p !== null) mixes.push(p);
   }
   const ms = field(raw, 'milestones');
+  const feel = field(raw, 'feel');
   return {
     ok: true,
     mixes,
     favorites: templateFavorites(field(raw, 'favorites'), now),
     milestones: ms === undefined ? null : parseMilestoneState(ms, now),
+    feel: feel === undefined ? null : parseFeel(feel),
     skipped: items.length - mixes.length,
   };
 }

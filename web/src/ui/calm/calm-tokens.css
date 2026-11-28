@@ -1,0 +1,27 @@
+/* Calm tokens: Minimalism. One accent (mascot yellow). Ratios are listed in docs/DESIGN-DECISION.md. */
+.c-app {
+  --c-bg: #14151F; --c-surface: #1E2030; --c-text: #F4EFE6; --c-soft: #B6B4C8;
+  --c-accent: #FFC93C; --c-on-accent: #1B1405; --c-accent-edge: #FFC93C; --c-ink: #FFC93C;
+  --c-focus: #8EE3DA; --c-edge: #7E81A0; --c-line: #2C3045; --c-caution: #FFB86B; --c-ok: #6FD39A;
+  --c-bw: 1px; --c-dim: 1;
+  --c-font: "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color-scheme: dark;
+}
+.c-app[data-theme="light"] {
+  --c-bg: #FAF6EF; --c-surface: #F2EBDF; --c-text: #2A2420; --c-soft: #5C5249;
+  --c-accent: #FFC93C; --c-on-accent: #1B1405; --c-accent-edge: #2A2420; --c-ink: #8F4420;
+  --c-focus: #1F6F6A; --c-edge: #8C8070; --c-line: #DDD3C3; --c-caution: #8A5A00; --c-ok: #2E6B3A;
+  color-scheme: light;
+}
+.c-app[data-contrast="high"] {
+  --c-bg: #000000; --c-surface: #0A0A0F; --c-text: #FFFFFF; --c-soft: #E0DEEA;
+  --c-accent: #FFE04D; --c-on-accent: #000000; --c-accent-edge: #FFFFFF; --c-ink: #FFE04D;
+  --c-focus: #6FFFF0; --c-edge: #FFFFFF; --c-line: #FFFFFF; --c-caution: #FFC27A; --c-ok: #7CF0AE;
+  --c-bw: 2px;
+}
+.c-app[data-theme="light"][data-contrast="high"] {
+  --c-bg: #FFFFFF; --c-surface: #FFFFFF; --c-text: #000000; --c-soft: #33303C;
+  --c-accent: #FFD400; --c-on-accent: #000000; --c-accent-edge: #000000; --c-ink: #5C3B00;
+  --c-focus: #0019D6; --c-edge: #000000; --c-line: #000000; --c-caution: #6B3A00; --c-ok: #0B5A2E;
+}
+.c-app[data-view="player"] { --c-dim: 0.9; }

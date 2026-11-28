@@ -10,6 +10,7 @@ test('level thresholds', () => {
 });
 test('counts only source files outside legacy', () => {
   assert.ok(counts('web/src/a.tsx') && counts('crates/x/src/lib.rs') && counts('scripts/a.mjs'));
+  assert.ok(!counts('app/ui/dist/chunk-a.mjs') && !counts('web/dist/a.mjs') && counts('app/ui/src/a.tsx'));
   assert.ok(!counts('legacy/x/a.ts') && !counts('web/package-lock.json') && !counts('README.md'));
 });
 test('lineCount ignores one trailing newline', () => {

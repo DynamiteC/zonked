@@ -11,13 +11,13 @@ export const ADHD_CONTROL: CategorySpec = {
       slug: 'smr-steady', shape: 'plateau', from: 12, to: 13.5, mins: [20, 30, 45], carriers: [200, 220, 240],
       modes: ['isochronic', 'isochronic', 'monaural'], noises: [['pink', 0.18], ['brown', 0.2]], layers: [[], ['lofi']],
       vibes: ['minimal', 'grounded'], situations: ['adhd-focus', 'deep-work'], intensity: 2, gain: 0.42, count: 5, jitter: 0.4,
-      reason: 'Steady SMR-range pulse with no changes to track, for {minutes} minutes of low-surprise focus.',
+      reason: 'Steady SMR-range pulse with no changes to track, for {minutes} minutes.',
     }),
     arch({
       slug: 'beta-anchor', shape: 'plateau', from: 14, to: 16, mins: [25, 30, 45, 50], carriers: [210, 230, 250],
       modes: ['isochronic', 'monaural'], noises: [['pink', 0.15], ['off', 0]], layers: [[], ['lofi']], vibes: ['grounded', 'bright', 'minimal'],
       situations: ['adhd-focus', 'deep-work'], intensity: 3, gain: 0.42, count: 5, jitter: 0.5,
-      reason: 'A constant low-beta pulse to anchor attention.',
+      reason: 'A constant low-beta pulse that never changes.',
     }),
     arch({
       slug: 'cadence-pulse', shape: 'plateau', from: 14, to: 15, mins: [20, 25, 30], carriers: [200, 220], modes: ['isochronic'],
@@ -32,7 +32,7 @@ export const ADHD_CONTROL: CategorySpec = {
     arch({
       slug: 'start-ramp', shape: 'ramp-up', from: 11, to: 15, mins: [15, 20, 25], carriers: [200, 220], modes: ['isochronic', 'monaural'],
       noises: [['pink', 0.15]], layers: [[], ['pluck']], vibes: ['bright', 'energized'], situations: ['adhd-focus', 'quick-reset'],
-      intensity: 2, gain: 0.42, count: 4, jitter: 0.2, reason: 'A slow 4 Hz climb to help you get started without a jolt.',
+      intensity: 2, gain: 0.42, count: 4, jitter: 0.2, reason: 'A slow climb from 4 Hz with no sudden steps.',
     }),
     arch({
       slug: 'sprint-steps', shape: 'ladder', from: 13, to: 16, mins: [20, 25, 30], carriers: [210, 230], modes: ['isochronic'],

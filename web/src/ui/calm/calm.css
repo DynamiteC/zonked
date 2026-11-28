@@ -1,0 +1,96 @@
+/* Calm base: reset, type, controls, navigation. Every rule is scoped under .c-app so Studio is never touched. */
+@import "./calm-tokens.css";
+@import "./calm-screens.css";
+@import "./painted.css";
+@import "./form.css";
+.c-app {
+  min-height: 100vh; position: relative; display: flex; flex-direction: column;
+  font-family: var(--c-font); font-size: 1rem; line-height: 1.6; color: var(--c-text); background: var(--c-bg);
+  font-variant-numeric: normal; font-feature-settings: "zero" 0;
+}
+.c-app *, .c-app *::before, .c-app *::after { box-sizing: border-box; }
+.c-app :focus-visible { outline: 3px solid var(--c-focus); outline-offset: 3px; }
+.c-app [hidden] { display: none !important; }
+.c-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.c-skip { position: absolute; left: -999px; top: 8px; background: var(--c-surface); padding: 8px 12px; border-radius: 8px; z-index: 50; color: var(--c-text); }
+.c-skip:focus { left: 8px; }
+.c-loading { padding: 24px; color: var(--c-soft); }
+.c-app time, .c-time, .c-dot, .c-step { font-variant-numeric: tabular-nums; }
+/* Timer digits only: the brand face draws a slashed zero, so clocks use the system face. */
+.c-time, .c-digits { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-variant-numeric: tabular-nums; }
+
+.c-topbar { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; gap: 8px; border-bottom: 1px solid var(--c-line); }
+.c-brand { font-weight: 700; font-size: 1.125rem; }
+.c-main { position: relative; flex: 1; width: 100%; max-width: 600px; margin: 0 auto; padding: 8px 20px 160px; outline: none; animation: c-enter 200ms ease-out; }
+@keyframes c-enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.c-h1 { font-size: 2.25rem; line-height: 1.15; margin: 8px 0; font-weight: 700; }
+.c-greet { font-size: 2.25rem; line-height: 1.15; margin: 8px 0; font-weight: 700; }
+.c-app h2 { margin: 0 0 4px; font-size: 1.625rem; line-height: 1.2; }
+.c-app .c-h3 { font-size: 1.25rem; margin: 24px 0 4px; }
+.c-lead { font-size: 1.25rem; color: var(--c-soft); margin: 0 0 16px; }
+.c-muted { color: var(--c-soft); margin: 4px 0 12px; }
+.c-step { color: var(--c-soft); font-size: 0.875rem; margin: 8px 0 0; }
+.c-promise { display: inline-block; border-bottom: var(--c-bw) solid var(--c-line); padding: 4px 0; font-weight: 600; margin: 4px 0 12px; }
+.c-note { color: var(--c-soft); border-left: 3px solid var(--c-edge); padding: 4px 0 4px 14px; margin: 16px 0; }
+.c-hero { display: flex; justify-content: center; margin: 8px 0; }
+.c-status { color: var(--c-soft); min-height: 1.5em; }
+.c-status:empty { display: none; }
+.c-eyebrow { margin: 0; color: var(--c-soft); font-size: 0.875rem; letter-spacing: 0.02em; }
+.c-empty { color: var(--c-soft); padding: 24px 0; border-top: 1px solid var(--c-line); }
+.c-icon { flex: none; }
+
+.c-btn { min-height: 48px; padding: 0 22px; border-radius: 8px; border: var(--c-bw) solid var(--c-edge); background: transparent; color: var(--c-text); font: inherit; font-weight: 600; cursor: pointer; transition: background 120ms; }
+.c-btn:hover { background: color-mix(in srgb, var(--c-text) 8%, transparent); }
+.c-btn:disabled { opacity: 0.55; cursor: default; }
+.c-btn.c-primary, .c-big { background: var(--c-accent); color: var(--c-on-accent); border: 2px solid var(--c-accent-edge); min-height: 52px; }
+.c-btn.c-primary:hover, .c-big:hover { background: var(--c-accent); filter: brightness(1.06); }
+.c-btn.c-link { background: none; border: 0; color: var(--c-ink); text-decoration: underline; text-underline-offset: 3px; min-height: 44px; padding: 0 4px; }
+.c-btn.c-small { min-height: 44px; padding: 0 16px; }
+.c-btn.c-wide { width: 100%; }
+.c-back { padding-left: 0; }
+.c-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+.c-actions.c-row { flex-direction: row; justify-content: space-between; flex-wrap: wrap; }
+.c-actions.c-row .c-primary { flex: 1; }
+.c-actions .c-btn.c-link { align-self: flex-start; }
+
+.c-safe-list { font-size: 1.125rem; padding: 0 0 0 24px; margin: 16px 0; }
+.c-safe-list li { padding: 4px 0; }
+.c-overlay { position: fixed; inset: 0; z-index: 70; background: rgba(8, 9, 14, 0.7); display: flex; align-items: center; justify-content: center; padding: 16px; }
+.c-dialog { background: var(--c-bg); color: var(--c-text); border: 1px solid var(--c-edge); border-radius: 12px; padding: 24px; max-width: 480px; width: 100%; max-height: 92vh; overflow: auto; }
+.c-end { text-align: center; }
+.c-end .c-actions { align-items: stretch; }
+
+.c-switch { position: relative; display: flex; align-items: center; gap: 12px; min-height: 60px; cursor: pointer; border-bottom: 1px solid var(--c-line); }
+.c-switch input { position: absolute; opacity: 0; width: 44px; height: 44px; margin: 0; }
+.c-switch > span:last-child { flex: 1; order: 0; }
+.c-track { order: 1; width: 52px; height: 30px; border-radius: 999px; border: var(--c-bw) solid var(--c-edge); position: relative; flex: none; margin-left: auto; }
+.c-track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--c-soft); transition: transform 120ms; }
+.c-switch input:checked + .c-track { background: var(--c-text); border-color: var(--c-text); }
+.c-switch input:checked + .c-track::after { transform: translateX(22px); background: var(--c-bg); }
+.c-switch input:focus-visible + .c-track { outline: 3px solid var(--c-focus); outline-offset: 3px; }
+.c-switch small { display: block; }
+
+/* Navigation: top on desktop, bottom on phone. No sidebar. */
+.c-tabbar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; border-top: 1px solid var(--c-line); padding: 6px 4px 10px; z-index: 10; background: var(--c-card-solid); box-sizing: border-box; height: 80px; align-items: center; }
+.c-nav { flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: none; border: 0; color: var(--c-soft); font: inherit; font-size: 0.875rem; cursor: pointer; border-top: 3px solid transparent; }
+.c-nav[aria-current="page"] { color: var(--c-ink); font-weight: 700; border-top-color: var(--c-ink); }
+.c-rail-brand { display: none; }
+.c-mini { position: fixed; left: 0; right: 0; bottom: 80px; z-index: 11; background: var(--c-card-solid); border-top: 1px solid var(--c-edge); padding: 4px max(20px, calc((100vw - 560px) / 2 + 20px)); display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 64px; box-sizing: border-box; }
+.c-mini-open { text-align: left; }
+@media (min-width: 900px) {
+  .c-app { padding-top: 64px; }
+  .c-tabbar { top: 0; bottom: auto; justify-content: flex-start; align-items: center; gap: 4px; padding: 0 24px; height: 64px; border-top: 0; border-bottom: 1px solid var(--c-line); }
+  .c-rail-brand { display: flex; align-items: center; gap: 8px; margin-right: 24px; font-weight: 700; }
+  .c-nav { flex: none; flex-direction: row; gap: 8px; height: 64px; min-height: 64px; padding: 0 16px; font-size: 1rem; border-top: 0; border-bottom: 3px solid transparent; }
+  .c-nav[aria-current="page"] { border-bottom-color: var(--c-ink); }
+  .c-topbar { display: none; }
+  .c-main { padding-bottom: 96px; }
+  .c-app[data-playing="true"]:not([data-view="player"]):not([data-view="reset"]):not([data-view="breathe"]) .c-main { padding-bottom: calc(64px + 32px); }
+  .c-mini { bottom: 0; }
+}
+@media (max-width: 899px) { .c-rail-brand { display: none; } .c-app[data-playing="true"]:not([data-view="player"]) .c-main { padding-bottom: calc(80px + 64px + 24px + env(safe-area-inset-bottom, 0px)); } }
+@media (prefers-reduced-motion: reduce) {
+  .c-app, .c-app *, .c-app *::before, .c-app *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+.c-app[data-motion="off"], .c-app[data-motion="off"] *, .c-app[data-motion="off"] *::before, .c-app[data-motion="off"] *::after { animation: none !important; transition: none !important; }
+.c-panel.c-app { min-height: 0; padding: 0; }

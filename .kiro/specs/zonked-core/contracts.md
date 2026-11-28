@@ -39,8 +39,9 @@ Subset syntax: see design.md section 5.1. `HH:MM:SS name`, `name: 200@10`, `name
 ```
 { version: 1, at: int, burnout: { score: 0..100, level: "focus"|"flow"|"recovery"|"decompress" },
   target: { presetId?: string, beatHz: 0.5..40, carrierHz: 20..1500, gain: 0..0.85, transitionSec: 5..600, breathe: boolean },
-  sbg: string|null }
+  sbg: string|null, why?: string }
 ```
+`why` is optional: one plain sentence for the person, at most 160 characters. Every reader strips control, line-break and bidi-override characters, collapses spaces, cuts to 160 code points and drops the field when nothing is left. It is shown as text only and never carries file names, commit messages or paths. When absent the web builds a sentence from level, score, beat and transition.
 Bridge: `GET /events` (SSE; `event: state`, data = validated JSON, plus `event: ping`), `GET /state`, `GET /health` -> `{ok, hasState, lastError, warnings[], clients}`. Port 43210, bind 127.0.0.1, accepts Host `localhost:43210` and `127.0.0.1:43210`.
 
 ## C4. Param protocol (main thread to Worklet)

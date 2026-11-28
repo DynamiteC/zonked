@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { registerSW } from 'virtual:pwa-register';
 import { createEngine } from './audio';
-import { App } from './app/App';
+import { ModeRoot } from './ui/calm/ModeRoot';
 import { createUpdateGate, installUpdateGate } from './app/swUpdate';
 import './styles/index.css';
 
@@ -11,7 +11,7 @@ if (root !== null) {
   const engine = createEngine();
   createRoot(root).render(
     <StrictMode>
-      <App engine={engine} />
+      <ModeRoot engine={engine} />
     </StrictMode>,
   );
 }

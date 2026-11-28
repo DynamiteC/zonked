@@ -1,4 +1,5 @@
 import type { Voice } from '../sbg/types';
+import type { ListenDevice } from './btFilter';
 
 /** Snapshot of the audio graph health, shown in the HUD and used by E2E. */
 export interface EngineStatus {
@@ -15,6 +16,12 @@ export interface EngineStats {
   rms: number;
   frames: number;
   nonZero: number;
+  /** Hiccups (underruns, late frames, decode and seam failures) in the last 5 minutes. Optional for older engines. */
+  hiccups?: number;
+  /** The same count split by kind: underrun, late, decode, seam. */
+  hiccupKinds?: Readonly<Record<string, number>>;
+  /** Power above 6 kHz at the output, in dB (any fixed reference). Measured on the main thread for the glitch check. */
+  hiDb?: number;
 }
 
 /** Copy-out view of the telemetry ring: interleaved stereo float32. */
@@ -45,6 +52,11 @@ export interface AudioEngine {
    * Never starts a stopped engine. Resolves true when the context is running afterwards.
    */
   resume?(): Promise<boolean>;
+  /** Sets how the person listens. Bluetooth adds a gentle high cut and lowers noise by 3 dB. Smooth, no click. */
+  setListening?(device: ListenDevice): void;
   /** Called whenever status changes. Returns an unsubscribe function. */
   onStatus(listener: (s: EngineStatus) => void): () => void;
 }
+
+/** Engine error text when the browser has no AudioWorklet. The UI maps it to a plain message. */
+export const AUDIO_UNSUPPORTED = 'audio-unsupported';

@@ -1,0 +1,138 @@
+{
+  "name": "zonked",
+  "version": "0.1.0",
+  "displayName": "Zonked",
+  "description": "Acoustic recovery companion: binaural beats, noise and lo-fi layers made by a no_std Rust WASM engine, with hearing safety limits built in.",
+  "author": "Zonked contributors",
+  "license": "MIT",
+  "minKiroCrewVersion": "0.13.1",
+  "iconPath": "assets/icon.png",
+  "heroImage": "assets/hero.png",
+  "screenshots": [
+    "assets/screenshots/screenshot-today.png",
+    "assets/screenshots/screenshot-player.png",
+    "assets/screenshots/screenshot-safety.png"
+  ],
+  "tags": [
+    "audio",
+    "focus",
+    "recovery"
+  ],
+  "agents": [
+    "agents/burnout-sentinel.json",
+    "agents/acoustic-sequencer.json",
+    "agents/dsp-verifier.json"
+  ],
+  "backend": {
+    "entryPoint": "backend/server.mjs",
+    "type": "node",
+    "port": "auto",
+    "healthCheck": "/health"
+  },
+  "agentTools": {
+    "route": "agent-tools",
+    "tools": [
+      {
+        "name": "zonked_report_intensity",
+        "title": "Report session intensity",
+        "description": "Burnout sentinel only. Report the 0-100 burnout score and the signals behind it. The backend clamps every value and decides if the sound should change.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "at": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4102444800
+            },
+            "commits_per_hour": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 120
+            },
+            "session_minutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 720
+            },
+            "build_failures": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10
+            },
+            "dirty_files": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 200
+            },
+            "degraded": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "score",
+            "at"
+          ],
+          "additionalProperties": false
+        },
+        "timeoutSeconds": 10,
+        "maxResultChars": 4000
+      },
+      {
+        "name": "zonked_get_suggestion",
+        "title": "Get the sound suggestion",
+        "description": "Acoustic sequencer. Returns the current safe sound target and why the backend holds or changes it. Read only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "timeoutSeconds": 10,
+        "maxResultChars": 4000
+      }
+    ]
+  },
+  "crons": [
+    {
+      "name": "burnout-check",
+      "every": 300,
+      "agent": "burnout-sentinel",
+      "message": "Measure the session intensity and report it with zonked_report_intensity. Report once, then stop.",
+      "persistent_session": false,
+      "silent": true,
+      "enabled": false
+    }
+  ],
+  "ui": {
+    "entry": "dist/index.mjs",
+    "pages": [
+      {
+        "route": "/apps/zonked",
+        "label": "Zonked",
+        "icon": "AudioLines"
+      }
+    ]
+  },
+  "permissions": {
+    "api": [
+      "/apps/zonked/api"
+    ],
+    "cron": true
+  },
+  "contributes": {
+    "panelTabs": [
+      {
+        "id": "now-playing",
+        "title": "Zonked",
+        "menuLabel": "Zonked: Now Playing",
+        "menuDescription": "Play or stop your calm sound from the side panel.",
+        "icon": "AudioLines",
+        "entry": "dist/panel.mjs"
+      }
+    ]
+  }
+}

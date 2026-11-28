@@ -27,7 +27,7 @@ Gate: `npm --prefix crew-bridge test` passes; manual SSE check with curl.
 - [x] 2.3 `watch.ts` debounced directory watcher; tests with temp dirs (R2.5)
 - [x] 2.4 `server.ts` SSE, `/state`, `/health`, Host and Origin checks; tests (R2.4, R2.7, R2.8)
 - [x] 2.5 `cli.ts` and `bin` entry; `--help`; graceful shutdown
-- [x] 2.6 Sample state fixtures and a `scripts/fake-crew.mjs` that cycles score 10 to 90 for demos without agents
+- [x] 2.6 Sample state fixtures and a `scripts/fake-crew.mjs` that cycles score 10 to 90 as a simulated crew feed, for demos without a Kiro Crew host
 - [x] 2.7 Dry-run the three agents' instruction files against fixtures (`kirocrew agent validate .kiro/crew/agents`)
 
 ## Phase 3: Parser and AudioWorklet bridge (`web/src/sbg`, `web/src/audio`)

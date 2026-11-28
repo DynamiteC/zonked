@@ -1,3 +1,5 @@
+import { getSampleBus } from '../audio/samples/bus';
+import { activeNature } from '../ui/calm/nature/active';
 import type { AudioEngine, EngineStats, EngineStatus } from '../audio/types';
 import type { Layers } from '../sbg/layers';
 import type { TimerState } from './timers';
@@ -10,6 +12,8 @@ export interface ZonkedE2E {
   readonly templateId: string | null;
   readonly timer: TimerState | null;
   readonly queueIndex: number;
+  /** Nature or own sound on now, and the gain on the beat path (1 = no duck). */
+  readonly nature: { readonly id: string | null; readonly beatGain: number | null };
 }
 
 /** Subset of the player the e2e hook reads. */
@@ -46,6 +50,9 @@ export function installE2E(
     },
     get timer() {
       return player?.snapshot().timer ?? null;
+    },
+    get nature() {
+      return { id: activeNature(), beatGain: getSampleBus()?.duck.gain.value ?? null };
     },
     get queueIndex() {
       return player?.snapshot().queueIndex ?? -1;

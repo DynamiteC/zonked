@@ -22,15 +22,15 @@ export function Hud({ snap, engine, bridge }: Props): React.JSX.Element {
   return (
     <section className="hud" aria-label="Session readout">
       <dl>
-        <div><dt>{COPY.advanced.carrier}<Tip label={COPY.advanced.carrier} text={COPY.tips.carrier} /></dt><dd data-testid="hud-carrier">{v.carrierHz.toFixed(1)} Hz</dd></div>
-        <div><dt>{COPY.advanced.left}<Tip label={COPY.advanced.left} text={COPY.tips.leftRight} /></dt><dd data-testid="hz-left">{hz.l.toFixed(2)} Hz</dd></div>
-        <div><dt>{COPY.advanced.right}<Tip label={COPY.advanced.right} text={COPY.tips.leftRight} /></dt><dd data-testid="hz-right">{hz.r.toFixed(2)} Hz</dd></div>
-        <div><dt>{COPY.advanced.beat}<Tip label={COPY.advanced.beat} text={COPY.tips.beat} /></dt><dd data-testid="hud-beat">{v.beatHz.toFixed(2)} Hz</dd></div>
-        <div><dt>{COPY.advanced.band}<Tip label={COPY.advanced.band} text={COPY.tips.band} /></dt><dd data-testid="hud-band">{bandName(v.beatHz)}</dd></div>
-        <div><dt>{COPY.advanced.elapsed}<Tip label={COPY.advanced.elapsed} text={COPY.tips.elapsed} /></dt><dd data-testid="hud-elapsed">{formatElapsed(snap.elapsedSec)}</dd></div>
-        <div><dt>{COPY.advanced.sound}<Tip label={COPY.advanced.sound} text={COPY.tips.sound} /></dt><dd data-testid="hud-preset">{preset}</dd></div>
+        <div><dt><Tip text={COPY.tips.carrier}>{COPY.advanced.carrier}</Tip></dt><dd data-testid="hud-carrier">{v.carrierHz.toFixed(1)} Hz</dd></div>
+        <div><dt><Tip text={COPY.tips.leftRight}>{COPY.advanced.left}</Tip></dt><dd data-testid="hz-left">{hz.l.toFixed(2)} Hz</dd></div>
+        <div><dt><Tip text={COPY.tips.leftRight}>{COPY.advanced.right}</Tip></dt><dd data-testid="hz-right">{hz.r.toFixed(2)} Hz</dd></div>
+        <div><dt><Tip text={COPY.tips.beat}>{COPY.advanced.beat}</Tip></dt><dd data-testid="hud-beat">{v.beatHz.toFixed(2)} Hz</dd></div>
+        <div><dt><Tip text={COPY.tips.band}>{COPY.advanced.band}</Tip></dt><dd data-testid="hud-band">{bandName(v.beatHz)}</dd></div>
+        <div><dt><Tip text={COPY.tips.elapsed}>{COPY.advanced.elapsed}</Tip></dt><dd data-testid="hud-elapsed">{formatElapsed(snap.elapsedSec)}</dd></div>
+        <div><dt><Tip text={COPY.tips.sound}>{COPY.advanced.sound}</Tip></dt><dd data-testid="hud-preset">{preset}</dd></div>
         <div>
-          <dt>{COPY.advanced.engine}<Tip label={COPY.advanced.engine} text={COPY.tips.engine} /></dt>
+          <dt><Tip text={COPY.tips.engine}>{COPY.advanced.engine}</Tip></dt>
           <dd data-testid="engine-status" data-state={engine.state}>
             {engine.state}
             {engine.error !== undefined ? `: ${engine.error}` : ''}
@@ -38,14 +38,13 @@ export function Hud({ snap, engine, bridge }: Props): React.JSX.Element {
         </div>
       </dl>
       <div className="crew-row">
-        <Tip label="Crew status" text={COPY.tips.crew}>
+        <Tip text={COPY.tips.crew}>
           <span className={`badge ${synced ? 'badge-synced' : 'badge-standalone'}`} data-testid="crew-badge">
             {synced ? 'Crew Synced' : 'Standalone'}
           </span>
         </Tip>
         <div className="burnout">
-          <span id="burnout-label">{COPY.advanced.burnout}</span>
-          <Tip label={COPY.advanced.burnout} text={synced ? COPY.tips.burnout : COPY.advanced.emptyBurnout} />
+          <span id="burnout-label"><Tip text={synced ? COPY.tips.burnout : COPY.advanced.emptyBurnout}>{COPY.advanced.burnout}</Tip></span>
           <div
             className="meter"
             role="meter"

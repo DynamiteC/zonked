@@ -36,7 +36,9 @@ export async function runUxChecks(_page, h) {
     await h.check('S3 card Play starts that sound; its mini visual is live', async () => {
       await page.getByTestId('sound-card-lofi').getByTestId('sound-card-play').click();
       await page.waitForFunction(() => window.__zonked.templateId === 'starter-lofi', null, { timeout: 20000 });
-      const live = await page.getByTestId('sound-card-lofi').getByTestId('sound-mini-visual').getAttribute('data-live');
+      const visual = page.getByTestId('sound-card-lofi').getByTestId('sound-mini-visual');
+      await visual.and(page.locator('[data-live="true"]')).waitFor({ timeout: 8000 }).catch(() => undefined);
+      const live = await visual.getAttribute('data-live');
       h.assert(live === 'true', `data-live ${live}`);
     });
     await h.check('S4 mix slider changes the layer level and stays in 0..1', async () => {

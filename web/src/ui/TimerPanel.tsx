@@ -73,8 +73,7 @@ export function TimerPanel({ timer, player, onClose }: Props): React.JSX.Element
         {active ? `${timer.kind}${timer.phase !== undefined ? `, ${timer.phase}` : ''}: ${formatClock(timer.remainingSec)} left` : COPY.empty.timer}
       </p>
       <section aria-labelledby="t-cd">
-        <h3 id="t-cd">Countdown</h3>
-        <Tip label="countdown" text={COPY.tips.countdown} />
+        <h3 id="t-cd"><Tip text={COPY.tips.countdown}>Countdown</Tip></h3>
         <MinuteChips name="timer-cd" values={COUNTDOWN} value={cd} onPick={setCd} />
         <NumField id="timer-cd-custom" label="Custom minutes" value={cd} min={1} max={720} onChange={setCd} />
         <button type="button" className="btn btn-primary" data-testid="timer-countdown" onClick={() => player.startTimer({ kind: 'countdown', minutes: cd })}>
@@ -82,16 +81,14 @@ export function TimerPanel({ timer, player, onClose }: Props): React.JSX.Element
         </button>
       </section>
       <section aria-labelledby="t-sl">
-        <h3 id="t-sl">Sleep fade-out</h3>
-        <Tip label="sleep fade-out" text={COPY.tips.sleepFade} />
+        <h3 id="t-sl"><Tip text={COPY.tips.sleepFade}>Sleep fade-out</Tip></h3>
         <MinuteChips name="timer-sl" values={SLEEP} value={sl} onPick={setSl} />
         <button type="button" className="btn btn-primary" data-testid="timer-sleep" onClick={() => player.startTimer({ kind: 'sleep-fade', minutes: sl })}>
           Start sleep fade {sl} min
         </button>
       </section>
       <section aria-labelledby="t-pm">
-        <h3 id="t-pm">Focus and break (Pomodoro)</h3>
-        <Tip label="focus and break" text={COPY.tips.pomodoro} />
+        <h3 id="t-pm"><Tip text={COPY.tips.pomodoro}>Focus and break (Pomodoro)</Tip></h3>
         <div className="form-grid">
           <NumField id="timer-focus-min" label="Focus minutes" value={focus} min={1} max={180} onChange={setFocus} />
           <NumField id="timer-break-min" label="Break minutes" value={brk} min={1} max={60} onChange={setBrk} />

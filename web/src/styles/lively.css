@@ -213,12 +213,6 @@ body {
 
 .adv-sliders { display: grid; gap: 0.25rem; margin: 0.5rem 0; }
 
-/* The "?" on controls that only show a tip on hover appears for touch screens. */
-.tip-touch { display: none; }
-@media (pointer: coarse) {
-  .tip-touch { display: inline-block; }
-}
-
 .tip-bubble { z-index: 90; }
 
 /* Mobile: Play stays on the first screen. */

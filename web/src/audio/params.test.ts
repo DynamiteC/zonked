@@ -16,7 +16,7 @@ describe('32-slot param block', () => {
     expect(SLOT.lofiLevel).toBe(8);
     expect(SLOT.percPattern).toBe(23);
   });
-  it('writes NO_LAYERS defaults when the voice has no layers, reserved slots 0', () => {
+  it('writes NO_LAYERS defaults when the voice has no layers, beat level 1', () => {
     const b = voiceToParams(voice, 1, out());
     expect(b[SLOT.lofiLevel]).toBe(0);
     expect(b[SLOT.instRootHz]).toBe(220);
@@ -24,6 +24,12 @@ describe('32-slot param block', () => {
     for (const k of ['lofiProgression', 'tapeWow', 'pianoPedal', 'breathDepth', 'stereoWidth', 'panDepth'] as const) expect(b[SLOT[k]]).toBe(0);
     expect(b[SLOT.breathRateHz]).toBeCloseTo(NO_LAYERS.breathRateHz, 6);
     expect(b[SLOT.panRateHz]).toBeCloseTo(NO_LAYERS.panRateHz, 6);
+  });
+  it('writes beat level to slot 7: absent is 1, clamped, non-finite falls back to 1', () => {
+    expect(voiceToParams({ ...voice, beatLevel: 0 }, 1, out())[SLOT.beatLevel]).toBe(0);
+    expect(voiceToParams({ ...voice, beatLevel: 9 }, 1, out())[SLOT.beatLevel]).toBe(1);
+    expect(voiceToParams({ ...voice, beatLevel: -2 }, 1, out())[SLOT.beatLevel]).toBe(0);
+    expect(voiceToParams({ ...voice, beatLevel: NaN }, 1, out())[SLOT.beatLevel]).toBe(1);
   });
   it('maps every layer field to its slot', () => {
     const layers = {

@@ -8,6 +8,8 @@ import type { NoiseKind } from '../sbg/types';
 import type { Layers } from '../sbg/layers';
 import { COPY } from './copy';
 import { Tip } from './Tip';
+import { RangeField, levelTicks } from './shared/RangeField';
+import { dialBands, dialMeaning, dialValueText } from './dialBands';
 
 /** Pulses faster than this can feel tiring. The note shows only above it. */
 const FAST_BEAT_HZ = 25;
@@ -35,6 +37,7 @@ const ROWS = [
 export function MixView({ snap, player }: Props): React.JSX.Element {
   const layers = snap.voice.layers ?? NO_LAYERS;
   const [alert, setAlert] = useState(0.3);
+  const [touched, setTouched] = useState(false);
   const [open, setOpen] = useState(startsOpen);
   const hz = channelHz(snap.voice);
   const beat = Math.abs(hz.r - hz.l);
@@ -59,16 +62,17 @@ export function MixView({ snap, player }: Props): React.JSX.Element {
       {ROWS.map(([id, key, label]) => (
         <div className="slider-row" key={id}>
           <label htmlFor={`mix-${id}`}>{label}</label>
-          <input
+          <RangeField
             id={`mix-${id}`}
-            data-testid={`mix-slider-${id}`}
-            type="range"
+            testId={`mix-slider-${id}`}
             min={0}
             max={1}
             step={0.05}
             value={layers[key]}
-            aria-valuetext={`${Math.round(layers[key] * 100)} percent`}
-            onChange={(e) => player.setLayerOverride({ [key]: Number(e.target.value) })}
+            valueText={`${Math.round(layers[key] * 100)} percent`}
+            bubbleText={`${Math.round(layers[key] * 100)}`}
+            ticks={levelTicks()}
+            onChange={(v) => player.setLayerOverride({ [key]: v })}
           />
           <output htmlFor={`mix-${id}`}>{Math.round(layers[key] * 100)}</output>
         </div>
@@ -76,39 +80,40 @@ export function MixView({ snap, player }: Props): React.JSX.Element {
       {noise !== 'off' && (
         <div className="slider-row">
           <label htmlFor="mix-noise">{noiseLabel}</label>
-          <input
+          <RangeField
             id="mix-noise"
-            data-testid="mix-slider-noise"
-            type="range"
+            testId="mix-slider-noise"
             min={0}
             max={noiseMax}
             step={0.05}
             value={Math.min(noiseMax, snap.voice.noiseLevel)}
-            aria-valuetext={`${Math.round(snap.voice.noiseLevel * 100)} percent`}
-            onChange={(e) => player.setNoiseOverride({ noiseLevel: Math.min(noiseMax, Number(e.target.value)) })}
+            valueText={`${Math.round(snap.voice.noiseLevel * 100)} percent`}
+            bubbleText={`${Math.round(snap.voice.noiseLevel * 100)}`}
+            ticks={levelTicks(noiseMax)}
+            onChange={(v) => player.setNoiseOverride({ noiseLevel: Math.min(noiseMax, v) })}
           />
           <output htmlFor="mix-noise">{Math.round(snap.voice.noiseLevel * 100)}</output>
         </div>
       )}
       <div className="dial" data-testid="calm-dial-wrap">
         <span className="tip-field">
-          <label htmlFor="calm-dial">{COPY.mix.dialTitle}</label>
-          <Tip label={COPY.mix.dialTitle} text={COPY.mix.dialHint} />
+          <Tip text={COPY.mix.dialHint} controlId="calm-dial"><label htmlFor="calm-dial">{COPY.mix.dialTitle}</label></Tip>
         </span>
         <div className="dial-row">
           <span className="meta">{COPY.mix.dialCalm}</span>
-          <input
+          <RangeField
             id="calm-dial"
-            data-testid="calm-dial"
-            type="range"
+            testId="calm-dial"
             min={0}
             max={1}
             step={0.01}
             value={alert}
-            aria-valuetext={`${Math.round(alert * 100)} percent toward alert, pulse about ${alertToBeat(alert)} Hz`}
-            onChange={(e) => {
-              const v = Number(e.target.value);
+            valueText={dialValueText(alert)}
+            bubbleText={`${alertToBeat(alert)} Hz`}
+            bands={dialBands(touched ? bandForHz(alertToBeat(alert)).name : band.name)}
+            onChange={(v) => {
               setAlert(v);
+              setTouched(true);
               player.setBeatOverride(alertToBeat(v));
               player.setLayerOverride(alertToLayers(v, layers));
             }}
@@ -117,6 +122,9 @@ export function MixView({ snap, player }: Props): React.JSX.Element {
         </div>
         <p className="meta" data-testid="dial-readout">
           {COPY.mix.beatNow}: {beat.toFixed(1)} Hz ({band.name})
+        </p>
+        <p className="meta" data-testid="dial-meaning">
+          {dialMeaning(beat)}
         </p>
         {beat > FAST_BEAT_HZ && (
           <p className="meta notice" data-testid="hearing-note">

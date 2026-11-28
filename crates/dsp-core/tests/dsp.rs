@@ -58,7 +58,7 @@ fn peak(x: &[f32]) -> f32 {
     x.iter().fold(0.0, |m, v| m.max(v.abs()))
 }
 
-const BIN_200_10: [f32; 8] = [200.0, 10.0, 0.5, 0.0, 0.0, 0.0, 0.05, 0.0];
+const BIN_200_10: [f32; 8] = [200.0, 10.0, 0.5, 0.0, 0.0, 0.0, 0.05, 1.0];
 
 #[test]
 fn binaural_frequency_accuracy_left_and_right() {
@@ -93,10 +93,10 @@ fn phase_is_continuous_across_frequency_steps() {
 
 #[test]
 fn gain_and_beat_steps_do_not_click() {
-    let mut e = engine([200.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.05, 0.0]);
+    let mut e = engine([200.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.05, 1.0]);
     let mut l_all = Vec::new();
     for (g, b) in [(0.85, 10.0), (0.0, 40.0), (0.85, 0.5), (0.2, 25.0)] {
-        e.apply_params(&[200.0, b, g, 0.0, 0.0, 0.0, 0.05, 0.0]);
+        e.apply_params(&[200.0, b, g, 0.0, 0.0, 0.0, 0.05, 1.0]);
         l_all.extend(render(&mut e, 48_000).0);
     }
     // 200 Hz sine at 0.85 peak: slope bound 0.0223, plus gain ramp contribution.
@@ -105,7 +105,7 @@ fn gain_and_beat_steps_do_not_click() {
 
 #[test]
 fn start_is_a_ramp_from_silence() {
-    let mut e = engine([300.0, 10.0, 0.85, 0.0, 0.0, 0.0, 2.0, 0.0]);
+    let mut e = engine([300.0, 10.0, 0.85, 0.0, 0.0, 0.0, 2.0, 1.0]);
     let (l, _) = render(&mut e, 480);
     assert!(peak(&l) < 0.01, "first 10 ms peak {}", peak(&l));
 }
@@ -173,7 +173,7 @@ fn noise_is_bounded_and_deterministic() {
 
 #[test]
 fn clamps_carrier_beat_gain() {
-    let mut e = engine([1.0e9, -5.0, 5.0, 0.0, 0.0, 0.0, 0.05, 0.0]);
+    let mut e = engine([1.0e9, -5.0, 5.0, 0.0, 0.0, 0.0, 0.05, 1.0]);
     render(&mut e, 96_000);
     let (l, r) = render(&mut e, 96_000);
     // carrier 1500, beat 0.5: fL 1499.75, fR 1500.25.
@@ -182,14 +182,14 @@ fn clamps_carrier_beat_gain() {
     let pk = peak(&l);
     assert!(pk > 0.8 && pk < 0.85, "gain clamp peak {pk}");
 
-    let mut low = engine([0.0, 1000.0, -1.0, 0.0, 0.0, 0.0, 0.05, 0.0]);
+    let mut low = engine([0.0, 1000.0, -1.0, 0.0, 0.0, 0.0, 0.05, 1.0]);
     render(&mut low, 96_000);
     let (l, r) = render(&mut low, 48_000);
     assert_eq!(peak(&l), 0.0);
     assert_eq!(peak(&r), 0.0);
 
     // carrier 20, beat 40: fL would be 0, must stay audible and above 0.
-    let mut lowf = engine([-50.0, 100.0, 0.5, 0.0, 0.0, 0.0, 0.05, 0.0]);
+    let mut lowf = engine([-50.0, 100.0, 0.5, 0.0, 0.0, 0.0, 0.05, 1.0]);
     render(&mut lowf, 96_000);
     let (l, _) = render(&mut lowf, 96_000);
     assert!(peak(&l) > 0.1);
@@ -197,7 +197,7 @@ fn clamps_carrier_beat_gain() {
 
 #[test]
 fn non_finite_inputs_keep_previous_values() {
-    let mut e = engine([300.0, 8.0, 0.5, 0.0, 0.0, 0.0, 0.05, 0.0]);
+    let mut e = engine([300.0, 8.0, 0.5, 0.0, 0.0, 0.0, 0.05, 1.0]);
     let bad = [f32::NAN, f32::INFINITY, f32::NEG_INFINITY, f32::NAN, f32::NAN, f32::INFINITY, f32::NAN, f32::NAN];
     e.apply_params(&bad);
     render(&mut e, 96_000);
@@ -235,7 +235,7 @@ fn limiter_bounds_extreme_input() {
 fn output_stays_within_limit_with_noise_at_full_scale() {
     for kind in [1.0, 2.0, 3.0] {
         for mode in [0.0, 1.0, 2.0] {
-            let mut e = engine([1500.0, 40.0, 0.85, mode, kind, 1.0, 0.05, 0.0]);
+            let mut e = engine([1500.0, 40.0, 0.85, mode, kind, 1.0, 0.05, 1.0]);
             let (l, r) = render(&mut e, 96_000);
             assert!(peak(&l) <= 0.95 && peak(&r) <= 0.95);
         }
@@ -244,7 +244,7 @@ fn output_stays_within_limit_with_noise_at_full_scale() {
 
 #[test]
 fn isochronic_gate_and_monaural_identity() {
-    let mut e = engine([200.0, 10.0, 0.8, 2.0, 0.0, 0.0, 0.05, 0.0]);
+    let mut e = engine([200.0, 10.0, 0.8, 2.0, 0.0, 0.0, 0.05, 1.0]);
     render(&mut e, 96_000);
     let (l, r) = render(&mut e, 48_000);
     assert_eq!(l, r);
@@ -256,7 +256,7 @@ fn isochronic_gate_and_monaural_identity() {
     // Gate 0.5*(1-cos): steps stay smooth.
     assert!(max_step(&l) < 0.03);
 
-    let mut m = engine([200.0, 10.0, 0.8, 1.0, 0.0, 0.0, 0.05, 0.0]);
+    let mut m = engine([200.0, 10.0, 0.8, 1.0, 0.0, 0.0, 0.05, 1.0]);
     render(&mut m, 96_000);
     let (l, r) = render(&mut m, 48_000);
     assert_eq!(l, r);
@@ -280,17 +280,17 @@ fn deterministic_for_same_inputs() {
 #[test]
 fn noise_kind_switch_has_no_click_in_bed_envelope() {
     // Switching kinds moves per-kind weights by smoothing, never by a jump.
-    let mut e = engine([200.0, 10.0, 0.0, 0.0, 1.0, 1.0, 0.05, 0.0]);
-    e.apply_params(&[200.0, 10.0, 0.5, 0.0, 1.0, 1.0, 0.05, 0.0]);
+    let mut e = engine([200.0, 10.0, 0.0, 0.0, 1.0, 1.0, 0.05, 1.0]);
+    e.apply_params(&[200.0, 10.0, 0.5, 0.0, 1.0, 1.0, 0.05, 1.0]);
     render(&mut e, 48_000);
-    e.apply_params(&[200.0, 10.0, 0.5, 0.0, 3.0, 1.0, 0.05, 0.0]);
+    e.apply_params(&[200.0, 10.0, 0.5, 0.0, 3.0, 1.0, 0.05, 1.0]);
     let (l, _) = render(&mut e, 4_800);
     assert!(l.iter().all(|v| v.is_finite()));
 }
 
 #[test]
 fn frames_are_clamped() {
-    let p = [440.0, 7.5, 0.6, 0.0, 1.0, 0.5, 0.05, 0.0];
+    let p = [440.0, 7.5, 0.6, 0.0, 1.0, 0.5, 0.05, 1.0];
     let (mut a, mut b) = (engine(p), engine(p));
     render(&mut a, 4_800);
     render(&mut b, 4_800);
@@ -343,7 +343,7 @@ fn c_abi_roundtrip() {
     use dsp_core::abi::*;
     zk_init(48_000.0);
     let block = zk_param_block();
-    let vals = [440.0f32, 6.0, 0.5, 0.0, 2.0, 0.3, 0.05, 0.0];
+    let vals = [440.0f32, 6.0, 0.5, 0.0, 2.0, 0.3, 0.05, 1.0];
     for (i, v) in vals.iter().enumerate() {
         unsafe { *block.add(i) = *v };
     }
@@ -363,7 +363,7 @@ fn c_abi_roundtrip() {
 }
 
 fn steady(mode: f32) -> Engine {
-    let mut e = engine([200.0, 10.0, 0.85, mode, 0.0, 0.0, 0.05, 0.0]);
+    let mut e = engine([200.0, 10.0, 0.85, mode, 0.0, 0.0, 0.05, 1.0]);
     render(&mut e, 48_000 * 6);
     e
 }
@@ -374,7 +374,7 @@ fn mode_switch_crossfades_without_click() {
         let mut e = steady(from);
         let (before, _) = render(&mut e, 64);
         let last = before[63];
-        e.apply_params(&[200.0, 10.0, 0.85, to, 0.0, 0.0, 0.05, 0.0]);
+        e.apply_params(&[200.0, 10.0, 0.85, to, 0.0, 0.0, 0.05, 1.0]);
         let (after, _) = render(&mut e, 48_000);
         assert!((after[0] - last).abs() < 0.05, "first-sample jump {from}->{to}");
         assert!(max_step(&after) < 0.06, "click {from}->{to}: {}", max_step(&after));
@@ -384,7 +384,7 @@ fn mode_switch_crossfades_without_click() {
 #[test]
 fn start_ramp_takes_at_least_two_seconds() {
     // Host asks for the minimum ramp; the core must still ramp slowly.
-    let mut e = engine([200.0, 10.0, 0.85, 1.0, 0.0, 0.0, 0.05, 0.0]);
+    let mut e = engine([200.0, 10.0, 0.85, 1.0, 0.0, 0.0, 0.05, 1.0]);
     let (l, _) = render(&mut e, 24_000);
     assert!(peak(&l[23_000..]) < 0.85 * 0.8, "too fast at 0.5 s");
     let (l, _) = render(&mut e, 72_000);
@@ -395,7 +395,7 @@ fn start_ramp_takes_at_least_two_seconds() {
 fn stop_ramp_takes_at_least_250ms() {
     let mut e = steady(1.0);
     let full = peak(&render(&mut e, 4800).0);
-    e.apply_params(&[200.0, 10.0, 0.0, 1.0, 0.0, 0.0, 0.05, 0.0]);
+    e.apply_params(&[200.0, 10.0, 0.0, 1.0, 0.0, 0.0, 0.05, 1.0]);
     let (l, _) = render(&mut e, 12_000);
     let at_250 = peak(&l[11_000..]);
     assert!(at_250 > 0.02 * full, "silenced before 250 ms: {at_250}");
@@ -406,9 +406,9 @@ fn stop_ramp_takes_at_least_250ms() {
 #[test]
 fn no_subnormal_output_after_60s_of_silence() {
     let mut e = steady(0.0);
-    e.apply_params(&[200.0, 10.0, 0.0, 0.0, 1.0, 0.5, 0.05, 0.0]);
+    e.apply_params(&[200.0, 10.0, 0.0, 0.0, 1.0, 0.5, 0.05, 1.0]);
     render(&mut e, 48_000);
-    e.apply_params(&[200.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.05, 0.0]);
+    e.apply_params(&[200.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.05, 1.0]);
     let (l, r) = render(&mut e, 48_000 * 60);
     for x in l.iter().chain(r.iter()) {
         assert!(*x == 0.0 || x.is_normal(), "subnormal {x:e}");

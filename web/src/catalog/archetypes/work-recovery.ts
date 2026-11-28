@@ -10,12 +10,12 @@ export const WORK_RECOVERY: CategorySpec = {
     arch({
       slug: 'screen-down', shape: 'ramp-down', from: 18, to: 8, mins: [10, 15, 20], carriers: [200, 220], modes: ['binaural', 'monaural', 'isochronic'],
       noises: [['pink', 0.2]], layers: [['lofi', 'pad'], ['pad'], ['lofi']], vibes: ['calm', 'lofi', 'warm'], situations: ['ai-burnout', 'quick-reset'],
-      intensity: 2, gain: 0.42, count: 5, reason: 'Steps your brain down from beta to alpha after a long review or generation run.',
+      intensity: 2, gain: 0.42, count: 5, reason: 'Steps down from beta to alpha after a long review or generation run.',
     }),
     arch({
       slug: 'micro-break', shape: 'plateau', from: 11, to: 8.5, ret: 11, mins: [5, 8, 10], carriers: [190, 210], modes: ['isochronic', 'binaural'],
       noises: [['off', 0], ['pink', 0.15]], layers: [['chimes'], ['pad', 'chimes']], vibes: ['bright', 'calm'], situations: ['quick-reset', 'ai-burnout'],
-      intensity: 2, gain: 0.4, count: 4, reason: 'A {minutes} minute reset that lowers tension and brings you back alert.',
+      intensity: 2, gain: 0.4, count: 4, reason: 'A {minutes} minute reset between tasks.',
     }),
     arch({
       slug: 'post-sprint', shape: 'ramp-down', from: 20, to: 6, mins: [15, 20, 30], carriers: [200, 220], modes: ['binaural', 'monaural'],

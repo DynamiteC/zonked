@@ -6,8 +6,9 @@ export const MAX_PEAK = 0.95 + 1e-6;
 export const SITUATIONS = ['adhd-focus', 'cant-sleep', 'lucid-dream', 'meditate', 'heal-stress', 'ai-burnout', 'deep-work', 'quick-reset'];
 export const ZERO_LAYERS = { lofiLevel: 0, crackle: 0, instLevel: 0, padLevel: 0, chimeLevel: 0, percLevel: 0 };
 
-const INIT = (crew) => {
-  localStorage.setItem('zonked.safety.v1', '1');
+const INIT = ({ crew, studio }) => {
+  if (studio) localStorage.setItem('zonked.safety.v1', '1');
+  if (studio && localStorage.getItem('zonked.theme.v1') === null) localStorage.setItem('zonked.theme.v1', 'studio');
   if (crew) localStorage.setItem('zonked.crew.v1', '1');
   window.__csp = [];
   document.addEventListener('securitypolicyviolation', (e) => window.__csp.push(`${e.violatedDirective} ${e.blockedURI}`));
@@ -22,10 +23,10 @@ const INIT = (crew) => {
   }
 };
 
-/** opts.crew sets the crew opt-in key before any page script runs. */
-export async function newSession(h, { crew, ...opts } = {}) {
+/** opts.crew sets the crew opt-in key before any page script runs. Studio is the default front door here, opts.calm leaves the app on its own default (Calm) and does not pre-accept the safety notice. */
+export async function newSession(h, { crew, calm, ...opts } = {}) {
   const context = await h.browser.newContext({ viewport: { width: 1280, height: 720 }, ...opts });
-  await context.addInitScript(INIT, Boolean(crew));
+  await context.addInitScript(INIT, { crew: Boolean(crew), studio: !calm });
   const page = await context.newPage();
   const errors = [];
   page.on('console', (m) => {

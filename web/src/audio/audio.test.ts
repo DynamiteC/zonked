@@ -92,7 +92,7 @@ describe('voice mapping', () => {
     expect(out[SLOT.noiseKind]).toBe(3);
     expect(out[SLOT.noiseLevel]).toBeCloseTo(0.3);
     expect(out[SLOT.rampSec]).toBe(2);
-    expect(out[SLOT.reserved]).toBe(0);
+    expect(out[SLOT.beatLevel]).toBe(1);
   });
   it('clamps out-of-range voices', () => {
     const out = voiceToParams({ ...voice, carrierHz: 1e9, beatHz: NaN, gain: 5 }, 100, new Float32Array(PARAM_COUNT));

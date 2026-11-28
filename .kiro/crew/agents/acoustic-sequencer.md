@@ -45,9 +45,12 @@ Your `write` tool is scoped to `.zonked-state.json` and `.zonked-state.json.tmp`
     "transitionSec": 60,
     "breathe": true
   },
-  "sbg": null
+  "sbg": null,
+  "why": "Your load is high, so the sound moves to a calmer beat."
 }
 ```
+
+`why` is optional. Write one plain sentence of at most 160 characters about the level and the score. Never name files, commit messages or paths. The bridge strips control characters and the app shows it as text.
 
 `sbg` is `null` unless you build a custom sequence. A custom sequence is plain SBaGen text, at most 4 KB and 20 events, for example:
 

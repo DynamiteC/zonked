@@ -15,6 +15,22 @@ export interface CrewState {
     readonly breathe: boolean;
   };
   readonly sbg: string | null;
+  /** Optional plain sentence for the person. Rendered as text only. */
+  readonly why?: string;
+}
+
+export const MAX_WHY_CHARS = 160;
+
+/** Strips control, line-break and bidi-override characters, collapses spaces, caps at 160 code points. Null when nothing is left. */
+export function cleanWhy(raw: unknown): string | null {
+  if (typeof raw !== 'string') return null;
+  const flat = raw
+    .slice(0, 4096)
+    .replace(/[\p{Cc}\u2028\u2029\u202A-\u202E\u2066-\u2069\u200B-\u200F\uFEFF]/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const capped = Array.from(flat).slice(0, MAX_WHY_CHARS).join('').trim();
+  return capped.length > 0 ? capped : null;
 }
 
 /**
@@ -60,6 +76,7 @@ export function parseCrewState(raw: unknown): CrewState | null {
   const pid = t['presetId'];
   const sbg = raw['sbg'];
   const at = raw['at'];
+  const why = cleanWhy(raw['why']);
   return {
     version: 1,
     at: typeof at === 'number' && Number.isFinite(at) ? Math.trunc(at) : 0,
@@ -73,5 +90,6 @@ export function parseCrewState(raw: unknown): CrewState | null {
       breathe: t['breathe'] === true,
     },
     sbg: typeof sbg === 'string' && sbg.length <= LIMITS.maxBytes ? sbg : null,
+    ...(why === null ? {} : { why }),
   };
 }
