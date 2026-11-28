@@ -1,8 +1,7 @@
 // Nature and own-sound checks (C8, C9). Each check runs in its own browser context.
 // The engine state hook (window.__zonked, with ?e2e=1) reports the playing sound and the beat gain.
-import { newSession } from './e2e-helpers.mjs';
+import { newSession, nav } from './e2e-helpers.mjs';
 
-const nav = (page, name) => page.getByRole('navigation', { name: 'Main' }).getByRole('button', { name });
 
 /** Small mono 16-bit PCM wav, built in the test. */
 function wav(seconds, rate = 8000, hz = 440) {

@@ -1,4 +1,4 @@
-// Shared helpers for the library-era e2e checks (10 to 20).
+// Shared helpers for the e2e checks.
 import { setTimeout as sleep } from 'node:timers/promises';
 
 export { sleep };
@@ -6,12 +6,16 @@ export const MAX_PEAK = 0.95 + 1e-6;
 export const SITUATIONS = ['adhd-focus', 'cant-sleep', 'lucid-dream', 'meditate', 'heal-stress', 'ai-burnout', 'deep-work', 'quick-reset'];
 export const ZERO_LAYERS = { lofiLevel: 0, crackle: 0, instLevel: 0, padLevel: 0, chimeLevel: 0, percLevel: 0 };
 
-const INIT = ({ crew, studio }) => {
-  if (studio) localStorage.setItem('zonked.safety.v1', '1');
-  if (studio && localStorage.getItem('zonked.theme.v1') === null) localStorage.setItem('zonked.theme.v1', 'studio');
+const INIT = ({ crew, accepted }) => {
+  // accepted pre-sets the safety notice flag for checks about sound, never for the safety checks themselves.
+  if (accepted) localStorage.setItem('zonked.safety.v1', '1');
   if (crew) localStorage.setItem('zonked.crew.v1', '1');
   window.__csp = [];
-  document.addEventListener('securitypolicyviolation', (e) => window.__csp.push(`${e.violatedDirective} ${e.blockedURI}`));
+  document.addEventListener('securitypolicyviolation', (e) => {
+    const line = `${e.violatedDirective} ${e.blockedURI || 'inline'} ${(e.sample || '').slice(0, 60)}`;
+    window.__csp.push(line);
+    if (typeof window.__cspReport === 'function') window.__cspReport(line);
+  });
   window.__msh = {};
   const proto = window.MediaSession && window.MediaSession.prototype;
   if (proto) {
@@ -23,10 +27,14 @@ const INIT = ({ crew, studio }) => {
   }
 };
 
-/** opts.crew sets the crew opt-in key before any page script runs. Studio is the default front door here, opts.calm leaves the app on its own default (Calm) and does not pre-accept the safety notice. */
+/**
+ * New browser context. By default the safety notice is pre-accepted so sound checks can start fast.
+ * opts.calm leaves storage empty (the safety checks use it), opts.crew sets the crew opt-in key.
+ */
 export async function newSession(h, { crew, calm, ...opts } = {}) {
   const context = await h.browser.newContext({ viewport: { width: 1280, height: 720 }, ...opts });
-  await context.addInitScript(INIT, { crew: Boolean(crew), studio: !calm });
+  await context.exposeFunction('__cspReport', (line) => (h.cspViolations ??= []).push(line));
+  await context.addInitScript(INIT, { crew: Boolean(crew), accepted: !calm });
   const page = await context.newPage();
   const errors = [];
   page.on('console', (m) => {
@@ -64,52 +72,53 @@ export async function settle(page) {
 }
 
 export const blur = (page) => page.evaluate(() => document.activeElement instanceof HTMLElement && document.activeElement.blur());
-export const press = async (page, key) => {
-  await blur(page);
-  await page.keyboard.press(key);
-};
-export const state = (page) => page.getByTestId('engine-status').getAttribute('data-state');
-export const num = async (page, id) => parseFloat(await page.getByTestId(id).innerText());
-export const tid = (page) => page.evaluate(() => window.__zonked.templateId);
-export const nowPlaying = (page) => page.getByTestId('now-playing').innerText();
-/** Waits for the play button label; for 'Play' also waits until the engine has fully stopped. */
-export const playLabel = async (page, l) => {
-  await page.waitForFunction((x) => document.querySelector('[data-testid=play-button]').textContent === x, l, { timeout: 20000 });
-  if (l === 'Play') await page.waitForFunction(() => document.querySelector('[data-testid=engine-status]').dataset.state !== 'running', null, { timeout: 20000 });
-};
+/** Tab button by name. The Crew tab may be labelled Coding, so both are accepted. */
+export const nav = (page, name) => page.getByRole('navigation', { name: 'Main' }).getByRole('button', { name: name === 'Crew' ? /^(Crew|Coding)$/ : name });
+/** Engine state from the e2e hook: idle, running, stopped, failed. */
+export const engineState = (page) => page.evaluate(() => window.__zonked?.status.state);
 
-export async function startPlaying(page) {
-  if ((await page.getByTestId('play-button').innerText()) === 'Play') await page.getByTestId('play-button').click();
-  await page.waitForFunction(() => document.querySelector('[data-testid=engine-status]')?.dataset.state === 'running');
-  await page.waitForFunction(async () => (await window.__zonked.getStats()).peak > 0.02);
+/** Opens the app (with the e2e hook), takes the skip path and waits until the Player shows. The safety notice is accepted when it shows. */
+export async function skipToPlayer(page, origin) {
+  await page.goto(`${origin}/?e2e=1`);
+  await page.getByRole('button', { name: 'Skip, just play' }).click();
+  const accept = page.getByTestId('calm-safety-accept');
+  if (await accept.isVisible({ timeout: 1500 }).catch(() => false)) await accept.click();
+  await page.getByTestId('player-toggle').waitFor();
 }
 
-/** Opens the Advanced section once. The open state is persisted, so one click per browser context is enough. */
-export async function openAdvanced(page) {
-  const t = page.getByTestId('advanced-toggle');
-  await t.waitFor();
-  if ((await t.getAttribute('aria-expanded')) !== 'true') await t.click();
+/** Waits until sound is really running: engine state and a non-silent peak. */
+export async function waitSound(page) {
+  await page.waitForFunction(() => window.__zonked?.status.state === 'running', null, { timeout: 20000 });
+  await page.waitForFunction(async () => (await window.__zonked.getStats()).peak > 0.02, null, { timeout: 20000 });
 }
 
-/** Clicks a menu item that lives in the More menu (opens the menu first when the item is not shown). */
-export async function openMore(page, testId) {
-  if (!(await page.getByTestId(testId).isVisible().catch(() => false))) await page.getByTestId('more-toggle').click();
-  await page.getByTestId(testId).click();
+/** Sounds tab, search, play the first result. */
+export async function playFound(page, text) {
+  await nav(page, 'Sounds').click();
+  await page.locator('#c-search-in').fill(text);
+  await page.locator('.c-row-play').first().click();
+  await page.getByTestId('player-toggle').waitFor();
 }
 
-export async function openPanel(page, toggle, panel) {
-  if (!(await page.getByTestId(panel).isVisible().catch(() => false))) await openMore(page, toggle);
-  await page.getByTestId(panel).waitFor();
+/** Opens the Advanced section of Options, from any screen, through You > Open more controls. */
+export async function openAdv(page) {
+  if (!(await page.getByTestId('advanced-panels').isVisible().catch(() => false))) {
+    await nav(page, 'You').click();
+    await page.getByTestId('studio-switch').click();
+    await page.getByTestId('advanced-panels').waitFor();
+  }
 }
 
-/** Holds a touch on an element for ms (default 600, past the 500 ms tip delay) and releases. Returns after the release; the click that follows is the caller's. */
-export async function touchHold(locator, ms = 600) {
-  const b = await locator.boundingBox();
-  const x = b.x + b.width / 2;
-  const y = b.y + b.height / 2;
-  await locator.evaluate((el, pt) => el.dispatchEvent(new PointerEvent('pointerdown', { pointerType: 'touch', bubbles: true, clientX: pt.x, clientY: pt.y })), { x, y });
-  await new Promise((r) => setTimeout(r, ms));
-  await locator.evaluate((el) => el.dispatchEvent(new PointerEvent('pointerup', { pointerType: 'touch', bubbles: true })));
+/** Closes the Options sheet so the next step starts on a clean screen. */
+export async function closeSheet(page) {
+  await page.keyboard.press('Escape');
+  await page.getByTestId('options-sheet').waitFor({ state: 'detached' }).catch(() => undefined);
+}
+
+/** Opens one Advanced section (details) by its label. */
+export async function openSection(page, label) {
+  const d = page.getByTestId(`adv-section-${label.toLowerCase().replace(/ /g, '-')}`);
+  if ((await d.getAttribute('open')) === null) await d.locator('summary').click();
 }
 
 /** Closes the help Guide with its own Skip button when it is open. Keeps the real flow: no flag, no storage seed. */

@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// MOCKED: the audio engine is a stub in this file. Real output is read by verify:e2e (web/scripts/e2e-core-checks.mjs).
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { fakeClock, memoryStorage } from '../../app/fakeClock.testutil';
