@@ -61,6 +61,10 @@
 .c-stage { position: relative; width: min(100%, 420px); height: 260px; margin: 8px auto; display: grid; place-items: center; overflow: hidden; border-radius: 12px; filter: brightness(var(--c-dim)); }
 .c-stage-scene { position: absolute; inset: 0; }
 .c-stage-mascot { position: relative; }
+/* The mascot always fits inside the stage, so the face is never cropped into a scowl. */
+.c-stage-mascot .cm-stage { width: 190px !important; height: 190px !important; }
+@media (max-height: 780px) { .c-stage-mascot .cm-stage { width: 160px !important; height: 160px !important; } }
+@media (max-height: 760px) { .c-stage-mascot .cm-stage { width: 128px !important; height: 128px !important; } }
 .c-cue { margin: 4px 0; color: var(--c-soft); min-height: 1.6em; }
 .c-time { font-size: 2.25rem; font-weight: 700; font-variant-numeric: tabular-nums; margin: 4px 0; }
 .c-controls { display: flex; justify-content: center; align-items: center; gap: 12px; margin: 12px 0; }
