@@ -1,3 +1,4 @@
+import { useEscape } from './useEscape';
 import { useEffect, useRef } from 'react';
 import { CALM } from './copy';
 import { FormFoot } from './FormFrame';
@@ -15,12 +16,10 @@ export function SafetyNotice({ onAccept, onCancel, onBack }: Props): React.JSX.E
   const box = useRef<HTMLDivElement>(null);
   useEffect(() => box.current?.querySelector<HTMLButtonElement>('[data-testid="calm-safety-accept"]')?.focus(), []);
 
+  useEscape(() => onCancel?.(), onCancel !== undefined);
   const onKey = (e: React.KeyboardEvent): void => {
     if (onCancel === undefined) return;
-    if (e.key === 'Escape') {
-      e.stopPropagation();
-      onCancel();
-    } else if (e.key === 'Tab') {
+    if (e.key === 'Tab') {
       const all = box.current?.querySelectorAll<HTMLButtonElement>('button') ?? [];
       const first = all[0];
       const last = all[all.length - 1];

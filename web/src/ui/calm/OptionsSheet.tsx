@@ -1,3 +1,4 @@
+import { useEscape } from './useEscape';
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import type { Player, PlayerSnapshot } from '../../app/player';
 import type { AudioEngine } from '../../audio/types';
@@ -34,11 +35,9 @@ export function OptionsSheet({ player, snap, nature, favorite, evidence, onFavor
   const [why, setWhy] = useState(false);
   const [adv, setAdv] = useState(advancedOpen);
   useEffect(() => box.current?.querySelector<HTMLButtonElement>('button')?.focus(), []);
+  useEscape(onClose);
   const onKey = (e: React.KeyboardEvent): void => {
-    if (e.key === 'Escape') {
-      e.stopPropagation();
-      onClose();
-    } else if (e.key === 'Tab') {
+    if (e.key === 'Tab') {
       const all = Array.from(box.current?.querySelectorAll<HTMLElement>('button:not([disabled]), input, select') ?? []);
       const first = all[0];
       const last = all[all.length - 1];

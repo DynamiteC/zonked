@@ -137,13 +137,25 @@ export const browserDecode: Decode = async (bytes) => {
   return { channels: Array.from({ length: buf.numberOfChannels }, (_, c) => buf.getChannelData(c)), sampleRate: buf.sampleRate };
 };
 
+/** A browser that never answers a decode must not leave the screen silent. */
+const DECODE_TIMEOUT_MS = 10_000;
+function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error('decode timeout')), ms);
+    p.then(
+      (v) => { clearTimeout(t); resolve(v); },
+      (e: unknown) => { clearTimeout(t); reject(e instanceof Error ? e : new Error('decode failed')); },
+    );
+  });
+}
+
 /** Checks a picked file by decoding it. Returns a plain message on any failure. */
 export async function validateOwn(bytes: ArrayBuffer, decode: Decode = browserDecode): Promise<OwnResult<true>> {
   if (bytes.byteLength > MAX_OWN_BYTES) return fail('This file is bigger than 8 MB.');
   if (bytes.byteLength === 0) return fail('This file is empty.');
   let d: Decoded;
   try {
-    d = await decode(bytes);
+    d = await withTimeout(decode(bytes), DECODE_TIMEOUT_MS);
   } catch {
     return fail('This file is not a sound this browser can read.');
   }

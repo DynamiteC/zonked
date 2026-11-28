@@ -266,7 +266,7 @@ A static audit (`web/scripts/audit-security.mjs`) fails on `eval`, `new Function
 | Library `design.md`: timers run on a 10 Hz tick | `TimerController` polls every 500 ms (`POLL_MS`) and recomputes elapsed time from the clock on every read. The Player tick that applies timer effects is 100 ms (`TICK_MS`) | code |
 | Library `design.md`: tone bed scaled by 0.6 when layers play | Tone and noise bed scale is `1 - 0.6 * min(1, sum(levels) / 2)`, exactly 1.0 with layers off and 0.4 with sum 2 or more. The layer bus is soft-limited to 0.6 | code (bit-identical pre-layer output needs 1.0) |
 | Library `design.md`: recommender "minus penalties" | Penalties exist as: speaker with binaural template -8, intensity 4 or more at night -5, no sensitivity points for a flagged template under high sensitivity. Missing vibe gives a flat +7 | code |
-| Library `design.md`: Gnaural and Android seeds only | 24 seeds (21 Android, 3 Gnaural) plus 208 generated originals, 232 in total | code |
+| Library `design.md`: Gnaural and Android seeds only | 24 original seed schedules (seed- ids) plus 208 generated originals, 232 in total | code |
 | Library `contracts.md`: `TEMPLATES` is a constant array | `TEMPLATES` is a read-only lazy Proxy over `getTemplates()`, so the catalog is built on first use, not at import | code (keeps the data out of first load) |
 
 ## 12. Library architecture
@@ -321,7 +321,7 @@ A category spec lists archetypes. An archetype is a stage shape (`plateau`, `ram
 ```mermaid
 flowchart LR
   A["8 category specs<br/>6 archetypes each (5 for lucid dreams)"] --> B["buildCategory<br/>archetype x variant index"]
-  S["buildSeeds<br/>21 Android + 3 Gnaural programs"] --> R
+  S["buildSeeds<br/>24 original seed programs"] --> R
   B --> R["buildTemplates<br/>seeds first, then categories in fixed order"]
   R --> T["232 Templates<br/>unique ids, unique names"]
   T --> E["templateToEvents<br/>clamp every field, monotone times"]

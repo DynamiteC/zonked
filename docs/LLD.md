@@ -590,7 +590,7 @@ Stage contours (`contour(shape, m, a, b, ret)`, with `r = min(5, max(1, 0.15 m))
 
 ### 17.2 Counts (computed by running the generator)
 
-Method: a throwaway script in the scratch directory bundled `web/src/catalog/build.ts` with `web/node_modules/.bin/esbuild` and ran it with Node. The numbers satisfy `catalog.test.ts` (at least 210 templates, at least 15 per category, 21 Android and 3 Gnaural seeds, unique ids).
+Method: a throwaway script in the scratch directory bundled `web/src/catalog/build.ts` with `web/node_modules/.bin/esbuild` and ran it with Node. The numbers satisfy `catalog.test.ts` (at least 210 templates, at least 15 per category, 24 original seeds, unique ids).
 
 | Category | Prefix | Archetypes | Generated | Seeds | Total |
 |---|---|---|---|---|---|
@@ -664,7 +664,7 @@ Time of day table `TOD`:
 
 Tiers guarantee at least `limit` (default 5) results: tier 1 is situation matches that are not flagged under high sensitivity (the flag is only set under high), tier 2 drops the situation requirement, tier 3 is everything. The first tier with enough entries wins. Picks that do not match the situation then carry the reason "Filters relaxed: too few exact matches, so close alternatives are included." Every recommendation carries the template's `reasonTemplate` (`{minutes}` replaced) plus one reason per term.
 
-Computed example (headphones, 30 minutes, evening, medium sensitivity): `adhd-focus` gives android-adhd-cycle 87, focus-flow-ramp-01 87, focus-alpha-beta-01 86; `cant-sleep` gives sleep-onset-delta-01 89, lucid-dream-drift-01 88; `meditate` gives meditation-alpha-sit-04 92; `quick-reset` gives healing-sunrise-lift-03 92.
+Computed example (headphones, 30 minutes, evening, medium sensitivity): `adhd-focus` gives seed-steady-blocks 87, focus-flow-ramp-01 87, focus-alpha-beta-01 86; `cant-sleep` gives sleep-onset-delta-01 89, lucid-dream-drift-01 88; `meditate` gives meditation-alpha-sit-04 92; `quick-reset` gives healing-sunrise-lift-03 92.
 
 Device detection (`ui/device.ts`) classifies the default `audiooutput` label with regular expressions (Bluetooth, headphones, speaker). It is read only and never requests a permission, so labels are often empty and the result is `unknown`.
 

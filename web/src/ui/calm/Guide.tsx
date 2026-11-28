@@ -1,3 +1,4 @@
+import { useEscape } from './useEscape';
 import { useEffect, useRef, useState } from 'react';
 import { CALM } from './copy';
 import { FormFoot } from './FormFrame';
@@ -49,11 +50,9 @@ export function Guide({ reduced, onClose, onCrew }: Props): React.JSX.Element {
   useEffect(() => box.current?.querySelector<HTMLElement>('h2')?.focus(), [i]);
   const card = CALM.guideCards[i] ?? CALM.guideCards[0];
   const last = i === CALM.guideCards.length - 1;
+  useEscape(onClose);
   const onKey = (e: React.KeyboardEvent): void => {
-    if (e.key === 'Escape') {
-      e.stopPropagation();
-      onClose();
-    } else if (e.key === 'Tab') {
+    if (e.key === 'Tab') {
       const all = Array.from(box.current?.querySelectorAll<HTMLElement>('button') ?? []);
       const at = document.activeElement;
       if (e.shiftKey && (at === all[0] || at === box.current?.querySelector('h2'))) {
