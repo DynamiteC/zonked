@@ -166,7 +166,7 @@ function g({ cx: e, kind: t, side: n }) {
 	});
 }
 // ../../web/src/ui/calm/mascot/layers.tsx
-var _ = "0 0 512 512", v = "translate(97.3 56.3) scale(.62)", y = [
+var _ = "0 0 512 512", v = "translate(46.1 56.1) scale(.82)", y = [
 	190,
 	226,
 	286,
@@ -294,32 +294,20 @@ var _ = "0 0 512 512", v = "translate(97.3 56.3) scale(.62)", y = [
 	}
 };
 function x() {
-	return /* @__PURE__ */ a("svg", {
+	return /* @__PURE__ */ i("svg", {
 		className: "cm-layer cm-shadow",
 		viewBox: _,
 		"aria-hidden": "true",
 		focusable: "false",
-		children: [
-			/* @__PURE__ */ i("path", {
-				className: "cm-hill-a",
-				d: "M-20 512C20 462 120 440 256 440C392 440 492 462 532 512Z",
-				fill: "#9DB07E"
-			}),
-			/* @__PURE__ */ i("path", {
-				className: "cm-hill-b",
-				d: "M40 512C90 474 170 458 256 458C342 458 422 474 472 512Z",
-				fill: "#B3C28F",
-				opacity: "0.7"
-			}),
-			/* @__PURE__ */ i("ellipse", {
-				cx: "256",
-				cy: "470",
-				rx: "120",
-				ry: "12",
-				fill: "#4F5F3C",
-				opacity: "0.28"
-			})
-		]
+		children: /* @__PURE__ */ i("ellipse", {
+			className: "cm-gshadow",
+			cx: "256",
+			cy: "452",
+			rx: "112",
+			ry: "13",
+			fill: "#4A3A40",
+			opacity: "0.2"
+		})
 	});
 }
 function S({ id: e, mood: t, plain: n }) {
@@ -331,7 +319,6 @@ function S({ id: e, mood: t, plain: n }) {
 		focusable: "false",
 		children: /* @__PURE__ */ a("g", {
 			transform: v,
-			filter: n ? void 0 : `url(#${e}-paint)`,
 			children: [
 				/* @__PURE__ */ a("g", {
 					className: "cm-pod cm-podl",
@@ -343,7 +330,7 @@ function S({ id: e, mood: t, plain: n }) {
 							width: "68",
 							height: "120",
 							rx: "30",
-							fill: "#6B4A3C",
+							fill: `url(#${e}-cup)`,
 							strokeWidth: "6"
 						}),
 						/* @__PURE__ */ i("rect", {
@@ -353,7 +340,7 @@ function S({ id: e, mood: t, plain: n }) {
 							width: "40",
 							height: "88",
 							rx: "16",
-							fill: "#241F2B",
+							fill: "#2E2433",
 							strokeWidth: "4"
 						}),
 						/* @__PURE__ */ i("rect", {
@@ -371,6 +358,10 @@ function S({ id: e, mood: t, plain: n }) {
 							width: "14",
 							height: "10",
 							rx: "3"
+						}),
+						/* @__PURE__ */ i("path", {
+							className: "cm-bevel",
+							d: "M20 232V226Q20 212 34 207"
 						})
 					]
 				}),
@@ -384,7 +375,7 @@ function S({ id: e, mood: t, plain: n }) {
 							width: "68",
 							height: "120",
 							rx: "30",
-							fill: "#6B4A3C",
+							fill: `url(#${e}-cup)`,
 							strokeWidth: "6"
 						}),
 						/* @__PURE__ */ i("rect", {
@@ -394,7 +385,7 @@ function S({ id: e, mood: t, plain: n }) {
 							width: "40",
 							height: "88",
 							rx: "16",
-							fill: "#241F2B",
+							fill: "#2E2433",
 							strokeWidth: "4"
 						}),
 						/* @__PURE__ */ i("rect", {
@@ -412,6 +403,10 @@ function S({ id: e, mood: t, plain: n }) {
 							width: "14",
 							height: "10",
 							rx: "3"
+						}),
+						/* @__PURE__ */ i("path", {
+							className: "cm-bevel",
+							d: "M440 232V226Q440 212 454 207"
 						})
 					]
 				}),
@@ -422,14 +417,47 @@ function S({ id: e, mood: t, plain: n }) {
 					r: "200",
 					fill: `url(#${e}-gold)`
 				}),
-				/* @__PURE__ */ i("circle", {
-					className: "cm-shade",
+				!n && /* @__PURE__ */ i("circle", {
+					className: "cm-grain",
 					cx: "256",
 					cy: "256",
 					r: "200",
-					fill: `url(#${e}-shade)`
+					fill: "#FBD84A",
+					filter: `url(#${e}-grain)`
 				}),
-				/* @__PURE__ */ i("circle", {
+				!n && /* @__PURE__ */ i("circle", {
+					className: "cm-key",
+					cx: "256",
+					cy: "256",
+					r: "200",
+					fill: `url(#${e}-key)`
+				}),
+				!n && /* @__PURE__ */ i("circle", {
+					className: "cm-cel",
+					cx: "256",
+					cy: "256",
+					r: "170",
+					fill: "none",
+					stroke: "#B8741C",
+					strokeOpacity: "0.26",
+					strokeWidth: "60",
+					strokeDasharray: "330 1100",
+					transform: "rotate(5 256 256)"
+				}),
+				!n && /* @__PURE__ */ i("circle", {
+					className: "cm-cool",
+					cx: "256",
+					cy: "256",
+					r: "191",
+					fill: "none",
+					stroke: "#CFE8F4",
+					strokeOpacity: "0.28",
+					strokeWidth: "4",
+					strokeDasharray: "200 1200",
+					strokeLinecap: "round",
+					transform: "rotate(30 256 256)"
+				}),
+				!n && /* @__PURE__ */ i("circle", {
 					className: "cm-rim",
 					cx: "256",
 					cy: "256",
@@ -475,16 +503,20 @@ function S({ id: e, mood: t, plain: n }) {
 				/* @__PURE__ */ i("polygon", {
 					className: "cm-f-mask cm-s-ink",
 					points: "96,240 240,276 240,350 168,370 120,320",
-					fill: "#2F2430",
+					fill: `url(#${e}-mask)`,
 					strokeWidth: "11",
 					strokeLinejoin: "round"
 				}),
 				/* @__PURE__ */ i("polygon", {
 					className: "cm-f-mask cm-s-ink",
 					points: "416,240 272,276 272,350 344,370 392,320",
-					fill: "#2F2430",
+					fill: `url(#${e}-mask)`,
 					strokeWidth: "11",
 					strokeLinejoin: "round"
+				}),
+				/* @__PURE__ */ i("path", {
+					className: "cm-bevel cm-bevel-m",
+					d: "M112 252L232 282M400 252L280 282"
 				}),
 				/* @__PURE__ */ i("polygon", {
 					className: "cm-gem",
@@ -574,7 +606,7 @@ function C() {
 		}, `${e}-${t}`))
 	});
 }
-function w({ id: e }) {
+function w({ id: e, lite: t }) {
 	return /* @__PURE__ */ i("svg", {
 		className: "cm-defs",
 		width: "0",
@@ -584,248 +616,135 @@ function w({ id: e }) {
 		children: /* @__PURE__ */ a("defs", { children: [
 			/* @__PURE__ */ a("linearGradient", {
 				id: `${e}-gold`,
+				x1: "0.2",
+				y1: "0",
+				x2: "0.3",
+				y2: "1",
+				children: [/* @__PURE__ */ i("stop", {
+					offset: "0",
+					stopColor: "#FBD84A"
+				}), /* @__PURE__ */ i("stop", {
+					offset: "1",
+					stopColor: "#E8A128"
+				})]
+			}),
+			/* @__PURE__ */ a("linearGradient", {
+				id: `${e}-mask`,
 				x1: "0",
 				y1: "0",
 				x2: "0",
 				y2: "1",
 				children: [/* @__PURE__ */ i("stop", {
 					offset: "0",
-					stopColor: "#FFE600"
+					stopColor: "#54415A"
 				}), /* @__PURE__ */ i("stop", {
 					offset: "1",
-					stopColor: "#FFB800"
+					stopColor: "#2E2433"
+				})]
+			}),
+			/* @__PURE__ */ a("linearGradient", {
+				id: `${e}-cup`,
+				x1: "0",
+				y1: "0",
+				x2: "0",
+				y2: "1",
+				children: [/* @__PURE__ */ i("stop", {
+					offset: "0",
+					stopColor: "#CC7F5E"
+				}), /* @__PURE__ */ i("stop", {
+					offset: "1",
+					stopColor: "#9C4F3A"
 				})]
 			}),
 			/* @__PURE__ */ a("radialGradient", {
-				id: `${e}-shade`,
-				cx: "0.35",
-				cy: "0.3",
-				r: "0.9",
+				id: `${e}-key`,
+				cx: "0.3",
+				cy: "0.25",
+				r: "0.7",
 				children: [/* @__PURE__ */ i("stop", {
-					offset: "0.5",
-					stopColor: "#C9772A",
-					stopOpacity: "0"
+					offset: "0",
+					stopColor: "#FFF4B8",
+					stopOpacity: "0.7"
 				}), /* @__PURE__ */ i("stop", {
 					offset: "1",
-					stopColor: "#C9772A",
-					stopOpacity: "0.35"
+					stopColor: "#FFF4B8",
+					stopOpacity: "0"
 				})]
 			}),
-			/* @__PURE__ */ a("filter", {
-				id: `${e}-paint`,
-				x: "-5%",
-				y: "-5%",
-				width: "110%",
-				height: "110%",
-				children: [/* @__PURE__ */ i("feTurbulence", {
-					type: "fractalNoise",
-					baseFrequency: "0.02",
-					numOctaves: "2",
-					seed: "3",
-					result: "t"
-				}), /* @__PURE__ */ i("feDisplacementMap", {
-					in: "SourceGraphic",
-					in2: "t",
-					scale: "9",
-					xChannelSelector: "R",
-					yChannelSelector: "G"
-				})]
+			!t && /* @__PURE__ */ a("filter", {
+				id: `${e}-grain`,
+				x: "0",
+				y: "0",
+				width: "1",
+				height: "1",
+				children: [
+					/* @__PURE__ */ i("feTurbulence", {
+						type: "fractalNoise",
+						baseFrequency: "0.012 0.24",
+						numOctaves: "2",
+						seed: "4",
+						result: "n"
+					}),
+					/* @__PURE__ */ i("feColorMatrix", {
+						in: "n",
+						type: "matrix",
+						values: "0 0 0 0 0.45  0 0 0 0 0.24  0 0 0 0 0  0.6 0 0 0 -0.14",
+						result: "m"
+					}),
+					/* @__PURE__ */ i("feComposite", {
+						in: "m",
+						in2: "SourceAlpha",
+						operator: "in"
+					})
+				]
 			})
 		] })
 	});
 }
-// ../../web/src/ui/calm/mascot/hoodie.tsx
-var T = "0 0 512 512", E = "#3A2A2E", D = "#4E8A8C", O = "#356A6E", k = "#F2C14E";
-function A({ id: e }) {
+// ../../web/src/ui/calm/mascot/layersExtra.tsx
+var T = "0 0 512 512", E = "#3A2A2E";
+function D() {
 	return /* @__PURE__ */ i("svg", {
-		className: "cm-layer cm-bodyl",
+		className: "cm-layer cm-band",
 		viewBox: T,
 		"aria-hidden": "true",
 		focusable: "false",
 		children: /* @__PURE__ */ a("g", {
-			filter: `url(#${e}-paint)`,
+			transform: v,
 			children: [
-				/* @__PURE__ */ i("ellipse", {
-					cx: "222",
-					cy: "462",
-					rx: "36",
-					ry: "15",
-					fill: "#6B4A3C",
+				/* @__PURE__ */ i("path", {
+					className: "cm-s-ink cm-bandink",
+					d: "M42 204C20 -34 492 -34 470 204",
+					fill: "none",
 					stroke: E,
-					strokeWidth: "3.5"
+					strokeWidth: "26",
+					strokeLinecap: "round"
 				}),
-				/* @__PURE__ */ i("ellipse", {
-					cx: "290",
-					cy: "462",
-					rx: "36",
-					ry: "15",
-					fill: "#6B4A3C",
-					stroke: E,
-					strokeWidth: "3.5"
+				/* @__PURE__ */ i("path", {
+					className: "cm-bandcol",
+					d: "M42 204C20 -34 492 -34 470 204",
+					fill: "none",
+					stroke: "#C27A5A",
+					strokeWidth: "15",
+					strokeLinecap: "round"
 				}),
-				/* @__PURE__ */ a("g", {
-					className: "cm-chest",
-					children: [
-						/* @__PURE__ */ i("path", {
-							className: "cm-hood",
-							d: "M166 358C146 306 178 262 256 258C334 262 366 306 346 358Z",
-							fill: O,
-							stroke: E,
-							strokeWidth: "4",
-							strokeLinejoin: "round"
-						}),
-						/* @__PURE__ */ i("path", {
-							d: "M178 456C168 400 190 342 256 338C322 342 344 400 334 456C300 468 212 468 178 456Z",
-							fill: D,
-							stroke: E,
-							strokeWidth: "4",
-							strokeLinejoin: "round"
-						}),
-						/* @__PURE__ */ i("path", {
-							d: "M300 352C330 380 336 420 332 452C316 458 304 460 296 460C306 420 306 384 300 352Z",
-							fill: O,
-							opacity: "0.4"
-						}),
-						/* @__PURE__ */ i("path", {
-							d: "M196 360C186 392 186 424 192 452",
-							fill: "none",
-							stroke: "#FFE9C0",
-							strokeOpacity: "0.4",
-							strokeWidth: "6",
-							strokeLinecap: "round"
-						}),
-						/* @__PURE__ */ i("path", {
-							className: "cm-trim",
-							d: "M180 350C206 378 306 378 332 350",
-							fill: "none",
-							stroke: k,
-							strokeWidth: "9",
-							strokeLinecap: "round"
-						}),
-						/* @__PURE__ */ i("path", {
-							d: "M180 350C206 378 306 378 332 350",
-							fill: "none",
-							stroke: E,
-							strokeWidth: "2.5",
-							strokeLinecap: "round",
-							strokeOpacity: "0.6",
-							transform: "translate(0 5)"
-						}),
-						/* @__PURE__ */ i("path", {
-							className: "cm-cord",
-							d: "M238 372C236 390 234 400 232 412M274 372C276 390 278 400 280 414",
-							fill: "none",
-							stroke: "#F4E9D2",
-							strokeWidth: "4",
-							strokeLinecap: "round"
-						}),
-						/* @__PURE__ */ i("circle", {
-							cx: "232",
-							cy: "416",
-							r: "4.5",
-							fill: k,
-							stroke: E,
-							strokeWidth: "2.5"
-						}),
-						/* @__PURE__ */ i("circle", {
-							cx: "280",
-							cy: "418",
-							r: "4.5",
-							fill: k,
-							stroke: E,
-							strokeWidth: "2.5"
-						}),
-						/* @__PURE__ */ i("path", {
-							className: "cm-pocket",
-							d: "M220 428Q256 420 292 428L298 452Q256 462 214 452Z",
-							fill: O,
-							fillOpacity: "0.55",
-							stroke: E,
-							strokeWidth: "3",
-							strokeLinejoin: "round"
-						}),
-						/* @__PURE__ */ i("ellipse", {
-							cx: "190",
-							cy: "432",
-							rx: "17",
-							ry: "30",
-							fill: D,
-							stroke: E,
-							strokeWidth: "3.5",
-							transform: "rotate(8 190 432)"
-						}),
-						/* @__PURE__ */ i("ellipse", {
-							cx: "322",
-							cy: "432",
-							rx: "17",
-							ry: "30",
-							fill: D,
-							stroke: E,
-							strokeWidth: "3.5",
-							transform: "rotate(-8 322 432)"
-						}),
-						/* @__PURE__ */ i("path", {
-							d: "M174 440Q192 450 209 442M303 442Q320 450 338 440",
-							fill: "none",
-							stroke: k,
-							strokeWidth: "7",
-							strokeLinecap: "round"
-						}),
-						/* @__PURE__ */ i("circle", {
-							cx: "196",
-							cy: "460",
-							r: "10",
-							fill: "#F7C95A",
-							stroke: E,
-							strokeWidth: "3"
-						}),
-						/* @__PURE__ */ i("circle", {
-							cx: "316",
-							cy: "460",
-							r: "10",
-							fill: "#F7C95A",
-							stroke: E,
-							strokeWidth: "3"
-						})
-					]
+				/* @__PURE__ */ i("path", {
+					d: "M60 190C50 10 462 10 452 190",
+					fill: "none",
+					stroke: "#FFF3D0",
+					strokeOpacity: "0.22",
+					strokeWidth: "5",
+					strokeLinecap: "round"
 				})
 			]
 		})
 	});
 }
-// ../../web/src/ui/calm/mascot/layersExtra.tsx
-var j = "0 0 512 512", M = "#3A2A2E";
-function N() {
-	return /* @__PURE__ */ i("svg", {
-		className: "cm-layer cm-band",
-		viewBox: j,
-		"aria-hidden": "true",
-		focusable: "false",
-		children: /* @__PURE__ */ a("g", {
-			transform: v,
-			children: [/* @__PURE__ */ i("path", {
-				className: "cm-s-ink cm-bandink",
-				d: "M42 204C20 -34 492 -34 470 204",
-				fill: "none",
-				stroke: M,
-				strokeWidth: "16",
-				strokeLinecap: "round"
-			}), /* @__PURE__ */ i("path", {
-				d: "M60 190C50 10 462 10 452 190",
-				fill: "none",
-				stroke: "#FFF3D0",
-				strokeOpacity: "0.22",
-				strokeWidth: "5",
-				strokeLinecap: "round"
-			})]
-		})
-	});
-}
-function P({ marked: e = !1 }) {
+function O({ marked: e = !1 }) {
 	let t = (e, t, n) => /* @__PURE__ */ i("path", {
 		className: "cm-ripple",
 		style: { animationDelay: `${n * -1.6}s` },
-		d: `M${e + t * 14} 170Q${e + t * 50} 215 ${e + t * 14} 260`,
+		d: `M${e + t * 12} 222Q${e + t * 44} 266 ${e + t * 12} 310`,
 		fill: "none",
 		stroke: "#8FE3D0",
 		strokeWidth: "5",
@@ -834,22 +753,22 @@ function P({ marked: e = !1 }) {
 	return /* @__PURE__ */ a("svg", {
 		className: "cm-layer cm-ripples",
 		"data-prop": e ? "ripples" : void 0,
-		viewBox: j,
+		viewBox: T,
 		"aria-hidden": "true",
 		focusable: "false",
 		children: [[
 			0,
 			1,
 			2
-		].map((e) => t(96, -1, e)), [
+		].map((e) => t(56, -1, e)), [
 			0,
 			1,
 			2
-		].map((e) => t(416, 1, e))]
+		].map((e) => t(456, 1, e))]
 	});
 }
 // ../../web/src/ui/calm/mascot/props.tsx
-var F = "0 0 512 512", I = "#3A2A2E", L = {
+var k = "0 0 512 512", A = "#3A2A2E", j = {
 	sleepy: () => /* @__PURE__ */ a("g", {
 		fill: "none",
 		strokeLinecap: "round",
@@ -875,7 +794,7 @@ var F = "0 0 512 512", I = "#3A2A2E", L = {
 	}),
 	breathing: () => /* @__PURE__ */ i("path", {
 		className: "cm-wisp",
-		d: "M306 336q14-12 28 0t28 0t28 0",
+		d: "M326 396q12-10 24 0t24 0t24 0",
 		fill: "none",
 		stroke: "#BFE9E3",
 		strokeWidth: "5",
@@ -893,7 +812,7 @@ var F = "0 0 512 512", I = "#3A2A2E", L = {
 		className: "cm-spark",
 		d: "M404 160l5 13l13 5l-13 5l-5 13l-5-13l-13-5l13-5z",
 		fill: "#00E5A8",
-		stroke: I,
+		stroke: A,
 		strokeWidth: "2.5",
 		strokeLinejoin: "round"
 	}),
@@ -901,7 +820,7 @@ var F = "0 0 512 512", I = "#3A2A2E", L = {
 		className: "cm-sweat",
 		d: "M372 118C362 134 358 144 366 152C374 158 386 152 384 142C382 134 376 128 372 118Z",
 		fill: "#8FD3F0",
-		stroke: I,
+		stroke: A,
 		strokeWidth: "3.5",
 		strokeLinejoin: "round"
 	}),
@@ -911,14 +830,14 @@ var F = "0 0 512 512", I = "#3A2A2E", L = {
 			/* @__PURE__ */ i("path", {
 				d: "M390 56c12-9 26-3 24 11c-12 6-24 0-24-11z",
 				fill: "#8DBE6B",
-				stroke: I,
+				stroke: A,
 				strokeWidth: "3",
 				strokeLinejoin: "round"
 			}),
 			/* @__PURE__ */ i("path", {
 				d: "M392 62q10-2 18-3",
 				fill: "none",
-				stroke: I,
+				stroke: A,
 				strokeWidth: "2",
 				strokeLinecap: "round"
 			}),
@@ -947,7 +866,7 @@ var F = "0 0 512 512", I = "#3A2A2E", L = {
 		strokeLinejoin: "round",
 		children: [/* @__PURE__ */ i("path", {
 			d: "M378 76c0-16 28-16 28 0c0 12-14 12-14 26M392 116v2",
-			stroke: I,
+			stroke: A,
 			strokeWidth: "11"
 		}), /* @__PURE__ */ i("path", {
 			d: "M378 76c0-16 28-16 28 0c0 12-14 12-14 26M392 116v2",
@@ -955,7 +874,7 @@ var F = "0 0 512 512", I = "#3A2A2E", L = {
 			strokeWidth: "6"
 		})]
 	})
-}, R = {
+}, M = {
 	sleepy: "zzz",
 	breathing: "wisp",
 	focus: "glow",
@@ -965,22 +884,22 @@ var F = "0 0 512 512", I = "#3A2A2E", L = {
 	offline: "cloud",
 	error: "question"
 };
-function z({ mood: e }) {
-	let t = L[e];
+function N({ mood: e }) {
+	let t = j[e];
 	return t ? /* @__PURE__ */ i("svg", {
 		className: "cm-layer cm-props",
-		viewBox: F,
+		viewBox: k,
 		"aria-hidden": "true",
 		focusable: "false",
 		children: /* @__PURE__ */ i("g", {
 			className: "cm-prop",
-			"data-prop": R[e],
+			"data-prop": M[e],
 			children: t()
 		})
 	}) : null;
 }
 // ../../web/src/ui/calm/mascot/useLife.ts
-var B = /* @__PURE__ */ new Set([
+var P = /* @__PURE__ */ new Set([
 	"idle",
 	"listening",
 	"steering",
@@ -988,7 +907,7 @@ var B = /* @__PURE__ */ new Set([
 	"offline",
 	"error"
 ]);
-function V(e) {
+function F(e) {
 	let t = e >>> 0;
 	return () => {
 		t = t + 0x6d2b79f5 >>> 0;
@@ -996,23 +915,23 @@ function V(e) {
 		return e = Math.imul(e ^ e >>> 15, e | 1), e ^= e + Math.imul(e ^ e >>> 7, e | 61), ((e ^ e >>> 14) >>> 0) / 4294967296;
 	};
 }
-function H(e, t) {
+function I(e, t) {
 	return (4e3 + e * 3e3) * (t ? 1.6 : 1);
 }
-function U(t, n, r) {
+function L(t, n, r) {
 	e(() => {
 		let e = t.current;
 		if (r || !e) return;
-		let i = V(n.length * 7919 + (n.codePointAt(0) ?? 1)), a = n === "tired", o, s = () => {
+		let i = F(n.length * 7919 + (n.codePointAt(0) ?? 1)), a = n === "tired", o, s = () => {
 			o = setTimeout(() => {
 				document.hidden || e.classList.add("cm-blinking"), o = setTimeout(() => {
 					e.classList.remove("cm-blinking"), s();
 				}, a ? 340 : 170);
-			}, H(i(), a));
+			}, I(i(), a));
 		}, c = () => {
 			e.classList.toggle("cm-paused", document.hidden);
 		};
-		return c(), document.addEventListener("visibilitychange", c), B.has(n) && s(), () => {
+		return c(), document.addEventListener("visibilitychange", c), P.has(n) && s(), () => {
 			o !== void 0 && clearTimeout(o), document.removeEventListener("visibilitychange", c), e.classList.remove("cm-blinking", "cm-paused");
 		};
 	}, [
@@ -1022,68 +941,84 @@ function U(t, n, r) {
 	]);
 }
 // ../../web/src/ui/calm/mascot/useParallax.ts
-var W = 8, G = 40, K = (e) => Number.isFinite(e) ? Math.max(-1, Math.min(1, e)) : 0;
-function q(t, r) {
+var R = 6, z = 50, B = (e) => Number.isFinite(e) ? Math.max(-1, Math.min(1, e)) : 0;
+function V() {
+	return typeof window < "u" && typeof window.matchMedia == "function" && window.matchMedia("(pointer: fine)").matches;
+}
+async function H() {
+	try {
+		return (await navigator.permissions?.query({ name: "accelerometer" }))?.state === "granted";
+	} catch {
+		return !1;
+	}
+}
+function U(t, r) {
 	let i = n(0);
 	e(() => {
 		let e = t.current;
 		if (!r || !e) return;
 		let n = (t, n) => {
 			let r = Date.now();
-			r - i.current < G || (i.current = r, e.style.setProperty("--ry", `${(K(t) * W).toFixed(2)}deg`), e.style.setProperty("--rx", `${(-K(n) * W).toFixed(2)}deg`));
+			r - i.current < z || (i.current = r, e.style.setProperty("--ry", `${(B(t) * R).toFixed(2)}deg`), e.style.setProperty("--rx", `${(-B(n) * R).toFixed(2)}deg`));
 		}, a = (e) => {
+			if (e.pointerType === "touch") return;
 			let t = window.innerWidth || 1, r = window.innerHeight || 1;
 			n(e.clientX / t * 2 - 1, e.clientY / r * 2 - 1);
-		};
-		return window.addEventListener("pointermove", a, { passive: !0 }), () => {
-			window.removeEventListener("pointermove", a);
+		}, o = (e) => n((e.gamma ?? 0) / 30, ((e.beta ?? 45) - 45) / 30), s = !1;
+		return V() ? window.addEventListener("pointermove", a, { passive: !0 }) : typeof DeviceOrientationEvent < "u" && H().then((t) => {
+			t && e.isConnected && (s = !0, window.addEventListener("deviceorientation", o, { passive: !0 }));
+		}), () => {
+			window.removeEventListener("pointermove", a), s && window.removeEventListener("deviceorientation", o);
 		};
 	}, [t, r]);
 }
 // ../../web/src/ui/calm/mascot/CalmMascot.tsx
-function J() {
+function W() {
 	return typeof window < "u" && typeof window.matchMedia == "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
-var Y = (e) => e !== void 0 && Number.isFinite(e) ? Math.max(0, Math.min(1, e)) : 0, X = 96;
-function Z({ mood: e = "idle", size: r = 220, reducedMotion: o, label: s = "Zonked mascot", breathPhase: c, level: l, situation: u }) {
-	let d = `cm${t().replace(/[^a-zA-Z0-9]/g, "")}`, f = n(null), p = o ?? J(), m = Number.isFinite(r) ? Math.max(24, Math.min(640, r)) : 220, h = m <= X;
-	return q(f, !p && !h), U(f, e, p), /* @__PURE__ */ a("div", {
+var G = (e) => e !== void 0 && Number.isFinite(e) ? Math.max(0, Math.min(1, e)) : 0, K = 96, q = 72;
+function J({ mood: e = "idle", size: r = 220, reducedMotion: o, label: s = "Zonked mascot", breathPhase: c, level: l, situation: u }) {
+	let d = `cm${t().replace(/[^a-zA-Z0-9]/g, "")}`, f = n(null), p = o ?? W(), m = Number.isFinite(r) ? Math.max(24, Math.min(640, r)) : 220, h = m <= K, g = m < q, _ = c !== void 0 && !p ? {
+		scale: String(1 + G(c) * .03),
+		translate: `0 ${(-G(c) * 1.2).toFixed(2)}%`
+	} : void 0;
+	return U(f, !p && !h), L(f, e, p), /* @__PURE__ */ a("div", {
 		ref: f,
 		className: `cm-stage cm-${e}${u ? ` cm-s-${u}` : ""}${p ? " cm-still" : ""}${h ? " cm-compact" : ""}${c === void 0 ? "" : " cm-driven"}`,
 		style: {
 			width: m,
 			height: m,
-			"--bp": Y(c),
-			"--lv": l === void 0 && e === "listening" ? .35 : Y(l)
+			"--bp": G(c),
+			"--lv": l === void 0 && e === "listening" ? .35 : G(l)
 		},
 		role: "img",
 		"aria-label": s,
 		"data-mood": e,
 		"data-situation": u,
-		children: [/* @__PURE__ */ i(w, { id: d }), /* @__PURE__ */ a("div", {
+		children: [/* @__PURE__ */ i(w, {
+			id: d,
+			lite: g
+		}), /* @__PURE__ */ a("div", {
 			className: "cm-body",
-			children: [
-				!h && /* @__PURE__ */ i(x, {}),
-				!h && /* @__PURE__ */ i(A, { id: d }),
-				/* @__PURE__ */ i("div", {
-					className: "cm-sway",
-					children: /* @__PURE__ */ a("div", {
-						className: "cm-head",
-						children: [
-							!h && /* @__PURE__ */ i(P, { marked: e === "listening" }),
-							/* @__PURE__ */ i(S, {
-								id: d,
-								mood: e,
-								plain: h
-							}),
-							/* @__PURE__ */ i(N, {}),
-							/* @__PURE__ */ i(z, { mood: e }),
-							!h && /* @__PURE__ */ i(C, {})
-						]
-					})
+			children: [!h && /* @__PURE__ */ i(x, {}), /* @__PURE__ */ i("div", {
+				className: "cm-sway",
+				style: _,
+				children: /* @__PURE__ */ a("div", {
+					className: "cm-head",
+					children: [
+						!h && /* @__PURE__ */ i(O, { marked: e === "listening" }),
+						/* @__PURE__ */ i(S, {
+							id: d,
+							mood: e,
+							plain: g
+						}),
+						/* @__PURE__ */ i(D, {}),
+						/* @__PURE__ */ i(N, { mood: e }),
+						!h && /* @__PURE__ */ i(C, {})
+					]
 				})
-			]
+			})]
 		})]
 	});
 }
-export { o as BreathCue, Z as CalmMascot };
+export { o as BreathCue, J as CalmMascot };

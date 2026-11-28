@@ -1,4 +1,4 @@
-import { W as e } from "./chunk-crewLink-CH1NzHoN.mjs";
+import { Y as e } from "./chunk-crewLink-DfIjAvPP.mjs";
 import { jsx as t, jsxs as n } from "react/jsx-runtime";
 // ../../web/src/ui/calm/nature/credits.json
 var r = [
