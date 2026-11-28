@@ -25,7 +25,7 @@
 @keyframes c-enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 .c-h1 { font-size: 2.25rem; line-height: 1.15; margin: 8px 0; font-weight: 700; }
 .c-greet { font-size: 2.25rem; line-height: 1.15; margin: 8px 0; font-weight: 700; }
-.c-app h2 { margin: 0 0 4px; font-size: 1.625rem; line-height: 1.2; }
+.c-app h2, .c-app .c-safety h1 { margin: 0 0 4px; font-size: 1.625rem; line-height: 1.2; }
 .c-app .c-h3 { font-size: 1.25rem; margin: 24px 0 4px; }
 .c-lead { font-size: 1.25rem; color: var(--c-soft); margin: 0 0 16px; }
 .c-muted { color: var(--c-soft); margin: 4px 0 12px; }

@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { EYES } from './eyes';
 import { PROP_NAME } from './props';
 import { blinkGap, seeded } from './useLife';
@@ -11,6 +11,8 @@ import { CalmMascot, type MascotMood } from './index';
 const MOODS: readonly MascotMood[] = ['idle', 'happy', 'sleepy', 'listening', 'breathing', 'focus', 'steering', 'tired', 'done', 'offline', 'error', 'loading'];
 const SIZES = [24, 40, 72, 120, 190, 400] as const;
 const css = readFileSync(join(__dirname, 'mascot.css'), 'utf8');
+// The frame watcher would add a timer of its own (jsdom runs rAF on a timer). It has its own test.
+beforeEach(() => { vi.stubGlobal('requestAnimationFrame', undefined); });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 /** Stubs matchMedia so only the listed queries match. */

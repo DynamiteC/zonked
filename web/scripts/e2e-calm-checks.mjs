@@ -1,6 +1,6 @@
 // Calm front door checks (C1 to C7, L1): safety before sound, onboarding, theme switch, week wording,
 // reduced motion, 375 px layout. Each check runs in its own browser context with no pre-set keys.
-import { newSession, nav } from './e2e-helpers.mjs';
+import { newSession, nav, dismissGuide } from './e2e-helpers.mjs';
 
 const CHAIN = /streak|chain|lost|broke|miss(ed)?\b/i;
 
@@ -166,8 +166,11 @@ export async function runCalmChecks(h) {
       const text = await s.page.getByTestId('end-card').innerText();
       h.assert(/Done for now\./.test(text) && /played for/.test(text), `card text: ${text}`);
       h.assert(!/tomorrow|streak|missed/i.test(text), 'pressure wording on end card');
+      await s.page.clock.runFor(1500);
       await s.page.getByTestId('end-close').click();
       h.assert((await s.page.getByTestId('end-card').count()) === 0, 'card still shown after Close');
+      // The guide opens once, right after the card is closed.
+      await dismissGuide(s.page);
       await nav(s.page, 'Today').click();
       // Play again shows only when the last session differs from today's pick; otherwise one Start.
       await s.page.getByTestId('today-play').waitFor();

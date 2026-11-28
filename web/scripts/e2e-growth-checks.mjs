@@ -24,7 +24,7 @@ export async function runGrowthChecks(h) {
       await s.page.getByTestId('player-toggle').click();
       await s.page.clock.runFor(2000);
       await s.page.getByTestId('end-card').waitFor();
-      await s.page.getByTestId('guide-skip').waitFor();
+      // The guide waits until the end card is closed, so there is nothing to dismiss here.
       await dismissGuide(s.page);
       const text = await s.page.getByTestId('end-card').innerText();
       h.assert(/How was that\?/.test(text) && /Calmer/.test(text) && /Same/.test(text) && /Not for me/.test(text), `row text: ${text}`);

@@ -14,6 +14,8 @@ import { runCrewChecks } from './e2e-crew-checks.mjs';
 import { runNatureChecks } from './e2e-nature-checks.mjs';
 import { runResetChecks } from './e2e-reset-checks.mjs';
 import { runGrowthChecks } from './e2e-growth-checks.mjs';
+import { runReleaseChecks } from './e2e-release-checks.mjs';
+import { runFeatureChecks } from './e2e-features-checks.mjs';
 
 const results = [];
 const info = [];
@@ -166,6 +168,8 @@ try {
   await runCrewChecks(harness);
   await runResetChecks(harness);
   await runGrowthChecks(harness);
+  await runReleaseChecks(harness);
+  await runFeatureChecks(harness);
   await runMixedContent(harness);
   await check('Z1 no CSP violation in any browser context of this run', async () => {
     const v = harness.cspViolations ?? [];

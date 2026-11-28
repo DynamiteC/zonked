@@ -1,10 +1,10 @@
-import { useId, useMemo, useRef, type CSSProperties, type JSX } from 'react';
+import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type JSX } from 'react';
 import './mascot.css';
 import { Defs, HeadLayer, MotesLayer, ShadowLayer } from './layers';
 import { BandLayer, RippleLayer } from './layersExtra';
 import { PropLayer } from './props';
 import type { CalmMascotProps } from './types';
-import { isLowPower } from './lowPower';
+import { isLowPower, slowDeviceSeen, watchFrames } from './lowPower';
 import { useLife } from './useLife';
 import { useParallax } from './useParallax';
 
@@ -28,7 +28,10 @@ export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = '
   const still = reducedMotion ?? prefersReduced();
   const px = Number.isFinite(size) ? Math.max(24, Math.min(640, size)) : 220;
   const compact = px <= COMPACT_MAX;
-  const lowPower = useMemo(() => still || isLowPower(), [still]);
+  const [slow, setSlow] = useState(slowDeviceSeen);
+  const lowPower = useMemo(() => still || slow || isLowPower(), [still, slow]);
+  // Times real frames for a moment. Over 20 ms on average turns the paint filter and parallax off for this visit.
+  useEffect(() => (still || lowPower ? undefined : watchFrames(() => setSlow(true))), [still, lowPower]);
   const lite = px < LITE_BELOW || lowPower;
   // The head breathes: about 3 percent larger and a little higher on inhale. Still under reduced motion.
   const lift: CSSProperties | undefined = breathPhase !== undefined && !still ? { scale: String(1 + unit(breathPhase) * 0.03), translate: `0 ${(-unit(breathPhase) * 1.2).toFixed(2)}%` } : undefined;
@@ -37,7 +40,7 @@ export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = '
   return (
     <div
       ref={stage}
-      className={`cm-stage cm-${mood}${situation ? ` cm-s-${situation}` : ''}${still ? ' cm-still' : ''}${compact ? ' cm-compact' : ''}${breathPhase !== undefined ? ' cm-driven' : ''}`}
+      className={`cm-stage cm-${mood}${situation ? ` cm-s-${situation}` : ''}${still ? ' cm-still' : ''}${lowPower && !still ? ' cm-low' : ''}${compact ? ' cm-compact' : ''}${breathPhase !== undefined ? ' cm-driven' : ''}`}
       style={{ width: px, height: px, '--bp': unit(breathPhase), '--lv': level === undefined && mood === 'listening' ? 0.35 : unit(level) } as CSSProperties}
       role="img"
       aria-label={label}

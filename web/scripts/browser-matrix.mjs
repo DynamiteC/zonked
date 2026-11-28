@@ -12,6 +12,13 @@ import { join } from 'node:path';
 import { chromium, firefox, webkit } from '@playwright/test';
 import { ROOT, WEB, freePort, sleep } from './e2e-lib.mjs';
 import { newSession, nav } from './e2e-helpers.mjs';
+import { runCalmChecks } from './e2e-calm-checks.mjs';
+import { runCrewChecks } from './e2e-crew-checks.mjs';
+import { runNatureChecks } from './e2e-nature-checks.mjs';
+import { runResetChecks } from './e2e-reset-checks.mjs';
+import { runGrowthChecks } from './e2e-growth-checks.mjs';
+import { runReleaseChecks } from './e2e-release-checks.mjs';
+import { runFeatureChecks } from './e2e-features-checks.mjs';
 
 const OUT = join(ROOT, '.work', 'matrix');
 const SHOTS = join(OUT, 'shots');
@@ -111,7 +118,7 @@ async function launch(name) {
   return ENGINES[name].launch(opts);
 }
 
-const CHECK_LIMIT_MS = 90000;
+const CHECK_LIMIT_MS = 150000;
 const AC_COUNT = () => {
   window.__acCount = 0;
   const Base = window.AudioContext || window.webkitAudioContext;
@@ -351,6 +358,31 @@ const standalone = (env) => [
   ['fallback-no-sharedarraybuffer', () => playsWithout(env, () => { Object.defineProperty(window, 'SharedArrayBuffer', { value: undefined, configurable: true, writable: true }); }, (st) => st.usesSharedMemory === false)],
 ];
 
+const FEATURE_RUNNERS = [runCalmChecks, runCrewChecks, runNatureChecks, runResetChecks, runGrowthChecks, runReleaseChecks, runFeatureChecks];
+
+/** The real-browser feature checks (the same functions verify:e2e runs) collected as [id, name, fn] for one browser and viewport. */
+async function collectFeatureChecks(browser, origin, extra) {
+  const found = [];
+  const wrapped = {
+    newContext: (o = {}) => {
+      const isDefault = o.viewport?.width === 1280 && o.viewport?.height === 720;
+      return browser.newContext({ ...o, ...(isDefault ? extra : {}) });
+    },
+  };
+  const h = { browser: wrapped, origin, assert, check: async (name, fn) => void found.push([name.split(' ')[0], name, fn]), info: () => undefined };
+  for (const run of FEATURE_RUNNERS) await run(h);
+  return found;
+}
+
+const FEATURE_LABELS = Object.fromEntries(
+  (await (async () => {
+    const found = [];
+    const h = { browser: null, origin: '', assert, check: async (name) => void found.push([name.split(' ')[0], name]), info: () => undefined };
+    for (const run of FEATURE_RUNNERS) await run(h);
+    return found;
+  })()).map(([id, name]) => [id, `real browser: ${name.slice(id.length + 1)}`]),
+);
+
 export const CHECK_LABELS = {
   load: 'first load, no console errors',
   skip: 'onboarding skip path',
@@ -370,6 +402,7 @@ export const CHECK_LABELS = {
   'fallback-no-wakelock': 'fallback: no wake lock',
   'fallback-no-mediasession': 'fallback: no MediaSession',
   'fallback-no-sharedarraybuffer': 'fallback: no SharedArrayBuffer',
+  ...FEATURE_LABELS,
 };
 
 /** Runs one check. A failure keeps the message, the console text and a screenshot path. */
@@ -410,6 +443,7 @@ async function runCombo(browser, engine, vpName, origin) {
   for (const [id, fn] of flow.steps) await run(id, fn, flow.current);
   await flow.close();
   for (const [id, fn] of standalone(env)) await run(id, fn);
+  for (const [id, , fn] of await collectFeatureChecks(browser, origin, extra)) await run(id, fn);
   return { engine, viewport: vpName, results };
 }
 
