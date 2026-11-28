@@ -100,21 +100,23 @@ export async function runCalmChecks(h) {
     }
   });
 
-  await h.check('C4 theme switch to Studio and back persists across reload', async () => {
+  await h.check('C4 the Studio link and Alt+Shift+S open the Player with Options on Advanced, and no Studio page is stored', async () => {
     const s = await open(h);
     try {
       await finishOnboarding(s.page);
       await nav(s.page, 'You').click();
       await s.page.getByTestId('studio-switch').click();
-      await s.page.getByTestId('play-button').waitFor();
-      h.assert((await s.page.evaluate(() => localStorage.getItem('zonked.theme.v1'))) === 'studio', 'key not studio');
+      await s.page.getByTestId('options-sheet').waitFor();
+      h.assert((await s.page.getByTestId('options-advanced').getAttribute('aria-expanded')) === 'true', 'Advanced not open');
+      await s.page.getByTestId('advanced-panels').waitFor();
+      h.assert((await s.page.evaluate(() => localStorage.getItem('zonked.theme.v1'))) !== 'studio', 'theme key set to studio');
+      await s.page.keyboard.press('Escape');
+      await s.page.getByTestId('options-sheet').waitFor({ state: 'detached' });
+      await s.page.keyboard.press('Alt+Shift+S');
+      await s.page.getByTestId('advanced-panels').waitFor();
       await s.page.reload();
-      await s.page.getByTestId('play-button').waitFor();
-      await s.page.getByTestId('back-to-calm').click();
-      await s.page.getByTestId('greeting').waitFor();
-      await s.page.reload();
-      await s.page.getByTestId('greeting').waitFor();
-      h.assert((await s.page.evaluate(() => localStorage.getItem('zonked.theme.v1'))) === 'calm', 'key not calm');
+      await s.page.getByTestId('greeting').or(s.page.getByTestId('player-toggle')).first().waitFor();
+      h.assert((await s.page.getByTestId('play-button').count()) === 0, 'old Studio page reachable');
     } finally {
       await s.context.close();
     }
@@ -157,6 +159,9 @@ export async function runCalmChecks(h) {
       await s.page.getByTestId('player-toggle').click();
       await s.page.clock.runFor(2000);
       await s.page.getByTestId('end-card').waitFor();
+      await s.page.getByTestId('guide').waitFor();
+      await s.page.keyboard.press('Escape');
+      await s.page.getByTestId('guide').waitFor({ state: 'detached' });
       const text = await s.page.getByTestId('end-card').innerText();
       h.assert(/Done for now\./.test(text) && /played for/.test(text), `card text: ${text}`);
       h.assert(!/tomorrow|streak|missed/i.test(text), 'pressure wording on end card');
@@ -190,10 +195,16 @@ export async function runCalmChecks(h) {
     try {
       await b.page.getByRole('button', { name: 'Skip, just play' }).click();
       await b.page.getByTestId('calm-safety-accept').click();
-      await b.page.getByTestId('player-nature').waitFor();
+      await b.page.getByTestId('player-options').waitFor();
       const tab = await top(b.page.locator('.c-tabbar'));
-      h.assert((await bottom(b.page.getByTestId('player-nature'))) <= tab, 'Add nature sound sits under the tab bar at 360x740');
-      h.assert((await b.page.getByRole('button', { name: '30 min' }).getAttribute('aria-pressed')) === 'false', 'timer chip has no aria-pressed');
+      h.assert((await bottom(b.page.getByTestId('player-options'))) <= tab, 'Options button sits under the tab bar at 360x740');
+      await b.page.getByTestId('player-options').click();
+      const chip = b.page.getByTestId('options-sheet').getByRole('button', { name: '30 min' });
+      h.assert((await chip.getAttribute('aria-pressed')) === 'false', 'timer chip has no aria-pressed');
+      await chip.click();
+      h.assert((await chip.getAttribute('aria-pressed')) === 'true', 'active timer chip not pressed');
+      h.assert((await b.page.getByTestId('options-sheet').locator('.rf-tick').allInnerTexts()).join('|') === 'More beats|Even|More nature', 'blend ticks');
+      await b.page.keyboard.press('Escape');
       await nav(b.page, 'Sounds').click();
       await b.page.getByTestId('open-nature').click();
       await b.page.getByTestId('nature-rain').waitFor();

@@ -1,6 +1,6 @@
 // UI v2 checks: mascot (viewports), mobile layout, tooltips, Quick Start. Checks 20 and up.
 import { runMascotChecks } from './e2e-mascot-checks.mjs';
-import { newSession, openAdvanced, sleep, state } from './e2e-helpers.mjs';
+import { newSession, openAdvanced, sleep, state, touchHold } from './e2e-helpers.mjs';
 
 const MOBILE = { width: 390, height: 844 };
 
@@ -71,22 +71,23 @@ async function tooltipChecks(h) {
       await tooltips(page).first().waitFor({ state: 'detached' });
       await play.focus();
       await tooltips(page).first().waitFor();
-      const id = await tooltips(page).first().getAttribute('id');
-      const d = (await play.getAttribute('aria-describedby')) ?? '';
-      h.assert(id && d.split(' ').includes(id), `aria-describedby "${d}" lacks ${id}`);
+      const tip = (await tooltips(page).first().innerText()).trim();
+      const d = ((await play.getAttribute('aria-describedby')) ?? '').split(' ').filter(Boolean);
+      const texts = await Promise.all(d.map((i) => page.locator(`[id="${i}"]`).innerText()));
+      h.assert(texts.some((t) => t.trim() === tip), `aria-describedby ${JSON.stringify(d)} does not point at the tip text`);
     });
-    await h.check('T3 Escape closes the tooltip and removes aria-describedby', async () => {
+    await h.check('T3 Escape closes the tooltip (the hidden description stays for screen readers)', async () => {
       await page.keyboard.press('Escape');
       await tooltips(page).first().waitFor({ state: 'detached' });
-      h.assert(!(await play.getAttribute('aria-describedby')), 'aria-describedby still set');
+      h.assert(((await play.getAttribute('aria-describedby')) ?? '') !== '', 'description link lost');
     });
     await h.check('T4 reduced motion removes the animation class', async () => {
       const cls = async () => {
         await page.mouse.move(5, 5);
         await page.evaluate(() => document.activeElement instanceof HTMLElement && document.activeElement.blur());
         await play.focus();
-        const id = await page.waitForFunction(() => document.querySelector('[data-testid=play-button]').getAttribute('aria-describedby'));
-        return page.locator(`[id="${await id.jsonValue()}"]`).getAttribute('class');
+        await tooltips(page).first().waitFor();
+        return tooltips(page).first().getAttribute('class');
       };
       const before = await cls();
       await page.getByLabel('Reduce motion').check();
@@ -96,17 +97,18 @@ async function tooltipChecks(h) {
   } finally {
     await s.context.close().catch(() => {});
   }
-  await h.check('T5 tap on "?" at 390x844 shows tooltip inside viewport', async () => {
+  await h.check('T5 touch hold on Play at 390x844 shows the tooltip inside the viewport and does not start it', async () => {
     const t = await openFresh(h, { viewport: MOBILE, hasTouch: true, isMobile: true }, '/?e2e=1');
     try {
-      const btn = t.page.getByRole('button', { name: 'About Play and Stop' });
-      await btn.scrollIntoViewIfNeeded();
-      await btn.tap();
+      const play = t.page.getByTestId('play-button');
+      await play.scrollIntoViewIfNeeded();
+      await touchHold(play);
       const tip = tooltips(t.page).first();
       await tip.waitFor();
       const b = await tip.boundingBox();
       h.assert(b && b.x >= 0 && b.y >= 0 && b.x + b.width <= 390 && b.y + b.height <= 844, `tooltip box ${JSON.stringify(b)}`);
-      h.assert(!!(await btn.getAttribute('aria-describedby')) || !!(await t.page.getByTestId('play-button').getAttribute('aria-describedby')), 'no aria-describedby while open');
+      await play.evaluate((el) => el.click());
+      h.assert((await state(t.page)) !== 'running', 'the held press also started playback');
       return `box x=${b.x.toFixed(0)} w=${b.width.toFixed(0)}`;
     } finally {
       await t.context.close().catch(() => {});

@@ -1,5 +1,5 @@
 // Sanctuary UX checks: first screen, sound cards, mix view, calm dial, Inspect, More menu, reduced motion.
-import { newSession, num, openAdvanced, openMore, sleep } from './e2e-helpers.mjs';
+import { newSession, num, openAdvanced, openMore, sleep, touchHold } from './e2e-helpers.mjs';
 
 const MOBILE = { width: 390, height: 844 };
 
@@ -140,13 +140,17 @@ export async function runUxChecks(_page, h) {
       await t.context.close().catch(() => {});
     }
   });
-  await h.check('T6 pinned tooltip stays after the mouse leaves', async () => {
+  await h.check('T6 a long press on Play shows the tooltip and swallows the tap; a short click still plays', async () => {
     const t = await fresh(h, { width: 1280, height: 720 });
     try {
-      await t.page.getByRole('button', { name: 'About Play and Stop' }).click();
-      await t.page.mouse.move(600, 400);
-      await sleep(1000);
-      h.assert((await t.page.getByRole('tooltip').count()) === 1, 'tooltip closed');
+      const play = t.page.getByTestId('play-button');
+      await touchHold(play);
+      await t.page.getByRole('tooltip').first().waitFor();
+      await play.evaluate((el) => el.click());
+      await sleep(500);
+      h.assert((await t.page.getByTestId('engine-status').getAttribute('data-state')) !== 'running', 'the long press fired the tap');
+      await play.click();
+      await t.page.waitForFunction(() => document.querySelector('[data-testid=engine-status]')?.dataset.state === 'running', null, { timeout: 20000 });
     } finally {
       await t.context.close().catch(() => {});
     }

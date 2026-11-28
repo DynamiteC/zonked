@@ -101,3 +101,19 @@ export async function openPanel(page, toggle, panel) {
   if (!(await page.getByTestId(panel).isVisible().catch(() => false))) await openMore(page, toggle);
   await page.getByTestId(panel).waitFor();
 }
+
+/** Holds a touch on an element for ms (default 600, past the 500 ms tip delay) and releases. Returns after the release; the click that follows is the caller's. */
+export async function touchHold(locator, ms = 600) {
+  const b = await locator.boundingBox();
+  const x = b.x + b.width / 2;
+  const y = b.y + b.height / 2;
+  await locator.evaluate((el, pt) => el.dispatchEvent(new PointerEvent('pointerdown', { pointerType: 'touch', bubbles: true, clientX: pt.x, clientY: pt.y })), { x, y });
+  await new Promise((r) => setTimeout(r, ms));
+  await locator.evaluate((el) => el.dispatchEvent(new PointerEvent('pointerup', { pointerType: 'touch', bubbles: true })));
+}
+
+/** Closes the help Guide with its own Skip button when it is open. Keeps the real flow: no flag, no storage seed. */
+export async function dismissGuide(page) {
+  const skip = page.getByTestId('guide-skip');
+  if (await skip.isVisible().catch(() => false)) await skip.click();
+}
