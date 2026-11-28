@@ -72,3 +72,5 @@
 
 .c-blend { --rf-accent: var(--c-accent-edge); --rf-line: var(--c-edge); --rf-bg: var(--c-bg); --rf-panel: var(--c-bg); --rf-text: var(--c-text); --rf-muted: var(--c-soft); }
 .c-blend .rf-input { width: 100%; }
+.c-blend { padding: 0 28px; box-sizing: border-box; grid-template-columns: minmax(0, 1fr); }
+.c-blend .rf { min-width: 0; }
