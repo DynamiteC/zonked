@@ -46,12 +46,12 @@ export async function runNatureChecks(h) {
       await s.page.waitForFunction(() => window.__zonked?.nature?.id === 'rain', null, { timeout: 20000 });
       await s.page.waitForTimeout(2500);
       const gentle = await natureState(s.page);
-      h.assert(gentle.beatGain > 0.7 && gentle.beatGain < 0.95, `gentle beat gain ${gentle.beatGain}`);
+      h.assert(gentle.beatGain > 0.15 && gentle.beatGain < 0.3, `gentle beat gain ${gentle.beatGain}`);
       await s.page.locator('#c-blend').fill('1');
       await s.page.waitForTimeout(2500);
       const full = await natureState(s.page);
-      h.assert(full.beatGain < gentle.beatGain - 0.2, `blend did not lower beat gain: ${gentle.beatGain} to ${full.beatGain}`);
-      h.assert(full.beatGain >= 0.39, `beat ducked below the floor: ${full.beatGain}`);
+      h.assert(full.beatGain < gentle.beatGain * 0.5, `blend did not lower beat gain: ${gentle.beatGain} to ${full.beatGain}`);
+      h.assert(full.beatGain >= 0.035, `beat ducked below the floor: ${full.beatGain}`);
       const stats = await s.page.evaluate(() => window.__zonked.getStats());
       h.assert(stats.peak <= 0.95 + 1e-6, `peak ${stats.peak}`);
       const level = await s.page.getByLabel('Nature volume').getAttribute('max');

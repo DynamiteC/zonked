@@ -59,7 +59,7 @@ export function MiniPlayer({ snap, crewPresetId = null, onOpen, onStop }: MiniPr
   if (!snap.playing) return null;
   const left = snap.timer.kind !== 'none' && snap.timer.running ? formatClock(snap.timer.remainingSec) : '';
   return (
-    <div className="c-mini" role="group" aria-label="Now playing">
+    <div className="c-mini" role="region" aria-label="Now playing">
       <button type="button" className="c-btn c-link c-mini-open" onClick={onOpen}>
         {sessionName(snap, crewPresetId)}
         {left !== '' && <span className="c-digits">{` ${left}`}</span>}

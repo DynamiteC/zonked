@@ -109,6 +109,8 @@ export const STAGES = [
   // The Vitest suites stub the audio engine; only this stage reads the real output.
   // The build above is fresh, so the e2e run may reuse it.
   sh('verify-e2e', 'npm --prefix web run verify:e2e', '.', 'checks', { ...process.env, ZONKED_SKIP_BUILD: '1' }),
+  // axe-core on every main screen, light and dark, phone and desktop, plus a keyboard pass. Automated only: see docs/ACCESSIBILITY.md.
+  sh('a11y-check', 'npm --prefix web run check:a11y', '.', null, { ...process.env, ZONKED_SKIP_BUILD: '1' }),
   // Three engines, three viewports. It builds HEAD in its own worktree and writes .work/matrix/results.json.
   sh('browser-matrix', 'node web/scripts/browser-matrix.mjs'),
 ];

@@ -35,7 +35,7 @@ export function SafetyNotice({ onAccept, onCancel, onBack }: Props): React.JSX.E
 
   const body = (
     <div className="c-safety" ref={box} onKeyDown={onKey}>
-      <h2 id="c-safety-title">{CALM.safetyTitle}</h2>
+      {onCancel === undefined ? <h1 id="c-safety-title">{CALM.safetyTitle}</h1> : <h2 id="c-safety-title">{CALM.safetyTitle}</h2>}
       <ul className="c-safe-list">
         {CALM.safetyLines.map((l) => (
           <li key={l}>{l}</li>

@@ -7,6 +7,7 @@ import { installE2E } from '../../app/e2e';
 import { reportPlaying } from '../../app/swUpdate';
 import { useReducedMotion, safeStorage } from '../../app/useReducedMotion';
 import { useSessionPlumbing } from '../../app/useSessionPlumbing';
+import { resolveShortcut } from '../../app/shortcuts';
 import { WakeLockController } from '../../app/wakeLock';
 import { templateToEvents } from '../../catalog/events';
 import type { Template } from '../../catalog/types';
@@ -100,6 +101,16 @@ export function useCalmSession(engine: AudioEngine, clock: Clock = realClock, st
   const actions = useRef<Parameters<typeof useSessionPlumbing>[0]['actions']['current']>({});
   actions.current = { 'play-pause': toggle };
   useSessionPlumbing({ player, engine, wake, snap, snapRef, actions });
+  // Space plays or pauses when nothing else has focus. A focused button or field keeps its own Space.
+  useEffect(() => {
+    const on = (e: KeyboardEvent): void => {
+      if (e.target !== document.body || e.repeat || resolveShortcut(e) !== 'play-pause') return;
+      e.preventDefault();
+      actions.current['play-pause']?.();
+    };
+    window.addEventListener('keydown', on);
+    return () => window.removeEventListener('keydown', on);
+  }, []);
 
   return { engine, player, store, snap, accepted, gate, reduced, setReduced, userReduced, guarded, accept, cancelGate, playTemplate, toggle };
 }
