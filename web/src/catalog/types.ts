@@ -71,7 +71,7 @@ export interface Template {
   readonly adhdFriendly: boolean;
   readonly stages: readonly Stage[];
   readonly reasonTemplate: string;
-  readonly source?: 'android' | 'gnaural' | 'original';
+  readonly source?: 'original';
   readonly breath?: { readonly inSec: number; readonly outSec: number };
 }
 
@@ -114,3 +114,15 @@ export const VIBES: readonly Vibe[] = [
 export const LAYER_TAGS: readonly LayerTag[] = [
   'binaural', 'isochronic', 'monaural', 'noise', 'lofi', 'instrument', 'pad', 'chimes', 'percussion',
 ];
+
+/** Plain words for the internal category ids. Ids stay stable because saved data and tests use them. */
+export const CATEGORY_LABEL: Readonly<Record<Category, string>> = {
+  vibes: 'Moods',
+  healing: 'Gentle',
+  'lucid-dreams': 'Dreamy',
+  meditation: 'Meditation',
+  sleep: 'Evening',
+  'adhd-control': 'Steady',
+  focus: 'Focus',
+  'work-recovery': 'Breaks',
+};

@@ -38,17 +38,26 @@ export const CALM = {
   preview: 'Hear 10 s',
   previewing: 'Playing a short preview',
   safetyTitle: 'Before you start',
+  // Wording needs a lawyer's review before any store listing.
   safetyLines: [
+    'Ask a doctor first if you have a seizure disorder, a serious mental health condition, tinnitus or sensitive hearing.',
+    'Start at a very low volume. Raise it only until you can still talk easily.',
     'Use stereo headphones for the best effect.',
-    'Keep the volume low.',
     'Zonked fades in slowly.',
-    'Zonked is not a medical device.',
-    'Stop any time.',
+    'Do not use it while driving or operating machinery.',
+    'If flashing or motion bothers you, turn on Reduce motion.',
+    'Stop if you feel dizzy, anxious, in pain, or your ears ring or feel full.',
     'Stop if anything feels uncomfortable.',
+    'Zonked is not a medical device.',
   ],
-  safetyLimits: 'Built-in limits: carrier tone 20 to 1500 Hz, beat at most 40 Hz, volume always capped.',
+  safetyLimits: 'Zonked keeps every sound inside fixed safe limits and never goes above a set volume cap. Your headphones still decide how loud it is.',
   safetyAccept: 'I understand, start',
   notMedical: 'Zonked is not a medical device.',
+  adultsNote: 'Zonked is made for adults. Ask a parent or carer before a child listens.',
+  helpLine: 'If you feel very low or in distress, please contact a local helpline or someone you trust. Zonked cannot help in a crisis.',
+  sleepNote: 'If sleep trouble lasts, talk to a doctor.',
+  untilStopHint: 'Until I stop plays for up to 2 hours, then fades out on its own.',
+  longSessionNote: 'This is a long session. Take a break if you need one.',
   dailyEyebrow: 'Your session for today',
   suggested: 'Suggested for you',
   forYou: 'For you',
@@ -97,9 +106,9 @@ export const CALM = {
   whyBody:
     'Some small studies suggest slow beats may help people relax. Results vary and may not happen for you. Zonked is not a medical device.',
   volumeCapped: 'Volume is capped for your safety.',
-  btTip: "If it sounds swooshy, set your computer's sound input to its own microphone so the headphones stay in music mode.",
+  btTip: "If it sounds swooshy, set your computer's sound input to its own microphone so the headphones stay in music mode. In-ear and Bluetooth headphones can sound louder than you expect, so start very quiet.",
   deviceTitle: 'How do you listen?',
-  deviceHint: 'Bluetooth mode softens hiss that Bluetooth can smear. It never changes the beat or the volume limits.',
+  deviceHint: 'Bluetooth mode softens hiss that Bluetooth can smear. It never changes the beat or the volume limits. In-ear and Bluetooth headphones can sound louder than you expect, so start very quiet.',
   favorite: 'Favorite',
   guideLink: 'How it works',
   guideStep: (n: number) => `${n} of 3`,
@@ -107,8 +116,8 @@ export const CALM = {
   guideDone: 'Done',
   guideCrewLink: 'Open Crew and try the demo',
   guideCards: [
-    { title: 'Press Start, and the sound fades in slowly', body: 'Pick a sound or press Start on Today. The sound rises softly over a few seconds, and you can stop whenever you like.' },
-    { title: 'Options holds the extras', body: 'Open Options on the player for the timer, a nature sound and your favorite. Everything else stays out of the way.' },
+    { title: 'Press Start, and the sound fades in slowly', body: 'Pick a sound or press Start on Today. The sound rises softly over a few seconds, and you can stop whenever you like. Start very quiet, and raise the volume only until you can still talk easily.' },
+    { title: 'Options holds the extras', body: 'Open Options on the player for the timer, a nature sound and your favorite. Everything else stays out of the way. Ask a doctor first if you have a seizure disorder, a serious mental health condition, tinnitus or sensitive hearing. Stop if you feel dizzy or your ears ring.' },
     { title: 'Crew can ease the sound while you code', body: 'When Crew is on, it can soften the sound as your session gets busy. You can try the demo first, with no setup.' },
   ] as const,
   optionsBtn: 'Options',
@@ -138,7 +147,7 @@ export const CALM = {
   crewBreak: 'Time for a break',
   crewPrivacy: 'Nothing leaves your computer.',
   crewOptional: 'Crew is optional. Zonked works fully without it.',
-  crewScore: 'Load score',
+  crewScore: 'Activity score',
   crewBeat: 'Beat now',
   crewNext: 'Next change',
   crewWhyTitle: 'Why',
@@ -149,7 +158,7 @@ export const CALM = {
   crewFollowing: 'Following the Crew',
   crewOverridden: 'You picked a sound yourself, so the Crew is not steering it.',
   crewFollowNow: 'Let the Crew steer',
-  crewNextReal: (clock: string) => `Not before ${clock}, and only if your load moves to another band.`,
+  crewNextReal: (clock: string) => `Not before ${clock}, and only if your activity moves to another band.`,
   crewNextWait: 'Waiting for the first change.',
   crewNextDemo: (sec: number) => `in ${sec} s`,
   crewNextDemoLast: (sec: number) => `none, the demo ends in ${sec} s`,
@@ -171,11 +180,11 @@ export const CALM = {
   resetEntry: 'A short pause, 90 seconds',
   resetEntryHint: 'Slow breathing with soft sound.',
   resetTitle: 'A short pause',
-  resetIntro: 'Ninety seconds of slow breathing with a soft sound. Stop any time.',
+  resetIntro: 'Ninety seconds of slow breathing with a soft sound. Stop if you feel dizzy, or any time.',
   breatheEntry: 'Breathe, 5 minutes',
   breatheEntryHint: 'Many people find slow breathing calming.',
   breatheTitle: 'Breathe, 5 minutes',
-  breatheIntro: 'Many people find slow breathing calming. Soft noise, nothing to follow. Stop any time.',
+  breatheIntro: 'Many people find slow breathing calming. Soft noise, nothing to follow. Stop if you feel dizzy, or any time.',
   breatheDoneLine: 'That was 5 minutes of slow breathing.',
   breatheAgain: 'Breathe again',
   breatheLeft: (sec: number) => `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')} left`,
@@ -257,17 +266,17 @@ export interface Feeling {
 
 export const FEELINGS: readonly Feeling[] = [
   { id: 'deep-work', label: 'Focus', mood: 'Steady and quiet', icon: 'target' },
-  { id: 'adhd-focus', label: 'Steady attention', mood: 'Even and plain', icon: 'wave' },
+  { id: 'adhd-focus', label: 'Steady', mood: 'Even and plain', icon: 'wave' },
   { id: 'ai-burnout', label: 'Recover', mood: 'Slow and soft', icon: 'leaf' },
   { id: 'heal-stress', label: 'Calm down', mood: 'Warm and gentle', icon: 'heart' },
   { id: 'cant-sleep', label: 'Sleep', mood: 'Dim and slow', icon: 'moon' },
-  { id: 'lucid-dream', label: 'Dream', mood: 'Drifting', icon: 'cloud' },
+  { id: 'lucid-dream', label: 'Dreamy', mood: 'Drifting', icon: 'cloud' },
   { id: 'meditate', label: 'Meditate', mood: 'Open and still', icon: 'lotus' },
   { id: 'quick-reset', label: 'Quick reset', mood: 'Short and light', icon: 'bolt' },
 ];
 
 export const EVIDENCE: Readonly<Record<string, string>> = {
-  strong: 'Several studies exist.',
+  strong: 'Some studies exist, and results vary.',
   mixed: 'Studies disagree.',
   preliminary: 'Early, small studies.',
   limited: 'Very little research.',
@@ -278,15 +287,15 @@ export const EVIDENCE: Readonly<Record<string, string>> = {
 export function greeting(hour: number): string {
   if (hour >= 5 && hour < 12) return 'Good morning.';
   if (hour >= 12 && hour < 17) return 'Good afternoon.';
-  if (hour >= 17 && hour < 21) return 'Good evening.';
+  if (hour >= 17 && hour < 22) return 'Good evening.';
   return 'Hello, night owl.';
 }
 
 const LEVEL_LINE: Readonly<Record<CrewState['burnout']['level'], string>> = {
-  focus: 'Your load looks light',
-  flow: 'Your load is building',
-  recovery: 'Your load is high',
-  decompress: 'Your load is very high',
+  focus: 'Your activity looks light',
+  flow: 'Your activity is building',
+  recovery: 'Your activity is high',
+  decompress: 'Your activity is very high',
 };
 
 /** Beat as a short string: 10, 7.5. */

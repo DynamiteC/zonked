@@ -52,7 +52,7 @@ export function setMediaMetadata(t: MediaTemplateInfo | null, nav: Navigator = n
     ms.metadata = new MediaMetadata({
       title: t?.name ?? 'Zonked',
       artist: 'Zonked',
-      album: t?.category ?? 'Acoustic recovery',
+      album: 'Zonked',
       artwork: ARTWORK,
     });
   } catch {

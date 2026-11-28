@@ -1,6 +1,6 @@
 ---
 name: acoustic-sequencer
-description: Turns the burnout score into a safe, smooth acoustic target and writes .zonked-state.json.
+description: Turns the activity score into a safe, smooth acoustic target and writes .zonked-state.json.
 tools: ["read", "write"]
 ---
 

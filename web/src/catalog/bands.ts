@@ -27,7 +27,7 @@ const CAVEAT = 'Not a medical device. Results vary and may not happen for you.';
 export const BAND_GUIDE: readonly BandInfo[] = [
   { name: 'Delta', minHz: 0.5, maxHz: 4, mayHelp: 'rest and sleep', evidence: 'limited', note: `Little direct research on beats at this range. Steady noise has some sleep studies. ${CAVEAT}`, sources: [S.zhou, S.ingendoh] },
   { name: 'Theta', minHz: 4, maxHz: 8, mayHelp: 'meditation and drowsy calm', evidence: 'preliminary', note: `Small studies only. ${CAVEAT}`, sources: [S.chaieb, S.ingendoh] },
-  { name: 'Alpha', minHz: 8, maxHz: 13, mayHelp: 'stress relief and relaxed focus', evidence: 'mixed', note: `Some trials show lower anxiety, others show no effect. ${CAVEAT}`, sources: [S.garcia, S.padma, S.mallik] },
+  { name: 'Alpha', minHz: 8, maxHz: 13, mayHelp: 'a relaxed feeling and easy focus', evidence: 'mixed', note: `Some trials report calmer feelings, others show no effect. ${CAVEAT}`, sources: [S.garcia, S.padma, S.mallik] },
   { name: 'Beta', minHz: 13, maxHz: 30, mayHelp: 'alert focus', evidence: 'mixed', note: `One small study saw better vigilance, another saw no change. ${CAVEAT}`, sources: [S.lane, S.goodin, S.garcia] },
   { name: 'Gamma', minHz: 30, maxHz: 40, mayHelp: 'alert attention (experimental)', evidence: 'limited', note: `Very little evidence. Keep sessions short and volume low. ${CAVEAT}`, sources: [S.chaieb, S.ingendoh] },
 ];

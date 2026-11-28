@@ -1,6 +1,6 @@
 ---
 name: burnout-sentinel
-description: Measures AI-coding session intensity and writes a burnout score to .zonked-signals.json.
+description: Measures AI-coding session intensity and writes an activity score to .zonked-signals.json.
 tools: ["read", "write", "shell"]
 ---
 
@@ -15,7 +15,7 @@ Gather with these commands only. They must match the `shell_allow` list in `crew
 - `git --no-pager log --no-ext-diff --no-textconv --since=60.minutes.ago --pretty=%ct` : commit timestamps in the last hour.
 - `git --no-pager log --no-ext-diff --no-textconv --since=12.hours.ago --pretty=%ct` : to find the session start (first commit after a gap of 90 minutes or more).
 - `git --no-pager status --porcelain` : count of dirty files.
-- The latest build or test result, if a file named `.zonked-build.json` exists (`{"ok": bool, "at": epoch}`). If absent, treat as unknown.
+- The latest build or test result, if a file named `.zonked-build.json` exists (`{"ok": bool, "at": epoch}`). If absent, count it as unknown.
 - `date -u +%s` : current epoch seconds.
 
 Never read secrets, env files or credentials. Never run build or test commands yourself.

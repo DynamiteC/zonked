@@ -3,8 +3,8 @@ import { arch, type CategorySpec } from '../dsl';
 export const HEALING: CategorySpec = {
   category: 'healing',
   prefix: 'healing',
-  adjectives: ['Mending', 'Tender', 'Restoring', 'Kind', 'Balmy', 'Soothing', 'Renewing', 'Warming', 'Settled', 'Easing', 'Gentle', 'Whole'],
-  nouns: ['Balm', 'Spring', 'Embrace', 'Garden', 'Shelter', 'Glow', 'Rain', 'Hearth', 'Sunrise', 'Quilt', 'Oasis', 'Haven'],
+  adjectives: ['Quiet', 'Tender', 'Mellow', 'Kind', 'Balmy', 'Silken', 'Fresh', 'Warming', 'Settled', 'Easing', 'Gentle', 'Round'],
+  nouns: ['Meadow', 'Spring', 'Embrace', 'Garden', 'Shelter', 'Glow', 'Rain', 'Hearth', 'Sunrise', 'Quilt', 'Oasis', 'Haven'],
   archs: [
     arch({
       slug: 'tension-release', shape: 'ramp-down', from: 14, to: 8, mins: [15, 20, 30], carriers: [180, 200, 220],
