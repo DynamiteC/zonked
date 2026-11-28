@@ -113,10 +113,10 @@ describe('layer', () => {
   it('loops, fades in over 2 s and ducks the beat', async () => {
     const m = makeBus();
     const layer = createSampleLayer(deps(m.bus));
-    expect((await layer.start('ocean', 0.85)).ok).toBe(true);
+    expect((await layer.start('rain', 0.85)).ok).toBe(true);
     const h = m.made[0];
     expect(h?.src['loop']).toBe(true);
-    expect(h?.gain.gain.calls).toContainEqual(['ramp', 0.85 * trimGain(2.5), 1 + FADE_IN_SEC]);
+    expect(h?.gain.gain.calls).toContainEqual(['ramp', 0.85 * trimGain(2), 1 + FADE_IN_SEC]);
     expect(m.duck.gain.calls.at(-1)?.[1]).toBeCloseTo(trimGain(-8) * 0.1);
   });
   it('clamps hostile levels', async () => {

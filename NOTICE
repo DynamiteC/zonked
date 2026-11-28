@@ -17,8 +17,8 @@ A. Shipped third-party material (inside the built app)
    licence text is in web/public/fonts/OFL.txt and must travel with every copy
    of the font files.
 
-2. Nature loops. 22 short loops in web/public/samples/, cut and re-encoded from
-   recordings by their authors (21 distinct sources). Each is CC0 1.0 or put in
+2. Nature loops. 20 short loops in web/public/samples/, cut and re-encoded from
+   recordings by their authors (19 distinct sources). Each is CC0 1.0 or put in
    the public domain by its author. Every file, author, source page, licence
    and hash is listed in docs/SAMPLES-LICENSES.md. Saved copies of the source
    pages for the public domain files are in docs/legal/samples/. Thank you to

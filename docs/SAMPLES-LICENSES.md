@@ -13,8 +13,6 @@ Public domain here means the recording author dedicated it to the public domain,
 |---|---|---|---|---|---|---|---|---|---|
 | rain.mp3.json | Rain | ezwa (PDSounds record 682) | https://commons.wikimedia.org/wiki/File:Rain_(1).ogg | Public domain (PD-author, dedicated by the author) | https://commons.wikimedia.org/wiki/Template:PD-author | 2026-11-27 | 0:00-0:35 of source (source SHA-256 31efcbe952a3989a...) | 210716 | ada559df5ca8712ea5bc267bc95339420b8ed5db2b29ff83e8ef1876aa182038 |
 | stream.mp3.json | Stream, river water up close | jackthemurray (Freesound 433589) | https://commons.wikimedia.org/wiki/File:433589_jackthemurray_stream-river-water-up-close.wav | CC0 1.0 | https://creativecommons.org/publicdomain/zero/1.0/ | 2026-11-27 | 0:10-0:45 of source (source SHA-256 be201d2fd0d110fc...) | 210716 | 43b64bead6a4155110b4b5392dfe8eab775c71eadea1f57c626a18dbdef7d468 |
-| ocean.mp3.json | Ocean Waves on a Tropical Beach | Jarrod stanley | https://commons.wikimedia.org/wiki/File:Ocean_Waves_on_a_Tropical_Beach.ogg | CC0 1.0 | https://creativecommons.org/publicdomain/zero/1.0/ | 2026-11-27 | 0:20-0:55 of source (source SHA-256 bae2fc0a0c1d36f4...) | 210716 | d31ae216e2b73c0a19973d03c5c26f12055c35a9f88a49c7d81659a2a9b669d6 |
-| rapids.mp3.json | Florida Rapids | Jarrod stanley | https://commons.wikimedia.org/wiki/File:Florida_Rapids.ogg | CC0 1.0 | https://creativecommons.org/publicdomain/zero/1.0/ | 2026-11-27 | 0:20-0:55 of source (source SHA-256 dd4be4f359fe377c...) | 210716 | bc8f28a90ba4b8063dcea36a3678920da0e31e4e33e03baea2e46aaaebef27de |
 | forest.mp3.json | Forest ambience | nille (PDSounds record 707) | https://commons.wikimedia.org/wiki/File:20090610_0_ambience.ogg | Public domain (PD-author, dedicated by the author) | https://commons.wikimedia.org/wiki/Template:PD-author | 2026-11-27 | 0:05-0:40 of source (source SHA-256 43848c3eda5f4282...) | 210716 | 9570e37c217ef5580de7bfbf238ea4f549f31bc73b6d85f8b04ae5b8629990d9 |
 | birds.mp3.json | Birds singing in garden | ezwa (PDSounds record 128) | https://commons.wikimedia.org/wiki/File:Birds_singing_in_garden.ogg | Public domain (PD-author, dedicated by the author) | https://commons.wikimedia.org/wiki/Template:PD-author | 2026-11-27 | 0:00-0:35 of source (source SHA-256 c3a9cbbecb313810...) | 210716 | 7cd810d7c0b9ed33f232003f8a80a4d672b8d650d74e3cff2765126bc040d199 |
 | breeze.mp3.json | Gentle breeze and birds singing | ezwa (PDSounds record 129) | https://commons.wikimedia.org/wiki/File:Gentle_breeze_and_birds_singing.ogg | Public domain (PD-author, dedicated by the author) | https://commons.wikimedia.org/wiki/Template:PD-author | 2026-11-27 | 0:00-0:28 of source (source SHA-256 399c31051dfe42f5...) | 168632 | 797acb5125d1abdad3813f657cf215d27cd1c3d22257780a83267e513df11b4d |
@@ -108,7 +106,9 @@ Process, same as round 1 with two changes:
    after MP3 encoding. It only acts on short peaks (thunder, pops, strikes). Rain and fire loops are raised by up to 12 dB,
    so their noise floor is higher than in the source. MP3 56 kbps cap, mono, 32 kHz.
 
-Total shipped audio: 22 loops, 4,688,224 bytes, about 4.7 MB (limit 6 MB).
+Total shipped audio: 20 loops, 4259736 bytes, about 4.3 MB (limit 6 MB).
+
+Removed on 2026-11-28 before release: `ocean` (Ocean Waves on a Tropical Beach) and `rapids` (Florida Rapids), both uploaded to Commons by the same account under CC0 as own work. Both file pages carry a deletion request for suspected copyright violation (the reviewer found metadata that points to a video site, and says the own-work claim is almost certainly false). The licence cannot be proven, so both loops, their catalog rows, credits and cached versions are gone. The made-in-code ocean swell and waterfall sounds stay.
 
 Not used in round 3, with the reason:
 

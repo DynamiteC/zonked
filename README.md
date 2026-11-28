@@ -1,8 +1,8 @@
 # Zonked
 
-A free, private, offline sound sanctuary for stress, AI-coding burnout, focus strain and sleep. Kiroween 2026 entry: **Resurrection** and **Best Kiro Crew App**.
+A free, private calm sound player for long working days and winding down. It may help some people relax. Results vary. Kiroween 2026 entry: **Resurrection** and **Best Kiro Crew App**.
 
-License: MIT ([`LICENSE`](LICENSE), [`NOTICE`](NOTICE)). Not a medical device.
+Licence: MIT for the original code, with named exceptions (see "Licence and scope" below, [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE)). Not a medical device. Privacy: [`docs/PRIVACY.md`](docs/PRIVACY.md). Security: [`SECURITY.md`](SECURITY.md). Release readiness: [`docs/READINESS.md`](docs/READINESS.md).
 
 [Demo video](media/zonked-demo.mp4) (2:50)
 
@@ -50,7 +50,7 @@ Numbers from one verify:all run on commit `102f9930353c` (2026-11-28). Generated
 - Real browser checks (Playwright, Chromium, real audio engine): 38 of 38
 - Browser matrix (Chromium, Firefox, WebKit builds from Playwright, 9 combinations): 162 of 162 checks
 <!-- counts:end -->
-- Not tested: listening by ear to the 22 recordings and 10 made-in-code sounds, real Firefox, real Safari, real phones, a real screen reader, and a live Kiro Crew host. `docs/OWNER-TEST.md` lists the steps for these.
+- Not tested: listening by ear to the 20 recordings and 10 made-in-code sounds, real Firefox, real Safari, real phones, a real screen reader, and a live Kiro Crew host. `docs/OWNER-TEST.md` lists the steps for these.
 - Publish readiness against the App Kit guide: `docs/PUBLISH-CHECKLIST.md`.
 
 ## Quick start (60 s)
@@ -64,7 +64,7 @@ npm run preview        # http://localhost:4173
 
 The app opens on the Calm front door: five short questions, the hearing-safety notice, then a starter sound. No sound plays before you accept the notice. Today, Journeys, Library, Player, Crew and Settings sit in a tab bar, and Settings has a switch to Studio mode, the full control panel. Your choice is kept in this browser. In Studio, click the mask or press Space and accept the safety notice once. See "Requirements" below for the toolchain.
 
-Zonked resurrects two old things. One is SBaGen (1998), the `.sbg` brainwave sequence idea. The other is the author's own 2018 final-year web application, binaural beats research and yellow mask mascot, which were inspired by Giorgio Regni's GPLv3 Android app "Binaural Beats Therapy". That Android app is credited and kept in `legacy/` as reference only. The sequence idea and the mascot now run as a Rust `no_std` WebAssembly synth inside an `AudioWorklet`, in an offline-first PWA. A three-agent Kiro Crew watches your coding session and eases the sound from Beta/Gamma focus, to Alpha recovery, to Theta decompression. A library of 239 templates, a recommender, five synthesized sound layers, 22 recorded nature loops and 10 made-in-code sounds with a blend slider, a 90 second pause, a 5 minute breathing session, a focus sprint, a sleep fade, timers and lock-screen controls make it usable on its own all day.
+Zonked resurrects two old things. One is SBaGen (1998), the `.sbg` brainwave sequence idea. The other is the author's own 2018 final-year web application, binaural beats research and yellow mask mascot, which were inspired by Giorgio Regni's GPLv3 Android app "Binaural Beats Therapy". That Android app is credited and kept in `legacy/` as reference only. The sequence idea and the mascot now run as a Rust `no_std` WebAssembly synth inside an `AudioWorklet`, in an offline-first PWA. When run in Kiro Crew, a three-agent crew can watch your coding session and ease the sound from Beta/Gamma focus, to Alpha recovery, to Theta decompression. A library of 239 templates, a recommender, five synthesized sound layers, 22 recorded nature loops and 10 made-in-code sounds with a blend slider, a 90 second pause, a 5 minute breathing session, a focus sprint, a sleep fade, timers and lock-screen controls make it usable on its own all day.
 
 - Demo video: `media/zonked-demo.mp4` (2:50), also `media/zonked-demo.webm`
 - Pitch deck: `docs/Zonked-Kiroween-Deck.pptx` (8 slides), web backup `docs/deck.html`
@@ -75,7 +75,7 @@ Zonked resurrects two old things. One is SBaGen (1998), the `.sbg` brainwave seq
 
 ## Free, private, for everyone
 
-Zonked is a free sound sanctuary for people easing stress, AI and work burnout, focus strain and sleep trouble. No account, no ads, no tracking, no network at run time. The engine makes the sound on your device, plus 22 bundled nature loops that play only when chosen, and 10 sounds made in code. The app works offline.
+Zonked is a free calm sound player for long working days and winding down. No account, no ads, no tracking, no internet at run time (the only call is the optional crew bridge on your own computer). The engine makes the sound on your device, plus 20 bundled nature loops that play only when chosen, and 10 sounds made in code. The app works offline: 6 of the 22 loops are saved at install, and the others work offline after you have played them once online.
 
 The Sanctuary panel (More menu) holds:
 
@@ -86,7 +86,7 @@ The Sanctuary panel (More menu) holds:
 - Gentle milestones: first session, three calm days, ten sessions, total minutes, first full sleep fade, took a break. One missed day is forgiven. They can be hidden or reset. There are no notifications and no pressure.
 - My data: export everything as one JSON file you keep, import a file (checked and clamped to the hearing-safety limits), or delete it all.
 
-Everything is stored in this browser (IndexedDB). Nothing is sent anywhere. See `docs/notes/AUDIT-HUMANITARIAN.md`.
+Everything is stored on this device, in the browser's localStorage and IndexedDB, plus the service worker cache. Nothing is sent anywhere. What is kept and how to delete it: [`docs/PRIVACY.md`](docs/PRIVACY.md). See also `docs/notes/AUDIT-HUMANITARIAN.md`.
 
 ## Sounds and what the research says
 
@@ -96,7 +96,7 @@ The research is mixed. Some small studies report less anxiety or better focus wi
 
 ## Hearing safety
 
-Use stereo headphones for binaural beats. Zonked is not a medical device. The engine clamps carrier to 20-1500 Hz, beat offset to 0.5-40 Hz, master gain to 0.85, and hard-limits output to [-0.95, 0.95]. Playback fades in over at least 2 seconds.
+Use stereo headphones for binaural beats. Start with the volume very low. Zonked is not a medical device and does not diagnose, treat or cure anything. Ask a doctor first if you have a seizure disorder, a serious mental health condition, tinnitus or sensitive hearing. Do not use it while driving or running machinery. The engine clamps carrier to 20-1500 Hz, beat offset to 0.5-40 Hz, master gain to 0.85, and hard-limits output to [-0.95, 0.95]. Playback fades in over at least 2 seconds.
 
 ## Layout
 
@@ -124,21 +124,21 @@ npm run preview        # http://localhost:4173 (COOP/COEP set)
 # or: npm run dev      # http://localhost:5173
 ```
 
-Click the mask or press Space. Accept the safety notice once. Pick a preset or open the editor (`E`) to write `.sbg` text. After the first load the app works with the network off.
+Click the mask or press Space. Accept the safety notice once. Pick a preset or open the editor (`E`) to write `.sbg` text. After the first load the app works with the network off. Of the nature loops, 6 are ready offline at once and the other 14 after you play them once online.
 
 Presets: Deep Focus (40 Hz gamma), Flow State (18 Hz beta), AI Burnout Reset (10 Hz alpha to 6 Hz theta), Breathwork Sync (5.5 Hz theta with a breath pacer), Deep Rest (2.5 Hz delta), Classic 1998 SBaGen Demo.
 
 ## The library
 
-Sound comes from the engine and a few bundled loops. The engine makes beats, noise, lo-fi and piano itself. 22 short CC0 or public domain nature loops (MP3, lazy loaded, precached for offline) ship in the repo and play only when chosen. Each is listed with source and licence in `docs/SAMPLES-LICENSES.md`. Ten more sounds (wind, waterfall, flute, roof rain, singing bowl, soft chimes, campfire, brown noise, ocean swell, crickets) are made in the browser. A person's own sound file never leaves their device. No network at run time.
+Sound comes from the engine and a few bundled loops. The engine makes beats, noise, lo-fi and piano itself. 20 short CC0 or public domain nature loops (MP3, lazy loaded) ship in the repo and play only when chosen. 6 are precached at install. The other 14 are saved for offline use the first time you play them. Each is listed with source and licence in `docs/SAMPLES-LICENSES.md`. Ten more sounds (wind, waterfall, flute, roof rain, singing bowl, soft chimes, campfire, brown noise, ocean swell, crickets) are made in the browser. A person's own sound file never leaves their device. No internet at run time.
 
 ### Templates
 
-239 templates across categories such as vibes, healing, lucid dreams, meditation, sleep, focus and work recovery. Each template is a list of stages (beat, carrier, mode, noise, layers) that plays through the same sequencer as an `.sbg` script, so every value is clamped to the hearing-safety bounds. 215 are generated by a deterministic archetype DSL (`web/src/catalog/`), 21 re-express published frequency and duration values from the Android reference app and 3 from Gnaural schedules, in original wording (marked by `source`). Open the catalog drawer to search by text, category, vibe, layer tag and ADHD friendly, 24 per page. The catalog is a lazy chunk, loaded when first needed.
+239 templates across categories such as vibes, healing, lucid dreams, meditation, sleep, focus and work recovery. Each template is a list of stages (beat, carrier, mode, noise, layers) that plays through the same sequencer as an `.sbg` script, so every value is clamped to the hearing-safety bounds. 215 are generated by a deterministic archetype DSL (`web/src/catalog/`), 21 follow published step values from the Android reference app and 3 from Gnaural schedules, in original wording (marked by `source`). A separate wave of this release is replacing these 24 with original schedules (see [`NOTICE`](NOTICE) and [`docs/READINESS.md`](docs/READINESS.md)). Open the catalog drawer to search by text, category, vibe, layer tag and steady-and-plain sounds, 24 per page. The catalog is a lazy chunk, loaded when first needed.
 
 ### Recommender
 
-Pick a situation (ADHD focus, can't sleep, lucid dream, meditate, heal stress, AI coding burnout, deep work, quick reset), optionally a vibe, your available minutes, and your device. The recommender scores every template (situation 40, vibe 15, duration 15, time of day 10, device 10, sensory sensitivity 10) and returns at least 5 with reasons. It is pure and deterministic. On speakers it warns about binaural templates. High sensitivity excludes intensity above 3, percussion and crackle while enough gentle matches exist. Press `R` to open it and `1` to `5` to launch a result.
+Pick a situation (steady focus, wind down, meditate, deep work, quick reset and others), optionally a vibe, your available minutes, and your device. The recommender scores every template (situation 40, vibe 15, duration 15, time of day 10, device 10, sensory sensitivity 10) and returns at least 5 with reasons. It is pure and deterministic. On speakers it warns about binaural templates. High sensitivity excludes intensity above 3, percussion and crackle while enough gentle matches exist. Press `R` to open it and `1` to `5` to launch a result.
 
 ### Layers
 
@@ -255,10 +255,17 @@ npm run check:sizes     # file size limits
 
 The app is a static site built to `web/dist` (`cd web && npm run build`). It needs a static host that applies the headers in `web/public/_headers`.
 
-## Credits and license
+## Credits
 
 Zonked brings back SBaGen (1998) and the author's 2018 final-year web application, with its research and mascot. That 2018 work was inspired by Giorgio Regni's GPLv3 Android app "Binaural Beats Therapy". The app is credited in [`NOTICE`](NOTICE) and [`legacy/NOTICE.md`](legacy/NOTICE.md), and `legacy/android` is kept as reference only.
 
-## License
+## Licence and scope
 
-Original code, docs and templates: MIT (see [`LICENSE`](LICENSE)). Material under `legacy/android` is Giorgio Regni's GPLv3 app and is reference only; it is not part of the shipped app. See [`NOTICE`](NOTICE). Zonked is not a medical device.
+Original code, docs, templates, mascot and icons: MIT (see [`LICENSE`](LICENSE)). These items keep their own terms and are not MIT:
+
+- `legacy/`: third-party reference material, never shipped. `legacy/android` is Giorgio Regni's GPLv3 app and keeps its own licence.
+- `web/public/samples/`: nature loops under CC0 1.0 or released into the public domain by their authors. Each file is listed in [`docs/SAMPLES-LICENSES.md`](docs/SAMPLES-LICENSES.md), with saved proof pages in `docs/legal/samples/` and a takedown route.
+- `web/public/fonts/`: Atkinson Hyperlegible Next under the SIL Open Font License 1.1 (`web/public/fonts/OFL.txt`).
+- Third-party packages keep their own licences (see [`NOTICE`](NOTICE)).
+
+This is not legal advice. Open questions that need a lawyer are in [`docs/READINESS.md`](docs/READINESS.md). Zonked is not a medical device.

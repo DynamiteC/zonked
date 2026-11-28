@@ -118,8 +118,8 @@ describe('glitch counter math', () => {
 
 describe('sample catalog bluetooth tags', () => {
   const loops = SAMPLES.filter((s) => s.kind === 'loop');
-  it('all 22 loops carry a hiss score and a btFriendly tag that agrees with it', () => {
-    expect(loops).toHaveLength(22);
+  it('all 20 loops carry a hiss score and a btFriendly tag that agrees with it', () => {
+    expect(loops).toHaveLength(20);
     for (const s of loops) {
       expect(typeof s.hiss).toBe('number');
       expect(s.btFriendly).toBe((s.hiss ?? 1) < BT_HISS_LIMIT);

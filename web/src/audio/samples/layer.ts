@@ -22,7 +22,7 @@ const DECODE_TIMEOUT = 'decode timeout';
 /** Closest made-in-code sound for each recording. */
 export const SYNTH_FALLBACK: Readonly<Record<string, SynthId>> = {
   rain: 'rainroof', lightrain: 'rainroof', thunder: 'rainroof', veranda: 'rainroof', window: 'rainroof', storm: 'rainroof', fire: 'rainroof',
-  stream: 'waterfall', ocean: 'waterfall', rapids: 'waterfall', waves: 'waterfall', pebbles: 'waterfall', creek: 'waterfall', trickle: 'waterfall', fountain: 'waterfall',
+  stream: 'waterfall', waves: 'waterfall', pebbles: 'waterfall', creek: 'waterfall', trickle: 'waterfall', fountain: 'waterfall',
   forest: 'wind', birds: 'wind', breeze: 'wind', hum: 'wind',
   chimes: 'bowl', koshi: 'bowl', gong: 'bowl',
 };
