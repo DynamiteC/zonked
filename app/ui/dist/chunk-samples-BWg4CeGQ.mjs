@@ -1,4 +1,4 @@
-import { C as e, D as t, E as n, M as r, N as i, S as a, T as o, b as s, k as c, w as l, x as u } from "./chunk-crewLink-DfIjAvPP.mjs";
+import { C as e, D as t, E as n, F as r, O as i, P as a, S as o, T as s, j as c, k as l, w as u } from "./chunk-crewLink-TXTH-ttS.mjs";
 import { n as d } from "./chunk-own-D62uDPlI.mjs";
 // \0rolldown/runtime.js
 var f = Object.defineProperty, p = (e, t) => {
@@ -396,35 +396,35 @@ function v(e) {
 	if (typeof e.getChannelData != "function" || !(e.length >= 2)) return;
 	let t = e.getChannelData(0), n = 0;
 	for (let e = 0; e < t.length; e += 64) n = Math.max(n, Math.abs(t[e] ?? 0));
-	c(t[0] ?? 0, t[t.length - 1] ?? 0, n) && r.record(Date.now(), "seam");
+	c(t[0] ?? 0, t[t.length - 1] ?? 0, n) && a.record(Date.now(), "seam");
 }
 var y = (e) => ({
 	ok: !1,
 	error: e
 }), b = 20261128, x = /^[a-z]+$/;
-function S(e) {
-	let i = /* @__PURE__ */ new Map(), c = /* @__PURE__ */ new Map(), d = null, f = 0, p = null, S = 0, C = 0, w = () => d === null ? 0 : p ?? l(f);
+function S(r) {
+	let s = /* @__PURE__ */ new Map(), c = /* @__PURE__ */ new Map(), d = null, f = 0, p = null, S = 0, C = 0, w = () => d === null ? 0 : p ?? n(f);
 	function T(e) {
-		e.duck.gain.setTargetAtTime(t(w()), e.ctx.currentTime, s);
+		e.duck.gain.setTargetAtTime(l(w()), e.ctx.currentTime, o);
 	}
-	function E(t) {
-		if (!x.test(t) || !m.some((e) => e.id === t)) return null;
+	function E(e) {
+		if (!x.test(e) || !m.some((t) => t.id === e)) return null;
 		try {
-			let n = new URL(`${e.baseUrl}samples/${t}.mp3.json`, e.origin);
-			return n.origin === new URL(e.origin).origin ? n.href : null;
+			let t = new URL(`${r.baseUrl}samples/${e}.mp3.json`, r.origin);
+			return t.origin === new URL(r.origin).origin ? t.href : null;
 		} catch {
 			return null;
 		}
 	}
-	async function D(t, n) {
-		if (i.has(n)) return { ok: !0 };
-		let a = E(n);
-		if (a === null) return y("unknown sample");
+	async function D(e, t) {
+		if (s.has(t)) return { ok: !0 };
+		let n = E(t);
+		if (n === null) return y("unknown sample");
 		try {
-			let r = await e.fetchBytes(a), o = await _(t.ctx, r, e.decodeTimeoutMs ?? 8e3);
-			return i.set(n, o), v(o), { ok: !0 };
+			let i = await r.fetchBytes(n), a = await _(e.ctx, i, r.decodeTimeoutMs ?? 8e3);
+			return s.set(t, a), v(a), { ok: !0 };
 		} catch (e) {
-			return r.record(Date.now(), "decode"), e instanceof Error && e.message === h ? y(h) : y("sample unavailable: check the connection or reinstall the app files");
+			return a.record(Date.now(), "decode"), e instanceof Error && e.message === h ? y(h) : y("sample unavailable: check the connection or reinstall the app files");
 		}
 	}
 	function O(e, t) {
@@ -435,20 +435,20 @@ function S(e) {
 		});
 		return c.set(t, r), r;
 	}
-	function k(e, t) {
-		let n = t.ctx.currentTime, r = e.gain.gain;
-		r.cancelScheduledValues(n), r.setValueAtTime(r.value, n), r.linearRampToValueAtTime(0, n + u);
+	function k(t, n) {
+		let r = n.ctx.currentTime, i = t.gain.gain;
+		i.cancelScheduledValues(r), i.setValueAtTime(i.value, r), i.linearRampToValueAtTime(0, r + e);
 		try {
-			e.src.stop(n + u + .05);
+			t.src.stop(r + e + .05);
 		} catch {}
-		e.src.onended = () => {
-			e.src.disconnect(), e.gain.disconnect();
+		t.src.onended = () => {
+			t.src.disconnect(), t.gain.disconnect();
 		};
 	}
-	function A(e, t, r, i, a) {
-		d !== null && k(d, e), f = n(i, f);
+	function A(e, t, n, r, a) {
+		d !== null && k(d, e), f = i(r, f);
 		let o = e.ctx.createBufferSource(), s = e.ctx.createGain();
-		o.buffer = r, o.loop = a, s.gain.setValueAtTime(0, e.ctx.currentTime), s.gain.linearRampToValueAtTime(f, e.ctx.currentTime + 2), o.connect(s), s.connect(e.input);
+		o.buffer = n, o.loop = a, s.gain.setValueAtTime(0, e.ctx.currentTime), s.gain.linearRampToValueAtTime(f, e.ctx.currentTime + 2), o.connect(s), s.connect(e.input);
 		let c = {
 			id: t,
 			src: o,
@@ -458,15 +458,15 @@ function S(e) {
 			o.disconnect(), s.disconnect(), d === c && (d = null, T(e));
 		}), o.start(), d = c, T(e), { ok: !0 };
 	}
-	async function j(e, t, r, i) {
+	async function j(e, t, n, r) {
 		let a;
 		try {
 			a = (await import("./chunk-graph-pvSx_qiJ.mjs")).buildSynth;
 		} catch {
 			return y("sample unavailable: reinstall the app files");
 		}
-		if (i !== S) return { ok: !0 };
-		d !== null && k(d, e), f = n(r, f);
+		if (r !== S) return { ok: !0 };
+		d !== null && k(d, e), f = i(n, f);
 		let o = a(e.ctx, t, b + C++), s = e.ctx.createGain();
 		return s.gain.setValueAtTime(0, e.ctx.currentTime), s.gain.linearRampToValueAtTime(f, e.ctx.currentTime + 2), o.connect(s), s.connect(e.input), d = {
 			id: t,
@@ -476,51 +476,51 @@ function S(e) {
 	}
 	return {
 		list: () => m,
-		async start(t, n) {
-			let r = e.getBus();
-			if (r === null) return y("start the sound first");
-			let a = ++S;
-			if (m.some((e) => e.id === t && e.kind === "synth")) return j(r, t, n, a);
-			let o = await O(r, t), s = g[t];
-			if (!o.ok && o.error === h && s !== void 0 && a === S) {
-				let e = await j(r, s, n, a), t = (m.find((e) => e.id === s)?.label ?? s).replace(" (synth)", "").toLowerCase();
+		async start(e, t) {
+			let n = r.getBus();
+			if (n === null) return y("start the sound first");
+			let i = ++S;
+			if (m.some((t) => t.id === e && t.kind === "synth")) return j(n, e, t, i);
+			let a = await O(n, e), o = g[e];
+			if (!a.ok && a.error === h && o !== void 0 && i === S) {
+				let e = await j(n, o, t, i), r = (m.find((e) => e.id === o)?.label ?? o).replace(" (synth)", "").toLowerCase();
 				return e.ok ? {
 					ok: !0,
-					note: `The recording could not load in this browser, so a made-in-code sound (${t}) plays instead.`
+					note: `The recording could not load in this browser, so a made-in-code sound (${r}) plays instead.`
 				} : e;
 			}
-			if (!o.ok) return o.error === h ? y("sample unavailable: this browser could not decode it") : o;
-			let c = i.get(t);
-			return c === void 0 || a !== S ? c === void 0 ? y("sample unavailable") : { ok: !0 } : A(r, t, c, n, !0);
+			if (!a.ok) return a.error === h ? y("sample unavailable: this browser could not decode it") : a;
+			let c = s.get(e);
+			return c === void 0 || i !== S ? c === void 0 ? y("sample unavailable") : { ok: !0 } : A(n, e, c, t, !0);
 		},
-		startBuffer(t, n, r, i) {
-			let a = e.getBus();
-			return a === null ? y("start the sound first") : (S++, A(a, t, n, r, i));
+		startBuffer(e, t, n, i) {
+			let a = r.getBus();
+			return a === null ? y("start the sound first") : (S++, A(a, e, t, n, i));
 		},
-		setLevel(t) {
-			f = n(t, f);
-			let r = e.getBus();
-			if (r === null || d === null) return;
-			let i = d.gain.gain;
-			i.cancelScheduledValues(r.ctx.currentTime), i.setTargetAtTime(f, r.ctx.currentTime, a), T(r);
+		setLevel(e) {
+			f = i(e, f);
+			let t = r.getBus();
+			if (t === null || d === null) return;
+			let n = d.gain.gain;
+			n.cancelScheduledValues(t.ctx.currentTime), n.setTargetAtTime(f, t.ctx.currentTime, u), T(t);
 		},
-		setBlend(t) {
-			p = o(t, p ?? 0);
-			let n = e.getBus();
+		setBlend(e) {
+			p = t(e, p ?? 0);
+			let n = r.getBus();
 			n !== null && T(n);
 		},
 		stop() {
 			S++;
-			let t = e.getBus(), n = d;
-			d = null, t !== null && n !== null && (k(n, t), T(t));
+			let e = r.getBus(), t = d;
+			d = null, e !== null && t !== null && (k(t, e), T(e));
 		},
 		playing: () => d?.id ?? null
 	};
 }
 // ../../web/src/audio/samples/index.ts
 var C = /* @__PURE__ */ p({
-	MAX_SAMPLE_LEVEL: () => e,
-	duckGain: () => t,
+	MAX_SAMPLE_LEVEL: () => s,
+	duckGain: () => l,
 	listSamples: () => E,
 	playingSample: () => j,
 	setBlend: () => A,
@@ -535,21 +535,21 @@ async function w(e) {
 	return t.arrayBuffer();
 }
 var T = S({
-	getBus: i,
+	getBus: r,
 	fetchBytes: w,
 	baseUrl: "./",
 	origin: typeof location > "u" ? "" : location.href
 }), E = () => T.list(), D = (e, t) => T.start(e, t), O = (e) => T.setLevel(e), k = () => T.stop(), A = (e) => T.setBlend(e), j = () => T.playing();
 async function M(e, t, n) {
-	let r = i();
-	if (r === null) return {
+	let i = r();
+	if (i === null) return {
 		ok: !1,
 		error: "start the sound first"
 	};
 	try {
-		let i = await r.ctx.decodeAudioData(t.slice(0)), a = Array.from({ length: i.numberOfChannels }, (e, t) => i.getChannelData(t)), o = d(a, i.sampleRate);
+		let r = await i.ctx.decodeAudioData(t.slice(0)), a = Array.from({ length: r.numberOfChannels }, (e, t) => r.getChannelData(t)), o = d(a, r.sampleRate);
 		if (!o.ok) return o;
-		let s = r.ctx.createBuffer(1, o.data.length, i.sampleRate);
+		let s = i.ctx.createBuffer(1, o.data.length, r.sampleRate);
 		return s.getChannelData(0).set(o.data), T.startBuffer(e, s, n, o.loop);
 	} catch {
 		return {

@@ -58,6 +58,8 @@ function fontsAsFiles(): Plugin {
     generateBundle: {
       order: 'post',
       handler(_o, bundle) {
+      // The OFL text must travel with the font files.
+      this.emitFile({ type: 'asset', fileName: 'assets/OFL.txt', source: readFileSync(fileURLToPath(new URL('../../web/public/fonts/OFL.txt', import.meta.url))) });
       for (const item of Object.values(bundle)) {
         if (item.type !== 'asset' || !item.fileName.endsWith('.css')) continue;
         let css = String(item.source);

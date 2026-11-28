@@ -1,10 +1,10 @@
 import { useEffect as e, useId as t, useMemo as n, useRef as r, useState as i } from "react";
 import { Fragment as a, jsx as o, jsxs as s } from "react/jsx-runtime";
-import { $ as c, X as l, Y as u, et as d, tt as f } from "./chunk-crewLink-DfIjAvPP.mjs";
-import { C as p, S as m, _ as h, t as g, x as _ } from "./chunk-data-Bhxfb-cT.mjs";
+import { ct as c, nt as l, ot as u, rt as d, st as f } from "./chunk-crewLink-TXTH-ttS.mjs";
+import { C as p, S as m, t as h, v as g, w as _ } from "./chunk-data-B5J84IqW.mjs";
 import { n as v, r as y, t as b } from "./chunk-FormFrame-DeBPfgdj.mjs";
-import { t as x } from "./chunk-SafetyNotice-DNa2dEUQ.mjs";
-import { n as S } from "./chunk-catalog-DUQ1JcEF.mjs";
+import { t as x } from "./chunk-SafetyNotice-Cf8oSBFS.mjs";
+import { n as S } from "./chunk-catalog-CdNrcMzw.mjs";
 // ../../web/src/ui/calm/ChoiceGrid.tsx
 function C({ legend: e, options: n, value: r, onChange: i }) {
 	let a = t();
@@ -42,11 +42,11 @@ function C({ legend: e, options: n, value: r, onChange: i }) {
 var w = 1e4, T = (e) => e.replace(/-\d+$/, "");
 function E(e, t = /* @__PURE__ */ new Date()) {
 	let n = /* @__PURE__ */ new Set(), r = [];
-	for (let i of S(h(e, t), 12)) {
+	for (let i of S(g(e, t), 12)) {
 		let e = T(i.template.id);
 		if (!n.has(e) && (n.add(e), r.push({
 			template: i.template,
-			reason: f(i.reasons[0] ?? i.template.reasonTemplate),
+			reason: c(i.reasons[0] ?? i.template.reasonTemplate),
 			score: i.score
 		}), r.length === 3)) break;
 	}
@@ -56,24 +56,24 @@ function D(e, t = /* @__PURE__ */ new Date()) {
 	let [n, r] = E(e, t);
 	return n === void 0 ? null : r === void 0 || n.score - r.score >= 5 ? n : null;
 }
-function O({ profile: t, playing: c, onPreview: l, onStop: d, onStart: f, onBack: p }) {
+function O({ profile: t, playing: c, onPreview: u, onStop: d, onStart: f, onBack: p }) {
 	let m = n(() => E(t), [t]), [h, g] = i(m[0]?.template.id ?? ""), [_, y] = i(null), b = r(null);
 	e(() => () => void (b.current !== null && window.clearTimeout(b.current)), []);
 	let x = (e) => {
-		b.current !== null && window.clearTimeout(b.current), g(e.id), y(e.id), l(e), b.current = window.setTimeout(() => {
+		b.current !== null && window.clearTimeout(b.current), g(e.id), y(e.id), u(e), b.current = window.setTimeout(() => {
 			y(null), d();
 		}, w);
 	}, S = m.find((e) => e.template.id === h)?.template;
 	return /* @__PURE__ */ s(a, { children: [
 		/* @__PURE__ */ o("h1", {
 			className: "c-h1 c-ftitle",
-			children: u.starterTitle
+			children: l.starterTitle
 		}),
 		/* @__PURE__ */ s("fieldset", {
 			className: "c-starters",
 			children: [/* @__PURE__ */ o("legend", {
 				className: "c-sr",
-				children: u.starterTitle
+				children: l.starterTitle
 			}), m.map((e) => /* @__PURE__ */ s("div", {
 				className: "c-starter",
 				"data-picked": h === e.template.id ? "true" : "false",
@@ -99,22 +99,22 @@ function O({ profile: t, playing: c, onPreview: l, onStop: d, onStart: f, onBack
 					type: "button",
 					className: "c-btn c-small",
 					onClick: () => x(e.template),
-					children: u.preview
+					children: l.preview
 				})]
 			}, e.template.id))]
 		}),
 		/* @__PURE__ */ o("p", {
 			className: "c-status",
 			role: "status",
-			children: _ !== null && c ? u.previewing : ""
+			children: _ !== null && c ? l.previewing : ""
 		}),
 		/* @__PURE__ */ o(v, {
 			left: p === void 0 ? null : {
-				label: u.back,
+				label: l.back,
 				onClick: p
 			},
 			next: {
-				label: u.start,
+				label: l.start,
 				disabled: S === void 0,
 				onClick: () => {
 					b.current !== null && window.clearTimeout(b.current), S !== void 0 && f(S);
@@ -128,19 +128,19 @@ var k = (e, t) => e.map((e) => ({
 	value: e,
 	label: t[e]
 })), A = {
-	1: u.goalTitle,
-	2: u.whenTitle,
-	3: u.listenTitle
+	1: l.goalTitle,
+	2: l.whenTitle,
+	3: l.listenTitle
 }, j = {
-	1: u.promise,
-	2: u.whenHelper,
-	3: u.listenNote
+	1: l.promise,
+	2: l.whenHelper,
+	3: l.listenNote
 };
-function M({ step: e, answers: t, set: n, onBack: r, onNext: i, onSkip: f, reduced: h }) {
+function M({ step: e, answers: t, set: n, onBack: r, onNext: i, onSkip: c, reduced: h }) {
 	return /* @__PURE__ */ s(a, { children: [
 		/* @__PURE__ */ o(y, {
 			step: e,
-			text: u.stepOf(e),
+			text: l.stepOf(e),
 			mood: e === 1 ? "happy" : "idle",
 			reduced: h
 		}),
@@ -149,20 +149,20 @@ function M({ step: e, answers: t, set: n, onBack: r, onNext: i, onSkip: f, reduc
 			helper: j[e],
 			children: [
 				e === 1 && /* @__PURE__ */ o(C, {
-					legend: u.goalTitle,
-					options: k(m, c),
+					legend: l.goalTitle,
+					options: k(p, u),
 					value: t.goal,
 					onChange: n.goal
 				}),
 				e === 2 && /* @__PURE__ */ o(C, {
-					legend: u.whenTitle,
-					options: k(p, d),
+					legend: l.whenTitle,
+					options: k(_, f),
 					value: t.when,
 					onChange: n.when
 				}),
 				e === 3 && /* @__PURE__ */ o(C, {
-					legend: u.listenTitle,
-					options: k(_, l),
+					legend: l.listenTitle,
+					options: k(m, d),
 					value: t.device,
 					onChange: n.device
 				})
@@ -170,24 +170,24 @@ function M({ step: e, answers: t, set: n, onBack: r, onNext: i, onSkip: f, reduc
 		}),
 		/* @__PURE__ */ o(v, {
 			left: r === null ? {
-				label: u.skip,
-				onClick: f,
+				label: l.skip,
+				onClick: c,
 				testid: "onb-skip"
 			} : {
-				label: u.back,
+				label: l.back,
 				onClick: r
 			},
 			next: {
-				label: u.next,
+				label: l.next,
 				onClick: i
 			}
 		})
 	] });
 }
-function N({ playing: e, reduced: t, onAccept: n, onPreview: r, onStop: a, onFinish: c, initial: l = g }) {
-	let [d, f] = i(1), [p, m] = i(!1), [h, _] = i(l.goal), [v, b] = i(l.timeOfDay), [S, C] = i(l.device), w = {
-		...l,
-		goal: h,
+function N({ playing: e, reduced: t, onAccept: n, onPreview: r, onStop: a, onFinish: c, initial: u = h }) {
+	let [d, f] = i(1), [p, m] = i(!1), [g, _] = i(u.goal), [v, b] = i(u.timeOfDay), [S, C] = i(u.device), w = {
+		...u,
+		goal: g,
 		timeOfDay: v,
 		device: S,
 		createdAt: Date.now()
@@ -200,12 +200,12 @@ function N({ playing: e, reduced: t, onAccept: n, onPreview: r, onStop: a, onFin
 	}, A = d <= 3 ? d : null;
 	return /* @__PURE__ */ s("section", {
 		className: "c-onb",
-		"aria-label": A === null ? u.safetyTitle : u.stepOf(A),
+		"aria-label": A === null ? l.safetyTitle : l.stepOf(A),
 		children: [
 			A !== null && /* @__PURE__ */ o(M, {
 				step: A,
 				answers: {
-					goal: h,
+					goal: g,
 					when: v,
 					device: S
 				},
@@ -223,7 +223,7 @@ function N({ playing: e, reduced: t, onAccept: n, onPreview: r, onStop: a, onFin
 			}),
 			d === 4 && /* @__PURE__ */ o(y, {
 				step: 3,
-				text: u.lastStep,
+				text: l.lastStep,
 				mood: "idle",
 				reduced: t
 			}),
@@ -233,7 +233,7 @@ function N({ playing: e, reduced: t, onAccept: n, onPreview: r, onStop: a, onFin
 			}),
 			d === 5 && /* @__PURE__ */ o(y, {
 				step: 3,
-				text: u.lastStep,
+				text: l.lastStep,
 				mood: "happy",
 				reduced: t
 			}),

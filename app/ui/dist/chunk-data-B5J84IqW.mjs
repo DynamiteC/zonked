@@ -1,4 +1,4 @@
-import { a as e, i as t, n, r } from "./chunk-catalog-DUQ1JcEF.mjs";
+import { a as e, i as t, n, r } from "./chunk-catalog-CdNrcMzw.mjs";
 // ../../web/src/ui/calm/data/types.ts
 var i = [
 	"focus",
@@ -148,11 +148,11 @@ var g = {
 	bluetooth: "bluetooth",
 	speakers: "speaker"
 };
-function ee(e) {
+function v(e) {
 	return e < 12 ? "morning" : e >= 12 && e < 17 ? "afternoon" : e >= 17 && e < 21 ? "evening" : "night";
 }
-function v(e, t = /* @__PURE__ */ new Date()) {
-	let n = g[e.goal], r = e.timeOfDay === "anytime" ? ee(t.getHours()) : e.timeOfDay, i = {
+function y(e, t = /* @__PURE__ */ new Date()) {
+	let n = g[e.goal], r = e.timeOfDay === "anytime" ? v(t.getHours()) : e.timeOfDay, i = {
 		situation: n.situation,
 		availableMinutes: n.minutes,
 		timeOfDay: r,
@@ -164,20 +164,20 @@ function v(e, t = /* @__PURE__ */ new Date()) {
 		vibe: n.vibe
 	});
 }
-var te = 6, ne = 12, re = 12, ie = 3, ae = 6, oe = 24, y = [
+var ee = 6, te = 12, ne = 12, re = 3, ie = 6, ae = 24, oe = [
 	"pad",
 	"instrument",
 	"chimes"
 ];
-function se(e) {
-	let t = Math.min(ne, e.layerTags.filter((e) => y.includes(e)).length * te), n = e.stages.some((e) => e.noiseLevel > 0 && (e.noise === "white" || e.noise === "violet")), i = e.stages.some((e) => e.noiseLevel > 0 && e.noise === "pink");
-	return t - (n ? re : 0) - (i ? ie : 0) - (r(e) ? ae : 0);
+function b(e) {
+	let t = Math.min(te, e.layerTags.filter((e) => oe.includes(e)).length * ee), n = e.stages.some((e) => e.noiseLevel > 0 && (e.noise === "white" || e.noise === "violet")), i = e.stages.some((e) => e.noiseLevel > 0 && e.noise === "pink");
+	return t - (n ? ne : 0) - (i ? re : 0) - (r(e) ? ie : 0);
 }
-function ce(e, i, a, o) {
+function se(e, i, a, o) {
 	let s = n(e, a, o);
 	if (i !== "bluetooth") return s;
-	let c = Math.max(0, ...s.map((e) => e.template.intensity)), l = e.sensorySensitivity === "high", u = n(e, Math.max(oe, a), o).filter((e) => e.template.intensity <= c && !(l && (t(e.template) || r(e.template)))).map((e, t) => {
-		let n = se(e.template), r = n > 0 ? [...e.reasons, "Clear and soft over Bluetooth."] : e.reasons;
+	let c = Math.max(0, ...s.map((e) => e.template.intensity)), l = e.sensorySensitivity === "high", u = n(e, Math.max(ae, a), o).filter((e) => e.template.intensity <= c && !(l && (t(e.template) || r(e.template)))).map((e, t) => {
+		let n = b(e.template), r = n > 0 ? [...e.reasons, "Clear and soft over Bluetooth."] : e.reasons;
 		return {
 			r: {
 				...e,
@@ -191,7 +191,7 @@ function ce(e, i, a, o) {
 	let d = u.slice(0, a).map((e) => e.r);
 	return d.length >= a ? d : s;
 }
-function b(e, t) {
+function ce(e, t) {
 	return t === "bluetooth" ? [...e.filter((e) => e.btFriendly), ...e.filter((e) => !e.btFriendly)] : e;
 }
 // ../../web/src/ui/calm/data/resolve.ts
@@ -217,7 +217,7 @@ function fe(e, t, n) {
 	}
 }
 function pe(e, t, n, r, i) {
-	return fe(ue(e.family, i), t, r.extraGentle) ?? de(n, v(r), i);
+	return fe(ue(e.family, i), t, r.extraGentle) ?? de(n, y(r), i);
 }
 function me(t, n, r, i = e()) {
 	let a = h(n);
@@ -447,4 +447,4 @@ function De(e, t) {
 		$.test(t) && e.set(z, t);
 	} catch {}
 }
-export { a as C, i as S, v as _, be as a, h as b, xe as c, N as d, A as f, b as g, me as h, Ee as i, Ce as l, j as m, we as n, Se as o, I as p, Te as r, De as s, H as t, M as u, ce as v, o as x, m as y };
+export { i as C, o as S, ce as _, be as a, m as b, xe as c, N as d, A as f, me as g, j as h, Ee as i, Ce as l, k as m, we as n, Se as o, I as p, Te as r, De as s, H as t, M as u, y as v, a as w, h as x, se as y };

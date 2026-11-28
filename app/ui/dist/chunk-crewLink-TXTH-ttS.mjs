@@ -1560,25 +1560,56 @@ function _t(e, t) {
 		updatedAt: a
 	};
 }
+function vt(e, t = Math.random) {
+	return `m${e.toString(36)}${Math.floor(t() * 36 ** 4).toString(36).padStart(4, "0")}`;
+}
+function yt(e, t, n, r) {
+	let i = gt(e);
+	if (i === null) throw RangeError("Invalid mix");
+	return {
+		...i,
+		v: 1,
+		id: vt(n, r),
+		name: ut(t, "My mix"),
+		createdAt: n,
+		updatedAt: n
+	};
+}
+function bt(e, t, n) {
+	return {
+		...e,
+		name: ut(t, e.name),
+		updatedAt: n
+	};
+}
+function xt(e, t) {
+	let n = new Set(t);
+	if (!n.has(e)) return e;
+	for (let t = 2; t < 1e3; t += 1) {
+		let r = `${e.slice(0, 54)} (${t})`;
+		if (!n.has(r)) return r;
+	}
+	return e;
+}
 // ../../web/src/app/crewFeed.ts
-var vt = 3e4, yt = 18e5, M = {
+var St = 3e4, Ct = 18e5, M = {
 	state: null,
 	source: "none",
 	changedAtMs: 0,
 	snoozeUntilMs: 0,
 	demoNextAtMs: null
-}, N = null, bt = /* @__PURE__ */ new Set(), xt = () => M;
-function St(e) {
-	return bt.add(e), () => void bt.delete(e);
+}, N = null, wt = /* @__PURE__ */ new Set(), Tt = () => M;
+function Et(e) {
+	return wt.add(e), () => void wt.delete(e);
 }
 function P(e) {
 	M = e;
-	for (let e of [...bt]) e();
+	for (let e of [...wt]) e();
 }
-var Ct = (e, t) => e !== null && e.target.beatHz === t.target.beatHz && e.target.carrierHz === t.target.carrierHz && e.target.gain === t.target.gain;
-function wt(e, t, n = Date.now()) {
+var Dt = (e, t) => e !== null && e.target.beatHz === t.target.beatHz && e.target.carrierHz === t.target.carrierHz && e.target.gain === t.target.gain;
+function Ot(e, t, n = Date.now()) {
 	if (M.source === "demo") return;
-	let r = !Ct(M.state, t);
+	let r = !Dt(M.state, t);
 	P({
 		...M,
 		state: t,
@@ -1586,7 +1617,7 @@ function wt(e, t, n = Date.now()) {
 		changedAtMs: r ? n : M.changedAtMs
 	}), n >= M.snoozeUntilMs && e.applyCrew(t);
 }
-function Tt() {
+function kt() {
 	M.source === "bridge" && P({
 		...M,
 		state: null,
@@ -1594,19 +1625,19 @@ function Tt() {
 		changedAtMs: 0
 	});
 }
-function Et(e, t = Date.now(), n = yt) {
+function At(e, t = Date.now(), n = Ct) {
 	N !== null && clearTimeout(N), P({
 		...M,
 		snoozeUntilMs: t + n
-	}), N = setTimeout(() => Dt(e), n);
+	}), N = setTimeout(() => jt(e), n);
 }
-function Dt(e) {
+function jt(e) {
 	N !== null && clearTimeout(N), N = null, P({
 		...M,
 		snoozeUntilMs: 0
 	}), M.source === "bridge" && M.state !== null && e.applyCrew(M.state);
 }
-function Ot(e) {
+function Mt(e) {
 	if (typeof e != "string") return null;
 	let t = e.slice(0, 4096).replace(/[\p{Cc}\u2028\u2029\u202A-\u202E\u2066-\u2069\u200B-\u200F\uFEFF]/gu, " ").replace(/\s+/g, " ").trim(), n = Array.from(t).slice(0, 160).join("").trim();
 	return n.length > 0 ? n : null;
@@ -1614,16 +1645,16 @@ function Ot(e) {
 function F(e, t, n) {
 	return Math.min(n, Math.max(t, e));
 }
-function kt(e) {
+function Nt(e) {
 	return typeof e == "object" && !!e && !Array.isArray(e);
 }
-function At(e) {
+function Pt(e) {
 	return e < 40 ? "focus" : e < 60 ? "flow" : e < 80 ? "recovery" : "decompress";
 }
-function jt(e) {
-	if (!kt(e) || e.version !== 1) return null;
+function Ft(e) {
+	if (!Nt(e) || e.version !== 1) return null;
 	let t = e.burnout, n = e.target;
-	if (!kt(t) || !kt(n)) return null;
+	if (!Nt(t) || !Nt(n)) return null;
 	let r = t.score, i = n.beatHz, s = n.carrierHz, c = n.gain, l = n.transitionSec;
 	if (![
 		r,
@@ -1632,7 +1663,7 @@ function jt(e) {
 		c,
 		l
 	].every((e) => typeof e == "number" && Number.isFinite(e))) return null;
-	let u = F(r, 0, 100), d = At(u), f = n.presetId, p = e.sbg, m = e.at, ee = Ot(e.why);
+	let u = F(r, 0, 100), d = Pt(u), f = n.presetId, p = e.sbg, m = e.at, ee = Mt(e.why);
 	return {
 		version: 1,
 		at: typeof m == "number" && Number.isFinite(m) ? Math.trunc(m) : 0,
@@ -1653,36 +1684,36 @@ function jt(e) {
 	};
 }
 // ../../web/src/audio/samples/bus.ts
-var Mt = null;
-function Nt(e) {
-	Mt = e;
+var It = null;
+function Lt(e) {
+	It = e;
 }
-function Pt() {
-	return Mt;
+function Rt() {
+	return It;
 }
 // ../../web/src/audio/health.ts
-var Ft = 3e5, It = 500, Lt = .04, Rt = .5;
-function zt(e, t, n = Lt) {
+var zt = 3e5, Bt = 500, Vt = .04, Ht = .5;
+function Ut(e, t, n = Vt) {
 	return !Number.isFinite(e) || !Number.isFinite(t) || e < 0 || t < 0 ? !1 : t - e > n;
 }
-function Bt(e, t, n) {
-	return !Number.isFinite(e) || !Number.isFinite(t) || !Number.isFinite(n) || n <= 0 ? !1 : Math.abs(e - t) > Rt * n;
+function Wt(e, t, n) {
+	return !Number.isFinite(e) || !Number.isFinite(t) || !Number.isFinite(n) || n <= 0 ? !1 : Math.abs(e - t) > Ht * n;
 }
 var I = new class {
 	events = [];
 	record(e, t, n = 1) {
 		if (!Number.isFinite(e) || !Number.isFinite(n)) return;
-		let r = Math.min(Math.max(0, Math.floor(n)), It);
+		let r = Math.min(Math.max(0, Math.floor(n)), Bt);
 		for (let n = 0; n < r; n++) this.events.push({
 			at: e,
 			kind: t
 		});
-		this.events.length > It && (this.events = this.events.slice(this.events.length - It));
+		this.events.length > Bt && (this.events = this.events.slice(this.events.length - Bt));
 	}
-	count(e, t = Ft) {
+	count(e, t = zt) {
 		return this.events.filter((n) => n.at <= e && e - n.at < t).length;
 	}
-	byKind(e, t = Ft) {
+	byKind(e, t = zt) {
 		let n = {
 			underrun: 0,
 			late: 0,
@@ -1696,46 +1727,46 @@ var I = new class {
 		this.events = [];
 	}
 }();
-function Vt(e) {
+function Gt(e) {
 	return e <= 0 ? "Sound health: smooth" : `${e} ${e === 1 ? "hiccup" : "hiccups"} in the last 5 minutes`;
 }
-function Ht(e) {
+function Kt(e) {
 	return e > 0 ? "Close heavy apps and move closer to your device. If it keeps happening, try wired headphones." : "";
 }
 // ../../web/src/audio/samples/math.ts
-var Ut = .85, Wt = .3, Gt = .15, Kt = .4, qt = .6, Jt = .95, Yt = (e, t, n) => e < t ? t : e > n ? n : e;
-function Xt(e, t = 0) {
-	return Yt(Number.isFinite(e) ? e : Number.isFinite(t) ? t : 0, 0, Ut);
+var qt = .85, Jt = .3, Yt = .15, Xt = .4, Zt = .6, Qt = .95, $t = (e, t, n) => e < t ? t : e > n ? n : e;
+function en(e, t = 0) {
+	return $t(Number.isFinite(e) ? e : Number.isFinite(t) ? t : 0, 0, qt);
 }
-function Zt(e, t = 0) {
-	return Yt(Number.isFinite(e) ? e : Number.isFinite(t) ? t : 0, 0, 1);
+function tn(e, t = 0) {
+	return $t(Number.isFinite(e) ? e : Number.isFinite(t) ? t : 0, 0, 1);
 }
-function Qt(e) {
-	return 1 - qt * Zt(e);
+function nn(e) {
+	return 1 - Zt * tn(e);
 }
-function $t(e) {
-	return Xt(e) / Ut;
+function rn(e) {
+	return en(e) / qt;
 }
-function en(e = 2049) {
+function an(e = 2049) {
 	let t = Math.max(3, e | 0), n = new Float32Array(t);
-	for (let e = 0; e < t; e++) n[e] = Yt(e / (t - 1) * 2 - 1, -.95, Jt);
+	for (let e = 0; e < t; e++) n[e] = $t(e / (t - 1) * 2 - 1, -.95, Qt);
 	return n;
 }
 // ../../web/src/storage/prefs.ts
-var tn = "zonked.safety.v1", nn = "zonked.reduceMotion";
-function rn(e, t = an()) {
+var on = "zonked.safety.v1", sn = "zonked.reduceMotion";
+function L(e, t = cn()) {
 	try {
 		return t?.getItem(e) === "1";
 	} catch {
 		return !1;
 	}
 }
-function L(e, t, n = an()) {
+function R(e, t, n = cn()) {
 	try {
 		n?.setItem(e, t ? "1" : "0");
 	} catch {}
 }
-function an() {
+function cn() {
 	try {
 		return typeof localStorage > "u" ? void 0 : localStorage;
 	} catch {
@@ -1743,15 +1774,15 @@ function an() {
 	}
 }
 // ../../web/src/app/useReducedMotion.ts
-function on() {
+function ln() {
 	try {
 		return typeof localStorage > "u" ? null : localStorage;
 	} catch {
 		return null;
 	}
 }
-function sn() {
-	let [n, r] = t(() => rn(nn)), [i, a] = t(() => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? !1);
+function un() {
+	let [n, r] = t(() => L(sn)), [i, a] = t(() => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? !1);
 	return e(() => {
 		let e = window.matchMedia?.("(prefers-reduced-motion: reduce)");
 		if (e === void 0) return;
@@ -1760,13 +1791,13 @@ function sn() {
 	}, []), [
 		n || i,
 		(e) => {
-			L(nn, e), r(e);
+			R(sn, e), r(e);
 		},
 		n
 	];
 }
 // ../../web/src/audio/worklet.ts?worker&url
-var cn = new URL("assets/worklet-DIdmPxVX.js", import.meta.url).href, ln = new URL(new URL("assets/dsp_core.wasm.json", import.meta.url).href).href, un = "audio-unsupported", R = {
+var dn = new URL("assets/worklet-DIdmPxVX.js", import.meta.url).href, fn = new URL(new URL("assets/dsp_core.wasm.json", import.meta.url).href).href, pn = "audio-unsupported", z = {
 	carrierHz: {
 		min: 20,
 		max: 1500,
@@ -1797,7 +1828,7 @@ var cn = new URL("assets/worklet-DIdmPxVX.js", import.meta.url).href, ln = new U
 		max: 30,
 		def: .05
 	}
-}, z = {
+}, B = {
 	carrierHz: 0,
 	beatHz: 1,
 	gain: 2,
@@ -1831,69 +1862,69 @@ var cn = new URL("assets/worklet-DIdmPxVX.js", import.meta.url).href, ln = new U
 	panDepth: 30,
 	panRateHz: 31
 };
-function B(e, t, n, r) {
+function V(e, t, n, r) {
 	return typeof e != "number" || !Number.isFinite(e) ? r : e < t ? t : e > n ? n : e;
 }
-var dn = (e, t = R.carrierHz.def) => B(e, R.carrierHz.min, R.carrierHz.max, t), fn = (e, t = R.beatHz.def) => B(e, R.beatHz.min, R.beatHz.max, t), pn = (e, t = 0) => B(e, R.gain.min, R.gain.max, t), mn = (e, t = 0) => B(e, R.noiseLevel.min, R.noiseLevel.max, t), hn = (e, t = R.beatLevel.def) => e === void 0 ? t : B(e, R.beatLevel.min, R.beatLevel.max, t), gn = (e, t = R.rampSec.def) => B(e, R.rampSec.min, R.rampSec.max, t), V = r, H = (e, t) => B(e, V.level.min, V.level.max, t), U = (e, t = 0) => B(typeof e == "number" ? Math.round(e) : e, 0, V.enumMax, t), _n = (e, t) => B(e, V.bpm.min, V.bpm.max, t);
-function vn(e) {
+var mn = (e, t = z.carrierHz.def) => V(e, z.carrierHz.min, z.carrierHz.max, t), hn = (e, t = z.beatHz.def) => V(e, z.beatHz.min, z.beatHz.max, t), gn = (e, t = 0) => V(e, z.gain.min, z.gain.max, t), _n = (e, t = 0) => V(e, z.noiseLevel.min, z.noiseLevel.max, t), vn = (e, t = z.beatLevel.def) => e === void 0 ? t : V(e, z.beatLevel.min, z.beatLevel.max, t), yn = (e, t = z.rampSec.def) => V(e, z.rampSec.min, z.rampSec.max, t), H = r, U = (e, t) => V(e, H.level.min, H.level.max, t), W = (e, t = 0) => V(typeof e == "number" ? Math.round(e) : e, 0, H.enumMax, t), bn = (e, t) => V(e, H.bpm.min, H.bpm.max, t);
+function xn(e) {
 	let t = i, n = e ?? t;
 	return {
-		lofiLevel: H(n.lofiLevel, t.lofiLevel),
-		lofiWarmth: H(n.lofiWarmth, t.lofiWarmth),
-		crackle: H(n.crackle, t.crackle),
-		instLevel: H(n.instLevel, t.instLevel),
-		instKind: B(typeof n.instKind == "number" ? Math.round(n.instKind) : n.instKind, 0, V.instKindMax, t.instKind),
-		instRootHz: B(n.instRootHz, V.instRootHz.min, V.instRootHz.max, t.instRootHz),
-		instScale: U(n.instScale, t.instScale),
-		instBpm: _n(n.instBpm, t.instBpm),
-		padLevel: H(n.padLevel, t.padLevel),
-		padChord: U(n.padChord, t.padChord),
-		padRootHz: B(n.padRootHz, V.padRootHz.min, V.padRootHz.max, t.padRootHz),
-		chimeLevel: H(n.chimeLevel, t.chimeLevel),
-		chimeRatePerMin: B(n.chimeRatePerMin, V.chimeRatePerMin.min, V.chimeRatePerMin.max, t.chimeRatePerMin),
-		percLevel: H(n.percLevel, t.percLevel),
-		percBpm: _n(n.percBpm, t.percBpm),
-		percPattern: U(n.percPattern, t.percPattern),
-		lofiProgression: U(n.lofiProgression, t.lofiProgression),
-		tapeWow: H(n.tapeWow, t.tapeWow),
-		pianoPedal: H(n.pianoPedal, t.pianoPedal),
-		breathDepth: H(n.breathDepth, t.breathDepth),
-		breathRateHz: B(n.breathRateHz, V.breathRateHz.min, V.breathRateHz.max, t.breathRateHz),
-		stereoWidth: H(n.stereoWidth, t.stereoWidth),
-		panDepth: H(n.panDepth, t.panDepth),
-		panRateHz: B(n.panRateHz, V.panRateHz.min, V.panRateHz.max, t.panRateHz)
+		lofiLevel: U(n.lofiLevel, t.lofiLevel),
+		lofiWarmth: U(n.lofiWarmth, t.lofiWarmth),
+		crackle: U(n.crackle, t.crackle),
+		instLevel: U(n.instLevel, t.instLevel),
+		instKind: V(typeof n.instKind == "number" ? Math.round(n.instKind) : n.instKind, 0, H.instKindMax, t.instKind),
+		instRootHz: V(n.instRootHz, H.instRootHz.min, H.instRootHz.max, t.instRootHz),
+		instScale: W(n.instScale, t.instScale),
+		instBpm: bn(n.instBpm, t.instBpm),
+		padLevel: U(n.padLevel, t.padLevel),
+		padChord: W(n.padChord, t.padChord),
+		padRootHz: V(n.padRootHz, H.padRootHz.min, H.padRootHz.max, t.padRootHz),
+		chimeLevel: U(n.chimeLevel, t.chimeLevel),
+		chimeRatePerMin: V(n.chimeRatePerMin, H.chimeRatePerMin.min, H.chimeRatePerMin.max, t.chimeRatePerMin),
+		percLevel: U(n.percLevel, t.percLevel),
+		percBpm: bn(n.percBpm, t.percBpm),
+		percPattern: W(n.percPattern, t.percPattern),
+		lofiProgression: W(n.lofiProgression, t.lofiProgression),
+		tapeWow: U(n.tapeWow, t.tapeWow),
+		pianoPedal: U(n.pianoPedal, t.pianoPedal),
+		breathDepth: U(n.breathDepth, t.breathDepth),
+		breathRateHz: V(n.breathRateHz, H.breathRateHz.min, H.breathRateHz.max, t.breathRateHz),
+		stereoWidth: U(n.stereoWidth, t.stereoWidth),
+		panDepth: U(n.panDepth, t.panDepth),
+		panRateHz: V(n.panRateHz, H.panRateHz.min, H.panRateHz.max, t.panRateHz)
 	};
 }
-var yn = {
+var Sn = {
 	binaural: 0,
 	monaural: 1,
 	isochronic: 2
-}, bn = {
+}, Cn = {
 	off: 0,
 	white: 1,
 	pink: 2,
 	brown: 3,
 	violet: 4
 };
-function xn(e, t) {
-	t[z.lofiLevel] = e.lofiLevel, t[z.lofiWarmth] = e.lofiWarmth, t[z.crackle] = e.crackle, t[z.instLevel] = e.instLevel, t[z.instKind] = e.instKind, t[z.instRootHz] = e.instRootHz, t[z.instScale] = e.instScale, t[z.instBpm] = e.instBpm, t[z.padLevel] = e.padLevel, t[z.padChord] = e.padChord, t[z.padRootHz] = e.padRootHz, t[z.chimeLevel] = e.chimeLevel, t[z.chimeRatePerMin] = e.chimeRatePerMin, t[z.percLevel] = e.percLevel, t[z.percBpm] = e.percBpm, t[z.percPattern] = e.percPattern, t[z.lofiProgression] = e.lofiProgression, t[z.tapeWow] = e.tapeWow, t[z.pianoPedal] = e.pianoPedal, t[z.breathDepth] = e.breathDepth, t[z.breathRateHz] = e.breathRateHz, t[z.stereoWidth] = e.stereoWidth, t[z.panDepth] = e.panDepth, t[z.panRateHz] = e.panRateHz;
+function wn(e, t) {
+	t[B.lofiLevel] = e.lofiLevel, t[B.lofiWarmth] = e.lofiWarmth, t[B.crackle] = e.crackle, t[B.instLevel] = e.instLevel, t[B.instKind] = e.instKind, t[B.instRootHz] = e.instRootHz, t[B.instScale] = e.instScale, t[B.instBpm] = e.instBpm, t[B.padLevel] = e.padLevel, t[B.padChord] = e.padChord, t[B.padRootHz] = e.padRootHz, t[B.chimeLevel] = e.chimeLevel, t[B.chimeRatePerMin] = e.chimeRatePerMin, t[B.percLevel] = e.percLevel, t[B.percBpm] = e.percBpm, t[B.percPattern] = e.percPattern, t[B.lofiProgression] = e.lofiProgression, t[B.tapeWow] = e.tapeWow, t[B.pianoPedal] = e.pianoPedal, t[B.breathDepth] = e.breathDepth, t[B.breathRateHz] = e.breathRateHz, t[B.stereoWidth] = e.stereoWidth, t[B.panDepth] = e.panDepth, t[B.panRateHz] = e.panRateHz;
 }
-function Sn(e, t, n) {
-	return n[z.carrierHz] = dn(e.carrierHz), n[z.beatHz] = fn(e.beatHz), n[z.gain] = pn(e.gain), n[z.mode] = yn[e.mode] ?? 0, n[z.noiseKind] = bn[e.noise] ?? 0, n[z.noiseLevel] = mn(e.noiseLevel), n[z.rampSec] = gn(t), n[z.beatLevel] = hn(e.beatLevel), xn(vn(e.layers), n), n;
+function Tn(e, t, n) {
+	return n[B.carrierHz] = mn(e.carrierHz), n[B.beatHz] = hn(e.beatHz), n[B.gain] = gn(e.gain), n[B.mode] = Sn[e.mode] ?? 0, n[B.noiseKind] = Cn[e.noise] ?? 0, n[B.noiseLevel] = _n(e.noiseLevel), n[B.rampSec] = yn(t), n[B.beatLevel] = vn(e.beatLevel), wn(xn(e.layers), n), n;
 }
-function Cn(e, t) {
+function En(e, t) {
 	return {
-		carrierHz: dn(e.carrierHz, t?.carrierHz),
-		beatHz: fn(e.beatHz, t?.beatHz),
-		noise: e.noise in bn ? e.noise : t?.noise ?? "off",
-		noiseLevel: mn(e.noiseLevel, t?.noiseLevel),
-		mode: e.mode in yn ? e.mode : t?.mode ?? "binaural",
-		gain: pn(e.gain, t?.gain),
-		...e.beatLevel === void 0 ? {} : { beatLevel: hn(e.beatLevel, t?.beatLevel) },
-		...e.layers === void 0 ? {} : { layers: vn(e.layers) }
+		carrierHz: mn(e.carrierHz, t?.carrierHz),
+		beatHz: hn(e.beatHz, t?.beatHz),
+		noise: e.noise in Cn ? e.noise : t?.noise ?? "off",
+		noiseLevel: _n(e.noiseLevel, t?.noiseLevel),
+		mode: e.mode in Sn ? e.mode : t?.mode ?? "binaural",
+		gain: gn(e.gain, t?.gain),
+		...e.beatLevel === void 0 ? {} : { beatLevel: vn(e.beatLevel, t?.beatLevel) },
+		...e.layers === void 0 ? {} : { layers: xn(e.layers) }
 	};
 }
-var wn = class {
+var Dn = class {
 	seq;
 	data;
 	constructor(e) {
@@ -1904,16 +1935,16 @@ var wn = class {
 		for (let t = 0; t < 32; t++) this.data[t] = e[t] ?? 0;
 		Atomics.add(this.seq, 0, 1);
 	}
-}, Tn = 6e3, En = 9e3, Dn = 10 ** -.15, On = .25;
-function kn(e, t) {
-	return Number.isFinite(e) ? t ? e * Dn : e : 0;
+}, On = 6e3, kn = 9e3, An = 10 ** -.15, jn = .25;
+function Mn(e, t) {
+	return Number.isFinite(e) ? t ? e * An : e : 0;
 }
-function An(e, t, n) {
+function Nn(e, t, n) {
 	let r = e.createGain(), i = e.createGain(), a = e.createBiquadFilter(), o = e.createBiquadFilter();
-	a.type = "highshelf", a.frequency.value = Tn, a.gain.value = -6, o.type = "lowpass", o.frequency.value = En, r.gain.value = 1, i.gain.value = 0, t.connect(r).connect(n), t.connect(a).connect(o).connect(i).connect(n);
+	a.type = "highshelf", a.frequency.value = On, a.gain.value = -6, o.type = "lowpass", o.frequency.value = kn, r.gain.value = 1, i.gain.value = 0, t.connect(r).connect(n), t.connect(a).connect(o).connect(i).connect(n);
 	let s = !1, c = (t, n) => {
 		let r = e.currentTime;
-		t.cancelScheduledValues(r), t.setValueAtTime(t.value, r), t.linearRampToValueAtTime(n, r + On);
+		t.cancelScheduledValues(r), t.setValueAtTime(t.value, r), t.linearRampToValueAtTime(n, r + jn);
 	};
 	return {
 		on: () => s,
@@ -1923,35 +1954,35 @@ function An(e, t, n) {
 	};
 }
 // ../../web/src/audio/telemetry.ts
-var jn = 8192, Mn = 8191, Nn = 8, Pn = 65544;
-function Fn(e) {
-	return e ? new SharedArrayBuffer(Pn) : new ArrayBuffer(Pn);
+var Pn = 8192, Fn = 8191, In = 8, Ln = 65544;
+function Rn(e) {
+	return e ? new SharedArrayBuffer(Ln) : new ArrayBuffer(Ln);
 }
-var In = class {
+var zn = class {
 	idx;
 	ring;
 	constructor(e) {
-		this.idx = new Int32Array(e, 0, 2), this.ring = new Float32Array(e, Nn, jn * 2);
+		this.idx = new Int32Array(e, 0, 2), this.ring = new Float32Array(e, In, Pn * 2);
 	}
 	read(e) {
 		let t = Atomics.load(this.idx, 0), n = t - Atomics.load(this.idx, 1) | 0;
 		if (n <= 0) return 0;
-		n > 8192 && (n = jn);
+		n > 8192 && (n = Pn);
 		let r = Math.min(n, e.length >> 1), i = t - r | 0;
 		for (let t = 0; t < r; t++) {
-			let n = (i & Mn) * 2;
+			let n = (i & Fn) * 2;
 			e[t * 2] = this.ring[n] ?? 0, e[t * 2 + 1] = this.ring[n + 1] ?? 0, i = i + 1 | 0;
 		}
 		return Atomics.store(this.idx, 1, t), r;
 	}
-}, Ln = { read: () => 0 }, Rn = 2, zn = .3, Bn = 1e3, Vn = class {
+}, Bn = { read: () => 0 }, Vn = 2, Hn = .3, Un = 1e3, Wn = class {
 	_status;
 	listeners = /* @__PURE__ */ new Set();
 	ctx = null;
 	node = null;
 	master = null;
 	writer = null;
-	tele = Ln;
+	tele = Bn;
 	voice = null;
 	startedAt = 0;
 	statsId = 0;
@@ -2009,9 +2040,9 @@ var In = class {
 			this.ctx === null && await this.build();
 			let t = this.ctx;
 			if (t === null || this.master === null) throw Error("audio graph missing");
-			this.voice = Cn(e), this.pushVoice(this.voice, Rn), this.startedAt = t.currentTime;
+			this.voice = En(e), this.pushVoice(this.voice, Vn), this.startedAt = t.currentTime;
 			let n = this.master.gain;
-			n.cancelScheduledValues(t.currentTime), n.setValueAtTime(0, t.currentTime), n.linearRampToValueAtTime(1, t.currentTime + Rn), await t.resume(), this.startWatch(t), this.setStatus({ state: "running" });
+			n.cancelScheduledValues(t.currentTime), n.setValueAtTime(0, t.currentTime), n.linearRampToValueAtTime(1, t.currentTime + Vn), await t.resume(), this.startWatch(t), this.setStatus({ state: "running" });
 		} catch (e) {
 			this.setStatus({
 				state: "error",
@@ -2021,11 +2052,11 @@ var In = class {
 	}
 	async build() {
 		let e = new AudioContext({ latencyHint: "interactive" });
-		if (this.ctx = e, typeof AudioWorkletNode > "u" || e.audioWorklet === void 0) throw Error(un);
-		await e.audioWorklet.addModule(cn);
-		let t = await fetch(ln);
+		if (this.ctx = e, typeof AudioWorkletNode > "u" || e.audioWorklet === void 0) throw Error(pn);
+		await e.audioWorklet.addModule(dn);
+		let t = await fetch(fn);
 		if (!t.ok) throw Error(`wasm fetch failed: ${t.status}`);
-		let n = await t.arrayBuffer(), r = typeof SharedArrayBuffer < "u" && this._status.crossOriginIsolated, i = r ? new SharedArrayBuffer(132) : void 0, a = r ? Fn(!0) : void 0, o = new AudioWorkletNode(e, "zonked-dsp", {
+		let n = await t.arrayBuffer(), r = typeof SharedArrayBuffer < "u" && this._status.crossOriginIsolated, i = r ? new SharedArrayBuffer(132) : void 0, a = r ? Rn(!0) : void 0, o = new AudioWorkletNode(e, "zonked-dsp", {
 			numberOfInputs: 0,
 			outputChannelCount: [2]
 		}), s = new Promise((e, t) => {
@@ -2044,15 +2075,15 @@ var In = class {
 		let c = e.createGain();
 		c.gain.value = 0;
 		let l = e.createGain(), u = e.createWaveShaper();
-		u.curve = en();
-		let d = An(e, c, u);
+		u.curve = an();
+		let d = Nn(e, c, u);
 		o.connect(l).connect(c), u.connect(e.destination);
 		let f = e.createAnalyser();
-		f.fftSize = 4096, f.smoothingTimeConstant = 0, u.connect(f), this.bt = d, this.analyser = f, this.freq = new Float32Array(f.frequencyBinCount), d.setOn(this.listening === "bluetooth"), Nt({
+		f.fftSize = 4096, f.smoothingTimeConstant = 0, u.connect(f), this.bt = d, this.analyser = f, this.freq = new Float32Array(f.frequencyBinCount), d.setOn(this.listening === "bluetooth"), Lt({
 			ctx: e,
 			input: c,
 			duck: l
-		}), this.node = o, this.master = c, this.writer = i ? new wn(i) : null, this.tele = a ? new In(a) : Ln, this.setStatus({
+		}), this.node = o, this.master = c, this.writer = i ? new Dn(i) : null, this.tele = a ? new zn(a) : Bn, this.setStatus({
 			sampleRate: e.sampleRate,
 			usesSharedMemory: r
 		});
@@ -2081,8 +2112,8 @@ var In = class {
 		this.listening !== e && (this.listening = e, this.bt?.setOn(e === "bluetooth"), this.voice !== null && this.pushVoice(this.voice, .5));
 	}
 	pushVoice(e, t) {
-		let n = kn(e.noiseLevel, this.listening === "bluetooth");
-		Sn(n === e.noiseLevel ? e : {
+		let n = Mn(e.noiseLevel, this.listening === "bluetooth");
+		Tn(n === e.noiseLevel ? e : {
 			...e,
 			noiseLevel: n
 		}, t, this.block), this.writer === null ? this.node?.port.postMessage({
@@ -2091,9 +2122,9 @@ var In = class {
 		}) : this.writer.write(this.block);
 	}
 	setVoice(e, t) {
-		this.voice = Cn(e, this.voice ?? void 0);
-		let n = gn(t ?? .05);
-		this.ctx !== null && this.ctx.currentTime - this.startedAt < 4 && (n = Math.max(n, Rn)), this.pushVoice(this.voice, n);
+		this.voice = En(e, this.voice ?? void 0);
+		let n = yn(t ?? .05);
+		this.ctx !== null && this.ctx.currentTime - this.startedAt < 4 && (n = Math.max(n, Vn)), this.pushVoice(this.voice, n);
 	}
 	stop() {
 		if (this.pendingStop !== null) return this.pendingStop;
@@ -2115,7 +2146,7 @@ var In = class {
 			gain: 0
 		}, .1);
 		let t = this.master?.gain;
-		t && (t.cancelScheduledValues(e.currentTime), t.setValueAtTime(t.value, e.currentTime), t.linearRampToValueAtTime(0, e.currentTime + zn)), await new Promise((e) => setTimeout(e, 350));
+		t && (t.cancelScheduledValues(e.currentTime), t.setValueAtTime(t.value, e.currentTime), t.linearRampToValueAtTime(0, e.currentTime + Hn)), await new Promise((e) => setTimeout(e, 350));
 		try {
 			await e.suspend(), this.setStatus({ state: "stopped" });
 		} catch (e) {
@@ -2130,7 +2161,7 @@ var In = class {
 		let t = e.playbackStats;
 		this.lastUnderruns = t?.underrunEvents ?? 0, this.watchTimer = setInterval(() => {
 			let n = Date.now(), r = e.baseLatency + (e.outputLatency || 0);
-			zt(this.lastLatency, r) && I.record(n, "late"), this.lastLatency = r;
+			Ut(this.lastLatency, r) && I.record(n, "late"), this.lastLatency = r;
 			let i = t?.underrunEvents;
 			typeof i == "number" && i > this.lastUnderruns && I.record(n, "underrun", i - this.lastUnderruns), typeof i == "number" && (this.lastUnderruns = i);
 		}, 1e3);
@@ -2170,7 +2201,7 @@ var In = class {
 		return t === null ? Promise.resolve(e) : new Promise((n) => {
 			let r = ++this.statsId, i = setTimeout(() => {
 				this.pending.delete(r), n(e);
-			}, Bn);
+			}, Un);
 			this.pending.set(r, {
 				resolve: n,
 				timer: i
@@ -2182,10 +2213,10 @@ var In = class {
 	}
 };
 // ../../web/src/audio/index.ts
-function Hn() {
-	return new Vn();
+function Gn() {
+	return new Wn();
 }
-var Un = (e) => e.mediaSession ?? void 0, Wn = [{
+var G = (e) => e.mediaSession ?? void 0, Kn = [{
 	src: "/pwa-512x512.png",
 	sizes: "512x512",
 	type: "image/png"
@@ -2193,7 +2224,7 @@ var Un = (e) => e.mediaSession ?? void 0, Wn = [{
 	src: "/pwa-192x192.png",
 	sizes: "192x192",
 	type: "image/png"
-}], Gn = [
+}], qn = [
 	"play",
 	"pause",
 	"stop",
@@ -2202,7 +2233,7 @@ var Un = (e) => e.mediaSession ?? void 0, Wn = [{
 	"seekforward",
 	"seekbackward"
 ];
-function Kn(e, t) {
+function Jn(e, t) {
 	switch (e) {
 		case "play": return () => t.play();
 		case "pause": return () => t.pause();
@@ -2214,19 +2245,19 @@ function Kn(e, t) {
 		default: return null;
 	}
 }
-function qn(e, t = navigator) {
-	let n = Un(t);
+function Yn(e, t = navigator) {
+	let n = G(t);
 	if (n !== void 0 && typeof MediaMetadata < "u") try {
 		n.metadata = new MediaMetadata({
 			title: e?.name ?? "Zonked",
 			artist: "Zonked",
 			album: e?.category ?? "Acoustic recovery",
-			artwork: Wn
+			artwork: Kn
 		});
 	} catch {}
 }
-function Jn(e, t, n = navigator) {
-	let r = Un(n);
+function Xn(e, t, n = navigator) {
+	let r = G(n);
 	if (r !== void 0 && typeof r.setPositionState == "function") try {
 		if (!Number.isFinite(e) || e <= 0 || !Number.isFinite(t)) {
 			r.setPositionState();
@@ -2240,15 +2271,15 @@ function Jn(e, t, n = navigator) {
 		});
 	} catch {}
 }
-function Yn(e, t = navigator) {
-	let n = Un(t);
+function Zn(e, t = navigator) {
+	let n = G(t);
 	if (n === void 0) return () => void 0;
-	qn(null, t);
-	for (let t of Gn) try {
-		n.setActionHandler(t, Kn(t, e));
+	Yn(null, t);
+	for (let t of qn) try {
+		n.setActionHandler(t, Jn(t, e));
 	} catch {}
 	return () => {
-		for (let e of Gn) try {
+		for (let e of qn) try {
 			n.setActionHandler(e, null);
 		} catch {}
 		try {
@@ -2256,12 +2287,12 @@ function Yn(e, t = navigator) {
 		} catch {}
 	};
 }
-function Xn(e, t = navigator) {
-	let n = Un(t);
+function Qn(e, t = navigator) {
+	let n = G(t);
 	n !== void 0 && (n.playbackState = e ? "playing" : "paused");
 }
 // ../../web/src/app/visibility.ts
-async function Zn(e) {
+async function $n(e) {
 	if (!e.isPlaying()) return !1;
 	let t = e.engine.contextState?.();
 	if (t !== "suspended" && t !== "interrupted" || e.engine.resume === void 0) return !1;
@@ -2270,17 +2301,17 @@ async function Zn(e) {
 	} catch {}
 	return !0;
 }
-function Qn(e) {
+function er(e) {
 	let t = e.doc ?? (typeof document > "u" ? void 0 : document), n = e.win ?? (typeof window > "u" ? void 0 : window), r = () => {
 		let n = t?.hidden === !0;
-		e.onVisibility?.(n), Zn(e);
-	}, i = () => void Zn(e);
+		e.onVisibility?.(n), $n(e);
+	}, i = () => void $n(e);
 	return t?.addEventListener("visibilitychange", r), n?.addEventListener("pageshow", i), n?.addEventListener("pointerdown", i), n?.addEventListener("keydown", i), () => {
 		t?.removeEventListener("visibilitychange", r), n?.removeEventListener("pageshow", i), n?.removeEventListener("pointerdown", i), n?.removeEventListener("keydown", i);
 	};
 }
 // ../../web/src/app/wakeLock.ts
-var $n = "zonked.wakeLock", er = class {
+var tr = "zonked.wakeLock", nr = class {
 	nav;
 	storage;
 	sentinel = null;
@@ -2303,7 +2334,7 @@ var $n = "zonked.wakeLock", er = class {
 	async setEnabled(e) {
 		this.enabled = e;
 		try {
-			this.storage?.setItem($n, e ? "1" : "0");
+			this.storage?.setItem(tr, e ? "1" : "0");
 		} catch {}
 		await this.sync();
 	}
@@ -2341,23 +2372,23 @@ var $n = "zonked.wakeLock", er = class {
 	}
 	readPref() {
 		try {
-			return this.storage?.getItem($n) === "1";
+			return this.storage?.getItem(tr) === "1";
 		} catch {
 			return !1;
 		}
 	}
-}, tr = ["favorites", "milestones"], nr = "zonked", W = "scripts", G = "logs", K = "mixes", q = "records", rr = 2, ir = 80, J = (e) => typeof e == "number" && Number.isFinite(e);
-function ar(e) {
-	if (typeof e != "object" || !e) return !1;
-	let t = e;
-	return J(t.id) && typeof t.name == "string" && t.name.length >= 1 && t.name.length <= ir && typeof t.text == "string" && t.text.length <= a.maxBytes && J(t.updatedAt);
-}
-function or(e) {
-	if (typeof e != "object" || !e) return !1;
-	let t = e;
-	return J(t.id) && J(t.startedAt) && J(t.endedAt) && J(t.peakScore) && typeof t.presetId == "string" && t.presetId.length <= ir;
-}
+}, rr = ["favorites", "milestones"], ir = "zonked", K = "scripts", q = "logs", J = "mixes", Y = "records", ar = 2, or = 80, X = (e) => typeof e == "number" && Number.isFinite(e);
 function sr(e) {
+	if (typeof e != "object" || !e) return !1;
+	let t = e;
+	return X(t.id) && typeof t.name == "string" && t.name.length >= 1 && t.name.length <= or && typeof t.text == "string" && t.text.length <= a.maxBytes && X(t.updatedAt);
+}
+function cr(e) {
+	if (typeof e != "object" || !e) return !1;
+	let t = e;
+	return X(t.id) && X(t.startedAt) && X(t.endedAt) && X(t.peakScore) && typeof t.presetId == "string" && t.presetId.length <= or;
+}
+function lr(e) {
 	let t = {
 		id: e.id,
 		startedAt: e.startedAt,
@@ -2368,45 +2399,45 @@ function sr(e) {
 	return {
 		...t,
 		...r === "manual" || r === "countdown" || r === "sleep-fade" ? { endKind: r } : {},
-		...J(i) && i >= 0 && i <= 1e3 ? { breaks: Math.floor(i) } : {}
+		...X(i) && i >= 0 && i <= 1e3 ? { breaks: Math.floor(i) } : {}
 	};
 }
-function Y(e) {
+function Z(e) {
 	return new Promise((t, n) => {
 		e.onsuccess = () => t(e.result), e.onerror = () => n(e.error ?? /* @__PURE__ */ Error("IndexedDB request failed"));
 	});
 }
-function X(e) {
+function Q(e) {
 	return new Promise((t, n) => {
 		e.oncomplete = () => t(), e.onerror = () => n(e.error ?? /* @__PURE__ */ Error("IndexedDB transaction failed")), e.onabort = () => n(e.error ?? /* @__PURE__ */ Error("IndexedDB transaction aborted"));
 	});
 }
-function cr(e) {
+function ur(e) {
 	return new Promise((t, n) => {
-		let r = e.open(nr, rr);
+		let r = e.open(ir, ar);
 		r.onupgradeneeded = () => {
 			let e = r.result, t = (t) => e.objectStoreNames.contains(t);
-			t(W) || e.createObjectStore(W, {
+			t(K) || e.createObjectStore(K, {
 				keyPath: "id",
 				autoIncrement: !0
-			}), t(G) || e.createObjectStore(G, {
+			}), t(q) || e.createObjectStore(q, {
 				keyPath: "id",
 				autoIncrement: !0
-			}), t(K) || e.createObjectStore(K, { keyPath: "id" }), t(q) || e.createObjectStore(q);
+			}), t(J) || e.createObjectStore(J, { keyPath: "id" }), t(Y) || e.createObjectStore(Y);
 		}, r.onsuccess = () => t(r.result), r.onerror = () => n(r.error ?? /* @__PURE__ */ Error("IndexedDB open failed")), r.onblocked = () => n(/* @__PURE__ */ Error("IndexedDB open blocked"));
 	});
 }
-function lr(e, t) {
+function dr(e, t) {
 	if (t.length > a.maxBytes) throw RangeError("Script exceeds 256 KB");
-	let n = e.trim().slice(0, ir);
+	let n = e.trim().slice(0, or);
 	return n.length > 0 ? n : "Untitled";
 }
-function ur() {
+function fr() {
 	let e = 1, t = [], n = [], r = /* @__PURE__ */ new Map(), i = /* @__PURE__ */ new Map();
 	return {
 		persistent: () => Promise.resolve(!1),
 		saveScript(n, r) {
-			let i = lr(n, r), a = {
+			let i = dr(n, r), a = {
 				id: t.find((e) => e.name === i)?.id ?? e++,
 				name: i,
 				text: r,
@@ -2442,158 +2473,158 @@ function ur() {
 		}
 	};
 }
-function dr(e = globalThis.indexedDB) {
-	let t = ur();
+function pr(e = globalThis.indexedDB) {
+	let t = fr();
 	if (e === void 0) return t;
-	let n = null, r = () => (n ??= cr(e).catch(() => null), n);
+	let n = null, r = () => (n ??= ur(e).catch(() => null), n);
 	return {
 		persistent: async () => await r() !== null,
 		async saveScript(e, n) {
 			let i = await r();
 			if (i === null) return t.saveScript(e, n);
-			let a = lr(e, n), o = i.transaction(W, "readwrite"), s = o.objectStore(W), c = (await Y(s.getAll())).filter(ar).find((e) => e.name === a), l = {
+			let a = dr(e, n), o = i.transaction(K, "readwrite"), s = o.objectStore(K), c = (await Z(s.getAll())).filter(sr).find((e) => e.name === a), l = {
 				name: a,
 				text: n,
 				updatedAt: Date.now()
-			}, u = await Y(s.put(c ? {
+			}, u = await Z(s.put(c ? {
 				...l,
 				id: c.id
 			} : l));
-			return await X(o), {
+			return await Q(o), {
 				...l,
 				id: Number(u)
 			};
 		},
 		async listScripts() {
 			let e = await r();
-			return e === null ? t.listScripts() : (await Y(e.transaction(W).objectStore(W).getAll())).filter(ar).sort((e, t) => t.updatedAt - e.updatedAt);
+			return e === null ? t.listScripts() : (await Z(e.transaction(K).objectStore(K).getAll())).filter(sr).sort((e, t) => t.updatedAt - e.updatedAt);
 		},
 		async deleteScript(e) {
 			let n = await r();
 			if (n === null) return t.deleteScript(e);
-			let i = n.transaction(W, "readwrite");
-			i.objectStore(W).delete(e), await X(i);
+			let i = n.transaction(K, "readwrite");
+			i.objectStore(K).delete(e), await Q(i);
 		},
 		async addLog(e) {
 			let n = await r();
 			if (n === null) return t.addLog(e);
-			let i = n.transaction(G, "readwrite");
-			i.objectStore(G).add({ ...e }), await X(i);
+			let i = n.transaction(q, "readwrite");
+			i.objectStore(q).add({ ...e }), await Q(i);
 		},
 		async listLogs(e = 50) {
 			let n = await r();
-			return n === null ? t.listLogs(e) : (await Y(n.transaction(G).objectStore(G).getAll())).filter(or).map(sr).sort((e, t) => t.startedAt - e.startedAt).slice(0, e);
+			return n === null ? t.listLogs(e) : (await Z(n.transaction(q).objectStore(q).getAll())).filter(cr).map(lr).sort((e, t) => t.startedAt - e.startedAt).slice(0, e);
 		},
 		async listMixes() {
 			let e = await r();
 			if (e === null) return t.listMixes();
-			let n = await Y(e.transaction(K).objectStore(K).getAll()), i = Date.now();
+			let n = await Z(e.transaction(J).objectStore(J).getAll()), i = Date.now();
 			return n.map((e) => _t(e, i)).filter((e) => e !== null).sort((e, t) => t.updatedAt - e.updatedAt).slice(0, 200);
 		},
 		async putMix(e) {
 			let n = await r();
 			if (n === null) return t.putMix(e);
-			let i = n.transaction(K, "readwrite"), a = i.objectStore(K), o = await Y(a.count()), s = await Y(a.getKey(e.id)) !== void 0;
+			let i = n.transaction(J, "readwrite"), a = i.objectStore(J), o = await Z(a.count()), s = await Z(a.getKey(e.id)) !== void 0;
 			if (o >= 200 && !s) throw i.abort(), RangeError("Too many mixes");
-			a.put(e), await X(i);
+			a.put(e), await Q(i);
 		},
 		async deleteMix(e) {
 			let n = await r();
 			if (n === null) return t.deleteMix(e);
-			let i = n.transaction(K, "readwrite");
-			i.objectStore(K).delete(e), await X(i);
+			let i = n.transaction(J, "readwrite");
+			i.objectStore(J).delete(e), await Q(i);
 		},
 		async getRecord(e) {
 			let n = await r();
-			return n === null || !tr.includes(e) ? t.getRecord(e) : await Y(n.transaction(q).objectStore(q).get(e));
+			return n === null || !rr.includes(e) ? t.getRecord(e) : await Z(n.transaction(Y).objectStore(Y).get(e));
 		},
 		async setRecord(e, n) {
 			let i = await r();
 			if (i === null) return t.setRecord(e, n);
-			let a = i.transaction(q, "readwrite");
-			a.objectStore(q).put(n, e), await X(a);
+			let a = i.transaction(Y, "readwrite");
+			a.objectStore(Y).put(n, e), await Q(a);
 		},
 		async clearSanctuary() {
 			let e = await r();
 			if (e === null) return t.clearSanctuary();
 			let n = e.transaction([
-				K,
-				q,
-				G
+				J,
+				Y,
+				q
 			], "readwrite");
-			n.objectStore(K).clear(), n.objectStore(q).clear(), n.objectStore(G).clear(), await X(n);
+			n.objectStore(J).clear(), n.objectStore(Y).clear(), n.objectStore(q).clear(), await Q(n);
 		}
 	};
 }
 // src/engine/session.ts
-var fr = 5, pr = (e) => p(e), Z = null, mr = () => rn(tn);
-function hr(e, t, n) {
-	Yn({
+var mr = 5, hr = (e) => p(e), gr = null, _r = () => L(on);
+function vr(e, t, n) {
+	Zn({
 		play: () => {
-			mr() && !e.snapshot().playing && e.play();
+			_r() && !e.snapshot().playing && e.play();
 		},
 		pause: () => void e.stop(),
 		stop: () => void e.stop(),
 		seekBy: (t) => e.seekBy(t)
-	}), Qn({
+	}), er({
 		engine: t,
 		isPlaying: () => e.snapshot().playing,
 		onVisibility: (e) => void n.setHidden(e)
 	});
 	let r = "";
 	e.subscribe((t) => {
-		let i = Math.floor(t.elapsedSec / fr), a = `${String(t.playing)}|${t.templateId ?? ""}|${t.timer.kind}|${t.timer.phase}|${String(i)}`;
+		let i = Math.floor(t.elapsedSec / mr), a = `${String(t.playing)}|${t.templateId ?? ""}|${t.timer.kind}|${t.timer.phase}|${String(i)}`;
 		if (a === r) return;
-		r = a, Xn(t.playing), qn(t.templateName === null ? null : {
+		r = a, Qn(t.playing), Yn(t.templateName === null ? null : {
 			name: t.templateName,
 			category: t.templateCategory ?? ""
 		});
 		let o = e.positionState();
-		o === null ? Jn(0, 0) : Jn(o.durationSec, o.positionSec), n.setPlaying(t.playing);
+		o === null ? Xn(0, 0) : Xn(o.durationSec, o.positionSec), n.setPlaying(t.playing);
 	});
 }
-function Q() {
-	if (Z !== null) return Z;
-	let e = Hn(), t = dr(), n = new it(e, qe, (e) => void t.addLog(e).catch(() => void 0), { toEvents: pr });
-	return hr(n, e, new er(void 0, on())), Z = {
+function $() {
+	if (gr !== null) return gr;
+	let e = Gn(), t = pr(), n = new it(e, qe, (e) => void t.addLog(e).catch(() => void 0), { toEvents: hr });
+	return vr(n, e, new nr(void 0, ln())), gr = {
 		engine: e,
 		player: n,
 		store: t
-	}, Z;
+	}, gr;
 }
-var $ = 0, gr = /* @__PURE__ */ new Set(), _r = () => $ > 0;
-function vr(e) {
-	return gr.add(e), () => void gr.delete(e);
+var yr = 0, br = /* @__PURE__ */ new Set(), xr = () => yr > 0;
+function Sr(e) {
+	return br.add(e), () => void br.delete(e);
 }
-function yr(e) {
-	$ = Math.max(0, $ + (e ? 1 : -1));
-	for (let e of gr) e($ > 0);
+function Cr(e) {
+	yr = Math.max(0, yr + (e ? 1 : -1));
+	for (let e of br) e(yr > 0);
 }
-var br = () => Q().engine.getStats(), xr = () => Q().engine.status.state, Sr = 1e3, Cr = 3e4, wr = "zonked.crew.v1", Tr = /* @__PURE__ */ new Set();
-function Er() {
+var wr = () => $().engine.getStats(), Tr = () => $().engine.status.state, Er = 1e3, Dr = 3e4, Or = "zonked.crew.v1", kr = /* @__PURE__ */ new Set();
+function Ar() {
 	try {
-		if (typeof location < "u" && new URLSearchParams(location.search).get("crew") === "1") return L(wr, !0), !0;
+		if (typeof location < "u" && new URLSearchParams(location.search).get("crew") === "1") return R(Or, !0), !0;
 	} catch {}
-	return rn(wr);
+	return L(Or);
 }
-function Dr(e) {
-	L(wr, e);
-	for (let t of [...Tr]) try {
+function jr(e) {
+	R(Or, e);
+	for (let t of [...kr]) try {
 		t(e);
 	} catch {}
 }
-function Or(e) {
-	return Tr.add(e), () => {
-		Tr.delete(e);
+function Mr(e) {
+	return kr.add(e), () => {
+		kr.delete(e);
 	};
 }
-function kr(e) {
-	return Math.min(Cr, Sr * 2 ** Math.min(Number.isFinite(e) ? Math.max(0, Math.floor(e)) : 0, 10));
+function Nr(e) {
+	return Math.min(Dr, Er * 2 ** Math.min(Number.isFinite(e) ? Math.max(0, Math.floor(e)) : 0, 10));
 }
-function Ar(e) {
+function Pr(e) {
 	return typeof EventSource > "u" ? null : new EventSource(e);
 }
-var jr = class {
+var Fr = class {
 	deps;
 	es = null;
 	timer = null;
@@ -2609,13 +2640,13 @@ var jr = class {
 		return this.status;
 	}
 	start() {
-		this.wanted || (this.wanted = !0, this.unsub = Or(() => this.sync()), this.sync());
+		this.wanted || (this.wanted = !0, this.unsub = Mr(() => this.sync()), this.sync());
 	}
 	stop() {
 		this.wanted = !1, this.unsub?.(), this.unsub = null, this.sync();
 	}
 	isEnabled() {
-		return this.deps.enabled ? this.deps.enabled() : this.deps.create !== void 0 || Er();
+		return this.deps.enabled ? this.deps.enabled() : this.deps.create !== void 0 || Ar();
 	}
 	sync() {
 		let e = this.wanted && this.isEnabled();
@@ -2623,7 +2654,7 @@ var jr = class {
 	}
 	connect() {
 		if (this.stopped) return;
-		let e = this.deps.create ?? Ar, t = null;
+		let e = this.deps.create ?? Pr, t = null;
 		try {
 			t = e(this.deps.url ?? "http://localhost:43210/events");
 		} catch {
@@ -2645,14 +2676,14 @@ var jr = class {
 		} catch {
 			return;
 		}
-		let n = jt(t);
+		let n = Ft(t);
 		if (n !== null) try {
 			this.deps.onState(n);
 		} catch {}
 	}
 	scheduleRetry() {
 		if (this.stopped) return;
-		let e = kr(this.attempt);
+		let e = Nr(this.attempt);
 		this.attempt += 1;
 		let t = this.deps.setTimer ?? ((e, t) => setTimeout(e, t));
 		this.timer = t(() => {
@@ -2677,51 +2708,51 @@ var jr = class {
 			} catch {}
 		}
 	}
-}, Mr = "zonked.css";
-function Nr(e) {
-	let t = new URL(Mr, e).href;
+}, Ir = "zonked.css";
+function Lr(e) {
+	let t = new URL(Ir, e).href;
 	if ([...document.querySelectorAll("link[data-zonked-css]")].some((e) => e.getAttribute("href") === t)) return;
 	let n = document.createElement("link");
 	n.rel = "stylesheet", n.href = t, n.setAttribute("data-zonked-css", "1"), document.head.appendChild(n);
 }
 // src/engine/crewLink.ts
-var Pr = "/apps/zonked/api/state", Fr = 15e3, Ir = null, Lr = null, Rr = "standalone", zr = "", Br = /* @__PURE__ */ new Set(), Vr = () => Rr;
-function Hr(e) {
-	return Br.add(e), () => void Br.delete(e);
+var Rr = "/apps/zonked/api/state", zr = 15e3, Br = null, Vr = null, Hr = "standalone", Ur = "", Wr = /* @__PURE__ */ new Set(), Gr = () => Hr;
+function Kr(e) {
+	return Wr.add(e), () => void Wr.delete(e);
 }
-function Ur(e) {
-	if (e !== Rr) {
-		Rr = e;
-		for (let t of [...Br]) t(e);
+function qr(e) {
+	if (e !== Hr) {
+		Hr = e;
+		for (let t of [...Wr]) t(e);
 	}
 }
-function Wr() {
-	Rr === "connected" && Q().player.crewLost(), Tt(), zr = "", Ur("standalone");
+function Jr() {
+	Hr === "connected" && $().player.crewLost(), kt(), Ur = "", qr("standalone");
 }
-async function Gr() {
-	if (Ir === null || !Er()) return Wr();
+async function Yr() {
+	if (Br === null || !Ar()) return Jr();
 	try {
-		let e = jt((await Ir.get(Pr)).crew);
-		if (e === null) return Wr();
-		Ur("connected");
+		let e = Ft((await Br.get(Rr)).crew);
+		if (e === null) return Jr();
+		qr("connected");
 		let t = JSON.stringify([
 			e.burnout,
 			e.target,
 			e.why ?? ""
 		]);
-		if (t === zr) return;
-		zr = t, wt(Q().player, e);
+		if (t === Ur) return;
+		Ur = t, Ot($().player, e);
 	} catch {
-		Wr();
+		Jr();
 	}
 }
-function Kr(e) {
-	Ir = e, Lr === null && (Lr = setInterval(() => void Gr(), Fr), Or(() => void Gr()), Gr());
+function Xr(e) {
+	Br = e, Vr === null && (Vr = setInterval(() => void Yr(), zr), Mr(() => void Yr()), Yr());
 }
-function qr() {
+function Zr() {
 	let t = n.useAppApi, r = t === void 0 ? null : t();
 	e(() => {
-		r !== null && Kr(r);
+		r !== null && Xr(r);
 	}, [r]);
 }
-export { Oe as $, Ht as A, P as B, Ut as C, Qt as D, Xt as E, vt as F, O as G, St as H, xt as I, qe as J, A as K, wt as L, I as M, Pt as N, Ft as O, jt as P, je as Q, Tt as R, Gt as S, Zt as T, dt as U, Et as V, k as W, Ae as X, De as Y, Me as Z, sn as _, jr as a, S as at, Kt as b, Dr as c, i as ct, Q as d, ke as et, _r as f, un as g, yr as h, Nr as i, Fe as it, Vt as j, Bt as k, xr as l, vr as m, Hr as n, Ie as nt, Er as o, x as ot, mr as p, it as q, qr as r, Ne as rt, Or as s, a as st, Vr as t, Le as tt, br as u, tn as v, $t as w, Wt as x, L as y, Dt as z };
+export { xt as $, zt as A, kt as B, Jt as C, tn as D, rn as E, Rt as F, dt as G, P as H, Ft as I, yt as J, k as K, St as L, Kt as M, Gt as N, en as O, I as P, bt as Q, Tt as R, Xt as S, qt as T, At as U, jt as V, Et as W, A as X, vt as Y, _t as Z, pn as _, Fr as a, je as at, L as b, jr as c, Le as ct, $ as d, Fe as dt, it as et, xr as f, S as ft, pr as g, Cr as h, i as ht, Lr as i, Me as it, Wt as j, nn as k, Tr as l, Ie as lt, Sr as m, a as mt, Kr as n, De as nt, Ar as o, Oe as ot, _r as p, x as pt, O as q, Zr as r, Ae as rt, Mr as s, ke as st, Gr as t, qe as tt, wr as u, Ne as ut, un as v, Yt as w, R as x, on as y, Ot as z };

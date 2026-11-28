@@ -1,9 +1,9 @@
 import { Suspense as e, lazy as t, useState as n } from "react";
-import { r, t as i } from "./chunk-samples-BgYriVps.mjs";
-import { Y as a } from "./chunk-crewLink-DfIjAvPP.mjs";
+import { r, t as i } from "./chunk-samples-BWg4CeGQ.mjs";
+import { nt as a } from "./chunk-crewLink-TXTH-ttS.mjs";
 import { t as o } from "./chunk-icons-C-FdU5cO.mjs";
 import { n as s } from "./chunk-MascotView-Cmnhlpu8.mjs";
-import { g as c } from "./chunk-data-Bhxfb-cT.mjs";
+import { _ as c } from "./chunk-data-B5J84IqW.mjs";
 import { jsx as l, jsxs as u } from "react/jsx-runtime";
 // ../../web/src/ui/calm/nature/groups.ts
 var d = [
@@ -74,7 +74,7 @@ var D = /* @__PURE__ */ r({ NatureScreen: () => F }), O = {
 	wind: "breeze",
 	waterfall: "rapids",
 	flute: "wave"
-}, k = t(() => import("./chunk-MySounds-Dn4O_e5Q.mjs").then((e) => ({ default: e.MySounds }))), A = t(() => import("./chunk-Credits-Bhokne3A.mjs").then((e) => ({ default: e.Credits })));
+}, k = t(() => import("./chunk-MySounds-DaaiuUg6.mjs").then((e) => ({ default: e.MySounds }))), A = t(() => import("./chunk-Credits-BaV3p7DJ.mjs").then((e) => ({ default: e.Credits })));
 function j({ id: e, label: t, value: n, max: r, onChange: i }) {
 	return /* @__PURE__ */ u("div", {
 		className: "c-slider",
