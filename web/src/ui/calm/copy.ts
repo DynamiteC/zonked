@@ -172,6 +172,7 @@ export const CALM = {
   gentleHint: 'Picks softer sounds and keeps the screen still.',
   reduceMotion: 'Reduce motion',
   themeTitle: 'Look',
+  contrastHint: 'High contrast stays bright at night. Choose Dark for a dim screen.',
   themeChoices: { system: 'System', light: 'Light', dark: 'Dark', contrast: 'High contrast' },
   dimLabel: 'Dim screen while playing',
   dimHint: 'On by default from 19:00 to 07:00.',
