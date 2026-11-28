@@ -132,3 +132,46 @@ Not used in round 3, with the reason:
   path `/samples/<id>.mp3.json` only, cache name `zonked-samples`, at most 40 entries. A loop heard once works offline.
 - Made-in-code sounds ship no file and work offline from the first start.
 - First load is unchanged: no sample is in the entry chunk.
+
+## Proof of the public domain files
+
+14 files rely on an author dedication to the public domain, not on CC0: rain, forest, birds, breeze, veranda, window,
+waves, pebbles, chimes, gong, fire, creek, fountain and storm. For each one, the text of the Commons file page
+(title, author, source record, and the dedication wording) was fetched on 2026-11-28 (UTC) and saved as
+`docs/legal/samples/<id>.txt`. All 14 pages show a dedication by the named author:
+
+- 12 pages come from PDSounds, where every uploader agrees to release recordings into the public domain. The Commons
+  page also carries a fallback grant for countries where a dedication is not possible.
+- 2 pages (waves and creek, both by Dsw4) are the uploader's own work with a self dedication and the same fallback
+  grant.
+
+What this proof does not show, and what we say plainly:
+
+- Commons does not check that an uploader is the author. For the PDSounds files, the Commons page says the file was
+  transferred from pdsounds.org. We rely on that statement. A saved page is evidence of what the page said on the
+  date above. It is not a legal guarantee.
+- The "Public domain" label here means a dedication by the author. It does not mean the Public Domain Mark.
+- `node scripts/check-samples.mjs` only checks that every file is listed with an allowed licence name and that the
+  hash matches this table. It does not check that the licence statement is true.
+- Whether this proof is enough for a store listing is a question for a LAWYER.
+- The CC0 rows (stream, ocean, rapids, lightrain, thunder, koshi, trickle, hum) link to the licence page. Their
+  Commons file pages were read when the loops were made, but no saved copy exists yet. Saving them is listed in
+  `docs/READINESS.md`.
+- The storm page has unrelated spam text in its user tags. The dedication on that page is clear.
+
+Nothing is marked for removal at this time. If a later check finds a page that no longer shows the dedication, the
+file is removed (see below).
+
+## Takedown
+
+If you own a recording used here, or you believe a file is listed with the wrong licence, tell us:
+
+1. Open an issue in the project repository titled "Sample takedown", and name the file (for example `rain.mp3.json`)
+   and why. Do not post private data. If you prefer a private route, use the one in `SECURITY.md`.
+2. We check the claim. If it looks right, we remove the file and its row, and list the removal here.
+3. A removed file is removed in the next release. Builds already installed keep their cached copy until the app
+   updates. Plan: loops will get content-hashed names so an update replaces them (wave E, see `docs/READINESS.md`).
+4. We do not ask you to prove more than a normal claim needs. Tell us what you can.
+
+This is a free project run by volunteers. It makes no promise about a fixed reply time, and a request is handled in
+good faith.

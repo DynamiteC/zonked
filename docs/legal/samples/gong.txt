@@ -1,0 +1,18 @@
+Saved proof of the licence for web/public/samples/gong.mp3.json
+Page: Wikimedia Commons, File:Gong or bell vibrant.ogg
+Page address: https://commons.wikimedia.org/wiki/File:Gong_or_bell_vibrant.ogg
+Fetched: 2026-11-28 (UTC), with a plain page fetch, no login.
+This is a text copy of the licence relevant parts of the page. Not legal advice. The page itself is the record; Commons may change it.
+
+Title: Gong or Bell, vibrant
+Artist or author: stephan
+PDSounds record number: 200
+Transferred to Commons by: Fae
+Date: 26 April 2007
+Comment: Nice droning gong. Played in different ways with my finger.
+
+This audio file comes from pdsounds.org and has been released into the public domain by its author.
+Page text: "Everyone who logs in may upload his recordings of the world. If you record for pdsounds, you must agree to release the audio files you make into the public domain. This means that everyone can download the sounds and use them at will, for education, art and commercial purposes too, with no copyrights and no strings attached to the files."
+Licence box: "This work has been released into the public domain by its author, stephan. This applies worldwide. In some countries this may not be legally possible; if so: stephan grants anyone the right to use this work for any purpose, without any conditions, unless such conditions are required by law."
+
+What Zonked ships: a cut, mono, resampled and level-normalised MP3 made from this file (see docs/SAMPLES-LICENSES.md).
