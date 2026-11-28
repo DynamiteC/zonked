@@ -1,8 +1,7 @@
 import { useEffect as e, useMemo as t, useState as n } from "react";
-import { r, t as i } from "./chunk-favorites-CH3XBDrL.mjs";
-import { a, t as o } from "./chunk-catalog-DUQ1JcEF.mjs";
-import { t as s } from "./chunk-soundMenu-C52iaQfx.mjs";
-import { Q as c, Y as l, Z as u } from "./chunk-crewLink-DfIjAvPP.mjs";
+import { r, t as i } from "./chunk-favorites-BbDg4vkc.mjs";
+import { a, o, t as s } from "./chunk-catalog-CdNrcMzw.mjs";
+import { at as c, it as l, nt as u } from "./chunk-crewLink-TXTH-ttS.mjs";
 import { t as d } from "./chunk-icons-C-FdU5cO.mjs";
 import { n as f } from "./chunk-MascotView-Cmnhlpu8.mjs";
 import { Fragment as p, jsx as m, jsxs as h } from "react/jsx-runtime";
@@ -24,7 +23,7 @@ var v = ({ text: e }) => /* @__PURE__ */ m("p", {
 	children: e
 });
 function y({ onPlay: e }) {
-	let [r, i] = n(null), [o, s] = n(0), u = t(() => {
+	let [r, i] = n(null), [o, s] = n(0), l = t(() => {
 		let e = {};
 		for (let t of a()) for (let n of t.situations) e[n] = (e[n] ?? 0) + 1;
 		return e;
@@ -51,7 +50,7 @@ function y({ onPlay: e }) {
 					}),
 					/* @__PURE__ */ m("span", {
 						className: "c-tile-count",
-						children: l.sounds(u[e.id] ?? 0)
+						children: u.sounds(l[e.id] ?? 0)
 					})
 				]
 			}) }, e.id))
@@ -67,13 +66,13 @@ function y({ onPlay: e }) {
 				className: "c-btn c-small",
 				disabled: o === 0,
 				onClick: () => s(o - 1),
-				children: l.back
+				children: u.back
 			}), /* @__PURE__ */ m("button", {
 				type: "button",
 				className: "c-btn c-small",
 				disabled: (o + 1) * g >= f.length,
 				onClick: () => s(o + 1),
-				children: l.next
+				children: u.next
 			})]
 		})
 	] });
@@ -87,8 +86,8 @@ function b({ onPlay: e, onBreathe: t }) {
 			className: "c-row-card",
 			"data-testid": "sounds-breathe",
 			onClick: t,
-			children: [/* @__PURE__ */ m("b", { children: l.breatheEntry }), /* @__PURE__ */ m("small", { children: l.breatheEntryHint })]
-		}) }), s.map((t) => {
+			children: [/* @__PURE__ */ m("b", { children: u.breatheEntry }), /* @__PURE__ */ m("small", { children: u.breatheEntryHint })]
+		}) }), o.map((t) => {
 			let r = n.find((e) => e.id === t.templateId);
 			return /* @__PURE__ */ m("li", { children: /* @__PURE__ */ h("button", {
 				type: "button",
@@ -98,7 +97,7 @@ function b({ onPlay: e, onBreathe: t }) {
 				children: [
 					/* @__PURE__ */ m("b", { children: t.name }),
 					/* @__PURE__ */ m("small", { children: t.blurb }),
-					/* @__PURE__ */ m("small", { children: t.id === "violet" ? "Start very quiet." : u[t.evidence] })
+					/* @__PURE__ */ m("small", { children: t.id === "violet" ? "Start very quiet." : l[t.evidence] })
 				]
 			}) }, t.id);
 		})]
@@ -116,21 +115,21 @@ function x(t) {
 		mixes: s
 	};
 }
-function S({ store: e, logs: r, reduced: i = !1, onNature: s, onBreathe: c, onPlay: u, onPlayMix: d }) {
-	let [g, S] = n(0), [C, w] = n(""), { favs: T, mixes: E } = x(e), D = C.trim().slice(0, 80), O = t(() => D === "" ? [] : o({ text: D }).slice(0, 20), [D]), k = t(() => a(), []), A = T.items.filter((e) => e.kind === "template").map((e) => k.find((t) => t.id === e.id)).filter((e) => e !== void 0), j = r.slice(0, 10);
+function S({ store: e, logs: r, reduced: i = !1, onNature: o, onBreathe: c, onPlay: l, onPlayMix: d }) {
+	let [g, S] = n(0), [C, w] = n(""), { favs: T, mixes: E } = x(e), D = C.trim().slice(0, 80), O = t(() => D === "" ? [] : s({ text: D }).slice(0, 20), [D]), k = t(() => a(), []), A = T.items.filter((e) => e.kind === "template").map((e) => k.find((t) => t.id === e.id)).filter((e) => e !== void 0), j = r.slice(0, 10);
 	return /* @__PURE__ */ h("div", { children: [
 		/* @__PURE__ */ m(f, {
-			title: l.libraryTitle,
+			title: u.libraryTitle,
 			reduced: i
 		}),
-		s !== void 0 && /* @__PURE__ */ h("button", {
+		o !== void 0 && /* @__PURE__ */ h("button", {
 			type: "button",
 			className: "c-link-card c-nature-link",
 			"data-testid": "open-nature",
-			onClick: s,
-			children: [/* @__PURE__ */ m("b", { children: l.natureTitle }), /* @__PURE__ */ m("span", {
+			onClick: o,
+			children: [/* @__PURE__ */ m("b", { children: u.natureTitle }), /* @__PURE__ */ m("span", {
 				className: "c-muted",
-				children: l.natureLine
+				children: u.natureLine
 			})]
 		}),
 		/* @__PURE__ */ h("div", {
@@ -138,11 +137,11 @@ function S({ store: e, logs: r, reduced: i = !1, onNature: s, onBreathe: c, onPl
 			children: [/* @__PURE__ */ m("label", {
 				htmlFor: "c-search-in",
 				className: "c-sr",
-				children: l.searchLabel
+				children: u.searchLabel
 			}), /* @__PURE__ */ m("input", {
 				id: "c-search-in",
 				type: "search",
-				placeholder: l.searchLabel,
+				placeholder: u.searchLabel,
 				value: C,
 				maxLength: 80,
 				onChange: (e) => w(e.target.value)
@@ -151,8 +150,8 @@ function S({ store: e, logs: r, reduced: i = !1, onNature: s, onBreathe: c, onPl
 		D === "" ? /* @__PURE__ */ h(p, { children: [/* @__PURE__ */ m("div", {
 			className: "c-tabs",
 			role: "tablist",
-			"aria-label": l.libraryTitle,
-			children: l.tabs.map((e, t) => /* @__PURE__ */ m("button", {
+			"aria-label": u.libraryTitle,
+			children: u.tabs.map((e, t) => /* @__PURE__ */ m("button", {
 				type: "button",
 				role: "tab",
 				id: `c-tab-${t}`,
@@ -167,16 +166,16 @@ function S({ store: e, logs: r, reduced: i = !1, onNature: s, onBreathe: c, onPl
 			role: "tabpanel",
 			"aria-labelledby": `c-tab-${g}`,
 			children: [
-				g === 0 && /* @__PURE__ */ m(y, { onPlay: u }),
+				g === 0 && /* @__PURE__ */ m(y, { onPlay: l }),
 				g === 1 && /* @__PURE__ */ m(b, {
-					onPlay: u,
+					onPlay: l,
 					...c === void 0 ? {} : { onBreathe: c }
 				}),
-				g === 2 && (A.length === 0 ? /* @__PURE__ */ m(v, { text: l.emptyFavorites }) : /* @__PURE__ */ m(_, {
+				g === 2 && (A.length === 0 ? /* @__PURE__ */ m(v, { text: u.emptyFavorites }) : /* @__PURE__ */ m(_, {
 					list: A,
-					onPlay: u
+					onPlay: l
 				})),
-				g === 3 && (E.length === 0 ? /* @__PURE__ */ m(v, { text: l.emptyMixes }) : /* @__PURE__ */ m("ul", {
+				g === 3 && (E.length === 0 ? /* @__PURE__ */ m(v, { text: u.emptyMixes }) : /* @__PURE__ */ m("ul", {
 					className: "c-list",
 					children: E.map((e) => /* @__PURE__ */ m("li", { children: /* @__PURE__ */ m("button", {
 						type: "button",
@@ -185,7 +184,7 @@ function S({ store: e, logs: r, reduced: i = !1, onNature: s, onBreathe: c, onPl
 						children: /* @__PURE__ */ m("b", { children: e.name })
 					}) }, e.id))
 				})),
-				g === 4 && (j.length === 0 ? /* @__PURE__ */ m(v, { text: l.emptyRecent }) : /* @__PURE__ */ m("ul", {
+				g === 4 && (j.length === 0 ? /* @__PURE__ */ m(v, { text: u.emptyRecent }) : /* @__PURE__ */ m("ul", {
 					className: "c-list",
 					children: j.map((e) => /* @__PURE__ */ h("li", {
 						className: "c-row-card",
@@ -193,9 +192,9 @@ function S({ store: e, logs: r, reduced: i = !1, onNature: s, onBreathe: c, onPl
 					}, e.id))
 				}))
 			]
-		})] }) : O.length === 0 ? /* @__PURE__ */ m(v, { text: l.searchEmpty }) : /* @__PURE__ */ m(_, {
+		})] }) : O.length === 0 ? /* @__PURE__ */ m(v, { text: u.searchEmpty }) : /* @__PURE__ */ m(_, {
 			list: O,
-			onPlay: u
+			onPlay: l
 		})
 	] });
 }

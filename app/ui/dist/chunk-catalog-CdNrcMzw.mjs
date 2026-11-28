@@ -1,7 +1,6 @@
-import { i as e, t } from "./chunk-soundMenu-C52iaQfx.mjs";
-import "./chunk-crewLink-DfIjAvPP.mjs";
+import "./chunk-crewLink-TXTH-ttS.mjs";
 // ../../web/src/catalog/dsl.ts
-function n(e) {
+function e(e) {
 	return {
 		modes: ["binaural"],
 		noises: [["off", 0]],
@@ -13,21 +12,21 @@ function n(e) {
 		...e
 	};
 }
-var r = (e, t) => e[(t % e.length + e.length) % e.length], i = [
+var t = (e, t) => e[(t % e.length + e.length) % e.length], n = [
 	98,
 	110,
 	123.5,
 	87.3,
 	103.8,
 	130.8
-], a = [
+], r = [
 	196,
 	220,
 	247,
 	175,
 	165,
 	262
-], o = {
+], i = {
 	calm: [4, 3],
 	warm: [6, 2],
 	dreamy: [4, 3],
@@ -42,64 +41,64 @@ var r = (e, t) => e[(t % e.length + e.length) % e.length], i = [
 		5
 	],
 	minimal: [7, 4]
-}, s = (e) => [...e].reduce((e, t) => (e * 31 + t.charCodeAt(0)) % 9973, 7);
-function c(e, t, n) {
-	let c = s(e) + n;
+}, a = (e) => [...e].reduce((e, t) => (e * 31 + t.charCodeAt(0)) % 9973, 7);
+function o(e, o, s) {
+	let c = a(e) + s;
 	return {
-		prog: r(o[t], c),
-		key: r(i, c),
-		pianoRoot: r(a, c >> 1)
+		prog: t(i[o], c),
+		key: t(n, c),
+		pianoRoot: t(r, c >> 1)
 	};
 }
-function l(e, t, n) {
+function s(e, n, r) {
 	let i = e === "dreamy" || e === "ethereal" || e === "calm";
 	return {
-		breathDepth: r([
+		breathDepth: t([
 			.45,
 			.4,
 			.3,
 			.2,
 			.1
-		], t - 1),
-		breathRateHz: .06 + n % 5 * .02,
-		stereoWidth: .3 + n % 4 * .1,
+		], n - 1),
+		breathRateHz: .06 + r % 5 * .02,
+		stereoWidth: .3 + r % 4 * .1,
 		panDepth: i ? .15 : 0,
-		panRateHz: .03 + n % 4 * .01
+		panRateHz: .03 + r % 4 * .01
 	};
 }
-var u = {
-	lofi: (e, t) => ({
+var c = {
+	lofi: (e, n) => ({
 		lofiLevel: .45,
-		lofiWarmth: r([
+		lofiWarmth: t([
 			.5,
 			.6,
 			.7
 		], e),
-		lofiProgression: t.prog,
-		tapeWow: r([
+		lofiProgression: n.prog,
+		tapeWow: t([
 			.25,
 			.35,
 			.45
 		], e),
-		padRootHz: t.key
+		padRootHz: n.key
 	}),
-	piano: (e, t) => ({
+	piano: (e, n) => ({
 		instLevel: .35,
 		instKind: 3,
-		instRootHz: t.pianoRoot,
-		instScale: r([
+		instRootHz: n.pianoRoot,
+		instScale: t([
 			2,
 			0,
 			1,
 			4,
 			3
 		], e),
-		instBpm: r([
+		instBpm: t([
 			40,
 			46,
 			52
 		], e),
-		pianoPedal: r([
+		pianoPedal: t([
 			.4,
 			.55,
 			.7
@@ -109,7 +108,7 @@ var u = {
 	drone: (e) => ({
 		instLevel: .35,
 		instKind: 1,
-		instRootHz: r([
+		instRootHz: t([
 			55,
 			62,
 			73,
@@ -121,19 +120,19 @@ var u = {
 	pluck: (e) => ({
 		instLevel: .3,
 		instKind: 0,
-		instRootHz: r([
+		instRootHz: t([
 			196,
 			220,
 			247,
 			262
 		], e),
-		instScale: r([
+		instScale: t([
 			0,
 			2,
 			4,
 			1
 		], e),
-		instBpm: r([
+		instBpm: t([
 			48,
 			56,
 			64,
@@ -143,7 +142,7 @@ var u = {
 	bell: (e) => ({
 		instLevel: .28,
 		instKind: 2,
-		instRootHz: r([
+		instRootHz: t([
 			262,
 			294,
 			330,
@@ -152,19 +151,19 @@ var u = {
 		instScale: 4,
 		instBpm: 40
 	}),
-	pad: (e, t) => ({
+	pad: (e, n) => ({
 		padLevel: .4,
-		padChord: r([
+		padChord: t([
 			0,
 			2,
 			4,
 			6
 		], e),
-		padRootHz: t.key
+		padRootHz: n.key
 	}),
 	chimes: (e) => ({
 		chimeLevel: .25,
-		chimeRatePerMin: r([
+		chimeRatePerMin: t([
 			3,
 			4,
 			6,
@@ -173,13 +172,13 @@ var u = {
 	}),
 	perc: (e) => ({
 		percLevel: .2,
-		percBpm: r([
+		percBpm: t([
 			64,
 			72,
 			80,
 			92
 		], e),
-		percPattern: r([
+		percPattern: t([
 			0,
 			3,
 			4,
@@ -187,17 +186,17 @@ var u = {
 		], e)
 	})
 };
-function d(e, t, n = {
+function l(e, t, n = {
 	prog: 0,
 	key: 110,
 	pianoRoot: 220
 }) {
 	return e.reduce((e, r) => ({
 		...e,
-		...u[r](t, n)
+		...c[r](t, n)
 	}), {});
 }
-var f = (e) => Math.round(e * 1e3) / 1e3, p = (e) => Math.min(40, Math.max(.5, e));
+var u = (e) => Math.round(e * 1e3) / 1e3, d = (e) => Math.min(40, Math.max(.5, e));
 function ee(e, t, n, r, i) {
 	let a = Math.min(5, Math.max(1, t * .15));
 	if (e === "plateau") {
@@ -252,24 +251,24 @@ function ee(e, t, n, r, i) {
 		}];
 	}).flat();
 }
-function m(e, t, n, i, a) {
-	let o = (t % 3 - 1) * e.jitter, s = p(e.to + o), u = r(e.noises, t >> 1), m = r(e.layers, t * 2 + (t >> 1)), h = r(e.vibes, t), g = d(m, t, c(e.slug, h, t)), _ = Object.keys(g).length > 0, v = _ ? {
+function f(e, n, r, i, a) {
+	let c = (n % 3 - 1) * e.jitter, f = d(e.to + c), p = t(e.noises, n >> 1), m = t(e.layers, n * 2 + (n >> 1)), h = t(e.vibes, n), g = l(m, n, o(e.slug, h, n)), _ = Object.keys(g).length > 0, v = _ ? {
 		...g,
-		...l(h, e.intensity, t)
+		...s(h, e.intensity, n)
 	} : g;
-	return ee(e.shape, n, p(e.from), s, e.ret).map((t) => ({
-		atMin: f(t.t),
-		beatHz: f(p(t.beat)),
+	return ee(e.shape, r, d(e.from), f, e.ret).map((t) => ({
+		atMin: u(t.t),
+		beatHz: u(d(t.beat)),
 		carrierHz: i,
 		gain: e.gain,
 		mode: a,
-		noise: u[0],
-		noiseLevel: u[1],
+		noise: p[0],
+		noiseLevel: p[1],
 		..._ ? { layers: v } : {},
 		ramp: t.ramp
 	}));
 }
-function h(e) {
+function p(e) {
 	let t = /* @__PURE__ */ new Set();
 	for (let n of e) {
 		t.add(n.mode);
@@ -278,63 +277,63 @@ function h(e) {
 	}
 	return [...t];
 }
-function g(e, t) {
+function m(e, t) {
 	if (t > 3) return !1;
 	let n = e.every((t, n) => n === 0 || Math.abs(t.beatHz - (e[n - 1]?.beatHz ?? t.beatHz)) <= 4), r = e.every((e) => e.mode === "isochronic" || e.beatHz >= 12 && e.beatHz <= 20), i = e.every((e) => (e.layers?.crackle ?? 0) === 0 && (e.layers?.percBpm ?? 0) <= 100);
 	return n && r && i;
 }
-function _(e, t) {
-	let n = e.adjectives.length, i = t * 7 % (n * e.nouns.length);
-	return `${r(e.adjectives, i)} ${r(e.nouns, Math.floor(i / n))}`;
+function h(e, n) {
+	let r = e.adjectives.length, i = n * 7 % (r * e.nouns.length);
+	return `${t(e.adjectives, i)} ${t(e.nouns, Math.floor(i / r))}`;
 }
-var v = (e) => String(e).padStart(2, "0"), y = {
+var g = (e) => String(e).padStart(2, "0"), _ = {
 	binaural: "Binaural",
 	monaural: "Monaural",
 	isochronic: "Isochronic"
-}, te = [
+}, v = [
 	"lofi",
 	"instrument",
 	"pad",
 	"chimes",
 	"percussion"
 ];
-function ne(e, t, n, r, i) {
-	let a = i[0], o = [`${y[e]}, ${t} Hz carrier, ${n} minutes, ${r} mood`];
+function te(e, t, n, r, i) {
+	let a = i[0], o = [`${_[e]}, ${t} Hz carrier, ${n} minutes, ${r} mood`];
 	a !== void 0 && a.noise !== "off" && a.noiseLevel > 0 && o.push(`${a.noise} noise`);
 	let s = i[i.length - 1];
 	a !== void 0 && s !== void 0 && a.beatHz !== s.beatHz && o.push(`beat ${a.beatHz} to ${s.beatHz} Hz`);
-	let c = h(i).filter((e) => te.includes(e));
+	let c = p(i).filter((e) => v.includes(e));
 	return c.length > 0 && o.push(c.join(" and ")), `${o.join(", ")}.`;
 }
-function b(e, t, n, i) {
-	let a = r(t.mins, n), o = r(t.carriers, n * 3 + 1), s = r(t.modes, n + (n >> 2)), c = m(t, n, a, o, s), l = t.to < 4 ? "delta" : t.to < 8 ? "theta" : t.to < 12 ? "alpha" : t.to < 30 ? "beta" : "gamma";
+function ne(e, n, r, i) {
+	let a = t(n.mins, r), o = t(n.carriers, r * 3 + 1), s = t(n.modes, r + (r >> 2)), c = f(n, r, a, o, s), l = n.to < 4 ? "delta" : n.to < 8 ? "theta" : n.to < 12 ? "alpha" : n.to < 30 ? "beta" : "gamma";
 	return {
-		id: `${e.prefix}-${t.slug}-${v(n + 1)}`,
-		name: _(e, i),
+		id: `${e.prefix}-${n.slug}-${g(r + 1)}`,
+		name: h(e, i),
 		category: e.category,
-		vibe: r(t.vibes, n),
+		vibe: t(n.vibes, r),
 		tags: [
-			t.slug,
+			n.slug,
 			l,
 			s,
-			...t.tags
+			...n.tags
 		],
-		layerTags: h(c),
-		situations: t.situations,
+		layerTags: p(c),
+		situations: n.situations,
 		recommendedMinutes: a,
-		intensity: t.intensity,
-		adhdFriendly: g(c, t.intensity),
+		intensity: n.intensity,
+		adhdFriendly: m(c, n.intensity),
 		stages: c,
-		reasonTemplate: `${t.reason.replace("{tone}", y[s])} ${ne(s, o, a, r(t.vibes, n), c)}`,
+		reasonTemplate: `${n.reason.replace("{tone}", _[s])} ${te(s, o, a, t(n.vibes, r), c)}`,
 		source: "original",
-		...t.breath === void 0 ? {} : { breath: t.breath }
+		...n.breath === void 0 ? {} : { breath: n.breath }
 	};
 }
-function x(e) {
-	let t = 0;
-	return re(e.archs.flatMap((n) => Array.from({ length: n.count }, (r, i) => b(e, n, i, t++))));
-}
 function re(e) {
+	let t = 0;
+	return y(e.archs.flatMap((n) => Array.from({ length: n.count }, (r, i) => ne(e, n, i, t++))));
+}
+function y(e) {
 	let t = /* @__PURE__ */ new Map();
 	return e.map((e) => {
 		let n = e.reasonTemplate.replaceAll("{minutes}", String(e.recommendedMinutes)), r = (t.get(n) ?? 0) + 1;
@@ -345,7 +344,7 @@ function re(e) {
 	});
 }
 // ../../web/src/catalog/archetypes/adhd-control.ts
-var S = {
+var b = {
 	category: "adhd-control",
 	prefix: "adhd",
 	adjectives: [
@@ -377,7 +376,7 @@ var S = {
 		"Keel"
 	],
 	archs: [
-		n({
+		e({
 			slug: "smr-steady",
 			shape: "plateau",
 			from: 12,
@@ -407,7 +406,7 @@ var S = {
 			jitter: .4,
 			reason: "Steady SMR-range pulse with no changes to track, for {minutes} minutes."
 		}),
-		n({
+		e({
 			slug: "beta-anchor",
 			shape: "plateau",
 			from: 14,
@@ -438,7 +437,7 @@ var S = {
 			jitter: .5,
 			reason: "A constant low-beta pulse that never changes."
 		}),
-		n({
+		e({
 			slug: "cadence-pulse",
 			shape: "plateau",
 			from: 14,
@@ -459,7 +458,7 @@ var S = {
 			count: 4,
 			reason: "Gentle soft percussion at a fixed 60 to 100 bpm cadence keeps tempo without surprises."
 		}),
-		n({
+		e({
 			slug: "quiet-bed",
 			shape: "plateau",
 			from: 13,
@@ -485,7 +484,7 @@ var S = {
 			jitter: 0,
 			reason: "A fixed warm bed with nothing that changes, so it fades into the background."
 		}),
-		n({
+		e({
 			slug: "start-ramp",
 			shape: "ramp-up",
 			from: 11,
@@ -507,7 +506,7 @@ var S = {
 			jitter: .2,
 			reason: "A slow climb from 4 Hz with no sudden steps."
 		}),
-		n({
+		e({
 			slug: "sprint-steps",
 			shape: "ladder",
 			from: 13,
@@ -530,7 +529,7 @@ var S = {
 			reason: "Four small, announced steps through the beta band for a structured work block."
 		})
 	]
-}, C = {
+}, x = {
 	category: "focus",
 	prefix: "focus",
 	adjectives: [
@@ -562,7 +561,7 @@ var S = {
 		"Scope"
 	],
 	archs: [
-		n({
+		e({
 			slug: "alpha-beta",
 			shape: "plateau",
 			from: 11,
@@ -599,7 +598,7 @@ var S = {
 			count: 5,
 			reason: "A pulse on the alpha-beta border for {minutes} minutes."
 		}),
-		n({
+		e({
 			slug: "deep-beta",
 			shape: "plateau",
 			from: 15,
@@ -625,7 +624,7 @@ var S = {
 			count: 5,
 			reason: "A steady beta-band pulse for long work blocks."
 		}),
-		n({
+		e({
 			slug: "gamma-edge",
 			shape: "ramp-up",
 			from: 18,
@@ -650,7 +649,7 @@ var S = {
 			count: 4,
 			reason: "A short climb to the high-beta and low-gamma edge."
 		}),
-		n({
+		e({
 			slug: "flow-ramp",
 			shape: "ramp-up",
 			from: 10,
@@ -675,7 +674,7 @@ var S = {
 			count: 4,
 			reason: "A slow glide from alpha into beta."
 		}),
-		n({
+		e({
 			slug: "reading-calm",
 			shape: "plateau",
 			from: 10,
@@ -700,7 +699,7 @@ var S = {
 			count: 4,
 			reason: "Gentle alpha for reading and study."
 		}),
-		n({
+		e({
 			slug: "sprint-pulse",
 			shape: "ladder",
 			from: 12,
@@ -722,7 +721,7 @@ var S = {
 			reason: "Four rising steps with soft percussion."
 		})
 	]
-}, w = {
+}, S = {
 	category: "healing",
 	prefix: "healing",
 	adjectives: [
@@ -754,7 +753,7 @@ var S = {
 		"Haven"
 	],
 	archs: [
-		n({
+		e({
 			slug: "tension-release",
 			shape: "ramp-down",
 			from: 14,
@@ -791,7 +790,7 @@ var S = {
 			count: 5,
 			reason: "Starts at a busier pace and slows to a relaxed one over {minutes} minutes."
 		}),
-		n({
+		e({
 			slug: "restore-theta",
 			shape: "plateau",
 			from: 9,
@@ -820,7 +819,7 @@ var S = {
 			count: 5,
 			reason: "Steady theta with a soft drone."
 		}),
-		n({
+		e({
 			slug: "heart-calm",
 			shape: "plateau",
 			from: 10,
@@ -850,7 +849,7 @@ var S = {
 			},
 			reason: "A slow rhythm of 6 breaths per minute to follow."
 		}),
-		n({
+		e({
 			slug: "ache-ease",
 			shape: "wave",
 			from: 10,
@@ -871,7 +870,7 @@ var S = {
 			count: 4,
 			reason: "Slow alpha-theta swells that feel like a rocking tide."
 		}),
-		n({
+		e({
 			slug: "soothe-glide",
 			shape: "ramp-down",
 			from: 12,
@@ -888,7 +887,7 @@ var S = {
 			count: 4,
 			reason: "A soft pad with a gliding beat."
 		}),
-		n({
+		e({
 			slug: "sunrise-lift",
 			shape: "ramp-up",
 			from: 7,
@@ -914,7 +913,7 @@ var S = {
 			reason: "A gentle brightening ramp that stays soft."
 		})
 	]
-}, T = {
+}, C = {
 	category: "lucid-dreams",
 	prefix: "lucid",
 	adjectives: [
@@ -946,7 +945,7 @@ var S = {
 		"Orbit"
 	],
 	archs: [
-		n({
+		e({
 			slug: "wbtb-theta",
 			shape: "plateau",
 			from: 9,
@@ -976,7 +975,7 @@ var S = {
 			count: 6,
 			reason: "Theta plateau with a light return, built for wake-back-to-bed lucid practice."
 		}),
-		n({
+		e({
 			slug: "rem-ladder",
 			shape: "ladder",
 			from: 8,
@@ -997,7 +996,7 @@ var S = {
 			count: 5,
 			reason: "Steps down through theta in four stages."
 		}),
-		n({
+		e({
 			slug: "aware-wave",
 			shape: "wave",
 			from: 5,
@@ -1014,7 +1013,7 @@ var S = {
 			count: 5,
 			reason: "Slow swings between theta and alpha."
 		}),
-		n({
+		e({
 			slug: "dream-drift",
 			shape: "ramp-down",
 			from: 10,
@@ -1047,7 +1046,7 @@ var S = {
 			count: 5,
 			reason: "A slow descent over {minutes} minutes."
 		}),
-		n({
+		e({
 			slug: "astral-calm",
 			shape: "plateau",
 			from: 10,
@@ -1069,7 +1068,7 @@ var S = {
 			reason: "Relaxed theta with a slow instrument drone."
 		})
 	]
-}, E = {
+}, w = {
 	category: "meditation",
 	prefix: "meditation",
 	adjectives: [
@@ -1101,7 +1100,7 @@ var S = {
 		"Bowl"
 	],
 	archs: [
-		n({
+		e({
 			slug: "alpha-sit",
 			shape: "plateau",
 			from: 12,
@@ -1144,7 +1143,7 @@ var S = {
 			count: 5,
 			reason: "{tone} calm and wide awake for a {minutes} minute seated sit."
 		}),
-		n({
+		e({
 			slug: "theta-descent",
 			shape: "ramp-down",
 			from: 10,
@@ -1165,7 +1164,7 @@ var S = {
 			count: 5,
 			reason: "Glides from alpha to theta."
 		}),
-		n({
+		e({
 			slug: "schumann-hold",
 			shape: "plateau",
 			from: 12,
@@ -1184,7 +1183,7 @@ var S = {
 			jitter: 0,
 			reason: "Rests on the 7.83 Hz Schumann resonance, then returns to wakefulness."
 		}),
-		n({
+		e({
 			slug: "breath-pacer",
 			shape: "plateau",
 			from: 9,
@@ -1209,7 +1208,7 @@ var S = {
 			},
 			reason: "Pair the 5.5 breaths per minute pacer with a slow theta pulse."
 		}),
-		n({
+		e({
 			slug: "bell-silence",
 			shape: "plateau",
 			from: 10,
@@ -1238,7 +1237,7 @@ var S = {
 			count: 4,
 			reason: "Sparse chimes over a quiet alpha-theta border."
 		}),
-		n({
+		e({
 			slug: "delta-glide",
 			shape: "ramp-down",
 			from: 6,
@@ -1260,7 +1259,7 @@ var S = {
 			reason: "A long fall into delta."
 		})
 	]
-}, D = {
+}, T = {
 	category: "sleep",
 	prefix: "sleep",
 	adjectives: [
@@ -1292,7 +1291,7 @@ var S = {
 		"Evening"
 	],
 	archs: [
-		n({
+		e({
 			slug: "onset-delta",
 			shape: "ramp-down",
 			from: 9,
@@ -1333,7 +1332,7 @@ var S = {
 			count: 6,
 			reason: "Glides from alpha to delta over {minutes} minutes."
 		}),
-		n({
+		e({
 			slug: "drift-theta",
 			shape: "ramp-down",
 			from: 8,
@@ -1366,7 +1365,7 @@ var S = {
 			count: 5,
 			reason: "A slow theta drift with a soft pad."
 		}),
-		n({
+		e({
 			slug: "deep-delta",
 			shape: "plateau",
 			from: 6,
@@ -1396,7 +1395,7 @@ var S = {
 			jitter: .2,
 			reason: "Holds steady delta."
 		}),
-		n({
+		e({
 			slug: "nap-reset",
 			shape: "plateau",
 			from: 10,
@@ -1422,7 +1421,7 @@ var S = {
 			count: 4,
 			reason: "A short nap sound that sinks to theta and returns after {minutes} minutes."
 		}),
-		n({
+		e({
 			slug: "breath-down",
 			shape: "ramp-down",
 			from: 7,
@@ -1443,7 +1442,7 @@ var S = {
 			},
 			reason: "Pair slow 4-in, 6-out breathing with a falling beat."
 		}),
-		n({
+		e({
 			slug: "rain-bed",
 			shape: "plateau",
 			from: 5,
@@ -1469,7 +1468,7 @@ var S = {
 			reason: "A soft noise bed with a faint low-end hum."
 		})
 	]
-}, ie = {
+}, E = {
 	category: "vibes",
 	prefix: "vibe",
 	adjectives: [
@@ -1501,7 +1500,7 @@ var S = {
 		"Lounge"
 	],
 	archs: [
-		n({
+		e({
 			slug: "lofi-study",
 			shape: "plateau",
 			from: 12,
@@ -1542,7 +1541,7 @@ var S = {
 			count: 6,
 			reason: "Warm lo-fi bed with a soft pluck for easy, steady company."
 		}),
-		n({
+		e({
 			slug: "warm-glow",
 			shape: "plateau",
 			from: 11,
@@ -1563,7 +1562,7 @@ var S = {
 			count: 4,
 			reason: "A warm pad and a gentle alpha pulse for a soft landing."
 		}),
-		n({
+		e({
 			slug: "bright-air",
 			shape: "plateau",
 			from: 13,
@@ -1580,7 +1579,7 @@ var S = {
 			count: 4,
 			reason: "Airy bells over a light alpha-beta border."
 		}),
-		n({
+		e({
 			slug: "ether-float",
 			shape: "wave",
 			from: 10,
@@ -1605,7 +1604,7 @@ var S = {
 			count: 4,
 			reason: "Slow swells with chimes for a floating, spacious mood."
 		}),
-		n({
+		e({
 			slug: "minimal-hum",
 			shape: "plateau",
 			from: 10,
@@ -1627,7 +1626,7 @@ var S = {
 			jitter: 0,
 			reason: "Just a pulse and a noise bed, nothing to attend to."
 		}),
-		n({
+		e({
 			slug: "spark-groove",
 			shape: "plateau",
 			from: 14,
@@ -1653,7 +1652,7 @@ var S = {
 			reason: "A light groove with soft percussion and a bright, steady feel."
 		})
 	]
-}, ae = {
+}, ie = {
 	category: "work-recovery",
 	prefix: "recovery",
 	adjectives: [
@@ -1685,7 +1684,7 @@ var S = {
 		"Cache"
 	],
 	archs: [
-		n({
+		e({
 			slug: "screen-down",
 			shape: "ramp-down",
 			from: 18,
@@ -1718,7 +1717,7 @@ var S = {
 			count: 5,
 			reason: "Steps down from beta to alpha after a long review or generation run."
 		}),
-		n({
+		e({
 			slug: "micro-break",
 			shape: "plateau",
 			from: 11,
@@ -1740,7 +1739,7 @@ var S = {
 			count: 4,
 			reason: "A {minutes} minute reset between tasks."
 		}),
-		n({
+		e({
 			slug: "post-sprint",
 			shape: "ramp-down",
 			from: 20,
@@ -1761,7 +1760,7 @@ var S = {
 			count: 4,
 			reason: "A long fall from high beta to theta after an intense push."
 		}),
-		n({
+		e({
 			slug: "eye-rest",
 			shape: "plateau",
 			from: 10,
@@ -1786,7 +1785,7 @@ var S = {
 			},
 			reason: "Close your eyes and follow a slow 4-in, 6-out breath."
 		}),
-		n({
+		e({
 			slug: "lofi-unwind",
 			shape: "plateau",
 			from: 10,
@@ -1823,7 +1822,7 @@ var S = {
 			count: 5,
 			reason: "Slow lo-fi bed to decompress while you do something light."
 		}),
-		n({
+		e({
 			slug: "commute-decompress",
 			shape: "ramp-down",
 			from: 14,
@@ -1853,53 +1852,53 @@ var S = {
 			reason: "Closes the work day with a calm descent that works over speakers."
 		})
 	]
-}, O = (e) => Math.round(e * 1e3) / 1e3, k = (e) => Math.min(40, Math.max(.5, e)), A = (e) => e.segs.reduce((e, t) => e + t[0], 0) * (e.scale ?? 1);
-function j(e, t) {
+}, D = (e) => Math.round(e * 1e3) / 1e3, O = (e) => Math.min(40, Math.max(.5, e)), k = (e) => e.segs.reduce((e, t) => e + t[0], 0) * (e.scale ?? 1);
+function A(e, t) {
 	let n = e.carrier ?? 200;
-	return e.carrierEnd === void 0 ? n : Math.round(n + (e.carrierEnd - n) * t / Math.max(A(e), 1));
+	return e.carrierEnd === void 0 ? n : Math.round(n + (e.carrierEnd - n) * t / Math.max(k(e), 1));
 }
-function M(e) {
+function ae(e) {
 	let t = [], [n, r] = e.noise ?? ["off", 0], i = 0;
 	return e.segs.forEach((a, o) => {
 		let s = a[1] !== a[2], c = e.segs[o + 1];
 		t.push({
-			atMin: O(i / 60),
-			beatHz: O(k(a[1])),
-			carrierHz: j(e, i),
+			atMin: D(i / 60),
+			beatHz: D(O(a[1])),
+			carrierHz: A(e, i),
 			gain: e.gain ?? .5,
 			mode: e.mode ?? "binaural",
 			noise: n,
 			noiseLevel: r,
 			ramp: s
-		}), i += a[0] * (e.scale ?? 1), s && (c === void 0 || k(c[1]) !== k(a[2])) && t.push({
+		}), i += a[0] * (e.scale ?? 1), s && (c === void 0 || O(c[1]) !== O(a[2])) && t.push({
 			...t[t.length - 1],
-			atMin: O(i / 60),
-			beatHz: O(k(a[2])),
-			carrierHz: j(e, i),
+			atMin: D(i / 60),
+			beatHz: D(O(a[2])),
+			carrierHz: A(e, i),
 			ramp: !1
 		});
 	}), t;
 }
-var N = (e, t) => e.replaceAll("{minutes}", String(t)).replaceAll("{duration}", `${t} minutes`);
-function P(e) {
-	let t = M(e), n = Math.max(1, Math.round(A(e) / 60));
+var oe = (e, t) => e.replaceAll("{minutes}", String(t)).replaceAll("{duration}", `${t} minutes`);
+function j(e) {
+	let t = ae(e), n = Math.max(1, Math.round(k(e) / 60));
 	return {
 		id: e.id,
 		name: e.name,
 		category: e.category,
 		vibe: e.vibe,
 		tags: [...e.tags, e.source],
-		layerTags: h(t),
+		layerTags: p(t),
 		situations: e.situations,
 		recommendedMinutes: n,
 		intensity: e.intensity,
-		adhdFriendly: g(t, e.intensity),
+		adhdFriendly: m(t, e.intensity),
 		stages: t,
-		reasonTemplate: N(e.reason, n),
+		reasonTemplate: oe(e.reason, n),
 		source: e.source
 	};
 }
-var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
+var M = ["white", .3], N = ["pink", .3], P = ["brown", .3], F = [
 	[
 		60,
 		10,
@@ -2010,7 +2009,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		5,
 		12
 	]
-], z = [
+], I = [
 	[
 		120,
 		10,
@@ -2091,7 +2090,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		5,
 		12
 	]
-], B = [
+], L = [
 	[
 		15,
 		10,
@@ -2142,7 +2141,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		8,
 		8
 	]
-], V = [
+], R = [
 	[
 		333,
 		8,
@@ -2178,7 +2177,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		8,
 		10
 	]
-], H = [
+], z = [
 	[
 		120,
 		20,
@@ -2198,12 +2197,12 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		40,
 		10
 	]
-], U = (e) => ({
+], B = (e) => ({
 	...e,
 	source: "android",
 	carrier: 200
-}), W = [
-	U({
+}), V = [
+	B({
 		id: "android-self-hypnosis",
 		name: "Mind Bridge",
 		category: "meditation",
@@ -2227,11 +2226,11 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 				12
 			]
 		],
-		noise: F,
+		noise: M,
 		tags: ["theta", "hypnosis"],
 		reason: "Five minutes down to 4 Hz, ten minutes holding there, five minutes back up."
 	}),
-	U({
+	B({
 		id: "android-highest-mental-activity",
 		name: "Spark Burst",
 		category: "focus",
@@ -2255,11 +2254,11 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 				12
 			]
 		],
-		noise: F,
+		noise: M,
 		tags: ["gamma", "boost"],
 		reason: "Two minutes up to the 40 Hz ceiling, a ten minute hold, two minutes back to 12 Hz."
 	}),
-	U({
+	B({
 		id: "android-unity",
 		name: "Unity Delta",
 		category: "meditation",
@@ -2271,12 +2270,12 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 			3.7,
 			3.7
 		]],
-		noise: L,
+		noise: P,
 		gain: .45,
 		tags: ["delta", "long"],
 		reason: "A flat 3.7 Hz hour under brown noise, wide and quiet."
 	}),
-	U({
+	B({
 		id: "android-morphine",
 		name: "Morphine Ease",
 		category: "healing",
@@ -2288,11 +2287,11 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 			10,
 			10
 		]],
-		noise: I,
+		noise: N,
 		tags: ["alpha", "pain"],
 		reason: "An hour at a steady 10 Hz under pink noise."
 	}),
-	U({
+	B({
 		id: "android-learning",
 		name: "Long Study Bed",
 		category: "focus",
@@ -2312,14 +2311,14 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		tags: ["beta", "study"],
 		reason: "A two minute lift, then two hours at 14 Hz for long reading blocks."
 	}),
-	U({
+	B({
 		id: "android-creativity",
 		name: "Creative Waves",
 		category: "vibes",
 		vibe: "bright",
 		situations: ["quick-reset", "deep-work"],
 		intensity: 2,
-		segs: B,
+		segs: L,
 		noise: ["white", .4],
 		tags: [
 			"alpha",
@@ -2328,7 +2327,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		],
 		reason: "Drifts back and forth between 10 and 6 Hz."
 	}),
-	U({
+	B({
 		id: "android-wakeful-relax",
 		name: "Quiet Alert",
 		category: "meditation",
@@ -2348,7 +2347,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		tags: ["alpha", "zen"],
 		reason: "Parked at 7.83 Hz with white noise."
 	}),
-	U({
+	B({
 		id: "android-schumann",
 		name: "Earth Hum",
 		category: "healing",
@@ -2376,7 +2375,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		tags: ["alpha", "earth"],
 		reason: "Ramps to 7.83 Hz, holds there ten minutes, then climbs back to 12 Hz."
 	}),
-	U({
+	B({
 		id: "android-astral-relax",
 		name: "Dream Gate Relax",
 		category: "lucid-dreams",
@@ -2396,14 +2395,14 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		tags: ["alpha", "astral"],
 		reason: "A ten minute slide from 15 to 10 Hz, then a long steady, calm rest."
 	}),
-	U({
+	B({
 		id: "android-interval-pulse",
 		name: "Interval Pulse",
 		category: "focus",
 		vibe: "energized",
 		situations: ["deep-work"],
 		intensity: 5,
-		segs: H,
+		segs: z,
 		tags: [
 			"beta",
 			"gamma",
@@ -2411,7 +2410,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		],
 		reason: "Eight short high and low rounds between a warm up and a cool down."
 	}),
-	U({
+	B({
 		id: "android-hallucination",
 		name: "Hazy Visions",
 		category: "vibes",
@@ -2427,7 +2426,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		tags: ["alpha", "trippy"],
 		reason: "A single {minutes} minute slide from 15 to 10 Hz, soft and dreamy."
 	}),
-	U({
+	B({
 		id: "android-sleep-induction",
 		name: "Drift Down",
 		category: "sleep",
@@ -2451,24 +2450,24 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 				3.4
 			]
 		],
-		noise: L,
+		noise: P,
 		gain: .5,
 		tags: ["delta", "induction"],
 		reason: "A six minute fall to delta, then a long gentle rise and dip for the rest of the hour."
 	}),
-	U({
+	B({
 		id: "android-lucid-dreams",
 		name: "Lucid Dream Cycle",
 		category: "lucid-dreams",
 		vibe: "dreamy",
 		situations: ["lucid-dream"],
 		intensity: 2,
-		segs: R,
+		segs: F,
 		gain: .5,
 		tags: ["theta", "lucid"],
 		reason: "A theta bed with brief alpha lifts and a soft ending."
 	}),
-	U({
+	B({
 		id: "android-shamanic-rhythm",
 		name: "Ember Circle",
 		category: "meditation",
@@ -2496,18 +2495,18 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		tags: ["theta", "journey"],
 		reason: "Five minutes down to 4.5 Hz, fifty minutes of hold, five minutes back up."
 	}),
-	U({
+	B({
 		id: "android-smr-sleep",
 		name: "SMR Sleep Weave",
 		category: "sleep",
 		vibe: "minimal",
 		situations: ["cant-sleep", "heal-stress"],
 		intensity: 2,
-		segs: V,
+		segs: R,
 		tags: ["alpha", "smr"],
 		reason: "Beats crossing between a calm pace and the low SMR band."
 	}),
-	U({
+	B({
 		id: "android-lucid-dreams-2",
 		name: "Long Lucid Night",
 		category: "lucid-dreams",
@@ -2525,9 +2524,9 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 				3.4,
 				2.4
 			],
-			...z
+			...I
 		],
-		noise: I,
+		noise: N,
 		gain: .5,
 		tags: [
 			"delta",
@@ -2536,7 +2535,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		],
 		reason: "A delta fall followed by a long night plan with timed theta pulses."
 	}),
-	U({
+	B({
 		id: "android-adhd-cycle",
 		name: "Focus Cycle",
 		category: "adhd-control",
@@ -2575,11 +2574,11 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 				20
 			]
 		],
-		noise: F,
+		noise: M,
 		tags: ["beta", "cycle"],
 		reason: "Five minute blocks that swap between 12 and 20 Hz after a 40 Hz opener."
 	}),
-	U({
+	B({
 		id: "android-self-hypnosis-short",
 		name: "Quick Mind Bridge",
 		category: "meditation",
@@ -2603,12 +2602,12 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 				12
 			]
 		],
-		noise: F,
+		noise: M,
 		scale: .5,
 		tags: ["theta", "short"],
 		reason: "The Mind Bridge shape made shorter."
 	}),
-	U({
+	B({
 		id: "android-wakeful-relax-5",
 		name: "Five Minute Calm",
 		category: "work-recovery",
@@ -2629,7 +2628,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		tags: ["alpha", "short"],
 		reason: "A {minutes} minute Quiet Alert between tasks."
 	}),
-	U({
+	B({
 		id: "android-schumann-short",
 		name: "Earth Reset",
 		category: "healing",
@@ -2658,14 +2657,14 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		tags: ["alpha", "short"],
 		reason: "A {minutes} minute version of the Earth Hum shape."
 	}),
-	U({
+	B({
 		id: "android-lucid-dreams-short",
 		name: "Lucid Nap Cycle",
 		category: "lucid-dreams",
 		vibe: "dreamy",
 		situations: ["lucid-dream", "cant-sleep"],
 		intensity: 2,
-		segs: R.slice(0, 12),
+		segs: F.slice(0, 12),
 		gain: .5,
 		tags: [
 			"theta",
@@ -2674,11 +2673,11 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		],
 		reason: "The opening stretch of the Lucid Dream Cycle, sized for naps."
 	})
-], G = (e) => ({
+], H = (e) => ({
 	...e,
 	source: "gnaural"
-}), K = [
-	G({
+}), U = [
+	H({
 		id: "gnaural-power-nap",
 		name: "Midday Nap",
 		category: "sleep",
@@ -2753,7 +2752,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		],
 		carrier: 164,
 		carrierEnd: 110,
-		noise: I,
+		noise: N,
 		gain: .5,
 		tags: [
 			"delta",
@@ -2762,7 +2761,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		],
 		reason: "A fast fall to 4 Hz, a long hold, then a slow climb."
 	}),
-	G({
+	H({
 		id: "gnaural-airplane-aid",
 		name: "Long Haul Calm",
 		category: "meditation",
@@ -2832,7 +2831,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		],
 		carrier: 280,
 		carrierEnd: 140,
-		noise: L,
+		noise: P,
 		gain: .5,
 		tags: [
 			"theta",
@@ -2841,7 +2840,7 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		],
 		reason: "A falling carrier tone over theta beats, built for long seated trips."
 	}),
-	G({
+	H({
 		id: "gnaural-arrive-sharp",
 		name: "Arrive Sharp",
 		category: "focus",
@@ -2885,11 +2884,177 @@ var F = ["white", .3], I = ["pink", .3], L = ["brown", .3], R = [
 		reason: "Five steps from alpha up to a 28.5 Hz middle, then back down."
 	})
 ];
-function q() {
-	return [...W, ...K].map(P);
+function W() {
+	return [...V, ...U].map(j);
+}
+// ../../web/src/catalog/soundMenu.ts
+var G = [
+	{
+		id: "lofi",
+		name: "Lo-fi",
+		blurb: "Warm, slow chords with a tape and vinyl feel, like a quiet study radio.",
+		mood: "warm",
+		defaultLevel: .5,
+		layerKeys: [
+			"lofiLevel",
+			"lofiProgression",
+			"tapeWow",
+			"crackle"
+		],
+		templateId: "starter-lofi",
+		evidence: "preference"
+	},
+	{
+		id: "piano",
+		name: "Soft piano",
+		blurb: "A soft piano playing gentle, slow phrases with long ringing notes.",
+		mood: "calm",
+		defaultLevel: .45,
+		layerKeys: [
+			"instLevel",
+			"instKind",
+			"pianoPedal"
+		],
+		templateId: "starter-piano",
+		evidence: "preference"
+	},
+	{
+		id: "violet",
+		name: "Violet hiss",
+		blurb: "A thin, bright hiss, like gentle static. Keep it quiet.",
+		mood: "bright",
+		defaultLevel: .3,
+		layerKeys: [],
+		templateId: "starter-violet",
+		evidence: "limited"
+	},
+	{
+		id: "rain",
+		name: "Rain hush",
+		blurb: "A steady rain-like hush, even across the pitches (pink noise).",
+		mood: "calm",
+		defaultLevel: .4,
+		layerKeys: [],
+		templateId: "starter-rain",
+		evidence: "mixed"
+	},
+	{
+		id: "deep",
+		name: "Deep rumble",
+		blurb: "A deep, low rumble like distant thunder or a big waterfall (brown noise).",
+		mood: "deep",
+		defaultLevel: .4,
+		layerKeys: [],
+		templateId: "starter-deep",
+		evidence: "preference"
+	},
+	{
+		id: "chimes",
+		name: "Soft chimes",
+		blurb: "Soft bells that ring now and then at uneven gaps.",
+		mood: "dreamy",
+		defaultLevel: .3,
+		layerKeys: ["chimeLevel", "chimeRatePerMin"],
+		templateId: "starter-chimes",
+		evidence: "preference"
+	},
+	{
+		id: "beats",
+		name: "Beats only",
+		blurb: "A soft pulse you hear as two slightly different tones, one per ear. Use headphones.",
+		mood: "neutral",
+		defaultLevel: 0,
+		layerKeys: [],
+		templateId: "starter-beats",
+		evidence: "mixed"
+	}
+], K = (e) => Number.isFinite(e) ? Math.min(1, Math.max(0, e)) : 0;
+function se(e, t) {
+	let n = K(t);
+	switch (e) {
+		case "lofi": return {
+			noise: "off",
+			noiseLevel: 0,
+			layers: {
+				lofiLevel: n,
+				lofiWarmth: .6,
+				lofiProgression: 2,
+				tapeWow: .35,
+				crackle: .12,
+				breathDepth: .4,
+				breathRateHz: .08,
+				stereoWidth: .5
+			}
+		};
+		case "piano": return {
+			noise: "off",
+			noiseLevel: 0,
+			layers: {
+				instLevel: n,
+				instKind: 3,
+				instRootHz: 220,
+				instScale: 2,
+				instBpm: 46,
+				pianoPedal: .5,
+				breathDepth: .3,
+				breathRateHz: .07,
+				stereoWidth: .4
+			}
+		};
+		case "violet": return {
+			noise: "violet",
+			noiseLevel: n,
+			layers: {}
+		};
+		case "rain": return {
+			noise: "pink",
+			noiseLevel: n,
+			layers: {}
+		};
+		case "deep": return {
+			noise: "brown",
+			noiseLevel: n,
+			layers: {}
+		};
+		case "chimes": return {
+			noise: "off",
+			noiseLevel: 0,
+			layers: {
+				chimeLevel: n,
+				chimeRatePerMin: 5,
+				breathDepth: .2,
+				breathRateHz: .06
+			}
+		};
+		default: return {
+			noise: "off",
+			noiseLevel: 0,
+			layers: {}
+		};
+	}
+}
+var q = [
+	2.5,
+	6,
+	10,
+	14,
+	20
+];
+function ce(e) {
+	let t = K(e), n = Math.min(q.length - 1, Math.floor(t * q.length));
+	return Math.min(40, Math.max(.5, q[n] ?? 2.5));
+}
+function le(e, t) {
+	let n = K(e);
+	return {
+		breathDepth: K(t.breathDepth * (1 - .6 * n)),
+		breathRateHz: Math.min(.2, Math.max(.05, .06 + .1 * n)),
+		instBpm: Math.min(180, Math.max(30, Math.round(t.instBpm * (.8 + .6 * n)))),
+		lofiWarmth: K(t.lofiWarmth * (1 - .4 * n))
+	};
 }
 // ../../web/src/catalog/starters.ts
-var J = {
+var ue = {
 	warm: "warm",
 	calm: "calm",
 	bright: "bright",
@@ -2897,69 +3062,69 @@ var J = {
 	dreamy: "dreamy",
 	neutral: "minimal"
 };
-function oe(t) {
-	let n = e(t.id, t.defaultLevel), r = Object.keys(n.layers).length > 0, i = [{
+function de(e) {
+	let t = se(e.id, e.defaultLevel), n = Object.keys(t.layers).length > 0, r = [{
 		atMin: 0,
 		beatHz: 8,
 		carrierHz: 200,
 		gain: .4,
 		mode: "binaural",
-		noise: n.noise,
-		noiseLevel: n.noiseLevel,
-		...r ? { layers: n.layers } : {},
+		noise: t.noise,
+		noiseLevel: t.noiseLevel,
+		...n ? { layers: t.layers } : {},
 		ramp: !1
 	}];
 	return {
-		id: t.templateId,
-		name: t.name,
+		id: e.templateId,
+		name: e.name,
 		category: "vibes",
-		vibe: J[t.mood] ?? "calm",
+		vibe: ue[e.mood] ?? "calm",
 		tags: [
 			"starter",
 			"sound-first",
-			t.id
+			e.id
 		],
-		layerTags: h(i),
+		layerTags: p(r),
 		situations: ["quick-reset", "heal-stress"],
 		recommendedMinutes: 20,
 		intensity: 1,
-		adhdFriendly: g(i, 1),
-		stages: i,
-		reasonTemplate: t.blurb,
+		adhdFriendly: m(r, 1),
+		stages: r,
+		reasonTemplate: e.blurb,
 		source: "original"
 	};
 }
-function se() {
-	return t.map(oe);
+function fe() {
+	return G.map(de);
 }
 // ../../web/src/catalog/build.ts
-function ce() {
+function pe() {
 	return [
-		...se(),
-		...q(),
+		...fe(),
+		...W(),
 		...[
-			ie,
-			w,
-			T,
 			E,
-			D,
 			S,
 			C,
-			ae
-		].flatMap(x)
+			w,
+			T,
+			b,
+			x,
+			ie
+		].flatMap(re)
 	];
 }
 // ../../web/src/catalog/registry.ts
-var Y;
-function X() {
-	return Y ??= ce(), Y;
+var J;
+function Y() {
+	return J ??= pe(), J;
 }
 new Proxy([], {
-	get: (e, t) => Reflect.get(X(), t),
-	has: (e, t) => Reflect.has(X(), t),
-	ownKeys: () => Reflect.ownKeys(X()),
+	get: (e, t) => Reflect.get(Y(), t),
+	has: (e, t) => Reflect.has(Y(), t),
+	ownKeys: () => Reflect.ownKeys(Y()),
 	getOwnPropertyDescriptor: (e, t) => {
-		let n = Reflect.getOwnPropertyDescriptor(X(), t);
+		let n = Reflect.getOwnPropertyDescriptor(Y(), t);
 		return n === void 0 || t === "length" ? n : {
 			...n,
 			configurable: !0
@@ -2967,17 +3132,17 @@ new Proxy([], {
 	}
 });
 // ../../web/src/catalog/features.ts
-function Z(e) {
+function X(e) {
 	return e.stages.some((e) => (e.layers?.percLevel ?? 0) > 0);
 }
-function Q(e) {
+function Z(e) {
 	return e.stages.some((e) => (e.layers?.crackle ?? 0) > 0);
 }
-function $(e) {
+function Q(e) {
 	return e.stages.some((e) => e.mode === "binaural");
 }
 // ../../web/src/catalog/recommend.ts
-var le = {
+var me = {
 	focus: [
 		1,
 		1,
@@ -3026,23 +3191,23 @@ var le = {
 		.6,
 		1
 	]
-}, ue = {
+}, he = {
 	morning: 0,
 	afternoon: 1,
 	evening: 2,
 	night: 3
-}, de = (e) => Math.round(e * 10) / 10;
-function fe(e, t, n) {
+}, ge = (e) => Math.round(e * 10) / 10;
+function $(e, t, n) {
 	let r = Math.max(1, t);
 	if (e <= r) return n.push(`Fits your ${r} minutes (${e} min).`), 15 * (.6 + e / r * .4);
 	let i = (e - r) / r;
 	return n.push(`Runs ${e} min, longer than your ${r}; you can stop any time.`), Math.max(0, 15 * (1 - i * 1.5)) - (i > .5 ? 5 : 0);
 }
-function pe(e, t, n) {
-	return t.deviceType === "speaker" ? $(e) ? (n.push("Warning: binaural beats need headphones. A speaker will not deliver the effect; pick an isochronic or monaural template if you can."), -8) : (n.push("Isochronic or monaural beats work over speakers."), 10) : (n.push(t.deviceType === "bluetooth" ? "Good over Bluetooth headphones." : "Headphones suit every beat type."), $(e) ? 10 : 8);
+function _e(e, t, n) {
+	return t.deviceType === "speaker" ? Q(e) ? (n.push("Warning: binaural beats need headphones. A speaker will not deliver the effect; pick an isochronic or monaural template if you can."), -8) : (n.push("Isochronic or monaural beats work over speakers."), 10) : (n.push(t.deviceType === "bluetooth" ? "Good over Bluetooth headphones." : "Headphones suit every beat type."), Q(e) ? 10 : 8);
 }
-function me(e, t, n) {
-	let r = e.intensity > 3 || Z(e) || Q(e), i = t.sensorySensitivity;
+function ve(e, t, n) {
+	let r = e.intensity > 3 || X(e) || Z(e), i = t.sensorySensitivity;
 	return i === "low" ? {
 		pts: 10,
 		sensitive: !1
@@ -3057,23 +3222,23 @@ function me(e, t, n) {
 		sensitive: !1
 	});
 }
-function he(e, t) {
+function ye(e, t) {
 	let n = [e.reasonTemplate.replace("{minutes}", String(e.recommendedMinutes))], r = e.situations.includes(t.situation), i = 0;
-	r ? (i += 40, n.push(`Made for: ${t.situation}.`)) : n.push(`Related option: not built for ${t.situation}, but close in mood.`), t.vibe === void 0 ? i += 7 : t.vibe === e.vibe && (i += 15, n.push(`Matches your ${t.vibe} vibe.`)), i += fe(e.recommendedMinutes, t.availableMinutes, n);
-	let a = (le[e.category][ue[t.timeOfDay]] ?? 0) * 10;
-	i += a, a >= 8 && n.push(`Suits the ${t.timeOfDay}.`), e.intensity >= 4 && t.timeOfDay === "night" && (i -= 5), i += pe(e, t, n);
-	let o = me(e, t, n);
+	r ? (i += 40, n.push(`Made for: ${t.situation}.`)) : n.push(`Related option: not built for ${t.situation}, but close in mood.`), t.vibe === void 0 ? i += 7 : t.vibe === e.vibe && (i += 15, n.push(`Matches your ${t.vibe} vibe.`)), i += $(e.recommendedMinutes, t.availableMinutes, n);
+	let a = (me[e.category][he[t.timeOfDay]] ?? 0) * 10;
+	i += a, a >= 8 && n.push(`Suits the ${t.timeOfDay}.`), e.intensity >= 4 && t.timeOfDay === "night" && (i -= 5), i += _e(e, t, n);
+	let o = ve(e, t, n);
 	return i += o.pts, {
 		template: e,
-		score: Math.max(0, de(i)),
+		score: Math.max(0, ge(i)),
 		reasons: n,
 		sensitive: o.sensitive,
 		onSituation: r
 	};
 }
-var ge = (e, t) => t.score - e.score || (e.template.id < t.template.id ? -1 : +(e.template.id > t.template.id));
-function _e(e, t = 5, n = X()) {
-	let r = Math.max(1, Math.floor(t)), i = n.map((t) => he(t, e)).sort(ge), a = [
+var be = (e, t) => t.score - e.score || (e.template.id < t.template.id ? -1 : +(e.template.id > t.template.id));
+function xe(e, t = 5, n = Y()) {
+	let r = Math.max(1, Math.floor(t)), i = n.map((t) => ye(t, e)).sort(be), a = [
 		i.filter((e) => e.onSituation && !e.sensitive),
 		i.filter((e) => !e.sensitive),
 		i
@@ -3087,7 +3252,7 @@ function _e(e, t = 5, n = X()) {
 	}));
 }
 // ../../web/src/catalog/search.ts
-function ve(e, t = X()) {
+function Se(e, t = Y()) {
 	let n = (e.text ?? "").toLowerCase().split(/\s+/).filter((e) => e.length > 0), r = e.layerTags ?? [];
 	return t.filter((t) => {
 		if (e.category !== void 0 && t.category !== e.category || e.vibe !== void 0 && t.vibe !== e.vibe || e.adhdFriendly !== void 0 && t.adhdFriendly !== e.adhdFriendly || !r.every((e) => t.layerTags.includes(e))) return !1;
@@ -3095,4 +3260,4 @@ function ve(e, t = X()) {
 		return n.every((e) => i.includes(e));
 	});
 }
-export { X as a, Z as i, _e as n, h as o, Q as r, g as s, ve as t };
+export { Y as a, le as c, X as i, p as l, xe as n, G as o, Z as r, ce as s, Se as t, m as u };
