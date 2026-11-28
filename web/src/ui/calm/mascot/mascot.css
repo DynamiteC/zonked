@@ -1,7 +1,7 @@
 .cm-stage{position:relative;perspective:700px;display:inline-block;--rx:0deg;--ry:0deg;font-family:system-ui,sans-serif}
 .cm-defs{position:absolute;width:0;height:0}
 .cm-body{position:absolute;inset:0;transform-style:preserve-3d}
-.cm-head{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .25s ease-out;filter:drop-shadow(0 6px 10px rgba(42,36,51,.25))}
+.cm-head{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .25s ease-out;filter:drop-shadow(0 3px 5px rgba(58,42,46,.18))}
 .cm-layer{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .cm-shadow{transform:translateZ(-40px)}
 .cm-face{transform:translateZ(0)}
@@ -33,7 +33,7 @@
 @media (prefers-reduced-motion:reduce){.cm-body,.cm-eye,.cm-mote,.cm-z,.cm-ear-glow{animation:none}.cm-head{transition:none;transform:none}}
 
 .cm-stage{--bp:0;--lv:0;--sw:9s}
-.cm-sway{position:absolute;inset:0;transform-style:preserve-3d;translate:0 calc(-6% - var(--bp) * 5px);scale:.84;transform-origin:50% 50%;animation:cm-sway var(--sw) ease-in-out infinite}
+.cm-sway{position:absolute;inset:0;transform-style:preserve-3d;translate:0 calc(var(--bp) * -5px);scale:1;transform-origin:50% 80%;animation:cm-sway var(--sw) ease-in-out infinite}
 .cm-bodyl{transform:translateZ(-24px)}
 .cm-chest{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(calc(var(--bp) * -10px)) scale(calc(1 + var(--bp) * .045))}
 .cm-band{transform:translateZ(26px)}

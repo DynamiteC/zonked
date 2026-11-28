@@ -1,6 +1,8 @@
 /* Calm base: reset, type, controls, navigation. Every rule is scoped under .c-app so Studio is never touched. */
 @import "./calm-tokens.css";
 @import "./calm-screens.css";
+@import "./painted.css";
+@import "./form.css";
 .c-app {
   min-height: 100vh; position: relative; display: flex; flex-direction: column;
   font-family: var(--c-font); font-size: 1rem; line-height: 1.6; color: var(--c-text); background: var(--c-bg);
@@ -17,9 +19,9 @@
 /* Timer digits only: the brand face draws a slashed zero, so clocks use the system face. */
 .c-time, .c-digits { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-variant-numeric: tabular-nums; }
 
-.c-topbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; gap: 8px; border-bottom: 1px solid var(--c-line); }
+.c-topbar { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; gap: 8px; border-bottom: 1px solid var(--c-line); }
 .c-brand { font-weight: 700; font-size: 1.125rem; }
-.c-main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 16px 20px 160px; outline: none; animation: c-enter 200ms ease-out; }
+.c-main { position: relative; flex: 1; width: 100%; max-width: 600px; margin: 0 auto; padding: 8px 20px 160px; outline: none; animation: c-enter 200ms ease-out; }
 @keyframes c-enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 .c-h1 { font-size: 2.25rem; line-height: 1.15; margin: 8px 0; font-weight: 700; }
 .c-greet { font-size: 2.25rem; line-height: 1.15; margin: 8px 0; font-weight: 700; }
@@ -51,20 +53,6 @@
 .c-actions.c-row .c-primary { flex: 1; }
 .c-actions .c-btn.c-link { align-self: flex-start; }
 
-.c-choices { border: 0; padding: 0; margin: 16px 0 0; display: grid; gap: 0; border-top: 1px solid var(--c-line); }
-.c-choice { position: relative; display: block; border-bottom: 1px solid var(--c-line); }
-.c-choice input, .c-starter-pick input { position: absolute; opacity: 0; width: 44px; height: 44px; margin: 0; }
-.c-choice span { display: flex; align-items: center; min-height: 60px; padding: 0 4px; font-size: 1.125rem; font-weight: 600; cursor: pointer; }
-.c-choice input:checked + span { color: var(--c-ink); box-shadow: inset 4px 0 0 var(--c-ink); padding-left: 16px; }
-.c-choice input:focus-visible + span, .c-starter-pick input:focus-visible ~ .c-s-text { outline: 3px solid var(--c-focus); outline-offset: 2px; }
-.c-sel { margin-left: auto; font-style: normal; font-size: 0.875rem; color: var(--c-ink); font-weight: 700; }
-.c-sel::before { content: ""; display: inline-block; width: 0.35em; height: 0.7em; margin-right: 0.5em; border: solid var(--c-ink); border-width: 0 2px 2px 0; transform: rotate(45deg) translateY(-0.15em); }
-.c-starters { border: 0; padding: 0; margin: 8px 0 0; display: grid; gap: 0; }
-.c-starter { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--c-line); flex-wrap: wrap; }
-.c-starter[data-picked="true"] { box-shadow: inset 4px 0 0 var(--c-ink); padding-left: 14px; }
-.c-starter-pick { position: relative; flex: 1; min-width: 140px; cursor: pointer; }
-.c-s-text { display: grid; padding-left: 4px; font-weight: 600; }
-.c-s-text small { color: var(--c-soft); font-size: 0.875rem; font-weight: 400; }
 .c-safe-list { font-size: 1.125rem; padding: 0 0 0 24px; margin: 16px 0; }
 .c-safe-list li { padding: 4px 0; }
 .c-overlay { position: fixed; inset: 0; z-index: 70; background: rgba(8, 9, 14, 0.7); display: flex; align-items: center; justify-content: center; padding: 16px; }
@@ -83,11 +71,11 @@
 .c-switch small { display: block; }
 
 /* Navigation: top on desktop, bottom on phone. No sidebar. */
-.c-tabbar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; background: var(--c-bg); border-top: 1px solid var(--c-line); padding: 6px 4px 10px; z-index: 10; box-sizing: border-box; height: 80px; align-items: center; }
+.c-tabbar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; border-top: 1px solid var(--c-line); padding: 6px 4px 10px; z-index: 10; background: var(--c-card-solid); box-sizing: border-box; height: 80px; align-items: center; }
 .c-nav { flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: none; border: 0; color: var(--c-soft); font: inherit; font-size: 0.875rem; cursor: pointer; border-top: 3px solid transparent; }
 .c-nav[aria-current="page"] { color: var(--c-ink); font-weight: 700; border-top-color: var(--c-ink); }
 .c-rail-brand { display: none; }
-.c-mini { position: fixed; left: 0; right: 0; bottom: 80px; z-index: 11; background: var(--c-surface); border-top: 1px solid var(--c-edge); padding: 4px max(20px, calc((100vw - 640px) / 2 + 20px)); display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 64px; box-sizing: border-box; }
+.c-mini { position: fixed; left: 0; right: 0; bottom: 80px; z-index: 11; background: var(--c-card-solid); border-top: 1px solid var(--c-edge); padding: 4px max(20px, calc((100vw - 560px) / 2 + 20px)); display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 64px; box-sizing: border-box; }
 .c-mini-open { text-align: left; }
 @media (min-width: 900px) {
   .c-app { padding-top: 64px; }

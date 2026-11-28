@@ -1,0 +1,26 @@
+/* Painted canvas: muted, low contrast, slow. Text always sits on the card surface, never on the scene. */
+.pt { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block; }
+.pt[data-tod="dawn"] { --p1: #F2D6C4; --p2: #F6E3CF; --p3: #FBEFD9; --pg: #FFD9A8; --ph1: #B9C7A4; --ph2: #A3B792; --ph3: #8EA67F; --pc: #FFF4E4; }
+.pt[data-tod="day"] { --p1: #BFD9E4; --p2: #D9E8E4; --p3: #F2EFDC; --pg: #FFF2C4; --ph1: #B4CC9E; --ph2: #9DBB8A; --ph3: #86A877; --pc: #FFFFFF; }
+.pt[data-tod="dusk"] { --p1: #C9B2C8; --p2: #E8B9A8; --p3: #F6D4A8; --pg: #FFC48A; --ph1: #A5A98C; --ph2: #8E967D; --ph3: #7A846C; --pc: #F8DCCB; }
+.pt[data-tod="night"] { --p1: #1E2440; --p2: #2B3358; --p3: #3A4166; --pg: #AEB8E8; --ph1: #2C3A4A; --ph2: #243240; --ph3: #1C2833; --pc: #4A5278; }
+.pt-s1 { stop-color: var(--p1); } .pt-s2 { stop-color: var(--p2); } .pt-s3 { stop-color: var(--p3); }
+.pt-gl { stop-color: var(--pg); }
+.pt-h1 { fill: var(--ph1); } .pt-h2 { fill: var(--ph2); } .pt-h3 { fill: var(--ph3); }
+.pt-cloud { fill: var(--pc); opacity: 0.7; }
+.pt-grain { opacity: 0.1; mix-blend-mode: multiply; }
+.pt-veil { fill: #0E1020; opacity: 0; }
+.c-app[data-theme="dark"] .pt-veil { opacity: 0.5; }
+.c-app[data-theme="dark"][data-dim="true"] .pt-veil { opacity: 0.66; }
+.c-app[data-theme="light"][data-dim="true"] .pt-veil { opacity: 0.2; }
+.pt-c1 { animation: pt-drift 140s ease-in-out infinite alternate; }
+.pt-c2 { animation: pt-drift 190s ease-in-out infinite alternate-reverse; }
+.pt-c3 { animation: pt-drift 160s ease-in-out infinite alternate; }
+@keyframes pt-drift { from { transform: translateX(-70px); } to { transform: translateX(90px); } }
+@media (prefers-reduced-motion: reduce) { .pt-cloud { animation: none; } }
+
+/* The one calm card. Translucent, but opaque enough that text contrast is computed on the card, not the scene. */
+.c-app { --c-card: rgba(30, 32, 48, 0.9); --c-card-solid: #1E2030; --c-shadow: 0 10px 30px rgba(8, 9, 20, 0.35); }
+.c-app[data-theme="light"] { --c-card: rgba(250, 246, 239, 0.92); --c-card-solid: #FAF6EF; --c-shadow: 0 10px 30px rgba(90, 70, 40, 0.18); }
+.c-app[data-contrast="high"] { --c-card: var(--c-bg); --c-card-solid: var(--c-bg); }
+.c-sheet { position: relative; background: var(--c-card); border-radius: 16px; box-shadow: var(--c-shadow); padding: 22px 20px 20px; margin-top: 12px; }

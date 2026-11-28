@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { setCrewEnabled } from '../bridgeClient';
 import { CALM } from './copy';
+import { FormFoot } from './FormFrame';
 import { CrewPanel } from './CrewPanel';
 import type { CrewInfo } from './useCrewBridge';
 
@@ -52,8 +53,8 @@ export function CrewScreen({ crew, overridden, onDemo, onStopDemo, onNotNow, onR
       )}
       {!demo && (
         <div className="c-demo">
-          <button type="button" className={live ? 'c-btn' : 'c-btn c-primary'} data-testid="crew-demo" onClick={onDemo}>{CALM.crewDemo}</button>
           <p className="c-muted">{CALM.crewDemoHint}</p>
+          <FormFoot left={null} next={{ label: CALM.crewDemo, onClick: onDemo, testid: 'crew-demo' }} />
         </div>
       )}
       <p className="c-muted">{CALM.crewPrivacy}</p>

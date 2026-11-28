@@ -4,6 +4,7 @@ import type { Template } from '../../catalog/types';
 import { CALM, GOAL_LABEL, briefReason, greeting } from './copy';
 import { nudgeRecs, profileToRecommendation } from './data';
 import type { FeelEntry, Goal, Profile, ProgressMap, WeekStats } from './data';
+import { FormFoot } from './FormFrame';
 import { Mascot } from './MascotView';
 import { WeekDots } from './WeekDots';
 
@@ -34,9 +35,10 @@ interface Props {
   readonly onReset: () => void;
   /** Opens the 5 minute breathing session. Shown for the Calm goal. */
   readonly onBreathe?: () => void;
+  readonly onGuide?: () => void;
 }
 
-export function Today({ profile, week, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, feel = NO_FEEL, onSprint, onPlay, onGo, onReset, onBreathe }: Props): React.JSX.Element {
+export function Today({ profile, week, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, feel = NO_FEEL, onSprint, onPlay, onGo, onReset, onBreathe, onGuide }: Props): React.JSX.Element {
   const [skip, setSkip] = useState(0);
   const recs = useMemo(() => {
     const ctx = profileToRecommendation(profile, now());
@@ -61,14 +63,7 @@ export function Today({ profile, week, reduced, crewConnected, hasHistory = true
           <p className="c-eyebrow">{CALM.dailyEyebrow}</p>
           <h2 id="c-daily-h">{pick.template.name}</h2>
           <p className="c-muted">{`${pick.template.recommendedMinutes} min. ${briefReason(pick.reasons[0] ?? CALM.suggested)}`}</p>
-          <div className="c-actions">
-            <button type="button" className="c-btn c-primary" data-testid="today-play" onClick={() => onPlay(pick.template)}>
-              {CALM.start}
-            </button>
-            <button type="button" className="c-btn c-link" onClick={() => setSkip((s) => s + 1)}>
-              {CALM.notThisOne}
-            </button>
-          </div>
+          <FormFoot left={{ label: CALM.notThisOne, onClick: () => setSkip((n) => n + 1) }} next={{ label: CALM.start, onClick: () => onPlay(pick.template), testid: 'today-play' }} />
         </section>
       )}
       {onSprint !== undefined && pick !== undefined && SPRINT_GOALS.includes(profile.goal) && (
@@ -113,6 +108,11 @@ export function Today({ profile, week, reduced, crewConnected, hasHistory = true
       <button type="button" className="c-link-card" onClick={() => onGo('journeys')}>
         <b>{CALM.journeysTitle}</b>
       </button>
+      {onGuide !== undefined && (
+        <button type="button" className="c-btn c-ghost c-guide-link" data-testid="today-guide" onClick={onGuide}>
+          {CALM.guideLink}
+        </button>
+      )}
       {crewConnected && (
         <p className="c-crew-chip" role="status">
           Crew connected: easing the sound

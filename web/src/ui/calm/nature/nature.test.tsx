@@ -121,11 +121,12 @@ describe('nature sounds', () => {
     expect(document.body.textContent).not.toMatch(/\b(cure|treat|heal|therapy)\b/i);
   });
 
-  it('adds nature from the player in one tap', async () => {
+  it('adds nature from the player Options sheet in two taps', async () => {
     localStorage.setItem(SAFETY_KEY, '1');
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     fireEvent.click(await screen.findByTestId('today-play'));
-    fireEvent.click(await screen.findByTestId('player-nature'));
+    fireEvent.click(await screen.findByTestId('player-options'));
+    fireEvent.click(await screen.findByTestId('sheet-nature-rain'));
     await waitFor(() => expect(m.startSample).toHaveBeenCalledWith('rain', 0.4));
   });
 

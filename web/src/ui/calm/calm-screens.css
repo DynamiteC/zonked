@@ -88,7 +88,6 @@
 @media (min-width: 900px) { .c-tiles { grid-template-columns: repeat(3, 1fr); } .c-nature-tiles { grid-template-columns: repeat(3, 1fr); } }
 @media (max-height: 780px) { .c-stage { height: 200px; } }
 @media (max-height: 760px) { .c-player .c-h1 { font-size: 1.625rem; margin: 0; } .c-stage { height: 150px; margin: 4px auto; } .c-controls { margin: 6px 0; } .c-player .c-chips { gap: 6px; margin: 6px 0; } .c-player .c-tchip { padding: 0 10px; } }
-.c-onb .c-choice span { min-height: 52px; }
 .c-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
 .c-stats div { border-top: 1px solid var(--c-line); padding-top: 8px; }
 .c-stats dt { color: var(--c-soft); font-size: 0.875rem; }

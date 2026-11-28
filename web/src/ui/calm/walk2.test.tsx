@@ -60,12 +60,11 @@ describe('walk 2 fixes', () => {
     for (const l of CALM.safetyLines) expect(screen.getByText(l)).toBeTruthy();
   });
 
-  it('Skip comes before the answer list on the first question', async () => {
+  it('Skip sits in the footer slot where Back sits on later steps', async () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     const skip = await screen.findByRole('button', { name: CALM.skip });
-    const group = document.querySelector('fieldset.c-choices');
-    expect(group).not.toBeNull();
-    expect(skip.compareDocumentPosition(group as Element) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(skip.parentElement?.className).toContain('c-foot');
+    expect(skip.parentElement?.firstElementChild).toBe(skip);
   });
 
   it('the mini player is hidden on the Crew screen and shown elsewhere', async () => {

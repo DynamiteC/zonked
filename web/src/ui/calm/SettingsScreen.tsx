@@ -13,6 +13,7 @@ interface Props {
   readonly onForget: () => void;
   readonly prefs: Prefs;
   readonly onPrefs: (p: Prefs) => void;
+  readonly onGuide?: () => void;
 }
 
 function Switch({ label, hint, checked, onChange, testId }: { readonly label: string; readonly hint?: string; readonly checked: boolean; readonly onChange: (v: boolean) => void; readonly testId: string }): React.JSX.Element {
@@ -44,7 +45,7 @@ function ThemePicker({ value, onChange }: { readonly value: ThemeChoice; readonl
   );
 }
 
-export function SettingsScreen({ gentle, reduceMotion, reduced = false, onGentle, onReduceMotion, onStudio, onForget, prefs, onPrefs }: Props): React.JSX.Element {
+export function SettingsScreen({ gentle, reduceMotion, reduced = false, onGentle, onReduceMotion, onStudio, onForget, prefs, onPrefs, onGuide }: Props): React.JSX.Element {
   return (
     <div>
       <PageHead title={CALM.settingsTitle} reduced={reduced} />
@@ -54,6 +55,11 @@ export function SettingsScreen({ gentle, reduceMotion, reduced = false, onGentle
       <Switch label={CALM.dimLabel} hint={CALM.dimHint} checked={dimOn(prefs)} onChange={(dim) => onPrefs({ ...prefs, dim })} testId="dim-switch" />
       <Switch label={CALM.announceLabel} hint={CALM.announceHint} checked={prefs.announce} onChange={(announce) => onPrefs({ ...prefs, announce })} testId="announce-switch" />
       <div className="c-actions">
+        {onGuide !== undefined && (
+          <button type="button" className="c-btn c-link" data-testid="settings-guide" onClick={onGuide}>
+            {CALM.guideLink}
+          </button>
+        )}
         <button type="button" className="c-btn c-link" data-testid="studio-switch" onClick={onStudio}>
           {CALM.studioLink}
         </button>

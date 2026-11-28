@@ -24,7 +24,4 @@
   --c-accent: #FFD400; --c-on-accent: #000000; --c-accent-edge: #000000; --c-ink: #5C3B00;
   --c-focus: #0019D6; --c-edge: #000000; --c-line: #000000; --c-caution: #6B3A00; --c-ok: #0B5A2E;
 }
-/* Player dim: the accent is 15 percent lower in luminance. */
 .c-app[data-view="player"] { --c-dim: 0.9; }
-.c-app[data-view="player"][data-theme="dark"] { --c-accent: #EDBB37; --c-accent-edge: #EDBB37; --c-ink: #EDBB37; }
-.c-app[data-view="player"][data-theme="dark"][data-contrast="high"] { --c-accent: #FFE04D; --c-accent-edge: #FFFFFF; --c-ink: #FFE04D; --c-dim: 1; }

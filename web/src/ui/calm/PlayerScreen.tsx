@@ -1,14 +1,13 @@
-import { Suspense, lazy, useState } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import type { Player, PlayerSnapshot } from '../../app/player';
 import type { AudioEngine } from '../../audio/types';
 import { getTemplates } from '../../catalog';
 import { SOUND_MENU } from '../../catalog/soundMenu';
-import { CALM, EVIDENCE } from './copy';
+import { CALM } from './copy';
+import { OptionsSheet } from './OptionsSheet';
 import { BreathLive, counterText, useBreathCounter } from './BreathLive';
 import { useBreath } from './mascot/useBreath';
-import { TimerChips } from './TimerChips';
-import { NatureControls } from './nature/NatureScreen';
-import { loadPrefs } from './nature/prefs';
+import { TimeLeft } from './TimerChips';
 import type { Nature } from './nature/useNature';
 import { sceneFor, useLevel } from './playerScene';
 import type { Sprint } from './useSprint';
@@ -80,10 +79,26 @@ interface Props {
   readonly theme: 'light' | 'dark';
   readonly announce?: boolean;
   readonly sprint?: Sprint;
+  /** Opens the Options sheet at once with Advanced expanded. Used by the Studio switch and shortcut. */
+  readonly openAdvanced?: boolean;
+  readonly onAdvancedShown?: () => void;
 }
 
-export function PlayerScreen({ engine, theme, announce = true, sprint, player, snap, still, favorite, onToggle, onFavorite, nature }: Props): React.JSX.Element {
-  const [why, setWhy] = useState(false);
+export function PlayerScreen({ engine, theme, announce = true, sprint, openAdvanced = false, onAdvancedShown, player, snap, still, favorite, onToggle, onFavorite, nature }: Props): React.JSX.Element {
+  const [open, setOpen] = useState(openAdvanced);
+  const [adv, setAdv] = useState(openAdvanced);
+  useEffect(() => {
+    if (!openAdvanced) return;
+    setOpen(true);
+    setAdv(true);
+    onAdvancedShown?.();
+  }, [openAdvanced, onAdvancedShown]);
+  const opener = useRef<HTMLButtonElement>(null);
+  const close = (): void => {
+    setOpen(false);
+    setAdv(false);
+    opener.current?.focus();
+  };
   const level = useLevel(engine, snap.playing);
   const sound = SOUND_MENU.find((s) => s.templateId === snap.templateId);
   const evidence = sound?.evidence ?? 'mixed';
@@ -94,44 +109,29 @@ export function PlayerScreen({ engine, theme, announce = true, sprint, player, s
     <div className="c-player">
       <h1 className="c-h1">{snap.templateName ?? CALM.brand}</h1>
       <Stage still={still} playing={snap.playing} situation={situation} theme={theme} level={level} announce={announce} />
+      <TimeLeft timer={snap.timer} />
       <div className="c-controls">
-        <button type="button" className="c-btn c-round c-big" data-testid="player-toggle" onClick={onToggle}>
+        <button type="button" className="c-btn c-primary c-big c-round" data-testid="player-toggle" onClick={onToggle}>
           {snap.playing ? CALM.stop : CALM.play}
         </button>
-        <button type="button" className="c-btn c-round" aria-pressed={favorite} onClick={onFavorite}>
-          {favorite ? CALM.saved : CALM.favorite}
-        </button>
       </div>
-      <TimerChips
-        timer={snap.timer}
-        player={player}
-        {...(sprint !== undefined && current !== undefined ? { onSprint: () => sprint.start(current), onSprintEnd: sprint.cancel } : {})}
-      />
-      <NatureQuick nature={nature} />
-      <p className="c-muted">{CALM.volumeCapped}</p>
-      <section className="c-why">
-        <button type="button" className="c-btn c-link" aria-expanded={why} aria-controls="c-why-box" onClick={() => setWhy((v) => !v)}>
-          {CALM.whyTitle}
-        </button>
-        <div id="c-why-box" hidden={!why}>
-          <p>{CALM.whyBody}</p>
-          <p>{`Evidence: ${evidence}. ${EVIDENCE[evidence] ?? ''}`}</p>
-        </div>
-      </section>
-    </div>
-  );
-}
-
-/** One tap adds the remembered nature sound (rain at first). Blend and level show once it is on. */
-function NatureQuick({ nature }: { readonly nature: Nature }): React.JSX.Element {
-  const remembered = nature.prefs.id ?? loadPrefs().id ?? 'rain';
-  return (
-    <section className="c-card c-nature-quick" aria-label={CALM.natureHead}>
-      <button type="button" className="c-btn" data-testid="player-nature" aria-pressed={nature.on !== null} onClick={() => (nature.on === null ? nature.start(remembered) : nature.stop())}>
-        {nature.on === null ? `${CALM.natureAdd}: ${remembered.startsWith('own:') ? CALM.mineTitle : remembered}` : CALM.natureOff}
+      <button ref={opener} type="button" className="c-btn c-ghost c-options-btn" data-testid="player-options" aria-haspopup="dialog" onClick={() => setOpen(true)}>
+        {CALM.optionsBtn}
       </button>
-      {nature.on !== null && <NatureControls nature={nature} />}
-      <p className="c-status" role="status">{nature.message}</p>
-    </section>
+      {open && (
+        <OptionsSheet
+          player={player}
+          snap={snap}
+          nature={nature}
+          favorite={favorite}
+          evidence={evidence}
+          onFavorite={onFavorite}
+          onClose={close}
+          engine={engine}
+          advancedOpen={adv}
+          {...(sprint !== undefined && current !== undefined ? { sprint: { onSprint: () => sprint.start(current), onSprintEnd: sprint.cancel } } : {})}
+        />
+      )}
+    </div>
   );
 }

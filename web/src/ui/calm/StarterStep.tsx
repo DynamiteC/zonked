@@ -3,6 +3,7 @@ import { recommendTemplates } from '../../catalog';
 import type { Template } from '../../catalog/types';
 import { CALM, briefReason } from './copy';
 import { profileToRecommendation } from './data';
+import { FormFoot } from './FormFrame';
 import type { Profile } from './data';
 
 export const PREVIEW_MS = 10_000;
@@ -45,9 +46,10 @@ interface Props {
   readonly onPreview: (t: Template) => void;
   readonly onStop: () => void;
   readonly onStart: (t: Template) => void;
+  readonly onBack?: () => void;
 }
 
-export function StarterStep({ profile, playing, onPreview, onStop, onStart }: Props): React.JSX.Element {
+export function StarterStep({ profile, playing, onPreview, onStop, onStart, onBack }: Props): React.JSX.Element {
   const starters = useMemo(() => pickStarters(profile), [profile]);
   const [picked, setPicked] = useState(starters[0]?.template.id ?? '');
   const [previewId, setPreviewId] = useState<string | null>(null);
@@ -67,13 +69,14 @@ export function StarterStep({ profile, playing, onPreview, onStop, onStart }: Pr
   const chosen = starters.find((s) => s.template.id === picked)?.template;
   return (
     <>
-      <h1 className="c-h1">{CALM.starterTitle}</h1>
+      <h1 className="c-h1 c-ftitle">{CALM.starterTitle}</h1>
       <fieldset className="c-starters">
         <legend className="c-sr">{CALM.starterTitle}</legend>
         {starters.map((s) => (
           <div key={s.template.id} className="c-starter" data-picked={picked === s.template.id ? 'true' : 'false'}>
             <label className="c-starter-pick">
               <input type="radio" name="starter" checked={picked === s.template.id} onChange={() => setPicked(s.template.id)} />
+              <span className="c-radio" aria-hidden="true" />
               <span className="c-s-text">
                 <b>{s.template.name}</b>
                 <small>{s.reason}</small>
@@ -88,14 +91,17 @@ export function StarterStep({ profile, playing, onPreview, onStop, onStart }: Pr
       <p className="c-status" role="status">
         {previewId !== null && playing ? CALM.previewing : ''}
       </p>
-      <div className="c-actions">
-        <button type="button" className="c-btn c-primary" disabled={chosen === undefined} onClick={() => {
+      <FormFoot
+        left={onBack === undefined ? null : { label: CALM.back, onClick: onBack }}
+        next={{
+          label: CALM.start,
+          disabled: chosen === undefined,
+          onClick: () => {
             if (timer.current !== null) window.clearTimeout(timer.current);
             if (chosen !== undefined) onStart(chosen);
-          }}>
-          {CALM.start}
-        </button>
-      </div>
+          },
+        }}
+      />
     </>
   );
 }

@@ -2,71 +2,72 @@ import type { JSX } from 'react';
 import type { MascotMood } from './types';
 
 const VB = '0 0 512 512';
-const INK = '#2A2433';
+const INK = '#3A2A2E';
+const HEAD = { x: 256, y: 200, r: 150 } as const;
 
 interface IdProps {
   readonly id: string;
 }
 
-/** Soft ground shadow under the head. */
+/** A small mound of grass the character sits on. Soft edge, no outline. */
 export function ShadowLayer(): JSX.Element {
   return (
     <svg className="cm-layer cm-shadow" viewBox={VB} aria-hidden="true" focusable="false">
-      <ellipse cx="256" cy="476" rx="150" ry="22" fill="#6B3A12" opacity="0.2" filter="blur(6px)" />
+      <path d="M-20 512C20 462 120 440 256 440C392 440 492 462 532 512Z" fill="#9DB07E" />
+      <path d="M40 512C90 474 170 458 256 458C342 458 422 474 472 512Z" fill="#B3C28F" opacity="0.7" />
+      <ellipse cx="256" cy="470" rx="120" ry="12" fill="#4F5F3C" opacity="0.28" />
     </svg>
   );
 }
 
-/** The round ochre body: painted gradient, soft watercolor edge, light rim, faint grain. */
+/** The round yellow head: flat watercolor fill, soft shade, warm rim light, hand drawn ink outline. */
 export function FaceLayer({ id }: IdProps): JSX.Element {
   return (
     <svg className="cm-layer cm-face" viewBox={VB} aria-hidden="true" focusable="false">
       <g filter={`url(#${id}-paint)`}>
-        <circle cx="256" cy="256" r="204" fill={`url(#${id}-gold)`} />
-        <circle cx="256" cy="256" r="204" fill={`url(#${id}-shade)`} />
+        <circle cx={HEAD.x} cy={HEAD.y} r={HEAD.r} fill="#F7C95A" />
+        <circle cx={HEAD.x} cy={HEAD.y} r={HEAD.r} fill={`url(#${id}-shade)`} />
+        <circle cx={HEAD.x} cy={HEAD.y} r="140" fill="none" stroke="#FFB45C" strokeOpacity="0.55" strokeWidth="9" strokeDasharray="250 1000" strokeLinecap="round" transform="rotate(10 256 200)" />
+        <circle cx={HEAD.x} cy={HEAD.y} r={HEAD.r} fill="none" stroke={INK} strokeWidth="4" />
+        <circle cx={HEAD.x} cy={HEAD.y} r={HEAD.r} fill="none" stroke={INK} strokeWidth="4" strokeDasharray="330 1000" strokeLinecap="round" transform="rotate(100 256 200)" />
       </g>
-      <path clipPath={`url(#${id}-disc)`} fillRule="evenodd" fill="#C8731F" opacity="0.26" d="M0 0H512V512H0ZM40 238a196 196 0 1 0 392 0a196 196 0 1 0 -392 0Z" />
-      <rect x="52" y="52" width="408" height="408" fill="#000" filter={`url(#${id}-grain)`} opacity="0.1" clipPath={`url(#${id}-disc)`} />
-      <circle cx="256" cy="256" r="198" fill="none" stroke="#FFF3D0" strokeOpacity="0.55" strokeWidth="5" strokeDasharray="280 1000" strokeLinecap="round" transform="rotate(-150 256 256)" />
+      <rect x="100" y="50" width="312" height="300" fill="#000" filter={`url(#${id}-grain)`} opacity="0.08" clipPath={`url(#${id}-disc)`} />
     </svg>
   );
 }
 
-/** Dark visor wrapping the eyes, gem on the brow, and cream eyes inside. */
+/** Soft visor with the brow gem, and calm eyes inside. */
 export function EyesLayer({ id }: IdProps): JSX.Element {
   const eye = (cx: number): JSX.Element => (
     <g className="cm-eye">
-      <circle cx={cx} cy="172" r="34" fill="#FFF6DC" />
-      <circle cx={cx} cy="174" r="21" fill={INK} />
-      <circle cx={cx} cy="174" r="21" fill="none" stroke="#B4531A" strokeWidth="3" opacity="0.6" />
-      <circle cx={cx - 8} cy="164" r="7" fill="#FFFFFF" opacity="0.9" />
-      <circle cx={cx + 9} cy="184" r="3" fill="#FFFFFF" opacity="0.6" />
+      <circle cx={cx} cy="188" r="25" fill="#FFF6DC" stroke={INK} strokeWidth="3" />
+      <circle cx={cx} cy="190" r="14" fill={INK} />
+      <circle cx={cx - 5} cy="184" r="4" fill="#FFF6DC" />
     </g>
   );
   return (
     <svg className="cm-layer cm-eyes" viewBox={VB} aria-hidden="true" focusable="false">
       <g filter={`url(#${id}-paint)`}>
-        <path d="M92 170Q92 112 168 114L344 114Q420 112 420 170Q420 230 346 230L300 230Q276 214 256 214Q236 214 212 230L166 230Q92 230 92 170Z" fill={INK} stroke="#8A4A12" strokeWidth="4" strokeLinejoin="round" />
+        <path d="M128 186Q128 146 182 148L330 148Q384 146 384 186Q384 232 330 232L290 232Q272 220 256 220Q240 220 222 232L182 232Q128 232 128 186Z" fill="#8A5A3A" fillOpacity="0.92" stroke={INK} strokeWidth="4" strokeLinejoin="round" />
       </g>
-      <path d="M118 126Q256 104 394 126" fill="none" stroke="#FFFFFF" strokeOpacity="0.14" strokeWidth="6" strokeLinecap="round" />
-      {eye(178)}
-      {eye(334)}
-      <polygon points="256,142 268,158 256,174 244,158" fill="#00E5A8" stroke="#E8B04A" strokeWidth="4" strokeLinejoin="round" />
+      {eye(196)}
+      {eye(316)}
+      <polygon points="256,110 266,124 256,138 246,124" fill="#7FE0C4" stroke={INK} strokeWidth="3" strokeLinejoin="round" />
     </svg>
   );
 }
 
 /** Rosy cheeks and a mouth that follows the mood. */
 export function PlatesLayer({ id, mood }: IdProps & { readonly mood: MascotMood }): JSX.Element {
-  const line = { fill: 'none', stroke: INK, strokeWidth: 7, strokeLinecap: 'round' } as const;
+  const line = { fill: 'none', stroke: INK, strokeWidth: 5, strokeLinecap: 'round' } as const;
   return (
     <svg className="cm-layer cm-plates" viewBox={VB} aria-hidden="true" focusable="false">
-      <circle cx="132" cy="276" r="38" fill={`url(#${id}-blush)`} />
-      <circle cx="380" cy="276" r="38" fill={`url(#${id}-blush)`} />
-      {mood === 'happy' && <path className="cm-mouth" d="M214 292Q256 340 298 292" {...line} />}
-      {mood === 'sleepy' && <path className="cm-mouth" d="M236 304Q256 310 276 304" {...line} strokeWidth={6} />}
-      {mood === 'breathing' && <ellipse className="cm-mouth" cx="256" cy="308" rx="12" ry="15" fill={INK} />}
-      {(mood === 'idle' || mood === 'listening') && <path className="cm-mouth" d="M228 296Q256 322 284 296" {...line} />}
+      <circle cx="160" cy="258" r="30" fill={`url(#${id}-blush)`} />
+      <circle cx="352" cy="258" r="30" fill={`url(#${id}-blush)`} />
+      {mood === 'happy' && <path className="cm-mouth" d="M226 262Q256 294 286 262" {...line} />}
+      {mood === 'sleepy' && <path className="cm-mouth" d="M240 272Q256 277 272 272" {...line} strokeWidth={4} />}
+      {mood === 'breathing' && <ellipse className="cm-mouth" cx="256" cy="274" rx="9" ry="11" fill={INK} />}
+      {(mood === 'idle' || mood === 'listening') && <path className="cm-mouth" d="M234 266Q256 282 278 266" {...line} />}
     </svg>
   );
 }
@@ -74,7 +75,7 @@ export function PlatesLayer({ id, mood }: IdProps & { readonly mood: MascotMood 
 /** Floating dust motes, drawn above everything. */
 export function MotesLayer(): JSX.Element {
   const motes: ReadonlyArray<readonly [number, number, number]> = [
-    [70, 110, 4], [440, 90, 3], [400, 430, 4], [90, 410, 3], [256, 40, 3], [470, 300, 2],
+    [70, 110, 4], [440, 90, 3], [400, 430, 4], [90, 410, 3], [256, 30, 3], [470, 300, 2],
   ];
   return (
     <svg className="cm-layer cm-motes" viewBox={VB} aria-hidden="true" focusable="false">
@@ -85,30 +86,25 @@ export function MotesLayer(): JSX.Element {
   );
 }
 
-/** Shared paint: gradients and grain filter. Ids are per instance. */
+/** Shared paint: soft shade, blush, and the two filters. Ids are per instance. */
 export function Defs({ id }: IdProps): JSX.Element {
   return (
     <svg className="cm-defs" width="0" height="0" aria-hidden="true" focusable="false">
       <defs>
-        <linearGradient id={`${id}-gold`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#FFE9A8" />
-          <stop offset="0.5" stopColor="#F6C255" />
-          <stop offset="1" stopColor="#DE9530" />
-        </linearGradient>
-        <radialGradient id={`${id}-shade`} cx="0.35" cy="0.3" r="0.85">
-          <stop offset="0.5" stopColor="#B4531A" stopOpacity="0" />
-          <stop offset="1" stopColor="#B4531A" stopOpacity="0.35" />
+        <radialGradient id={`${id}-shade`} cx="0.35" cy="0.3" r="0.9">
+          <stop offset="0.55" stopColor="#C9772A" stopOpacity="0" />
+          <stop offset="1" stopColor="#C9772A" stopOpacity="0.3" />
         </radialGradient>
         <radialGradient id={`${id}-blush`}>
-          <stop offset="0" stopColor="#F0788A" stopOpacity="0.6" />
-          <stop offset="1" stopColor="#F0788A" stopOpacity="0" />
+          <stop offset="0" stopColor="#EE7F8E" stopOpacity="0.55" />
+          <stop offset="1" stopColor="#EE7F8E" stopOpacity="0" />
         </radialGradient>
         <filter id={`${id}-paint`} x="-5%" y="-5%" width="110%" height="110%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="t" />
-          <feDisplacementMap in="SourceGraphic" in2="t" scale="5" xChannelSelector="R" yChannelSelector="G" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="3" result="t" />
+          <feDisplacementMap in="SourceGraphic" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G" />
         </filter>
         <clipPath id={`${id}-disc`}>
-          <circle cx="256" cy="256" r="204" />
+          <circle cx={HEAD.x} cy={HEAD.y} r={HEAD.r} />
         </clipPath>
         <filter id={`${id}-grain`} x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" />

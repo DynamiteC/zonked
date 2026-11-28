@@ -1,0 +1,71 @@
+/* One form template. Header row, title, helper, option rows, footer. Type: one bold weight (titles), regular elsewhere. */
+.c-app .c-fhead { display: flex; align-items: center; gap: 14px; min-height: 72px; }
+.c-fhead-text { flex: 1; min-width: 0; }
+.c-fhead .c-step { margin: 0 0 8px; font-size: 0.9375rem; color: var(--c-soft); font-weight: 400; }
+.c-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.c-bar i { display: block; height: 4px; border-radius: 2px; background: var(--c-line); }
+.c-bar i[data-on="true"] { background: var(--c-accent); }
+.c-ftitle { font-size: 1.75rem; line-height: 1.2; margin: 18px 0 6px; font-weight: 700; }
+.c-helper { margin: 0 0 14px; color: var(--c-soft); font-size: 1rem; font-weight: 400; }
+.c-choices { margin: 8px 0 0; border: 0; padding: 0; display: grid; gap: 6px; border-top: 0; }
+.c-choice { position: relative; display: flex; align-items: center; gap: 14px; min-height: 52px; padding: 0 14px; border-radius: 12px; border-bottom: 0; cursor: pointer; font-weight: 400; }
+.c-choice:hover { background: color-mix(in srgb, var(--c-text) 6%, transparent); }
+.c-choice[data-on="true"], .c-starter[data-picked="true"] { background: color-mix(in srgb, var(--c-accent) 16%, transparent); }
+.c-choice .c-opt { font-size: 1.0625rem; font-weight: 400; min-height: 0; padding: 0; display: block; box-shadow: none; color: var(--c-text); }
+.c-choice[data-on="true"] .c-opt { font-weight: 600; }
+.c-choice input, .c-starter-pick input { position: absolute; opacity: 0; width: 100%; height: 100%; left: 0; top: 0; margin: 0; cursor: pointer; }
+.c-radio { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--c-edge); background: transparent; display: inline-block; position: relative; }
+.c-choice[data-on="true"] .c-radio, .c-starter[data-picked="true"] .c-radio { background: var(--c-accent); border-color: var(--c-accent-edge); }
+.c-choice[data-on="true"] .c-radio::after, .c-starter[data-picked="true"] .c-radio::after { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: var(--c-on-accent); }
+.c-choice input:focus-visible ~ .c-opt, .c-starter-pick input:focus-visible ~ .c-s-text { outline: 3px solid var(--c-focus); outline-offset: 4px; border-radius: 6px; }
+.c-starter { padding: 8px 14px; border: 0; border-radius: 12px; box-shadow: none; gap: 10px; }
+.c-starters { border: 0; padding: 0; margin: 8px 0 0; display: grid; gap: 6px; }
+.c-starter { display: flex; align-items: center; flex-wrap: wrap; }
+.c-starter-pick { position: relative; flex: 1; min-width: 140px; cursor: pointer; display: flex; align-items: center; gap: 14px; }
+.c-s-text small { color: var(--c-soft); font-size: 0.875rem; font-weight: 400; }
+.c-s-text { display: grid; padding: 0; font-weight: 400; }
+.c-s-text b { font-weight: 400; font-size: 1.0625rem; }
+.c-starter[data-picked="true"] .c-s-text b { font-weight: 600; }
+/* Footer: the same grid on every step. Back (or Skip) left, Next right at one fixed width. */
+.c-foot { display: grid; grid-template-columns: 1fr 12rem; align-items: center; gap: 12px; margin-top: 22px; }
+.c-foot > :first-child { justify-self: start; }
+.c-foot .c-next-btn { width: 12rem; min-width: 12rem; font-weight: 600; }
+.c-foot .c-ghost { background: transparent; border-color: transparent; color: var(--c-text); font-weight: 400; padding: 0 12px; text-decoration: underline; text-underline-offset: 3px; }
+.c-foot-gap { display: block; min-height: 48px; }
+.c-btn.c-primary { background: var(--c-accent); color: var(--c-on-accent); }
+/* Sheet content */
+.c-sheet h2 { font-weight: 700; }
+.c-sheet .c-btn { font-weight: 400; }
+.c-sheet .c-btn.c-primary { font-weight: 600; }
+.c-dialog .c-foot { margin-top: 18px; }
+@media (max-width: 420px) { .c-foot { grid-template-columns: 1fr 10rem; } .c-foot .c-next-btn { width: 10rem; min-width: 10rem; } }
+/* Sliders: round thumb, painted track, no square grey. */
+.c-app input[type="range"] { -webkit-appearance: none; appearance: none; height: 28px; background: transparent; width: 100%; margin: 0; }
+.c-app input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: var(--c-line); }
+.c-app input[type="range"]::-moz-range-track { height: 6px; border-radius: 3px; background: var(--c-line); }
+.c-app input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; margin-top: -9px; border-radius: 50%; background: var(--c-accent); border: 2px solid var(--c-accent-edge); }
+.c-app input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--c-accent); border: 2px solid var(--c-accent-edge); }
+.c-app input[type="range"]:focus-visible { outline: 3px solid var(--c-focus); outline-offset: 3px; border-radius: 6px; }
+/* Player options sheet */
+.c-options-btn { display: block; margin: 4px auto 0; font-weight: 400; }
+.c-overlay.c-sheet-wrap { align-items: flex-end; padding: 0; justify-content: center; }
+.c-opts { width: 100%; max-width: 560px; max-height: 86vh; overflow: auto; background: var(--c-card-solid); color: var(--c-text); border-radius: 16px 16px 0 0; box-shadow: var(--c-shadow); padding: 16px 20px 24px; animation: c-rise 200ms ease-out; }
+@keyframes c-rise { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+.c-opts-head { display: flex; justify-content: space-between; align-items: center; }
+.c-opts-head h2 { margin: 0; font-size: 1.25rem; }
+.c-o-h { margin: 18px 0 6px; font-size: 1rem; font-weight: 700; color: var(--c-soft); }
+.c-chips.c-left { justify-content: flex-start; margin: 6px 0; }
+.c-tchip { border-radius: 999px; }
+.c-tchip[aria-pressed="true"] { background: color-mix(in srgb, var(--c-accent) 22%, transparent); color: var(--c-text); border: 2px solid var(--c-accent-edge); font-weight: 600; }
+.c-guide-done { margin: 6px 0 0; text-align: center; }
+.c-guide-crew { margin-top: 4px; }
+.c-guide-link { display: block; margin: 12px auto 0; }
+.c-guide .c-fhead { margin-bottom: 4px; }
+/* Footer holds one place across steps: the form is a fixed-height column and the footer sits at the bottom. */
+.c-onb { display: flex; flex-direction: column; min-height: 37rem; }
+.c-onb .c-foot { margin-top: auto; padding-top: 22px; }
+.c-onb .c-safety { display: flex; flex-direction: column; flex: 1; }
+.c-onb .c-safety .c-foot { margin-top: auto; }
+@media (max-width: 420px) { .c-onb { min-height: 40rem; } }
+.c-chips.c-nature-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; }
+.c-nature-row .c-tchip { flex: none; white-space: nowrap; }

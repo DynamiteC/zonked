@@ -84,3 +84,23 @@ Every hearing limit. No sound before the safety notice on every path. CSP. No in
 ## Not checked
 
 Colours were computed, not sampled from pixels. No screen reader run. No user test.
+
+## Revised ruling D2: painted calm
+
+The owner found the first Calm look flat: a dark settings form with a glossy mascot, and onboarding steps that did not match each other. The owner is right. The new direction is a warm, hand-painted, animated-film calm, with original art. Minimalism now means few elements and one task per screen, not a bare form.
+
+Reasons and changes:
+
+1. Painted canvas on every screen: a sky wash that follows the hour (dawn, day, dusk, night), three soft hills, three slow clouds, paper grain and a light glow. Dark theme adds a veil. Only slow drift moves, and reduced motion shows a still frame. Text never sits on the scene. It sits on one translucent card (16 px radius, soft shadow, 560 px wide).
+2. Mascot redrawn by hand: ink outline with varied weight, flat watercolor fills, warm rim light, cheek blush, no gloss. It has a small seated body on a grass mound, and the headphones are part of the character. All five moods, the props and the subtle 3D tilt are kept.
+3. One form template (`FormFrame.tsx`): the same header row (72 px mascot, step text, 3-segment bar), the same title size, one helper line, option rows with a radio circle in regular weight, and a footer on a fixed grid. Back (or Skip, just play on step 1) sits left. Next sits right at one width (12 rem, 10 rem on phones). The card keeps a fixed height, so Next stays at the same screen position on every step (measured: y 646 to 647 at 1280 wide, 684 on phone).
+4. The same card and footer pattern is used by Safety, Starter, Today and Crew.
+5. One yellow, `#FFC93C`, with dark text. The second dimmed yellow in the Player is removed. The word Selected is gone: the picked row has a yellow radio, a faint yellow wash and medium weight, and the radio input keeps its accessible name. Type: bold for titles only.
+6. Player shows only the scene, the session name, the time left and one yellow Stop. An Options button opens a bottom sheet: Timer, Nature sound (picker row, one Nature or beats slider, nature volume only when a nature sound is on), More (Favorite, What the research says, volume note) and a closed Advanced section that loads the pro panels only when opened. Sliders have a round yellow thumb.
+7. A 3-card help guide (How it works): shown once after the first sound ends, or from Today and You. Skip and Done on every card, stored under `zonked.guide.v1`, can be reopened. Studio mode and Alt+Shift+S now open the Player with Options showing Advanced.
+
+Contrast on the card (computed, worst case backdrop): dark card text 10.6 to 14.6, soft text 6.0 to 8.2; light card text 11.9 to 14.1, soft text 5.9 to 7.0; dark on yellow 11.9. In the light theme the yellow fill is 1.2 to 1.4 against the card, so every yellow control carries a dark 2 px edge (14.2).
+
+Before and after (first screen, desktop): before, a flat dark page with a mascot, a tagline, an underline and a Skip link above a bold list with a word Selected on one row, and step 2 with none of those. After, `docs/ux-shots/after-d2-onboarding1-dark-d.png` and `after-d2-onboarding2-dark-d.png` show the same header, title, helper, rows and footer on a painted scene. Compare with `after-r1-onboarding-dark-d.png`.
+
+Not checked: screen reader run, user test, motion on a low-power device.

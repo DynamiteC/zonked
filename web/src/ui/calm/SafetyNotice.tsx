@@ -1,17 +1,19 @@
 import { useEffect, useRef } from 'react';
 import { CALM } from './copy';
+import { FormFoot } from './FormFrame';
 
 interface Props {
   readonly onAccept: () => void;
   /** Present only in the dialog form. */
   readonly onCancel?: () => void;
+  /** Inline form in onboarding: the Back button. */
+  readonly onBack?: () => void;
 }
 
 /** The required notice. In dialog form it traps focus and Escape closes it without playing. */
-export function SafetyNotice({ onAccept, onCancel }: Props): React.JSX.Element {
-  const ok = useRef<HTMLButtonElement>(null);
-  const cancel = useRef<HTMLButtonElement>(null);
-  useEffect(() => ok.current?.focus(), []);
+export function SafetyNotice({ onAccept, onCancel, onBack }: Props): React.JSX.Element {
+  const box = useRef<HTMLDivElement>(null);
+  useEffect(() => box.current?.querySelector<HTMLButtonElement>('[data-testid="calm-safety-accept"]')?.focus(), []);
 
   const onKey = (e: React.KeyboardEvent): void => {
     if (onCancel === undefined) return;
@@ -19,16 +21,20 @@ export function SafetyNotice({ onAccept, onCancel }: Props): React.JSX.Element {
       e.stopPropagation();
       onCancel();
     } else if (e.key === 'Tab') {
-      const edge = e.shiftKey ? cancel.current : ok.current;
+      const all = box.current?.querySelectorAll<HTMLButtonElement>('button') ?? [];
+      const first = all[0];
+      const last = all[all.length - 1];
+      const edge = e.shiftKey ? first : last;
       if (document.activeElement === edge) {
         e.preventDefault();
-        (e.shiftKey ? ok.current : cancel.current)?.focus();
+        (e.shiftKey ? last : first)?.focus();
       }
     }
   };
+  const back = onCancel ?? onBack;
 
   const body = (
-    <div className="c-safety" onKeyDown={onKey}>
+    <div className="c-safety" ref={box} onKeyDown={onKey}>
       <h2 id="c-safety-title">{CALM.safetyTitle}</h2>
       <ul className="c-safe-list">
         {CALM.safetyLines.map((l) => (
@@ -36,16 +42,7 @@ export function SafetyNotice({ onAccept, onCancel }: Props): React.JSX.Element {
         ))}
       </ul>
       <p className="c-limits" data-testid="safety-limits">{CALM.safetyLimits}</p>
-      <div className="c-actions c-row">
-        {onCancel !== undefined && (
-          <button ref={cancel} type="button" className="c-btn" onClick={onCancel}>
-            {CALM.back}
-          </button>
-        )}
-        <button ref={ok} type="button" className="c-btn c-primary" data-testid="calm-safety-accept" onClick={onAccept}>
-          {CALM.safetyAccept}
-        </button>
-      </div>
+      <FormFoot left={back === undefined ? null : { label: CALM.back, onClick: back }} next={{ label: CALM.safetyAccept, onClick: onAccept, testid: 'calm-safety-accept' }} />
     </div>
   );
   if (onCancel === undefined) return body;

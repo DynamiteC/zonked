@@ -41,12 +41,17 @@ export function TimerChips({ timer, player, onSprint, onSprintEnd }: Props): Rea
           </button>
         )))}
       </div>
-      {timer.kind !== 'none' && timer.running && (
-        <p className="c-time" data-testid="time-left">
-          {timer.kind === 'pomodoro' ? `${timer.phase === 'break' ? CALM.sprintBreakLeft : CALM.sprintFocusLeft} ` : ''}
-          {formatClock(timer.remainingSec)}
-        </p>
-      )}
     </div>
+  );
+}
+
+/** The time left on the running timer, or nothing. Shown in the main player view. */
+export function TimeLeft({ timer }: { readonly timer: TimerState }): React.JSX.Element | null {
+  if (timer.kind === 'none' || !timer.running) return null;
+  return (
+    <p className="c-time" data-testid="time-left">
+      {timer.kind === 'pomodoro' ? `${timer.phase === 'break' ? CALM.sprintBreakLeft : CALM.sprintFocusLeft} ` : ''}
+      {formatClock(timer.remainingSec)}
+    </p>
   );
 }

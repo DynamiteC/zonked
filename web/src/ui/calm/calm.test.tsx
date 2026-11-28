@@ -75,10 +75,11 @@ describe('onboarding order', () => {
     await screen.findByTestId('player-toggle');
   });
 
-  it('marks the pre-picked goal as Selected and keeps the note to one sentence', async () => {
+  it('checks the pre-picked goal without a Selected word and keeps the note to one sentence', async () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     await screen.findByText(CALM.goalTitle, { selector: 'h1' });
-    expect(screen.getByText(CALM.selected)).toBeTruthy();
+    expect(screen.queryByText(CALM.selected)).toBeNull();
+    expect(screen.getAllByRole('radio').filter((r) => (r as HTMLInputElement).checked)).toHaveLength(1);
     expect(screen.getByRole('heading', { level: 1 })).toBeTruthy();
     expect(screen.queryByRole('radio', { name: /Selected/ })).toBeNull();
     expect(CALM.listenNote.match(/[.!?]/g)).toHaveLength(1);
@@ -113,26 +114,23 @@ describe('onboarding order', () => {
 describe('studio switch', () => {
   beforeEach(() => void saveProfile(createLocalStorage(), PROFILE));
 
-  it('defaults to Calm, switches to Studio, remembers it, and returns', async () => {
+  it('the Studio link now opens the Player with Options showing Advanced', async () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     await screen.findByTestId('greeting');
     expect(readMode()).toBe('calm');
     click(CALM.nav[3]);
     fireEvent.click(await screen.findByRole('button', { name: CALM.studioLink }));
-    await screen.findByTestId('play-button');
-    expect(localStorage.getItem(MODE_KEY)).toBe('studio');
-    click(CALM.backToCalm);
-    await screen.findByTestId('greeting');
-    expect(localStorage.getItem(MODE_KEY)).toBe('calm');
+    expect((await screen.findByTestId('options-advanced')).getAttribute('aria-expanded')).toBe('true');
+    expect(screen.queryByTestId('play-button')).toBeNull();
   });
 
-  it('opens Studio with Alt+Shift+S and not with a bare S', async () => {
+  it('opens Advanced with Alt+Shift+S and not with a bare S', async () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     await screen.findByTestId('greeting');
     fireEvent.keyDown(window, { code: 'KeyS' });
-    expect(screen.queryByTestId('play-button')).toBeNull();
+    expect(screen.queryByTestId('options-sheet')).toBeNull();
     fireEvent.keyDown(window, { code: 'KeyS', altKey: true, shiftKey: true });
-    await screen.findByTestId('play-button');
+    await screen.findByTestId('options-sheet');
   });
 
   it('opens Studio at start when it was the last choice', async () => {

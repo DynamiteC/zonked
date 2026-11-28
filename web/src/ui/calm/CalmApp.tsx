@@ -24,6 +24,8 @@ import { forgetNature } from './nature/forget';
 import { toDayNumber } from './data';
 import { today, useCalmData } from './useCalmData';
 import { useCalmSession } from './useCalmSession';
+import { Guide, guideDone, markGuideDone } from './Guide';
+import { Painted } from './Painted';
 import { useCrewBridge } from './useCrewBridge';
 import { useFeel } from './useFeel';
 import { AUDIO_UNSUPPORTED } from '../../audio/types';
@@ -50,7 +52,7 @@ interface ActiveDay {
 /** A journey day is done at 80 percent of its length or 3 minutes, whichever is greater (spec section d). */
 export const doneAfterSec = (minutes: number): number => Math.max(180, minutes * 60 * 0.8);
 
-export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAppProps): React.JSX.Element {
+export function CalmApp({ engine, clock, store, bridgeCreate }: CalmAppProps): React.JSX.Element {
   const s = useCalmSession(engine, clock, store);
   const data = useCalmData(s.store, s.snap.playing);
   const crew = useCrewBridge(s.player, bridgeCreate);
@@ -65,9 +67,23 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
   const last = useLastPlayed(data.storage);
   const end = useEndCard(s.snap, !onboarding && view !== 'reset' && view !== 'breathe', sprint.focus === null ? null : { id: sprint.focus.id, name: CALM.sprintName });
   const still = s.reduced || data.profile.extraGentle;
+  const [guideOpen, setGuideOpen] = useState(false);
+  const [guideSeen, setGuideSeen] = useState(() => guideDone(data.storage));
+  const closeGuide = (): void => {
+    markGuideDone(data.storage);
+    setGuideSeen(true);
+    setGuideOpen(false);
+  };
   const { look, prefs, dim, setPrefs } = useLook();
 
-  useStudioShortcut(onStudio);
+  const [advancedPending, setAdvancedPending] = useState(false);
+  // Studio mode is now the Advanced section of the player Options sheet.
+  const openAdvanced = useCallback(() => {
+    setAdvancedPending(true);
+    setView('player');
+  }, []);
+  const advancedShown = useCallback(() => setAdvancedPending(false), []);
+  useStudioShortcut(openAdvanced);
   const go = useCallback((v: View) => setView(v), []);
   const { play, playDay, finish } = usePlayActions({ s, data, last, end, active, setView });
   useJourneyDone(s.snap.playing, s.snap.elapsedSec, active, data.progress, data.setJourney);
@@ -86,10 +102,12 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
 
   return (
     <div className="c-app" data-theme={look.theme} data-contrast={look.highContrast ? 'high' : 'normal'} data-view={view} data-dim={dim ? 'true' : 'false'} data-motion={still ? 'off' : 'on'} data-playing={s.snap.playing ? 'true' : 'false'}>
+      <Painted />
       <TopBar />
       <EngineNotice engine={engine} />
       {crew.view.source === 'demo' && <p className="c-badge-sim" role="status" data-testid="demo-badge">{CALM.crewDemoBadge}</p>}
       <main id="c-main" className="c-main" tabIndex={-1}>
+        <div className="c-sheet">
         <Suspense fallback={<p className="c-loading" role="status">{CALM.loading}</p>}>
           {onboarding ? (
             <Onboarding
@@ -117,10 +135,11 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
               onPrefs={setPrefs}
               feel={feel.entries}
               sprint={sprint}
-              handlers={{ go, play, playDay, openJourney, forget, onStudio, onMix: (m: Mix) => s.guarded(() => s.player.playMix(m)) }}
+              handlers={{ go, play, playDay, openJourney, forget, onStudio: openAdvanced, advancedPending, advancedShown, onMix: (m: Mix) => s.guarded(() => s.player.playMix(m)), openGuide: () => setGuideOpen(true) }}
             />
           )}
         </Suspense>
+        </div>
       </main>
       {!onboarding && view !== 'player' && view !== 'reset' && view !== 'breathe' && view !== 'crew' && <MiniPlayer snap={s.snap} crewPresetId={crew.view.state?.target.presetId ?? null} onOpen={() => go('player')} onStop={() => void s.player.stop()} />}
       {!onboarding && <TabBar view={view} onGo={go} reduced={still} />}
@@ -128,6 +147,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate, onStudio }: CalmAp
         {s.snap.playing ? `Playing. ${CALM.volumeCapped}` : 'Stopped.'}
       </p>
       {end.card !== null && !s.snap.playing && <EndCardHost card={end.card} play={play} dismiss={end.dismiss} feel={feel} firstRun={toDayNumber(data.profile.createdAt) === today()} />}
+      {(guideOpen || (!guideSeen && !onboarding && end.card !== null && !s.snap.playing)) && <Guide reduced={still} onClose={closeGuide} onCrew={() => { closeGuide(); go('crew'); }} />}
       {s.gate && <SafetyNotice onAccept={s.accept} onCancel={s.cancelGate} />}
     </div>
   );

@@ -32,6 +32,9 @@ export interface Handlers {
   readonly forget: () => void;
   readonly onStudio: () => void;
   readonly onMix: (m: Mix) => void;
+  readonly openGuide: () => void;
+  readonly advancedPending: boolean;
+  readonly advancedShown: () => void;
 }
 
 interface Props {
@@ -75,7 +78,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
     case 'nature':
       return <NatureScreen nature={nature} reduced={still} onBack={() => h.go('library')} />;
     case 'player':
-      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} theme={look.theme} announce={prefs.announce} sprint={sprint} />;
+      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} theme={look.theme} announce={prefs.announce} sprint={sprint} openAdvanced={h.advancedPending} onAdvancedShown={h.advancedShown} />;
     case 'reset':
       return <ResetScreen s={s} still={still} theme={look.theme} announce={prefs.announce} onBack={() => h.go('today')} />;
     case 'breathe':
@@ -104,6 +107,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
           onForget={h.forget}
           prefs={prefs}
           onPrefs={onPrefs}
+          onGuide={h.openGuide}
         />
       );
     default:
@@ -127,6 +131,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
           onGo={h.go}
           onReset={() => h.go('reset')}
           onBreathe={() => h.go('breathe')}
+          onGuide={h.openGuide}
         />
       );
   }
