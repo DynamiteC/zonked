@@ -207,4 +207,35 @@ describe('storage v2 (mixes and records)', () => {
     const l = (await s.listLogs())[0];
     expect(l).toEqual({ id: 7, startedAt: 1, endedAt: 2, peakScore: 0, presetId: 'p' });
   });
+  it('upgrades a v1 database that holds junk rows and keeps only the valid ones', async () => {
+    const f = new IDBFactory();
+    await new Promise<void>((resolve, reject) => {
+      const r = f.open('zonked', 1);
+      r.onupgradeneeded = () => {
+        r.result.createObjectStore('scripts', { keyPath: 'id', autoIncrement: true });
+        r.result.createObjectStore('logs', { keyPath: 'id', autoIncrement: true });
+      };
+      r.onsuccess = () => {
+        const tx = r.result.transaction(['scripts', 'logs'], 'readwrite');
+        tx.objectStore('scripts').put({ name: 'ok', text: 't', updatedAt: 1 });
+        tx.objectStore('scripts').put({ name: { x: 1 }, text: 7, updatedAt: 'no' });
+        tx.objectStore('scripts').put({ id: 'str', name: 'n'.repeat(999), text: 't', updatedAt: Number.NaN });
+        tx.objectStore('logs').put({ startedAt: 1, endedAt: 2, peakScore: 3, presetId: 'p', endKind: 'evil', breaks: 1e9 });
+        tx.objectStore('logs').put({ startedAt: 'x' });
+        tx.objectStore('logs').put({ junk: true });
+        tx.oncomplete = () => { r.result.close(); resolve(); };
+        tx.onerror = () => reject(tx.error);
+      };
+      r.onerror = () => reject(r.error);
+    });
+    const s = createStore(f);
+    expect((await s.listScripts()).map((x) => x.name)).toEqual(['ok']);
+    const logs = await s.listLogs();
+    expect(logs).toHaveLength(1);
+    expect(logs[0]).not.toHaveProperty('endKind');
+    expect(logs[0]).not.toHaveProperty('breaks');
+    expect(await s.listMixes()).toEqual([]);
+    expect(await s.getRecord('favorites')).toBeUndefined();
+    expect(await s.persistent()).toBe(true);
+  });
 });

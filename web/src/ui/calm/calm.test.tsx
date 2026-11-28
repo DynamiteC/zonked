@@ -6,7 +6,6 @@ import { MOTION_KEY, SAFETY_KEY } from '../../storage/prefs';
 import { createStore } from '../../storage/db';
 import { JOURNEYS, createLocalStorage, saveProfile, weekStats } from './data';
 import type { Profile } from './data';
-import { MODE_KEY, readMode } from './mode';
 import { ModeRoot } from './ModeRoot';
 import { Stage } from './PlayerScreen';
 import { getTemplates } from '../../catalog';
@@ -117,7 +116,6 @@ describe('studio switch', () => {
   it('the Studio link now opens the Player with Options showing Advanced', async () => {
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
     await screen.findByTestId('greeting');
-    expect(readMode()).toBe('calm');
     click(CALM.nav[3]);
     fireEvent.click(await screen.findByRole('button', { name: CALM.studioLink }));
     expect((await screen.findByTestId('options-advanced')).getAttribute('aria-expanded')).toBe('true');
@@ -133,11 +131,11 @@ describe('studio switch', () => {
     await screen.findByTestId('options-sheet');
   });
 
-  it('opens Studio at start when it was the last choice', async () => {
-    localStorage.setItem(MODE_KEY, 'studio');
+  it('ignores an old Studio flag in storage: Calm is the only shell', async () => {
+    localStorage.setItem('zonked.theme.v1', 'studio');
     render(<ModeRoot engine={engine()} store={createStore(undefined)} />);
-    await screen.findByTestId('play-button');
-    expect(screen.queryByTestId('greeting')).toBeNull();
+    await screen.findByTestId('greeting');
+    expect(screen.queryByTestId('studio-bar')).toBeNull();
   });
 
   it('plays from Today only after the safety dialog is accepted', async () => {
