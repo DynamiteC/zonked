@@ -1,6 +1,6 @@
 # Satisfaction walk 2
 
-Same method as `docs/SATISFACTION-WALK.md`: five personas, ten scorecard rows from `docs/FEATURE-AUDIT-RICE.md` Step 6. Build: HEAD 61351bc, Vite build in a throwaway worktree under /tmp (removed after). Chromium via Playwright for all personas. One phone-width pass in WebKit. No source changed, nothing committed. Scripts, results.json and 60 screenshots are in `.work/walk2/` (`walk.mjs`, `f.mjs` to `n.mjs`, `shots/`, `app/`).
+Same method as `docs/notes/SATISFACTION-WALK.md`: five personas, ten scorecard rows from `docs/notes/FEATURE-AUDIT-RICE.md` Step 6. Build: HEAD 61351bc, Vite build in a throwaway worktree under /tmp (removed after). Chromium via Playwright for all personas. One phone-width pass in WebKit. No source changed, nothing committed. Scripts, results.json and 60 screenshots are in `.work/walk2/` (`walk.mjs`, `f.mjs` to `n.mjs`, `shots/`, `app/`).
 
 ## Warnings
 

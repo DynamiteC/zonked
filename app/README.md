@@ -26,7 +26,7 @@ The three agents run only inside a Kiro Crew host. Without one, you can run the 
 ## Build
 
 ```bash
-cd app/ui && npm install && npm run build
+cd app/ui && npm ci && npm run build
 ```
 
 The built bundle in `app/ui/dist` is committed. `npm run check:dist` fails when it is stale.

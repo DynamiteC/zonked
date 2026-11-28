@@ -402,7 +402,7 @@ Files to create later. Web path `web/src/ui/calm/`, Kiro Crew app path `app/ui/s
 | Crew bridge client (`crew.ts`) | Optional daily reminder (browser Notification, opt in) |
 | Safety gate `guarded()` | Today, Library, Player shells |
 
-The player singleton rule from `docs/APP-SPIKE.md` stays: audio lives in a module-level engine that outlives page unmounts. Journeys and Today only read and write local state.
+The player singleton rule from `docs/notes/APP-SPIKE.md` stays: audio lives in a module-level engine that outlives page unmounts. Journeys and Today only read and write local state.
 
 ## n. Analytics and local data model
 

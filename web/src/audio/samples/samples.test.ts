@@ -1,3 +1,4 @@
+// MOCKED: the audio engine is a stub in this file. Real output is read by verify:e2e (web/scripts/e2e-core-checks.mjs).
 import { describe, it, expect, vi } from 'vitest';
 import { SAMPLES } from './catalog';
 import type { SampleBus } from './bus';
