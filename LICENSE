@@ -19,3 +19,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Scope of this licence
+
+This licence covers Zonked's original code, documentation, original templates,
+mascot and icons. It does not cover these items, which keep their own terms,
+listed in NOTICE:
+
+- legacy/ : third-party reference material. legacy/android is GPLv3 (see
+  legacy/android/LICENSE). It is not shipped by the app.
+- web/public/samples/ : nature loops under CC0 1.0 or released into the public
+  domain by their authors (see docs/SAMPLES-LICENSES.md).
+- web/public/fonts/ : Atkinson Hyperlegible Next under the SIL Open Font
+  License 1.1 (see web/public/fonts/OFL.txt).
+- Third-party packages, under the licences in their own packages.

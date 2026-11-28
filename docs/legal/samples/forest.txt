@@ -1,0 +1,18 @@
+Saved proof of the licence for web/public/samples/forest.mp3.json
+Page: Wikimedia Commons, File:20090610 0 ambience.ogg
+Page address: https://commons.wikimedia.org/wiki/File:20090610_0_ambience.ogg
+Fetched: 2026-11-28 (UTC), with a plain page fetch, no login.
+This is a text copy of the licence relevant parts of the page. Not legal advice. The page itself is the record; Commons may change it.
+
+Title: forest ambience
+Artist or author: nille
+PDSounds record number: 707
+Transferred to Commons by: Fae
+Date: 10 June 2009
+Comment: Zoom H2 on a tripod in a small wood. No processing except normalizing and cutting a few seconds from the start and end.
+
+This audio file comes from pdsounds.org and has been released into the public domain by its author.
+Page text: "Everyone who logs in may upload his recordings of the world. If you record for pdsounds, you must agree to release the audio files you make into the public domain. This means that everyone can download the sounds and use them at will, for education, art and commercial purposes too, with no copyrights and no strings attached to the files."
+Licence box: "This work has been released into the public domain by its author, nille. This applies worldwide. In some countries this may not be legally possible; if so: nille grants anyone the right to use this work for any purpose, without any conditions, unless such conditions are required by law."
+
+What Zonked ships: a cut, mono, resampled and level-normalised MP3 made from this file (see docs/SAMPLES-LICENSES.md).

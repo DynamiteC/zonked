@@ -1,0 +1,15 @@
+Saved proof of the licence for web/public/samples/creek.mp3.json
+Page: Wikimedia Commons, File:Forest lawn creek.ogg
+Page address: https://commons.wikimedia.org/wiki/File:Forest_lawn_creek.ogg
+Fetched: 2026-11-28 (UTC), with a plain page fetch, no login.
+This is a text copy of the licence relevant parts of the page. Not legal advice. The page itself is the record; Commons may change it.
+
+Title: (no title)
+Artist or author: Dsw4
+Source: Own work (the uploader and the author are the same Commons user)
+Date: Autumn 2008
+Comment: An unedited field recording of a small creek in Webster, NY, recorded with a shotgun microphone.
+
+Licence box: "I, the copyright holder of this work, release this work into the public domain. This applies worldwide. In some countries this may not be legally possible; if so: I grant anyone the right to use this work for any purpose, without any conditions, unless such conditions are required by law."
+
+What Zonked ships: a cut, mono, resampled and level-normalised MP3 made from this file (see docs/SAMPLES-LICENSES.md).
