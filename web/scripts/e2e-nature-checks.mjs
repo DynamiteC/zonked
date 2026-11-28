@@ -48,7 +48,7 @@ export async function runNatureChecks(h) {
       await s.page.waitForTimeout(2500);
       const gentle = await natureState(s.page);
       h.assert(gentle.beatGain > 0.7 && gentle.beatGain < 0.95, `gentle beat gain ${gentle.beatGain}`);
-      await s.page.getByLabel('More nature, softer beats').fill('1');
+      await s.page.locator('#c-blend').fill('1');
       await s.page.waitForTimeout(2500);
       const full = await natureState(s.page);
       h.assert(full.beatGain < gentle.beatGain - 0.2, `blend did not lower beat gain: ${gentle.beatGain} to ${full.beatGain}`);

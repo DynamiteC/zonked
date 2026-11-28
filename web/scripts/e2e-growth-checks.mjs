@@ -2,7 +2,7 @@
 // C14: the "How was that?" answer is stored on this device and survives a reload.
 // C15: a focus sprint switches to a quieter break on a mocked clock, then ends with the end card.
 // C16: the 5 minute breathing session plays soft noise and shows the breath ring.
-import { newSession } from './e2e-helpers.mjs';
+import { newSession, dismissGuide } from './e2e-helpers.mjs';
 
 const nav = (page, name) => page.getByRole('navigation', { name: 'Main' }).getByRole('button', { name });
 
@@ -25,6 +25,8 @@ export async function runGrowthChecks(h) {
       await s.page.getByTestId('player-toggle').click();
       await s.page.clock.runFor(2000);
       await s.page.getByTestId('end-card').waitFor();
+      await s.page.getByTestId('guide-skip').waitFor();
+      await dismissGuide(s.page);
       const text = await s.page.getByTestId('end-card').innerText();
       h.assert(/How was that\?/.test(text) && /Calmer/.test(text) && /Same/.test(text) && /Not for me/.test(text), `row text: ${text}`);
       await s.page.getByTestId('feel-calmer').click();
@@ -44,7 +46,10 @@ export async function runGrowthChecks(h) {
   await h.check('C15 a focus sprint switches to a quieter break and then ends', async () => {
     const s = await playing(h);
     try {
-      await s.page.getByRole('button', { name: 'Focus sprint' }).click();
+      await s.page.getByTestId('player-options').click();
+      await s.page.getByTestId('options-sheet').getByRole('button', { name: 'Focus sprint' }).click();
+      await s.page.keyboard.press('Escape');
+      await s.page.getByTestId('options-sheet').waitFor({ state: 'detached' });
       const focusId = await s.page.evaluate(() => window.__zonked.templateId);
       const t0 = await s.page.evaluate(() => window.__zonked.timer);
       h.assert(t0.kind === 'pomodoro' && t0.phase === 'focus', `timer: ${JSON.stringify(t0)}`);
