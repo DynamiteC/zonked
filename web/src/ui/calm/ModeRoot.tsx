@@ -55,7 +55,7 @@ export function ModeRoot({ engine, clock, store, initialMode }: ModeRootProps): 
   return (
     <Suspense fallback={loading}>
       {mode === 'calm' ? (
-        <CalmApp engine={engine} {...extra} onStudio={() => choose('studio')} />
+        <CalmApp engine={engine} {...extra} onStudio={() => undefined} />
       ) : (
         <>
           <div style={BAR_STYLE} data-testid="studio-bar">

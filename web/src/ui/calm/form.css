@@ -69,3 +69,6 @@
 @media (max-width: 420px) { .c-onb { min-height: 40rem; } }
 .c-chips.c-nature-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; }
 .c-nature-row .c-tchip { flex: none; white-space: nowrap; }
+
+.c-blend { --rf-accent: var(--c-accent-edge); --rf-line: var(--c-edge); --rf-bg: var(--c-bg); --rf-panel: var(--c-bg); --rf-text: var(--c-text); --rf-muted: var(--c-soft); }
+.c-blend .rf-input { width: 100%; }

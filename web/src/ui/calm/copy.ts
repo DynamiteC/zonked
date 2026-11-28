@@ -120,10 +120,10 @@ export const CALM = {
   optAdvanced: 'Advanced',
   natureNone: 'None',
   saved: 'Saved',
-  studio: 'Studio mode',
-  studioLink: 'Open Studio mode',
+  studio: 'More controls',
+  studioLink: 'Open more controls',
   studioHint: 'For advanced controls. Shortcut: Alt+Shift+S.',
-  studioNote: 'Advanced controls live in Settings, or press Alt+Shift+S for Studio mode.',
+  studioNote: 'More controls are in Options on the Player, or press Alt+Shift+S.',
   backToCalm: 'Back to Calm',
   crewTitle: 'Crew',
   crewIntro:

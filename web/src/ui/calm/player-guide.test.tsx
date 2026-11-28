@@ -63,6 +63,11 @@ describe('player: options only when needed', () => {
     expect(screen.getByRole('button', { name: 'Sleep fade' })).toBeTruthy();
     expect(screen.getByLabelText(CALM.natureBlend)).toBeTruthy();
     expect(screen.queryByLabelText(CALM.natureLevel)).toBeNull();
+    const labels = Array.from(sheet.querySelectorAll('[data-testid="rf-tick"]')).map((n) => n.textContent);
+    expect(labels).toEqual(['More beats', 'Even', 'More nature']);
+    const chip = screen.getByRole('button', { name: 'Sleep fade' });
+    fireEvent.click(chip);
+    expect(chip.getAttribute('aria-pressed')).toBe('true');
   });
 
   it('closes on Escape and returns focus to Options', async () => {
