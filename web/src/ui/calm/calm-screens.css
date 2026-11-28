@@ -114,10 +114,11 @@
 /* Link card with a second line. */
 .c-link-card small { color: var(--c-soft); font-size: 0.9375rem; margin: 0; }
 
-/* Dim screen while playing: lower brightness on the player only. High contrast stays at full strength. */
-.c-app[data-dim="true"][data-playing="true"][data-view="player"]:not([data-contrast="high"]) .c-player,
-.c-app[data-dim="true"][data-playing="true"][data-view="reset"]:not([data-contrast="high"]) .c-reset,
-.c-app[data-dim="true"][data-playing="true"][data-view="breathe"]:not([data-contrast="high"]) .c-reset { filter: brightness(0.75); }
+/* Dim screen while playing: a dark layer over the screen, under every dialog. High contrast stays at full strength.
+   Not a CSS filter: a filter on the player makes it the box for fixed children, which cut the Options sheet off on phones. */
+.c-app[data-dim="true"][data-playing="true"][data-view="player"]:not([data-contrast="high"]) .c-player::before,
+.c-app[data-dim="true"][data-playing="true"][data-view="reset"]:not([data-contrast="high"]) .c-reset::before,
+.c-app[data-dim="true"][data-playing="true"][data-view="breathe"]:not([data-contrast="high"]) .c-reset::before { content: ""; position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, 0.25); pointer-events: none; }
 
 /* Reset screen reuses the player layout. */
 .c-reset .c-lead { margin: 0 0 8px; }

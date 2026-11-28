@@ -375,4 +375,23 @@ export async function runFeatureChecks(h) {
       await s.context.close();
     }
   });
+
+  await check('F14 night dim on a phone: the Options sheet stays inside the screen and its controls can be tapped', async () => {
+    const s = await newSession(h, { viewport: { width: 360, height: 740 }, hasTouch: true });
+    try {
+      await s.context.addInitScript(() => localStorage.setItem('zonked.theme.v2', JSON.stringify({ choice: 'dark', dim: true, announce: true })));
+      await skipToPlayer(s.page, h.origin);
+      await waitSound(s.page);
+      assert((await s.page.locator('.c-app[data-dim="true"]').count()) === 1, 'dim is not on');
+      await s.page.getByTestId('player-options').click();
+      const box = await s.page.getByTestId('options-sheet').boundingBox();
+      assert(box !== null && box.y >= 0 && box.y + box.height <= 740 + 1 && box.x >= 0 && box.x + box.width <= 360 + 1, `sheet outside the screen: ${JSON.stringify(box)}`);
+      const chip = s.page.getByTestId('options-sheet').getByRole('button', { name: '30 min' });
+      await chip.click({ timeout: 10000 });
+      assert((await chip.getAttribute('aria-pressed')) === 'true', 'chip not pressed');
+      return `sheet y=${Math.round(box.y)} h=${Math.round(box.height)}`;
+    } finally {
+      await s.context.close();
+    }
+  });
 }

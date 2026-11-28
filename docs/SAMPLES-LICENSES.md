@@ -108,7 +108,7 @@ Process, same as round 1 with two changes:
 
 Total shipped audio: 20 loops, 4259736 bytes, about 4.3 MB (limit 6 MB).
 
-Removed on 2026-11-28 before release: `ocean` (Ocean Waves on a Tropical Beach) and `rapids` (Florida Rapids), both uploaded to Commons by the same account under CC0 as own work. Both file pages carry a deletion request for suspected copyright violation (the reviewer found metadata that points to a video site, and says the own-work claim is almost certainly false). The licence cannot be proven, so both loops, their catalog rows, credits and cached versions are gone. The made-in-code ocean swell and waterfall sounds stay.
+Removed on 2026-11-28 before release: `ocean` (Ocean Waves on a Tropical Beach) and `rapids` (Florida Rapids), both uploaded to Commons by the same account under CC0 as own work. Both file pages carry a deletion request for suspected copyright violation (the reviewer found metadata that points to a video site, and says the own-work claim is almost certainly false). The licence cannot be proven, so both loops, their catalog rows, credits and cached versions are gone. The made-in-code ocean swell and waterfall sounds stay. No template, journey, Bluetooth pick, credit line, cache version or precache entry refers to either id any more: Bluetooth picks read the `btFriendly` flag from the sample catalog, which no longer lists them, and the icon key the waterfall sound borrowed was renamed.
 
 Not used in round 3, with the reason:
 

@@ -2,7 +2,7 @@ import { Suspense as e, lazy as t, useCallback as n, useEffect as r, useId as i,
 import { G as l, J as u, K as d, U as f, V as p, W as m, Y as h, _t as g, a as _, d as v, dt as y, h as b, ht as x, i as S, lt as C, o as w, p as T, q as E, r as D, s as O, st as k, v as ee, x as te, y as A } from "./chunk-crewLink-B-5l2pQt.mjs";
 import { a as j, l as ne, o as re, u as ie } from "./chunk-catalog-DQXidRzG.mjs";
 import { r as M, t as N } from "./chunk-RangeField-D77jQUlk.mjs";
-import { t as P } from "./chunk-icons-C-FdU5cO.mjs";
+import { t as P } from "./chunk-icons-h6Wr9KyH.mjs";
 import { t as F } from "./chunk-MascotView-BrlUzit0.mjs";
 import { Fragment as I, jsx as L, jsxs as R } from "react/jsx-runtime";
 import { C as z, D as B, T as ae, _ as oe, a as se, b as ce, c as V, d as le, f as ue, g as de, h as fe, l as pe, m as me, n as he, o as ge, p as _e, r as ve, s as ye, t as be, u as xe, v as Se, x as Ce, y as we } from "./chunk-data-DrI3L2nM.mjs";
@@ -11,7 +11,7 @@ import { t as Te } from "./chunk-SafetyNotice-CJuWch_-.mjs";
 import { c as Ee } from "./chunk-milestones-Bmiu2MXR.mjs";
 import { n as De } from "./chunk-FormFrame-BoSz-j25.mjs";
 import { r as Oe, t as ke } from "./chunk-samples-_x0GtVlI.mjs";
-import { a as Ae, c as je, i as Me, n as Ne, o as Pe, r as Fe, s as Ie } from "./chunk-NatureScreen-QpnFXjpL.mjs";
+import { a as Ae, c as je, i as Me, n as Ne, o as Pe, r as Fe, s as Ie } from "./chunk-NatureScreen-CvySDdjN.mjs";
 import { n as Le } from "./chunk-useBreath-BZ3euK4B.mjs";
 import { n as Re } from "./chunk-look-C_f0p27a.mjs";
 import { a as ze, n as Be, r as Ve } from "./chunk-ownStore-BhAw3wjz.mjs";
@@ -1551,7 +1551,7 @@ function kn({ plan: e, onAgain: t, onBack: n }) {
 	});
 }
 // ../../web/src/ui/calm/CalmScreens.tsx
-var An = t(() => import("./chunk-Journeys-D_5fPE50.mjs").then((e) => ({ default: e.JourneyList }))), jn = t(() => import("./chunk-Journeys-D_5fPE50.mjs").then((e) => ({ default: e.JourneyDetail }))), Mn = t(() => import("./chunk-Library-CtlV2q_x.mjs").then((e) => ({ default: e.Library }))), Nn = t(() => Promise.resolve().then(() => vn).then((e) => ({ default: e.PlayerScreen }))), Pn = t(() => import("./chunk-CrewScreen-DYpfF6Xm.mjs").then((e) => ({ default: e.CrewScreen }))), Fn = t(() => import("./chunk-NatureScreen-QpnFXjpL.mjs").then((e) => e.t).then((e) => ({ default: e.NatureScreen }))), In = t(() => import("./chunk-SettingsScreen-CaVT2IU7.mjs").then((e) => ({ default: e.SettingsScreen })));
+var An = t(() => import("./chunk-Journeys-D_5fPE50.mjs").then((e) => ({ default: e.JourneyList }))), jn = t(() => import("./chunk-Journeys-D_5fPE50.mjs").then((e) => ({ default: e.JourneyDetail }))), Mn = t(() => import("./chunk-Library-CcMbm1nM.mjs").then((e) => ({ default: e.Library }))), Nn = t(() => Promise.resolve().then(() => vn).then((e) => ({ default: e.PlayerScreen }))), Pn = t(() => import("./chunk-CrewScreen-DYpfF6Xm.mjs").then((e) => ({ default: e.CrewScreen }))), Fn = t(() => import("./chunk-NatureScreen-CvySDdjN.mjs").then((e) => e.t).then((e) => ({ default: e.NatureScreen }))), In = t(() => import("./chunk-SettingsScreen-CaVT2IU7.mjs").then((e) => ({ default: e.SettingsScreen })));
 function Ln({ view: e, journeyId: t, s: n, data: r, crewInfo: i, nature: a, still: o, fav: s, last: c, look: l, prefs: f, onPrefs: p, feel: m, sprint: h, handlers: g }) {
 	switch (e) {
 		case "journeys": return /* @__PURE__ */ L(An, {
