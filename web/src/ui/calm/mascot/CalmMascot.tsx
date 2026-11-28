@@ -1,8 +1,11 @@
 import { useId, useRef, type CSSProperties, type JSX } from 'react';
 import './mascot.css';
 import { Defs, HeadLayer, MotesLayer, ShadowLayer } from './layers';
-import { BandLayer, BodyLayer, RippleLayer } from './layersExtra';
+import { BodyLayer } from './hoodie';
+import { BandLayer, RippleLayer } from './layersExtra';
+import { PropLayer } from './props';
 import type { CalmMascotProps } from './types';
+import { useLife } from './useLife';
 import { useParallax } from './useParallax';
 
 /** Reads the OS reduced-motion setting. Safe where matchMedia is missing. */
@@ -24,6 +27,7 @@ export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = '
   const px = Number.isFinite(size) ? Math.max(24, Math.min(640, size)) : 220;
   const compact = px <= COMPACT_MAX;
   useParallax(stage, !still && !compact);
+  useLife(stage, mood, still);
   return (
     <div
       ref={stage}
@@ -40,13 +44,13 @@ export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = '
         {!compact && <BodyLayer id={id} />}
         <div className="cm-sway">
           <div className="cm-head">
-            {!compact && <RippleLayer />}
+            {!compact && <RippleLayer marked={mood === 'listening'} />}
             <HeadLayer id={id} mood={mood} plain={compact} />
             <BandLayer />
+            <PropLayer mood={mood} />
             {!compact && <MotesLayer />}
           </div>
         </div>
-        {!compact && <span className="cm-z" aria-hidden="true">z</span>}
       </div>
     </div>
   );

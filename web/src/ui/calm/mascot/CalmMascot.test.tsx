@@ -3,6 +3,9 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { EYES } from './eyes';
+import { PROP_NAME } from './props';
+import { blinkGap, seeded } from './useLife';
 import { CalmMascot, type MascotMood } from './index';
 
 const MOODS: readonly MascotMood[] = ['idle', 'happy', 'sleepy', 'listening', 'breathing', 'focus', 'steering', 'tired', 'done', 'offline', 'error', 'loading'];
@@ -88,7 +91,8 @@ describe('CalmMascot', () => {
   it('has no animation under reduced motion: still class and css switch every animation off', () => {
     render(<CalmMascot mood="loading" reducedMotion />);
     expect(screen.getByRole('img').className).toContain('cm-still');
-    expect(css).toMatch(/\.cm-still \.cm-body[^{]*\.cm-ring\{animation:none\}/);
+    expect(css).toMatch(/\.cm-still \*\{animation:none!important/);
+    expect(css).toMatch(/@media \(prefers-reduced-motion:reduce\)\{\s*\.cm-stage \*\{animation:none!important/);
     expect(css).toContain('@media (prefers-reduced-motion:reduce)');
     expect(css).toContain('@media (forced-colors:active)');
     expect(css).toContain("[data-theme='dark']");
@@ -98,5 +102,78 @@ describe('CalmMascot', () => {
     const times = [...css.matchAll(/animation:[^;}]*?\s(\d*\.?\d+)s\s/g)].map((m) => Number(m[1]));
     expect(times.length).toBeGreaterThan(5);
     expect(Math.min(...times)).toBeGreaterThanOrEqual(1);
+  });
+
+  it('gives every mood its own marker: eye shapes plus one prop', () => {
+    const seen = new Set<string>();
+    for (const mood of MOODS) {
+      const { container, unmount } = render(<CalmMascot mood={mood} size={200} reducedMotion />);
+      const eyes = [...container.querySelectorAll('.cm-eye')].map((e) => e.getAttribute('data-eye'));
+      expect(eyes).toEqual([...EYES[mood]]);
+      const prop = container.querySelector('[data-prop]')?.getAttribute('data-prop') ?? 'none';
+      if (mood === 'listening') expect(prop).toBe('ripples');
+      else expect(prop).toBe(PROP_NAME[mood] ?? 'none');
+      seen.add(`${eyes.join('/')}|${prop}`);
+      unmount();
+    }
+    expect(seen.size).toBe(MOODS.length);
+  });
+
+  it('keeps the prop at 72 px and draws it only for its mood', () => {
+    const a = render(<CalmMascot mood="sleepy" size={72} reducedMotion />);
+    expect(a.container.querySelector('[data-prop="zzz"]')).not.toBeNull();
+    a.unmount();
+    const b = render(<CalmMascot mood="idle" size={72} reducedMotion />);
+    expect(b.container.querySelector('.cm-props')).toBeNull();
+  });
+
+  it('draws the hoodie: hood, trim, two cords and a pocket', () => {
+    const { container } = render(<CalmMascot size={200} reducedMotion />);
+    for (const c of ['cm-hood', 'cm-trim', 'cm-pocket']) expect(container.querySelectorAll(`.${c}`)).toHaveLength(1);
+    expect(container.querySelector('.cm-cord')?.getAttribute('d')?.split('M')).toHaveLength(3);
+  });
+
+  it('blinks on a seeded 4 to 7 s timer and clears it on unmount', () => {
+    vi.useFakeTimers();
+    try {
+      const { unmount } = render(<CalmMascot mood="idle" reducedMotion={false} />);
+      expect(vi.getTimerCount()).toBe(1);
+      vi.advanceTimersByTime(7001);
+      expect(vi.getTimerCount()).toBe(1);
+      unmount();
+      expect(vi.getTimerCount()).toBe(0);
+    } finally { vi.useRealTimers(); }
+    const a = seeded(5); const b = seeded(5);
+    expect([a(), a()]).toEqual([b(), b()]);
+    for (let i = 0; i < 50; i += 1) {
+      const g = blinkGap(a(), false);
+      expect(g).toBeGreaterThanOrEqual(4000);
+      expect(g).toBeLessThanOrEqual(7000);
+    }
+  });
+
+  it('starts no timer under reduced motion or for moods that do not blink', () => {
+    vi.useFakeTimers();
+    try {
+      render(<CalmMascot mood="idle" reducedMotion />);
+      expect(vi.getTimerCount()).toBe(0);
+      cleanup();
+      render(<CalmMascot mood="sleepy" reducedMotion={false} />);
+      expect(vi.getTimerCount()).toBe(0);
+    } finally { vi.useRealTimers(); }
+  });
+
+  it('pauses animations while the tab is hidden and removes the listener', () => {
+    const del = vi.spyOn(document, 'removeEventListener');
+    const { unmount } = render(<CalmMascot reducedMotion={false} />);
+    const el = screen.getByRole('img');
+    Object.defineProperty(document, 'hidden', { configurable: true, get: () => true });
+    document.dispatchEvent(new Event('visibilitychange'));
+    expect(el.classList.contains('cm-paused')).toBe(true);
+    Object.defineProperty(document, 'hidden', { configurable: true, get: () => false });
+    document.dispatchEvent(new Event('visibilitychange'));
+    expect(el.classList.contains('cm-paused')).toBe(false);
+    unmount();
+    expect(del.mock.calls.some(([t]) => t === 'visibilitychange')).toBe(true);
   });
 });

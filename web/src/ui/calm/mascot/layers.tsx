@@ -1,4 +1,5 @@
 import type { JSX } from 'react';
+import { Eye, EYES } from './eyes';
 import type { MascotMood } from './types';
 
 /** Canvas of the whole drawing. The head uses the 2018 logo coordinates (circle r200 at 256,256) under HEAD_T. */
@@ -10,26 +11,24 @@ interface IdProps {
 }
 
 type Row = readonly [number, number, number, number];
-interface MouthShape { readonly dy: Row; readonly len: number }
+interface MouthShape { readonly dy: Row; readonly len: number; readonly rot?: Row }
 
 const MOUTH_X: Row = [190, 226, 286, 322];
 /** Four vertical slits, as in the original. Mood bends the row like a smile or a frown. */
 const MOUTH: Readonly<Record<MascotMood, MouthShape>> = {
   idle: { dy: [0, 0, 0, 0], len: 1 },
   listening: { dy: [0, 0, 0, 0], len: 1 },
-  happy: { dy: [-9, 4, 4, -9], len: 1 },
+  happy: { dy: [-9, 4, 4, -9], len: 0.9, rot: [-16, -5, 5, 16] },
   sleepy: { dy: [0, 0, 0, 0], len: 0.45 },
   breathing: { dy: [0, 0, 0, 0], len: 0.8 },
   focus: { dy: [0, 0, 0, 0], len: 0.7 },
   steering: { dy: [0, 0, 0, 0], len: 1 },
-  tired: { dy: [7, -2, -2, 7], len: 0.7 },
+  tired: { dy: [7, -2, -2, 7], len: 0.7, rot: [10, 3, -3, -10] },
   done: { dy: [-5, 2, 2, -5], len: 0.85 },
   offline: { dy: [4, -2, 3, -3], len: 0.8 },
   error: { dy: [4, -2, 3, -3], len: 0.8 },
   loading: { dy: [0, 0, 0, 0], len: 0.6 },
 };
-
-const SMILE_EYES: ReadonlySet<MascotMood> = new Set<MascotMood>(['happy', 'done']);
 
 /** The hill the character sits on. Soft edge, no outline. */
 export function ShadowLayer(): JSX.Element {
@@ -42,27 +41,10 @@ export function ShadowLayer(): JSX.Element {
   );
 }
 
-function Eye({ cx, smile }: { readonly cx: number; readonly smile: boolean }): JSX.Element {
-  return (
-    <g className="cm-eye">
-      <circle className="cm-f-mask cm-s-ink" cx={cx} cy="150" r="40" fill="#241F2B" strokeWidth="5" />
-      {smile ? (
-        <path className="cm-s-gold" d={`M${cx - 20} 160A20 20 0 0 1 ${cx + 20} 160`} fill="none" stroke="#FFD23A" strokeWidth="8" strokeLinecap="round" />
-      ) : (
-        <>
-          <circle className="cm-ring cm-s-gold" cx={cx} cy="150" r="24" fill="none" stroke="#FFD23A" strokeWidth="4" strokeOpacity="0.85" />
-          <circle className="cm-pupil cm-f-gold" cx={cx} cy="150" r="8" fill="#FFD23A" />
-          <circle cx={cx - 9} cy="140" r="4" fill="#FFF6DC" opacity="0.8" />
-        </>
-      )}
-    </g>
-  );
-}
-
 /** The gold head: hand-drawn ink outline, watercolor shade, rim light, ring eyes, angular mask and slit mouth. */
 export function HeadLayer({ id, mood, plain }: IdProps & { readonly mood: MascotMood; readonly plain: boolean }): JSX.Element {
   const m = MOUTH[mood];
-  const smile = SMILE_EYES.has(mood);
+  const [eyeL, eyeR] = EYES[mood];
   return (
     <svg className="cm-layer cm-face" viewBox={VB_FULL} aria-hidden="true" focusable="false">
       <g transform={HEAD_T} filter={plain ? undefined : `url(#${id}-paint)`}>
@@ -87,12 +69,18 @@ export function HeadLayer({ id, mood, plain }: IdProps & { readonly mood: Mascot
         <polygon className="cm-f-mask cm-s-ink" points="96,240 240,276 240,350 168,370 120,320" fill="#2F2430" strokeWidth="11" strokeLinejoin="round" />
         <polygon className="cm-f-mask cm-s-ink" points="416,240 272,276 272,350 344,370 392,320" fill="#2F2430" strokeWidth="11" strokeLinejoin="round" />
         <polygon className="cm-gem" points="256,300 270,316 256,332 242,316" fill="#00E5A8" fillOpacity="0.35" stroke="#00E5A8" strokeWidth="5" strokeLinejoin="round" />
-        <Eye cx={178} smile={smile} />
-        <Eye cx={334} smile={smile} />
+        <Eye cx={178} kind={eyeL} side={-1} />
+        <Eye cx={334} kind={eyeR} side={1} />
         <g className="cm-mouth" style={{ ['--ml' as string]: m.len }}>
           {MOUTH_X.map((x, i) => {
             const dy = m.dy[i] ?? 0;
-            return <path key={x} className="cm-bar cm-s-ink" d={`M${x} ${409 + dy - 17 * m.len}V${409 + dy + 17 * m.len}`} stroke="#3A2A2E" strokeWidth="9" strokeLinecap="round" fill="none" />;
+            const rot = m.rot?.[i] ?? 0;
+            const y = 409 + dy;
+            return (
+              <g key={x} transform={rot ? `rotate(${rot} ${x} ${y})` : undefined}>
+                <path className="cm-bar cm-s-ink" d={`M${x} ${y - 17 * m.len}V${y + 17 * m.len}`} stroke="#3A2A2E" strokeWidth="9" strokeLinecap="round" fill="none" />
+              </g>
+            );
           })}
         </g>
       </g>

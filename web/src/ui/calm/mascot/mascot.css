@@ -19,12 +19,16 @@
 /* paint */
 .cm-slit{fill:#241F2B;stroke:#FFD23A;stroke-width:3}
 .cm-shade{mix-blend-mode:multiply}
-.cm-eye{transform-box:fill-box;transform-origin:center;transform:scaleY(var(--eye));animation:cm-blink 5.5s infinite}
+.cm-eye{transform-box:fill-box;transform-origin:center;transform:scaleY(var(--eye));transition:transform .12s ease-out}
+.cm-blinking .cm-eye{transform:scaleY(.08)}
+.cm-dial{transform-box:fill-box;transform-origin:center;animation:cm-spin 14s linear infinite}
+.cm-props{transform:translateZ(46px);pointer-events:none}
+.cm-pk{stroke:#7C7396}
+.cm-cloud,.cm-q,.cm-sweat,.cm-spark,.cm-fall,.cm-wisp,.cm-glow,.cm-zl{transform-box:fill-box;transform-origin:center}
 .cm-bar{transform-box:fill-box;transform-origin:center}
 .cm-gem{transition:fill-opacity .6s}
 .cm-mote{animation:cm-drift 7s ease-in-out infinite;opacity:.8}
 .cm-ripple{transform-box:fill-box;transform-origin:center;opacity:0;animation:cm-rip 3.2s ease-out infinite}
-.cm-z{position:absolute;right:6%;top:6%;font-size:1.6em;font-weight:700;color:#5E5668;opacity:0}
 
 /* situations */
 .cm-s-calm{--eye:.55;--sw:10s}
@@ -35,50 +39,60 @@
 .cm-s-nature .cm-mote{fill:#D8F2C8}
 .cm-s-focus .cm-mote{fill:#FFD9A0}
 
-/* moods */
+/* moods: each differs by eye shape, slits and one prop (data-eye, data-prop) */
+.cm-listening,.cm-sleepy,.cm-focus,.cm-tired,.cm-happy,.cm-done,.cm-breathing{--eye:1}
 .cm-idle .cm-body{animation:cm-float 5s ease-in-out infinite}
-.cm-happy{--eye:1}
-.cm-happy .cm-body{animation:cm-bounce 2.4s ease-in-out infinite}
-.cm-sleepy{--eye:.22}
-.cm-sleepy .cm-body{animation:cm-float 8s ease-in-out infinite}
-.cm-sleepy .cm-eye{animation:none}
-.cm-sleepy .cm-z{animation:cm-zee 4s ease-in infinite}
-.cm-listening .cm-body{animation:cm-float 6s ease-in-out infinite}
+.cm-happy .cm-body{animation:cm-bounce 1.4s ease-out 1}
+.cm-sleepy{--sw:13s}
+.cm-sleepy .cm-head{transform-origin:50% 90%;animation:cm-nod 7s ease-in-out infinite}
+.cm-sleepy .cm-z1{animation:cm-zee 5s ease-in-out infinite}
+.cm-sleepy .cm-z2{animation:cm-zee 5s ease-in-out -1.7s infinite}
+.cm-sleepy .cm-z3{animation:cm-zee 5s ease-in-out -3.4s infinite}
+.cm-listening{--sw:6s}
 .cm-listening .cm-slit,.cm-steering .cm-slit{fill:#00E5A8}
 .cm-listening .cm-pod{filter:drop-shadow(0 0 calc(2px + var(--lv) * 9px) rgba(0,229,168,calc(.25 + var(--lv) * .6)))}
 .cm-breathing .cm-body{animation:cm-breathe 8s ease-in-out infinite}
 .cm-breathing .cm-bar,.cm-driven .cm-bar{transform:scaleY(calc(.85 + var(--bp) * .3))}
-.cm-focus{--eye:.88;--sw:16s}
-.cm-focus .cm-eye{animation:none}
-.cm-focus .cm-head{rotate:3deg;translate:0 1%}
+.cm-breathing.cm-driven .cm-eye{transform:scaleY(calc(.12 + var(--bp) * .88))}
+.cm-breathing:not(.cm-driven) .cm-eye{animation:cm-eyebreath 8s ease-in-out infinite}
+.cm-breathing .cm-wisp{opacity:.7;animation:cm-wisp 8s ease-in-out infinite}
+.cm-breathing.cm-driven .cm-wisp{animation:none;opacity:calc(.8 - var(--bp) * .7)}
+.cm-focus{--sw:16s}
+.cm-focus .cm-head{rotate:3deg;translate:0 1.5%}
+.cm-focus .cm-gem{fill-opacity:.7;filter:drop-shadow(0 0 4px #00E5A8)}
+.cm-focus .cm-glow{animation:cm-gem 4s ease-in-out infinite}
 .cm-steering .cm-body{animation:cm-float 7s ease-in-out infinite}
-.cm-steering .cm-gem{fill-opacity:.9;animation:cm-gem 3.4s ease-in-out infinite;filter:drop-shadow(0 0 6px #00E5A8)}
-.cm-steering .cm-pod{animation:cm-gem 3.4s ease-in-out infinite;filter:drop-shadow(0 0 5px #00E5A8)}
-.cm-tired{--eye:.5;--sw:14s}
-.cm-tired .cm-eye{animation:none}
+.cm-steering .cm-gem{fill-opacity:.9;animation:cm-gem 3s ease-in-out infinite;filter:drop-shadow(0 0 6px #00E5A8)}
+.cm-steering .cm-spark{animation:cm-spark 3s ease-in-out infinite}
+.cm-tired{--sw:14s}
 .cm-tired .cm-head{rotate:-5deg;translate:0 2.5%}
 .cm-tired .cm-body{animation:cm-float 10s ease-in-out infinite}
+.cm-tired .cm-sweat{animation:cm-drip 5s ease-in infinite}
+.cm-tired .cm-eye{transition-duration:.3s}
 .cm-done{--sw:14s}
 .cm-done .cm-body{animation:cm-float 9s ease-in-out infinite}
 .cm-done .cm-gem{fill-opacity:.8}
-.cm-offline,.cm-error{--eye:.8;--sw:14s}
+.cm-done .cm-fall{animation:cm-fall 6s ease-in-out infinite}
+.cm-offline,.cm-error{--eye:1;--sw:14s}
 .cm-offline .cm-gem,.cm-error .cm-gem{fill:none;stroke:#8C8C8C}
 .cm-offline .cm-pupil,.cm-error .cm-pupil{opacity:.55}
 .cm-offline .cm-body,.cm-error .cm-body{animation:cm-float 9s ease-in-out infinite}
-.cm-loading .cm-ring{stroke-dasharray:20 12;transform-box:fill-box;transform-origin:center;animation:cm-spin 12s linear infinite}
+.cm-offline .cm-cloud{animation:cm-float 7s ease-in-out infinite}
+.cm-error .cm-q{animation:cm-float 6s ease-in-out infinite}
 .cm-loading .cm-body{animation:cm-float 6s ease-in-out infinite}
 .cm-driven .cm-body{animation:none}
+.cm-paused,.cm-paused *{animation-play-state:paused!important}
 
 /* paint, dark and contrast variants */
 [data-theme='dark'] .cm-hill-a{fill:#3C4A4F}
 [data-theme='dark'] .cm-hill-b{fill:#4A5A5C}
 [data-theme='dark'] .cm-bandink{stroke:#8A7480}
-[data-theme='dark'] .cm-z{color:#CCD6FF}
+[data-theme='dark'] .cm-pk{stroke:#CCD6FF}
 [data-contrast='high'] .cm-s-ink{stroke:#000}
 [data-theme='dark'][data-contrast='high'] .cm-s-ink{stroke:#fff}
 [data-theme='dark'][data-contrast='high'] .cm-bandink{stroke:#fff}
 @media (forced-colors:active){
-  .cm-hill-a,.cm-hill-b,.cm-shade,.cm-rim,.cm-motes,.cm-ripples{display:none}
+  .cm-hill-a,.cm-hill-b,.cm-shade,.cm-rim,.cm-motes,.cm-ripples,.cm-props{display:none}
   .cm-f-gold,.cm-f-cup,.cm-slit,.cm-pupil{fill:Canvas}
   .cm-f-mask,.cm-bar{fill:CanvasText}
   .cm-bar{stroke:CanvasText}
@@ -90,23 +104,29 @@
 }
 
 .cm-cue{margin:.4em 0 0;text-align:center;font-size:.95rem;letter-spacing:.04em;opacity:.85}
-@keyframes cm-blink{0%,92%,100%{transform:scaleY(var(--eye))}95%{transform:scaleY(.08)}}
 @keyframes cm-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3%)}}
 @keyframes cm-bounce{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-4%) scale(.99,1.02)}}
 @keyframes cm-drift{0%,100%{transform:translate(0,0);opacity:.3}50%{transform:translate(6px,-14px);opacity:.9}}
 @keyframes cm-gem{0%,100%{opacity:.7}50%{opacity:1}}
-@keyframes cm-zee{0%{opacity:0;transform:translate(0,10px)}30%{opacity:.8}100%{opacity:0;transform:translate(10px,-30px)}}
+@keyframes cm-zee{0%{opacity:0;transform:translate(0,12px)}30%{opacity:.9}100%{opacity:0;transform:translate(10px,-26px)}}
 @keyframes cm-breathe{0%,100%{transform:scale(1)}40%{transform:scale(1.04)}}
 @keyframes cm-sway{0%,100%{rotate:-1.6deg}50%{rotate:1.6deg}}
 @keyframes cm-rip{0%{opacity:0;transform:scale(.7)}30%{opacity:calc(var(--lv) * .7)}100%{opacity:0;transform:scale(1.7)}}
 @keyframes cm-spin{to{transform:rotate(360deg)}}
+@keyframes cm-nod{0%,100%{translate:0 0;rotate:0deg}55%{translate:0 2.5%;rotate:6deg}70%{translate:0 1%;rotate:2deg}}
+@keyframes cm-eyebreath{0%,45%,100%{transform:scaleY(1)}70%,90%{transform:scaleY(.15)}}
+@keyframes cm-wisp{0%,45%{opacity:0;transform:translateX(0)}70%{opacity:.8}100%{opacity:0;transform:translateX(12px)}}
+@keyframes cm-spark{0%,100%{opacity:.5;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
+@keyframes cm-drip{0%,60%{transform:translateY(0);opacity:1}100%{transform:translateY(16px);opacity:0}}
+@keyframes cm-fall{0%{transform:translateY(-6px);opacity:0}25%{opacity:1}100%{transform:translateY(46px) rotate(12deg);opacity:0}}
 
-/* motion off: a still frame, no animation, no transitions */
-.cm-still .cm-body,.cm-still .cm-sway,.cm-still .cm-eye,.cm-still .cm-mote,.cm-still .cm-z,.cm-still .cm-ripple,.cm-still .cm-pod,.cm-still .cm-gem,.cm-still .cm-ring{animation:none}
-.cm-still .cm-head{transition:none;transform:none}
+/* motion off: the pose and its prop stay, nothing moves */
+.cm-still *{animation:none!important;transition:none!important}
+.cm-still .cm-head{transform:none}
 .cm-still .cm-mote{opacity:.5}
 .cm-still .cm-ripple{opacity:calc(var(--lv) * .35)}
+.cm-still .cm-wisp{opacity:.6}
 @media (prefers-reduced-motion:reduce){
-  .cm-body,.cm-sway,.cm-eye,.cm-mote,.cm-z,.cm-ripple,.cm-pod,.cm-gem,.cm-ring{animation:none}
-  .cm-head{transition:none;transform:none}
+  .cm-stage *{animation:none!important;transition:none!important}
+  .cm-head{transform:none}
 }

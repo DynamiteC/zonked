@@ -30,7 +30,7 @@ All numbers are in the 512 unit space of the 2018 `logo.svg`.
 | Soft watercolor fill | The gold gradient, a warm radial shade at the lower right, and a pale rim light arc at the top left. |
 | Dark mask colour | Warm plum `#2F2430` with rounded line joins, instead of the 2018 near black with neon. |
 | Headphones | A band over the head that ends in a brown cup around each ear pod. The pod is the inner part of the cup, so nothing is drawn twice. |
-| Body | A small blue-grey body sitting on a green hill, shown from 120 px up. |
+| Body | A seated figure in a soft deep-teal hoodie on a green hill, shown from 120 px up. Hood behind the head, gold trim on neck and cuffs, two cream drawstrings, a chest pocket. The headphone band stays over it. |
 | 3D | Layers at different depth. The head tilts up to 8 degrees toward the pointer. |
 
 Not allowed: changing the plate shapes, the number of slits, the eye rings, the head shape or the gold. No new characters, no faces with curved mouths.
@@ -39,21 +39,24 @@ Not allowed: changing the plate shapes, the number of slits, the eye rings, the 
 
 Props: `mood`, `size`, `reducedMotion`, `label`, `breathPhase`, `level`, `situation`. New moods only add values.
 
-| Mood | Where used | Eyes | Mouth slits | Motion |
-|---|---|---|---|---|
-| idle | default | open, slow blink | straight | float 5 s |
-| listening | sound plays | open | straight | pods glow and ripples follow `level` |
-| happy | success | closed arcs | bent up | soft bounce 2.4 s |
-| sleepy | sleep timer | nearly shut | short | float 8 s, a "z" |
-| breathing | player | open | follow `breathPhase` | 4 in, 4 out, driven from outside |
-| focus | focus journeys | steady, no blink | short | slight lean, 16 s sway |
-| steering | crew steers the sound | open | straight | cyan glow on gem and pods, 3.4 s |
-| tired | crew demo, burned out step | half shut | bent down | head drops and tilts |
-| done | end card | closed arcs | small smile | float 9 s |
-| offline, error | no bridge, failed load | open, pupils dim | uneven | slow float, grey gem, never red |
-| loading | waiting | ring eyes dashed | short | dashes turn once in 12 s |
+| Mood | Where used | Eyes (`data-eye`) | Prop (`data-prop`) | Slits | Motion |
+|---|---|---|---|---|---|
+| idle | default | ring | none | straight | float 5 s, seeded blink every 4 to 7 s |
+| listening | sound plays | half | ripples | straight | head sway 6 s, ripples follow `level` |
+| happy | success | arc (upturned) | none | smile, outer slits tilt out | one small bounce |
+| sleepy | sleep timer | lid (low) | zzz | short | slow drooping nod 7 s, letters drift up |
+| breathing | player | ring, closes on exhale | wisp | follow `breathPhase` | chest and hoodie rise with `breathPhase` |
+| focus | focus journeys | narrow | glow (line on gem) | short | forward lean, no blink |
+| steering | crew steers the sound | ring | spark (near ear pod) | straight | gem pulse once per 3 s |
+| tired | burned out step | heavy (tilted lid) | sweat | frown | head drops, blink every 6 to 11 s |
+| done | end card | closed (arcs) | leaf and sparkle | small smile | prop floats down 6 s |
+| offline | no bridge | up (pupils look up) | cloud | uneven | slow float, grey gem |
+| loading | waiting | dial (ticks turn) | none | short | dial turns once in 14 s |
+| error | failed load | ring and squint | question | uneven | slow float, never red |
 
-Rules: every loop is 1 second or slower, so no flash exceeds 3 per second. Reduced motion (the prop or the OS setting) removes all animation and the pointer tilt.
+Each mood is a pair of eye shape and prop, so no two match. Props are drawn only for their mood. Listening uses the sound ripples as its prop.
+
+Rules: every loop is 1 second or slower, so no flash exceeds 3 per second. Blinks use a seeded timer and stop on unmount. All animation pauses while the tab is hidden. Reduced motion (the prop or the OS setting) removes all animation and the pointer tilt.
 
 ## Sizes
 
