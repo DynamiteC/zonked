@@ -296,11 +296,12 @@ function flowChecks(env) {
     ['theme-switch', async () => {
       await nav(page(), 'You').click();
       await page().getByTestId('studio-switch').click();
-      await page().getByTestId('play-button').waitFor();
-      assert((await page().evaluate(() => localStorage.getItem('zonked.theme.v1'))) === 'studio', 'theme key not studio');
-      await page().getByTestId('back-to-calm').click();
-      await page().getByTestId('greeting').waitFor();
-      assert((await page().evaluate(() => localStorage.getItem('zonked.theme.v1'))) === 'calm', 'theme key not calm');
+      await page().getByTestId('options-sheet').waitFor();
+      assert((await page().getByTestId('options-advanced').getAttribute('aria-expanded')) === 'true', 'Advanced not open');
+      await page().getByTestId('advanced-panels').waitFor();
+      assert((await page().evaluate(() => localStorage.getItem('zonked.theme.v1'))) !== 'studio', 'theme key set to studio');
+      await page().keyboard.press('Escape');
+      await page().getByTestId('options-sheet').waitFor({ state: 'detached' });
     }],
     ['reload-keeps-state', async () => {
       await page().reload();
@@ -360,7 +361,7 @@ export const CHECK_LABELS = {
   'nature-loop-mp3': 'nature loop decodes and plays (MP3)',
   'synth-sound': 'synth sound plays',
   'crew-demo-beat-changes': 'Crew demo runs, beat changes',
-  'theme-switch': 'theme switch persists',
+  'theme-switch': 'Studio link opens Advanced in Options',
   'reload-keeps-state': 'reload keeps state',
   'service-worker': 'service worker registers and activates',
   'offline-reload': 'offline reload works',
