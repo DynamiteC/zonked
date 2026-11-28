@@ -1,8 +1,7 @@
 // Calm front door checks (C1 to C7, L1): safety before sound, onboarding, theme switch, week wording,
 // reduced motion, 375 px layout. Each check runs in its own browser context with no pre-set keys.
-import { newSession } from './e2e-helpers.mjs';
+import { newSession, nav } from './e2e-helpers.mjs';
 
-const nav = (page, name) => page.getByRole('navigation', { name: 'Main' }).getByRole('button', { name });
 const CHAIN = /streak|chain|lost|broke|miss(ed)?\b/i;
 
 const open = async (h, opts = {}) => {
@@ -159,9 +158,11 @@ export async function runCalmChecks(h) {
       await s.page.getByTestId('player-toggle').click();
       await s.page.clock.runFor(2000);
       await s.page.getByTestId('end-card').waitFor();
-      await s.page.getByTestId('guide').waitFor();
-      await s.page.keyboard.press('Escape');
-      await s.page.getByTestId('guide').waitFor({ state: 'detached' });
+      // The help guide used to open over the end card. It now waits until the card is closed, so it is optional here.
+      if (await s.page.getByTestId('guide').isVisible({ timeout: 1500 }).catch(() => false)) {
+        await s.page.keyboard.press('Escape');
+        await s.page.getByTestId('guide').waitFor({ state: 'detached' });
+      }
       const text = await s.page.getByTestId('end-card').innerText();
       h.assert(/Done for now\./.test(text) && /played for/.test(text), `card text: ${text}`);
       h.assert(!/tomorrow|streak|missed/i.test(text), 'pressure wording on end card');

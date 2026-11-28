@@ -2,9 +2,8 @@
 // C14: the "How was that?" answer is stored on this device and survives a reload.
 // C15: a focus sprint switches to a quieter break on a mocked clock, then ends with the end card.
 // C16: the 5 minute breathing session plays soft noise and shows the breath ring.
-import { newSession, dismissGuide } from './e2e-helpers.mjs';
+import { newSession, dismissGuide, nav } from './e2e-helpers.mjs';
 
-const nav = (page, name) => page.getByRole('navigation', { name: 'Main' }).getByRole('button', { name });
 
 /** Skip onboarding with a mocked clock and land on the player with sound playing. */
 async function playing(h) {

@@ -17,7 +17,7 @@ export const ALLOWED_HOSTS = ['www.w3.org', 'w3.org', 'localhost:43210'];
 export const VENDOR_DOC_HOSTS = ['react.dev', 'bit.ly'];
 
 export const REQUIRED_HEADERS = [
-  ["Content-Security-Policy", "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' ws://localhost:43210 http://localhost:43210; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"],
+  ["Content-Security-Policy", "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self'; connect-src 'self' ws://localhost:43210 http://localhost:43210; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"],
   ['Cross-Origin-Opener-Policy', 'same-origin'],
   ['Cross-Origin-Embedder-Policy', 'require-corp'],
   ['Cross-Origin-Resource-Policy', 'same-origin'],

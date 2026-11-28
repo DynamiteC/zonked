@@ -1,9 +1,8 @@
 // Reset and theme checks (C12, C13). Each check runs in its own browser context.
 // C12: the guided 90 second pause completes on a mocked clock and shows its end card.
 // C13: the theme choice persists across a reload and high contrast applies.
-import { newSession } from './e2e-helpers.mjs';
+import { newSession, nav } from './e2e-helpers.mjs';
 
-const nav = (page, name) => page.getByRole('navigation', { name: 'Main' }).getByRole('button', { name });
 
 /** Skip onboarding, accept the notice, and stop the default session so the page starts quiet. */
 async function ready(h) {

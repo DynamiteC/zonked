@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// MOCKED: the audio engine is a stub in this file. Real output is read by verify:e2e (web/scripts/e2e-core-checks.mjs).
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { channelHz } from '../../app/neuro';
@@ -154,8 +155,8 @@ describe('ScopePanel and AdvancedPanels', () => {
     const onClose = vi.fn();
     render(<AdvancedPanels engine={engine as never} player={player} onClose={onClose} />);
     const sections = screen.getByTestId('advanced-panels').querySelectorAll('details');
-    expect(sections.length).toBe(7);
-    expect([...sections].map((d) => d.open)).toEqual([true, false, false, false, false, false, false]);
+    expect(sections.length).toBe(9);
+    expect([...sections].map((d) => d.open)).toEqual([true, false, false, false, false, false, false, false, false]);
     fireEvent.click(screen.getByTestId('adv-close'));
     expect(onClose).toHaveBeenCalled();
     vi.unstubAllGlobals();

@@ -30,7 +30,7 @@ Read `.kiro/steering/zonked-standards.md` first. It is the binding rule set. Thi
 ```bash
 cargo test --manifest-path crates/dsp-core/Cargo.toml          # DSP unit tests
 cargo clippy --manifest-path crates/dsp-core/Cargo.toml --all-targets -- -D warnings
-wasm-pack build crates/dsp-core --target web --release           # WASM build
+npm --prefix web run build:wasm                                  # WASM build (plain cargo, pinned toolchain)
 npm --prefix crew-bridge test                                    # bridge tests
 npm --prefix web run dev | build | test | verify:e2e             # PWA
 ```

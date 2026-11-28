@@ -6,7 +6,7 @@
 // Uses the app's own e2e hook (?e2e=1). Nothing leaves this machine. Set GLITCH_SECONDS to shorten a run.
 import { chromium } from '@playwright/test';
 import { ensureBuilt, startServer } from './e2e-lib.mjs';
-import { newSession } from './e2e-helpers.mjs';
+import { newSession, nav } from './e2e-helpers.mjs';
 
 const SECONDS = Number(process.env.GLITCH_SECONDS ?? 30);
 const MIN_DROP_DB = 4;
@@ -17,7 +17,6 @@ const SOUNDS = [
   { id: 'fountain', label: 'fountain', nature: 'fountain', noise: true },
 ];
 
-const nav = (page, name) => page.getByRole('navigation', { name: 'Main' }).getByRole('button', { name });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function play(h, sound, device) {

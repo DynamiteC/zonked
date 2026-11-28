@@ -31,7 +31,7 @@ The MIT licence covers Zonked's original code. The nature loops (CC0 or public d
 ## Build
 
 ```bash
-cd app/ui && npm install && npm run build
+cd app/ui && npm ci && npm run build
 ```
 
 The built bundle in `app/ui/dist` is committed. `npm run check:dist` fails when it is stale.

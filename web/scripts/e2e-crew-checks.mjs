@@ -2,9 +2,8 @@
 // C10: the Simulated session badge shows, the beat changes at least 3 times, nothing leaves the origin.
 // C11: the why text updates with the steps and stays plain text.
 import { setTimeout as sleep } from 'node:timers/promises';
-import { newSession } from './e2e-helpers.mjs';
+import { newSession, nav } from './e2e-helpers.mjs';
 
-const nav = (page, name) => page.getByRole('navigation', { name: 'Main' }).getByRole('button', { name });
 
 /** Watches the demo from the tap to the end. Returns what the two checks need. */
 async function watchDemo(h) {

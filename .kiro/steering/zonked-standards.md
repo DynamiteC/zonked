@@ -35,7 +35,7 @@ These rules bind every change. A change that breaks one is a defect, even if tes
 ## 3. Web security
 
 - `web/public/_headers` must contain, at minimum:
-  - `Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' ws://localhost:43210 http://localhost:43210; object-src 'none'; base-uri 'none'; frame-ancestors 'none'` (project decision: inline styles allowed for React style props; scripts stay strict)
+  - `Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self'; connect-src 'self' ws://localhost:43210 http://localhost:43210; object-src 'none'; base-uri 'none'; frame-ancestors 'none'` (project decision, 2026-11-28: no inline style rule; React sets styles through the CSSOM, which this policy allows)
   - `Cross-Origin-Opener-Policy: same-origin`
   - `Cross-Origin-Embedder-Policy: require-corp`
   - `X-Content-Type-Options: nosniff`

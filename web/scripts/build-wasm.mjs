@@ -25,19 +25,13 @@ if (process.env.SKIP_WASM === '1') {
   process.exit(0);
 }
 
-const wasmPack = resolve(webDir, 'node_modules/.bin/wasm-pack');
-let source = null;
-if (existsSync(wasmPack) && run(wasmPack, ['build', crate, '--target', 'web', '--release'])) {
-  source = resolve(crate, 'pkg/dsp_core_bg.wasm');
-} else {
-  console.warn('build-wasm: wasm-pack unavailable or failed, falling back to cargo');
-  const manifest = resolve(crate, 'Cargo.toml');
-  if (!run('cargo', ['build', '--manifest-path', manifest, '--target', 'wasm32-unknown-unknown', '--release'])) {
-    fail('both wasm-pack and cargo builds failed');
-  }
-  source = resolve(crate, 'target/wasm32-unknown-unknown/release/dsp_core.wasm');
-  if (!existsSync(source)) source = resolve(webDir, '../target/wasm32-unknown-unknown/release/dsp_core.wasm');
+// Plain cargo with the toolchain pinned in rust-toolchain.toml. wasm-pack is not used: the crate has no wasm-bindgen.
+const manifest = resolve(crate, 'Cargo.toml');
+if (!run('cargo', ['build', '--locked', '--manifest-path', manifest, '--target', 'wasm32-unknown-unknown', '--release'])) {
+  fail('cargo build for wasm32-unknown-unknown failed');
 }
+let source = resolve(crate, 'target/wasm32-unknown-unknown/release/dsp_core.wasm');
+if (!existsSync(source)) source = resolve(webDir, '../target/wasm32-unknown-unknown/release/dsp_core.wasm');
 if (!existsSync(source)) fail(`wasm output not found at ${source}`);
 mkdirSync(dirname(dest), { recursive: true });
 copyFileSync(source, dest);
