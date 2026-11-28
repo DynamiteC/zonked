@@ -1,4 +1,5 @@
 import { SAMPLES } from './catalog';
+import { hasSeamJump, healthLog } from '../health';
 import type { SampleInfo } from './catalog';
 import type { SampleBus } from './bus';
 import type { SynthHandle, SynthId } from './synth/graph';
@@ -30,6 +31,15 @@ function decodeWithin(ctx: BaseAudioContext, bytes: ArrayBuffer, ms: number): Pr
       (e: unknown) => { clearTimeout(timer); reject(e instanceof Error ? e : new Error(String(e))); },
     );
   });
+}
+
+/** A loop whose two ends differ a lot would click every time it repeats. Counted as a hiccup, never blocks playback. */
+function checkSeam(buf: AudioBuffer): void {
+  if (typeof buf.getChannelData !== 'function' || !(buf.length >= 2)) return;
+  const d = buf.getChannelData(0);
+  let peak = 0;
+  for (let i = 0; i < d.length; i += 64) peak = Math.max(peak, Math.abs(d[i] ?? 0));
+  if (hasSeamJump(d[0] ?? 0, d[d.length - 1] ?? 0, peak)) healthLog.record(Date.now(), 'seam');
 }
 
 export interface LayerDeps {
@@ -81,8 +91,10 @@ export function createSampleLayer(deps: LayerDeps) {
       const bytes = await deps.fetchBytes(url);
       const buf = await decodeWithin(bus.ctx, bytes, deps.decodeTimeoutMs ?? DECODE_TIMEOUT_MS);
       buffers.set(id, buf);
+      checkSeam(buf);
       return { ok: true };
     } catch (e) {
+      healthLog.record(Date.now(), 'decode');
       if (e instanceof Error && e.message === DECODE_TIMEOUT) return fail(DECODE_TIMEOUT);
       return fail('sample unavailable: check the connection or reinstall the app files');
     }

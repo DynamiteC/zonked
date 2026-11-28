@@ -5,10 +5,10 @@ export type {
 export { DEVICES, GOALS, TIMES_OF_DAY } from './types';
 export { JOURNEYS, getJourney } from './journeys';
 export { resolveJourney } from './resolve';
-export { profileToRecommendation, needsHeadphoneNotice, timeOfDayFromHour } from './recommendation';
+export { profileToRecommendation, recommendForDevice, orderForDevice, bluetoothDelta, needsHeadphoneNotice, timeOfDayFromHour } from './recommendation';
 export { weekStats, toDayNumber, MIN_DAY_MINUTES } from './week';
 export {
-  loadProfile, saveProfile, loadLast, saveLast, loadProgress, saveProgress, clearAll,
+  loadProfile, saveProfile, loadDevice, saveDevice, migrateDevice, DEVICE_KEY, loadLast, saveLast, loadProgress, saveProgress, clearAll,
   createLocalStorage, createMemoryStorage, DEFAULT_PROFILE, MAX_PAYLOAD_BYTES,
 } from './storage';
 export {

@@ -64,6 +64,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate }: CalmAppProps): R
   const feel = useFeel(data.storage);
   const sprint = useSprint(s);
   const onboarding = data.profile.createdAt === 0;
+  useEffect(() => engine.setListening?.(data.profile.device), [engine, data.profile.device]);
   const last = useLastPlayed(data.storage);
   const end = useEndCard(s.snap, !onboarding && view !== 'reset' && view !== 'breathe', sprint.focus === null ? null : { id: sprint.focus.id, name: CALM.sprintName });
   const still = s.reduced || data.profile.extraGentle;

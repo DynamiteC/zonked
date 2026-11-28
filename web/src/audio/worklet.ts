@@ -1,7 +1,9 @@
 import { DspProcessorCore } from './worklet-core';
+import { skippedQuanta } from './health';
 
 // AudioWorkletGlobalScope declarations (not in lib.dom).
 declare const sampleRate: number;
+declare const currentFrame: number;
 declare class AudioWorkletProcessor {
   readonly port: MessagePort;
   constructor();
@@ -17,6 +19,9 @@ interface InitMsg {
 
 class ZonkedDsp extends AudioWorkletProcessor {
   private core: DspProcessorCore | null = null;
+  private lastFrame = -1;
+  private skipped = 0;
+  private reportAt = 0;
 
   constructor() {
     super();
@@ -41,12 +46,24 @@ class ZonkedDsp extends AudioWorkletProcessor {
     }
   }
 
+  /** Frame-time watchdog: a gap in currentFrame between two calls means the browser skipped render quanta. */
+  private watch(): void {
+    if (this.lastFrame >= 0) this.skipped += skippedQuanta(this.lastFrame, currentFrame);
+    this.lastFrame = currentFrame;
+    if (currentFrame >= this.reportAt) {
+      this.reportAt = currentFrame + sampleRate;
+      if (this.skipped > 0) this.port.postMessage({ type: 'health', skipped: this.skipped });
+      this.skipped = 0;
+    }
+  }
+
   process(_inputs: Float32Array[][], outputs: Float32Array[][]): boolean {
     const out = outputs[0];
     const l = out?.[0];
     if (this.core === null || l === undefined) return true;
     const r = out?.[1] ?? l;
     this.core.process(l, r);
+    this.watch();
     return true;
   }
 }

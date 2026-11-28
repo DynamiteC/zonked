@@ -19,7 +19,7 @@ export const CALM = {
   goalTitle: 'What brings you here?',
   whenTitle: 'When do you need it most?',
   listenTitle: 'How do you listen?',
-  listenNote: 'Headphones suit two-tone beats best, and speakers suit gentle pulses and noise.',
+  listenNote: 'Wired suits two-tone beats best, Bluetooth gets softer hiss, speakers suit gentle pulses.',
   whenHelper: 'It helps us pick your first sound.',
   lastStep: 'Almost ready',
   stepOf: (n: number) => `${n} of 3`,
@@ -97,6 +97,9 @@ export const CALM = {
   whyBody:
     'Some small studies suggest slow beats may help people relax. Results vary and may not happen for you. Zonked is not a medical device.',
   volumeCapped: 'Volume is capped for your safety.',
+  btTip: "If it sounds swooshy, set your computer's sound input to its own microphone so the headphones stay in music mode.",
+  deviceTitle: 'How do you listen?',
+  deviceHint: 'Bluetooth mode softens hiss that Bluetooth can smear. It never changes the beat or the volume limits.',
   favorite: 'Favorite',
   guideLink: 'How it works',
   guideStep: (n: number) => `${n} of 3`,
@@ -239,10 +242,9 @@ export const TIME_LABEL: Readonly<Record<TimeOfDay, string>> = {
 };
 
 export const DEVICE_LABEL: Readonly<Record<Device, string>> = {
-  headphones: 'Headphones',
+  wired: 'Wired headphones',
+  bluetooth: 'Bluetooth headphones',
   speakers: 'Speakers',
-  bluetooth: 'Bluetooth',
-  unsure: 'Not sure',
 };
 
 export interface Feeling {

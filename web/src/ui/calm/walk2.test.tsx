@@ -23,7 +23,7 @@ function engine(): AudioEngine {
     setVoice: vi.fn(), getStats: vi.fn(async () => ({ peak: 0, rms: 0, frames: 0, nonZero: 0 })), onStatus: () => () => undefined,
   } as unknown as AudioEngine;
 }
-const PROFILE: Profile = { goal: 'sleep', timeOfDay: 'night', device: 'headphones', extraGentle: false, createdAt: 1_700_000_000_000 };
+const PROFILE: Profile = { goal: 'sleep', timeOfDay: 'night', device: 'wired', extraGentle: false, createdAt: 1_700_000_000_000 };
 const player = { startTimer: vi.fn(), stopTimer: vi.fn() } as unknown as Player;
 const timer = (t: Partial<TimerState> & { kind: TimerState['kind'] }): TimerState => ({ running: true, remainingSec: 60, totalSec: 900, ...t }) as unknown as TimerState;
 

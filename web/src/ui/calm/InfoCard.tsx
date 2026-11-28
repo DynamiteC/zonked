@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
-import { recommendTemplates } from '../../catalog';
 import type { Template } from '../../catalog/types';
 import { CALM } from './copy';
-import { profileToRecommendation } from './data';
+import { profileToRecommendation, recommendForDevice } from './data';
 import type { Profile, WeekStats } from './data';
 import { WeekDots } from './WeekDots';
 
@@ -16,7 +15,7 @@ interface Props {
 
 /** Desktop right column: today's session and the week. Hidden by css below 1180 px. */
 export function InfoCard({ profile, week, joinedToday, hasHistory, onPlay }: Props): React.JSX.Element {
-  const pick = useMemo(() => recommendTemplates(profileToRecommendation(profile, new Date()), 1)[0], [profile]);
+  const pick = useMemo(() => recommendForDevice(profileToRecommendation(profile, new Date()), profile.device, 1)[0], [profile]);
   return (
     <aside className="c-info c-card" aria-label={CALM.infoTitle}>
       <p className="c-eyebrow">{CALM.dailyEyebrow}</p>

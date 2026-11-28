@@ -40,7 +40,7 @@ function engine(): AudioEngine & { start: ReturnType<typeof vi.fn> } {
   } as unknown as AudioEngine & { start: ReturnType<typeof vi.fn> };
 }
 
-const PROFILE: Profile = { goal: 'sleep', timeOfDay: 'night', device: 'headphones', extraGentle: false, createdAt: 1_700_000_000_000 };
+const PROFILE: Profile = { goal: 'sleep', timeOfDay: 'night', device: 'wired', extraGentle: false, createdAt: 1_700_000_000_000 };
 
 async function openNature(eng: AudioEngine): Promise<void> {
   render(<ModeRoot engine={eng} store={createStore(undefined)} />);

@@ -6,6 +6,7 @@ import { CalmAlertPanel } from './CalmAlertPanel';
 import { EditorPanel } from './EditorPanel';
 import { ImportExportPanel } from './ImportExportPanel';
 import { MixPanel } from './MixPanel';
+import { HealthPanel } from './HealthPanel';
 import { ScopePanel } from './ScopePanel';
 import { TimersPanel } from './TimersPanel';
 import { usePlayerSnapshot } from './usePlayerSnapshot';
@@ -23,7 +24,7 @@ export interface AdvancedPanelsProps {
   onClose?: () => void;
 }
 
-const SECTIONS = ['Mix', 'Calm to Alert', 'Editor', 'Import and export', 'Timers', 'Scope'] as const;
+const SECTIONS = ['Mix', 'Calm to Alert', 'Editor', 'Import and export', 'Timers', 'Scope', 'Sound health'] as const;
 
 /**
  * The pro options as plain panels: Mix, Calm to Alert, Editor, Import and export, Timers, Scope.
@@ -55,6 +56,7 @@ export function AdvancedPanels({ engine, player: given, onClose }: AdvancedPanel
     ),
     Timers: <TimersPanel timer={snap.timer} player={own} />,
     Scope: <ScopePanel telemetry={engine.telemetry} />,
+    'Sound health': <HealthPanel />,
   };
   return (
     <div className="adv-panels" data-testid="advanced-panels">

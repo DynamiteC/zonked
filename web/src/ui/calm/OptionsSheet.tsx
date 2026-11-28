@@ -4,6 +4,8 @@ import type { AudioEngine } from '../../audio/types';
 import { listSamples } from '../../audio/samples';
 import { CALM, EVIDENCE } from './copy';
 import { Slider } from './nature/NatureScreen';
+import { orderForDevice } from './data';
+import type { Device } from './data';
 import { MAX_NATURE_LEVEL } from './nature/prefs';
 import type { Nature } from './nature/useNature';
 import { TimerChips } from './TimerChips';
@@ -20,13 +22,15 @@ interface Props {
   readonly onFavorite: () => void;
   readonly onClose: () => void;
   readonly engine: AudioEngine;
+  /** How the person listens. Bluetooth shows a tip and lists soft sounds first. */
+  readonly device?: Device;
   /** Opens with the Advanced section expanded (Studio shortcut). */
   readonly advancedOpen?: boolean;
   readonly sprint?: { readonly onSprint: () => void; readonly onSprintEnd: () => void };
 }
 
 /** Bottom sheet with every player option: Timer, Nature sound, More. Escape closes it and focus returns to Options. */
-export function OptionsSheet({ player, snap, nature, favorite, evidence, onFavorite, onClose, sprint, engine, advancedOpen = false }: Props): React.JSX.Element {
+export function OptionsSheet({ player, snap, nature, favorite, evidence, onFavorite, onClose, sprint, engine, device = 'wired', advancedOpen = false }: Props): React.JSX.Element {
   const box = useRef<HTMLDivElement>(null);
   const [why, setWhy] = useState(false);
   const [adv, setAdv] = useState(advancedOpen);
@@ -48,7 +52,7 @@ export function OptionsSheet({ player, snap, nature, favorite, evidence, onFavor
       }
     }
   };
-  const samples = listSamples();
+  const samples = orderForDevice(listSamples(), device);
   return (
     <div className="c-overlay c-sheet-wrap" onClick={onClose}>
       <div ref={box} className="c-opts" role="dialog" aria-modal="true" aria-labelledby="c-opts-title" data-testid="options-sheet" onKeyDown={onKey} onClick={(e) => e.stopPropagation()}>
@@ -93,6 +97,7 @@ export function OptionsSheet({ player, snap, nature, favorite, evidence, onFavor
             <p>{`Evidence: ${evidence}. ${EVIDENCE[evidence] ?? ''}`}</p>
           </div>
           <p className="c-muted">{CALM.volumeCapped}</p>
+          {device === 'bluetooth' && <p className="c-muted" data-testid="bt-tip">{CALM.btTip}</p>}
         </section>
         <section aria-labelledby="c-o-adv">
           <h3 id="c-o-adv" className="c-o-h">

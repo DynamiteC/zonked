@@ -8,6 +8,9 @@ import {
 } from './params';
 import { setSampleBus } from './samples/bus';
 import { guardCurve } from './samples/math';
+import { btNoiseLevel, createBtPath } from './btFilter';
+import type { BtPath, ListenDevice } from './btFilter';
+import { healthLog, isLateJump } from './health';
 import { RingTelemetryReader, createTelemetryBuffer, emptyTelemetry } from './telemetry';
 
 const START_RAMP_SEC = 2;
@@ -31,6 +34,13 @@ export class ZonkedAudioEngine implements AudioEngine {
   private pendingStart: Promise<void> | null = null;
   private pendingStop: Promise<void> | null = null;
   private readonly block = new Float32Array(PARAM_COUNT);
+  private listening: ListenDevice = 'wired';
+  private bt: BtPath | null = null;
+  private analyser: AnalyserNode | null = null;
+  private freq: Float32Array<ArrayBuffer> | null = null;
+  private watchTimer: ReturnType<typeof setInterval> | null = null;
+  private lastLatency = 0;
+  private lastUnderruns = 0;
 
   constructor() {
     this._status = {
@@ -75,6 +85,7 @@ export class ZonkedAudioEngine implements AudioEngine {
       g.setValueAtTime(0, ctx.currentTime);
       g.linearRampToValueAtTime(1, ctx.currentTime + START_RAMP_SEC);
       await ctx.resume();
+      this.startWatch(ctx);
       this.setStatus({ state: 'running' });
     } catch (err) {
       this.setStatus({ state: 'error', error: err instanceof Error ? err.message : String(err) });
@@ -110,7 +121,18 @@ export class ZonkedAudioEngine implements AudioEngine {
     const duck = ctx.createGain();
     const guard = ctx.createWaveShaper();
     guard.curve = guardCurve();
-    node.connect(duck).connect(master).connect(guard).connect(ctx.destination);
+    // Bluetooth path sits between master and the clip guard: dsp-core and its limits are not touched.
+    const bt = createBtPath(ctx, master, guard);
+    node.connect(duck).connect(master);
+    guard.connect(ctx.destination);
+    const analyser = ctx.createAnalyser();
+    analyser.fftSize = 4096;
+    analyser.smoothingTimeConstant = 0;
+    guard.connect(analyser);
+    this.bt = bt;
+    this.analyser = analyser;
+    this.freq = new Float32Array(analyser.frequencyBinCount);
+    bt.setOn(this.listening === 'bluetooth');
     setSampleBus({ ctx, input: master, duck });
     this.node = node;
     this.master = master;
@@ -126,17 +148,31 @@ export class ZonkedAudioEngine implements AudioEngine {
       if (!p) return;
       clearTimeout(p.timer);
       this.pending.delete(id);
+      const hi = this.hiDb();
       p.resolve({
         peak: Number(m['peak']), rms: Number(m['rms']),
         frames: Number(m['frames']), nonZero: Number(m['nonZero']),
+        hiccups: healthLog.count(Date.now()),
+        hiccupKinds: healthLog.byKind(Date.now()),
+        ...(hi === null ? {} : { hiDb: hi }),
       });
+    } else if (m['type'] === 'health') {
+      healthLog.record(Date.now(), 'underrun', Number(m['skipped']));
     } else if (m['type'] === 'error') {
       this.setStatus({ state: 'error', error: String(m['message']) });
     }
   }
 
+  setListening(device: ListenDevice): void {
+    if (this.listening === device) return;
+    this.listening = device;
+    this.bt?.setOn(device === 'bluetooth');
+    if (this.voice !== null) this.pushVoice(this.voice, 0.5);
+  }
+
   private pushVoice(voice: Voice, rampSec: number): void {
-    voiceToParams(voice, rampSec, this.block);
+    const level = btNoiseLevel(voice.noiseLevel, this.listening === 'bluetooth');
+    voiceToParams(level === voice.noiseLevel ? voice : { ...voice, noiseLevel: level }, rampSec, this.block);
     if (this.writer !== null) this.writer.write(this.block);
     else this.node?.port.postMessage({ type: 'params', p: new Float32Array(this.block) });
   }
@@ -166,6 +202,7 @@ export class ZonkedAudioEngine implements AudioEngine {
     const ctx = this.ctx;
     if (ctx === null || this._status.state !== 'running') return;
     this.setStatus({ state: 'stopping' });
+    this.stopWatch();
     if (this.voice !== null) this.pushVoice({ ...this.voice, gain: 0 }, 0.1);
     const g = this.master?.gain;
     if (g) {
@@ -180,6 +217,40 @@ export class ZonkedAudioEngine implements AudioEngine {
     } catch (err) {
       this.setStatus({ state: 'error', error: err instanceof Error ? err.message : String(err) });
     }
+  }
+
+  /** Once a second: a jump in output delay counts as a late frame, and the browser's own underrun count (where it has one) is added. */
+  private startWatch(ctx: AudioContext): void {
+    this.stopWatch();
+    this.lastLatency = ctx.baseLatency + (ctx.outputLatency || 0);
+    const stats = (ctx as unknown as { playbackStats?: { underrunEvents?: number } }).playbackStats;
+    this.lastUnderruns = stats?.underrunEvents ?? 0;
+    this.watchTimer = setInterval(() => {
+      const now = Date.now();
+      const cur = ctx.baseLatency + (ctx.outputLatency || 0);
+      if (isLateJump(this.lastLatency, cur)) healthLog.record(now, 'late');
+      this.lastLatency = cur;
+      const u = stats?.underrunEvents;
+      if (typeof u === 'number' && u > this.lastUnderruns) healthLog.record(now, 'underrun', u - this.lastUnderruns);
+      if (typeof u === 'number') this.lastUnderruns = u;
+    }, 1000);
+  }
+
+  private stopWatch(): void {
+    if (this.watchTimer !== null) clearInterval(this.watchTimer);
+    this.watchTimer = null;
+  }
+
+  /** Power above 6 kHz in dB, from the output tap. Null before the graph exists. */
+  private hiDb(): number | null {
+    const a = this.analyser;
+    const f = this.freq;
+    if (a === null || f === null) return null;
+    a.getFloatFrequencyData(f);
+    const first = Math.round((6000 / (a.context.sampleRate / 2)) * f.length);
+    let sum = 0;
+    for (let i = first; i < f.length; i++) sum += 10 ** ((f[i] ?? -200) / 10);
+    return sum > 0 ? 10 * Math.log10(sum) : -200;
   }
 
   contextState(): AudioContextStateLike {

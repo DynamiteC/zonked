@@ -154,8 +154,8 @@ describe('ScopePanel and AdvancedPanels', () => {
     const onClose = vi.fn();
     render(<AdvancedPanels engine={engine as never} player={player} onClose={onClose} />);
     const sections = screen.getByTestId('advanced-panels').querySelectorAll('details');
-    expect(sections.length).toBe(6);
-    expect([...sections].map((d) => d.open)).toEqual([true, false, false, false, false, false]);
+    expect(sections.length).toBe(7);
+    expect([...sections].map((d) => d.open)).toEqual([true, false, false, false, false, false, false]);
     fireEvent.click(screen.getByTestId('adv-close'));
     expect(onClose).toHaveBeenCalled();
     vi.unstubAllGlobals();

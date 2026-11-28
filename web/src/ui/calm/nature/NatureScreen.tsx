@@ -3,6 +3,8 @@ import { listSamples } from '../../../audio/samples';
 import { CALM } from '../copy';
 import { Icon } from '../icons';
 import { PageHead } from '../MascotView';
+import { orderForDevice } from '../data';
+import type { Device } from '../data';
 import { NATURE_GROUPS, groupOf } from './groups';
 import { MAX_NATURE_LEVEL } from './prefs';
 import type { Nature } from './useNature';
@@ -68,7 +70,7 @@ function CreditsFooter({ samples }: { readonly samples: readonly Sample[] }): Re
   );
 }
 
-export function NatureScreen({ nature, reduced, onBack }: { readonly nature: Nature; readonly reduced: boolean; readonly onBack: () => void }): React.JSX.Element {
+export function NatureScreen({ nature, reduced, onBack, device = 'wired' }: { readonly nature: Nature; readonly reduced: boolean; readonly onBack: () => void; readonly device?: Device }): React.JSX.Element {
   const samples = listSamples();
   return (
     <div className="c-nature">
@@ -83,7 +85,7 @@ export function NatureScreen({ nature, reduced, onBack }: { readonly nature: Nat
         )}
       </div>
       {NATURE_GROUPS.map((g) => {
-        const list = samples.filter((s) => groupOf(s) === g);
+        const list = orderForDevice(samples.filter((s) => groupOf(s) === g), device);
         return list.length === 0 ? null : (
           <section key={g} aria-labelledby={`c-ng-${g.replaceAll(' ', '-')}`}>
             <h2 className="c-h3" id={`c-ng-${g.replaceAll(' ', '-')}`}>{g}</h2>

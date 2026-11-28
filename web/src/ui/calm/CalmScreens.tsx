@@ -76,9 +76,9 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
     case 'library':
       return <Library store={s.store} logs={data.logs} reduced={still} onNature={() => h.go('nature')} onPlay={h.play} onPlayMix={h.onMix} onBreathe={() => h.go('breathe')} />;
     case 'nature':
-      return <NatureScreen nature={nature} reduced={still} onBack={() => h.go('library')} />;
+      return <NatureScreen nature={nature} device={data.profile.device} reduced={still} onBack={() => h.go('library')} />;
     case 'player':
-      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} theme={look.theme} announce={prefs.announce} sprint={sprint} openAdvanced={h.advancedPending} onAdvancedShown={h.advancedShown} />;
+      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} device={data.profile.device} theme={look.theme} announce={prefs.announce} sprint={sprint} openAdvanced={h.advancedPending} onAdvancedShown={h.advancedShown} />;
     case 'reset':
       return <ResetScreen s={s} still={still} theme={look.theme} announce={prefs.announce} onBack={() => h.go('today')} />;
     case 'breathe':
@@ -101,6 +101,8 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
           gentle={data.profile.extraGentle}
           reduceMotion={s.userReduced}
           reduced={still}
+          device={data.profile.device}
+          onDevice={(device) => data.setProfile({ ...data.profile, device })}
           onGentle={(v) => data.setProfile({ ...data.profile, extraGentle: v })}
           onReduceMotion={s.setReduced}
           onStudio={h.onStudio}

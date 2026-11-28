@@ -2,11 +2,12 @@ import type { Situation, Vibe } from '../../../catalog/types';
 
 export type Goal = 'focus' | 'calm' | 'sleep' | 'study' | 'recover' | 'curious';
 export type TimeOfDay = 'morning' | 'afternoon' | 'evening' | 'night' | 'anytime';
-export type Device = 'headphones' | 'speakers' | 'bluetooth' | 'unsure';
+/** How the person listens. Old saved values 'headphones' and 'unsure' become 'wired' on load. */
+export type Device = 'wired' | 'bluetooth' | 'speakers';
 
 export const GOALS: readonly Goal[] = ['focus', 'calm', 'sleep', 'study', 'recover', 'curious'];
 export const TIMES_OF_DAY: readonly TimeOfDay[] = ['morning', 'afternoon', 'evening', 'night', 'anytime'];
-export const DEVICES: readonly Device[] = ['headphones', 'speakers', 'bluetooth', 'unsure'];
+export const DEVICES: readonly Device[] = ['wired', 'bluetooth', 'speakers'];
 
 /** Onboarding answers. No name, no account. */
 export interface Profile {

@@ -8,7 +8,7 @@ import {
 } from './index';
 import type { Profile, SessionDay, StorageLike } from './index';
 
-const P: Profile = { goal: 'sleep', timeOfDay: 'night', device: 'headphones', extraGentle: false, createdAt: 1000 };
+const P: Profile = { goal: 'sleep', timeOfDay: 'night', device: 'wired', extraGentle: false, createdAt: 1000 };
 const ids = new Set(getTemplates().map((t) => t.id));
 
 describe('journeys', () => {
@@ -99,7 +99,7 @@ describe('profileToRecommendation', () => {
   it('maps devices and sensitivity', () => {
     expect(profileToRecommendation({ ...P, device: 'speakers' }).deviceType).toBe('speaker');
     expect(profileToRecommendation({ ...P, device: 'bluetooth' }).deviceType).toBe('bluetooth');
-    expect(profileToRecommendation({ ...P, device: 'unsure' }).deviceType).toBe('headphones');
+    expect(profileToRecommendation({ ...P, device: 'wired' }).deviceType).toBe('headphones');
     expect(profileToRecommendation(P).sensorySensitivity).toBe('medium');
     expect(profileToRecommendation({ ...P, extraGentle: true }).sensorySensitivity).toBe('high');
   });
@@ -113,7 +113,7 @@ describe('profileToRecommendation', () => {
     expect(profileToRecommendation({ ...P, timeOfDay: 'morning' }, at(23)).timeOfDay).toBe('morning');
   });
   it('flags the headphone notice', () => {
-    expect(needsHeadphoneNotice({ ...P, device: 'unsure' })).toBe(true);
+    expect(needsHeadphoneNotice({ ...P, device: 'bluetooth' })).toBe(false);
     expect(needsHeadphoneNotice({ ...P, device: 'speakers' })).toBe(true);
     expect(needsHeadphoneNotice(P)).toBe(false);
   });

@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react';
-import { recommendTemplates } from '../../catalog';
 import type { Template } from '../../catalog/types';
 import { CALM, GOAL_LABEL, briefReason, greeting } from './copy';
-import { nudgeRecs, profileToRecommendation } from './data';
+import { nudgeRecs, profileToRecommendation, recommendForDevice } from './data';
 import type { FeelEntry, Goal, Profile, ProgressMap, WeekStats } from './data';
 import { FormFoot } from './FormFrame';
 import { Mascot } from './MascotView';
@@ -42,7 +41,7 @@ export function Today({ profile, week, reduced, crewConnected, hasHistory = true
   const [skip, setSkip] = useState(0);
   const recs = useMemo(() => {
     const ctx = profileToRecommendation(profile, now());
-    return nudgeRecs(recommendTemplates(ctx, 5), feel.length === 0 ? [] : recommendTemplates(ctx, 12), feel);
+    return nudgeRecs(recommendForDevice(ctx, profile.device, 5), feel.length === 0 ? [] : recommendForDevice(ctx, profile.device, 12), feel);
   }, [profile, now, feel]);
   const pick = recs[skip % Math.max(1, recs.length)];
   return (

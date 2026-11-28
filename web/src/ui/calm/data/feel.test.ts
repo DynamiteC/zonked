@@ -66,7 +66,7 @@ describe('feel nudge', () => {
     expect(feelBias([e('a', 'same')], 'a')).toBe(0);
     expect(feelBias(Array.from({ length: 50 }, () => e('a', 'calmer')), 'a')).toBe(12);
   });
-  const gentle: Profile = { goal: 'focus', timeOfDay: 'morning', device: 'headphones', extraGentle: true, createdAt: 1 };
+  const gentle: Profile = { goal: 'focus', timeOfDay: 'morning', device: 'wired', extraGentle: true, createdAt: 1 };
   it('never lets a Calmer answer raise intensity above what the sensitivity setting allowed', () => {
     for (const p of [gentle, { ...gentle, extraGentle: false, goal: 'sleep' as const }]) {
       const ctx = profileToRecommendation(p, new Date(2026, 0, 5, 9));

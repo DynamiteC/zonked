@@ -1,10 +1,14 @@
-import { CALM } from './copy';
+import { CALM, DEVICE_LABEL } from './copy';
+import { DEVICES } from './data';
+import type { Device } from './data';
 import { dimOn } from './look';
 import type { Prefs, ThemeChoice } from './look';
 import { PageHead } from './MascotView';
 
 interface Props {
   readonly gentle: boolean;
+  readonly device?: Device;
+  readonly onDevice?: (d: Device) => void;
   readonly reduceMotion: boolean;
   readonly reduced?: boolean;
   readonly onGentle: (v: boolean) => void;
@@ -45,10 +49,22 @@ function ThemePicker({ value, onChange }: { readonly value: ThemeChoice; readonl
   );
 }
 
-export function SettingsScreen({ gentle, reduceMotion, reduced = false, onGentle, onReduceMotion, onStudio, onForget, prefs, onPrefs, onGuide }: Props): React.JSX.Element {
+export function SettingsScreen({ device, onDevice, gentle, reduceMotion, reduced = false, onGentle, onReduceMotion, onStudio, onForget, prefs, onPrefs, onGuide }: Props): React.JSX.Element {
   return (
     <div>
       <PageHead title={CALM.settingsTitle} reduced={reduced} />
+      {device !== undefined && onDevice !== undefined && (
+        <fieldset className="c-themes" data-testid="device-picker">
+          <legend>{CALM.deviceTitle}</legend>
+          {DEVICES.map((d) => (
+            <label key={d} className="c-theme-opt">
+              <input type="radio" name="c-device" value={d} data-testid={`device-${d}`} checked={device === d} onChange={() => onDevice(d)} />
+              <span>{DEVICE_LABEL[d]}</span>
+            </label>
+          ))}
+          <small className="c-muted">{CALM.deviceHint}</small>
+        </fieldset>
+      )}
       <Switch label={CALM.gentle} hint={CALM.gentleHint} checked={gentle} onChange={onGentle} testId="gentle-switch" />
       <Switch label={CALM.reduceMotion} checked={reduceMotion} onChange={onReduceMotion} testId="motion-switch" />
       <ThemePicker value={prefs.choice} onChange={(choice) => onPrefs({ ...prefs, choice })} />

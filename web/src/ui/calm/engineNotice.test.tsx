@@ -29,7 +29,7 @@ function engine() {
 beforeEach(() => {
   localStorage.clear();
   HTMLCanvasElement.prototype.getContext = (() => null) as never;
-  saveProfile(createLocalStorage(), { goal: 'calm', timeOfDay: 'night', device: 'headphones', extraGentle: false, createdAt: 1_700_000_000_000 });
+  saveProfile(createLocalStorage(), { goal: 'calm', timeOfDay: 'night', device: 'wired', extraGentle: false, createdAt: 1_700_000_000_000 });
 });
 afterEach(() => cleanup());
 
