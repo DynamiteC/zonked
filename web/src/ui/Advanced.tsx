@@ -35,10 +35,11 @@ export function Advanced({ snap, engine, bridge, onOpen, player }: Props): React
   return (
     <section className="adv" aria-label="Advanced details">
       <div className="adv-head">
+        <Tip text={COPY.tips.advanced}>
         <button type="button" className="btn" data-testid="advanced-toggle" aria-expanded={open} aria-controls="adv-body" onClick={toggle}>
           {COPY.advanced.open}
         </button>
-        <Tip label={COPY.advanced.open} text={COPY.tips.advanced} />
+        </Tip>
       </div>
       <div id="adv-body" className={open ? 'adv-body' : 'adv-body sr-only'} data-open={open} inert={!open}>
         <p className="meta">{COPY.advanced.hint}</p>

@@ -65,9 +65,8 @@ export function Drawer({ id, title, testId, help, onClose, children }: Props): R
     >
       <div className="drawer-head">
         <h2 ref={head} tabIndex={-1}>
-          {title}
+          {help !== undefined ? <Tip text={help}>{title}</Tip> : title}
         </h2>
-        {help !== undefined && <Tip label={title} text={help} />}
         <button type="button" className="btn" onClick={onClose}>
           Close
         </button>

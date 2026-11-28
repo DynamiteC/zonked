@@ -80,8 +80,7 @@ export function Editor({ store, onPlay, onClose }: Props): React.JSX.Element {
       }}
     >
       <div className="editor-head">
-        <h2>Script editor</h2>
-        <Tip label="Script editor" text={COPY.tips.editor} />
+        <h2><Tip text={COPY.tips.editor}>Script editor</Tip></h2>
         <button type="button" className="btn" onClick={onClose}>
           Close
         </button>

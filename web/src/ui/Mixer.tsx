@@ -39,8 +39,7 @@ export function Mixer({ snap, player, onClose }: Props): React.JSX.Element {
       {MIXER_ROWS.map((r) => (
         <div className="slider-row" key={r.id}>
           <span className="tip-field">
-            <label htmlFor={r.id}>{r.label}</label>
-            <Tip label={r.label} text={r.tip} />
+            <Tip text={r.tip} controlId={r.id}><label htmlFor={r.id}>{r.label}</label></Tip>
           </span>
           <RangeField
             id={r.id}
@@ -59,12 +58,11 @@ export function Mixer({ snap, player, onClose }: Props): React.JSX.Element {
       ))}
       <div className="tip-field">
         <p className="master" data-testid="master-gain">
-          Master gain {snap.muted ? 0 : gain.toFixed(2)} (maximum {MAX_GAIN})
+          <Tip text={COPY.tips.volume}>{`Master gain ${snap.muted ? 0 : gain.toFixed(2)} (maximum ${MAX_GAIN})`}</Tip>
         </p>
-        <Tip label="volume" text={COPY.tips.volume} />
       </div>
       <div className="drawer-actions">
-        <Tip label="mute" text={COPY.tips.mute} info={false}>
+        <Tip text={COPY.tips.mute}>
         <button
           type="button"
           className="btn"

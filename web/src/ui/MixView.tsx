@@ -97,8 +97,7 @@ export function MixView({ snap, player }: Props): React.JSX.Element {
       )}
       <div className="dial" data-testid="calm-dial-wrap">
         <span className="tip-field">
-          <label htmlFor="calm-dial">{COPY.mix.dialTitle}</label>
-          <Tip label={COPY.mix.dialTitle} text={COPY.mix.dialHint} />
+          <Tip text={COPY.mix.dialHint} controlId="calm-dial"><label htmlFor="calm-dial">{COPY.mix.dialTitle}</label></Tip>
         </span>
         <div className="dial-row">
           <span className="meta">{COPY.mix.dialCalm}</span>

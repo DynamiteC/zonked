@@ -112,61 +112,129 @@ describe('Advanced', () => {
 });
 
 describe('Tip', () => {
-  const ui = (reduced = false): React.JSX.Element => (
+  const ui = (reduced = false, onTap: () => void = () => undefined): React.JSX.Element => (
     <MotionContext.Provider value={reduced}>
       <div>
-        <Tip label="thing" text="Explains the thing">
-          <button type="button">Do it</button>
+        <Tip text="Explains the thing">
+          <button type="button" onClick={onTap}>Do it</button>
         </Tip>
         <button type="button">Elsewhere</button>
       </div>
     </MotionContext.Provider>
   );
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
 
-  it('opens on hover, focus and tap, wiring aria-describedby', () => {
+  it('has no ? button', () => {
     render(ui());
-    const btn = screen.getByRole('button', { name: 'Do it' });
-    expect(screen.queryByRole('tooltip')).toBeNull();
-    fireEvent.mouseEnter(btn.parentElement as HTMLElement);
-    const tip = screen.getByRole('tooltip');
-    expect(btn.getAttribute('aria-describedby')).toBe(tip.id);
-    fireEvent.mouseLeave(btn.parentElement as HTMLElement);
-    expect(screen.queryByRole('tooltip')).toBeNull();
-    fireEvent.focus(btn);
-    expect(screen.getByRole('tooltip')).toBeTruthy();
-    fireEvent.blur(btn);
-    expect(screen.queryByRole('tooltip')).toBeNull();
-    fireEvent.click(screen.getByRole('button', { name: 'About thing' }));
-    expect(screen.getByRole('tooltip').textContent).toBe('Explains the thing');
+    expect(screen.queryByRole('button', { name: /About/ })).toBeNull();
+    expect(screen.getAllByRole('button')).toHaveLength(2);
   });
 
-  it('closes on Escape and on a tap elsewhere, and a second tap on ? closes it', () => {
+  it('hover shows the tip after 300 ms and leaving hides it', () => {
     render(ui());
-    const info = screen.getByRole('button', { name: 'About thing' });
-    fireEvent.click(info);
+    const wrap = screen.getByRole('button', { name: 'Do it' }).parentElement as HTMLElement;
+    fireEvent.mouseEnter(wrap);
+    act(() => void vi.advanceTimersByTime(250));
+    expect(screen.queryByRole('tooltip')).toBeNull();
+    act(() => void vi.advanceTimersByTime(60));
+    expect(screen.getByRole('tooltip').textContent).toBe('Explains the thing');
+    fireEvent.mouseLeave(wrap);
+    expect(screen.queryByRole('tooltip')).toBeNull();
+  });
+
+  it('keyboard focus shows the tip at once and the control is described by the text', () => {
+    render(ui());
+    const btn = screen.getByRole('button', { name: 'Do it' });
+    fireEvent.keyDown(btn, { key: 'Tab' });
+    fireEvent.focus(btn);
+    expect(screen.getByRole('tooltip')).toBeTruthy();
+    const ids = (btn.getAttribute('aria-describedby') ?? '').split(' ');
+    expect(ids.map((i) => document.getElementById(i)?.textContent)).toContain('Explains the thing');
+    fireEvent.blur(btn);
+    expect(screen.queryByRole('tooltip')).toBeNull();
+  });
+
+  it('a click focus does not leave the tip open', () => {
+    render(ui());
+    const btn = screen.getByRole('button', { name: 'Do it' });
+    fireEvent.pointerDown(btn, { pointerType: 'mouse' });
+    fireEvent.focus(btn);
+    expect(screen.queryByRole('tooltip')).toBeNull();
+  });
+
+  it('a 500 ms touch hold shows the tip and the tap does not fire', () => {
+    const tap = vi.fn();
+    render(ui(false, tap));
+    const btn = screen.getByRole('button', { name: 'Do it' });
+    fireEvent.pointerDown(btn, { pointerType: 'touch', clientX: 10, clientY: 10 });
+    act(() => void vi.advanceTimersByTime(400));
+    expect(screen.queryByRole('tooltip')).toBeNull();
+    act(() => void vi.advanceTimersByTime(150));
+    expect(screen.getByRole('tooltip')).toBeTruthy();
+    fireEvent.pointerUp(btn, { pointerType: 'touch' });
+    fireEvent.click(btn);
+    expect(tap).not.toHaveBeenCalled();
+    fireEvent.click(btn);
+    expect(tap).toHaveBeenCalledTimes(1);
+  });
+
+  it('a short touch is a normal tap with no tip', () => {
+    const tap = vi.fn();
+    render(ui(false, tap));
+    const btn = screen.getByRole('button', { name: 'Do it' });
+    fireEvent.pointerDown(btn, { pointerType: 'touch', clientX: 10, clientY: 10 });
+    act(() => void vi.advanceTimersByTime(200));
+    fireEvent.pointerUp(btn, { pointerType: 'touch' });
+    act(() => void vi.advanceTimersByTime(600));
+    fireEvent.click(btn);
+    expect(screen.queryByRole('tooltip')).toBeNull();
+    expect(tap).toHaveBeenCalledTimes(1);
+  });
+
+  it('a finger that moves is a scroll, not a press', () => {
+    render(ui());
+    const btn = screen.getByRole('button', { name: 'Do it' });
+    fireEvent.pointerDown(btn, { pointerType: 'touch', clientX: 10, clientY: 10 });
+    fireEvent.pointerMove(btn, { pointerType: 'touch', clientX: 10, clientY: 60 });
+    act(() => void vi.advanceTimersByTime(700));
+    expect(screen.queryByRole('tooltip')).toBeNull();
+  });
+
+  it('Escape closes the tip', () => {
+    render(ui());
+    const btn = screen.getByRole('button', { name: 'Do it' });
+    fireEvent.keyDown(btn, { key: 'Tab' });
+    fireEvent.focus(btn);
+    expect(screen.getByRole('tooltip')).toBeTruthy();
     fireEvent.keyDown(document.body, { key: 'Escape' });
     expect(screen.queryByRole('tooltip')).toBeNull();
-    fireEvent.click(info);
-    fireEvent.pointerDown(screen.getByRole('button', { name: 'Elsewhere' }));
-    expect(screen.queryByRole('tooltip')).toBeNull();
-    fireEvent.click(info);
-    fireEvent.click(info);
-    expect(screen.queryByRole('tooltip')).toBeNull();
+  });
+
+  it('text labels get a dotted underline class, controls do not', () => {
+    const { container } = render(<Tip text="x">Label</Tip>);
+    expect(container.querySelector('.tip-dotted')).not.toBeNull();
+    const second = render(ui());
+    expect(second.container.querySelector('.tip-dotted')).toBeNull();
   });
 
   it('drops the animation class under reduced motion', () => {
     const { unmount } = render(ui(false));
-    fireEvent.click(screen.getByRole('button', { name: 'About thing' }));
+    fireEvent.keyDown(screen.getByRole('button', { name: 'Do it' }), { key: 'Tab' });
+    fireEvent.focus(screen.getByRole('button', { name: 'Do it' }));
     expect(screen.getByRole('tooltip').className).toContain('tip-anim');
     unmount();
     render(ui(true));
-    fireEvent.click(screen.getByRole('button', { name: 'About thing' }));
+    fireEvent.keyDown(screen.getByRole('button', { name: 'Do it' }), { key: 'Tab' });
+    fireEvent.focus(screen.getByRole('button', { name: 'Do it' }));
     expect(screen.getByRole('tooltip').className).not.toContain('tip-anim');
   });
 
-  it('keeps tooltip inside a narrow viewport', () => {
+  it('keeps the tip inside a narrow viewport', () => {
     render(ui());
-    fireEvent.click(screen.getByRole('button', { name: 'About thing' }));
+    const btn = screen.getByRole('button', { name: 'Do it' });
+    fireEvent.keyDown(btn, { key: 'Tab' });
+    fireEvent.focus(btn);
     const left = parseInt((screen.getByRole('tooltip') as HTMLElement).style.left, 10);
     expect(left).toBeGreaterThanOrEqual(8);
   });

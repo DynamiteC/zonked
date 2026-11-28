@@ -3,19 +3,27 @@ import { cloneElement, createContext, isValidElement, useCallback, useContext, u
 /** True when motion is reduced (OS setting or the checkbox). The tooltip then appears without a fade. */
 export const MotionContext = createContext(false);
 
+/** Hover waits this long before the tip shows. */
+export const HOVER_MS = 300;
+/** A touch must be held this long to show the tip. */
+export const LONG_PRESS_MS = 500;
+/** A finger that moves farther than this is a scroll, not a press. */
+const MOVE_PX = 10;
+/** A tip opened by touch closes by itself after this long. */
+const TOUCH_SHOW_MS = 4000;
+const EDGE = 8;
+const INTERACTIVE = new Set(['button', 'select', 'input', 'textarea', 'a']);
+
 interface Props {
-  /** Short name of the thing explained. Used for the accessible name of the info button. */
-  label: string;
+  /** The explanation. Plain text only. */
   text: string;
-  /** Show the small "?" button (the way to open the tip by tap or click). Default true. */
-  info?: boolean;
-  /** Optional control to describe. It receives aria-describedby while the tip is open. */
-  children?: React.ReactElement<{ 'aria-describedby'?: string }>;
+  /** The label or control that triggers the tip. It gets aria-describedby. */
+  children: React.ReactNode;
+  /** Id of a form control that this label describes. Focusing that control shows the tip too. */
+  controlId?: string;
 }
 
-const EDGE = 8;
-
-/** Fixed placement keeps the bubble inside the viewport and out of overflow clipping. */
+/** Fixed placement keeps the bubble inside the viewport (360 px phones too) and out of overflow clipping. */
 function place(anchor: HTMLElement, bubble: HTMLElement): void {
   const a = anchor.getBoundingClientRect();
   const w = bubble.offsetWidth;
@@ -29,18 +37,39 @@ function place(anchor: HTMLElement, bubble: HTMLElement): void {
   bubble.style.top = `${Math.round(top)}px`;
 }
 
-export function Tip({ label, text, info = true, children }: Props): React.JSX.Element {
+type Timer = ReturnType<typeof setTimeout> | null;
+
+/**
+ * The label or control is the trigger. Hover shows the tip after 300 ms, a 500 ms touch hold shows it
+ * without firing the tap, keyboard focus shows it at once, and Escape closes it.
+ * Text children get a light dotted underline so people can tell a tip is there.
+ */
+export function Tip({ text, children, controlId }: Props): React.JSX.Element {
   const reduced = useContext(MotionContext);
   const id = useId();
+  const descId = `${id}-d`;
   const [open, setOpen] = useState(false);
-  const pinned = useRef(false);
-  const byPointer = useRef(false);
   const root = useRef<HTMLSpanElement>(null);
   const bubble = useRef<HTMLSpanElement>(null);
+  const hover = useRef<Timer>(null);
+  const press = useRef<Timer>(null);
+  const hide = useRef<Timer>(null);
+  const start = useRef<{ x: number; y: number } | null>(null);
+  /** Set when a long press fired, so the click that follows the release is swallowed once. */
+  const swallow = useRef(false);
+  const byPointer = useRef(false);
+
+  const clear = (t: { current: Timer }): void => {
+    if (t.current !== null) clearTimeout(t.current);
+    t.current = null;
+  };
   const close = useCallback(() => {
-    pinned.current = false;
+    clear(hover);
+    clear(press);
+    clear(hide);
     setOpen(false);
   }, []);
+  useEffect(() => () => { clear(hover); clear(press); clear(hide); }, []);
 
   useLayoutEffect(() => {
     if (open && root.current !== null && bubble.current !== null) place(root.current, bubble.current);
@@ -71,30 +100,78 @@ export function Tip({ label, text, info = true, children }: Props): React.JSX.El
     };
   }, [open, close]);
 
-  const described = open ? id : undefined;
-  const own = isValidElement(children) ? children.props['aria-describedby'] : undefined;
-  const merged = [own, described].filter((x) => x !== undefined && x !== '').join(' ') || undefined;
-  const control = isValidElement(children) ? cloneElement(children, { 'aria-describedby': merged }) : null;
+  // A separate control (a select next to its label) shows this tip on keyboard focus.
+  useEffect(() => {
+    if (controlId === undefined) return undefined;
+    const el = document.getElementById(controlId);
+    if (el === null) return undefined;
+    const prev = el.getAttribute('aria-describedby');
+    el.setAttribute('aria-describedby', [prev, descId].filter((x) => x !== null && x !== '').join(' '));
+    const onIn = (): void => { if (!byPointer.current) setOpen(true); };
+    const onKey = (): void => { byPointer.current = false; };
+    const onPtr = (): void => { byPointer.current = true; };
+    el.addEventListener('focus', onIn);
+    el.addEventListener('keydown', onKey);
+    el.addEventListener('pointerdown', onPtr);
+    el.addEventListener('blur', close);
+    return () => {
+      if (prev === null) el.removeAttribute('aria-describedby');
+      else el.setAttribute('aria-describedby', prev);
+      el.removeEventListener('focus', onIn);
+      el.removeEventListener('keydown', onKey);
+      el.removeEventListener('pointerdown', onPtr);
+      el.removeEventListener('blur', close);
+    };
+  }, [controlId, descId, close]);
 
-  const onInfo = (): void => {
-    if (open && pinned.current) {
-      close();
-    } else {
-      pinned.current = true;
-      setOpen(true);
-    }
+  const only = isValidElement(children) ? (children as React.ReactElement<{ 'aria-describedby'?: string }>) : null;
+  const ownsControl = only !== null && typeof only.type === 'string' && INTERACTIVE.has(only.type);
+  const control = ownsControl ? cloneElement(only, { 'aria-describedby': [only.props['aria-describedby'], descId].filter(Boolean).join(' ') }) : children;
+  const focusable = !ownsControl && controlId === undefined;
+  const dotted = !ownsControl;
+
+  const cancelPress = (): void => {
+    clear(press);
+    start.current = null;
   };
 
   return (
     <span
       ref={root}
-      className="tip"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => {
-        if (!pinned.current) setOpen(false);
+      className={dotted ? 'tip tip-dotted' : 'tip'}
+      {...(focusable ? { tabIndex: 0, 'aria-describedby': descId } : {})}
+      onMouseEnter={() => {
+        clear(hover);
+        hover.current = setTimeout(() => setOpen(true), HOVER_MS);
       }}
-      onPointerDown={() => {
+      onMouseLeave={close}
+      onPointerDown={(e) => {
         byPointer.current = true;
+        if (e.pointerType !== 'touch') return;
+        start.current = { x: e.clientX, y: e.clientY };
+        clear(press);
+        press.current = setTimeout(() => {
+          swallow.current = true;
+          setOpen(true);
+          clear(hide);
+          hide.current = setTimeout(() => setOpen(false), TOUCH_SHOW_MS);
+        }, LONG_PRESS_MS);
+      }}
+      onPointerMove={(e) => {
+        const s = start.current;
+        if (s !== null && Math.hypot(e.clientX - s.x, e.clientY - s.y) > MOVE_PX) cancelPress();
+      }}
+      onPointerUp={cancelPress}
+      onPointerCancel={cancelPress}
+      onContextMenu={(e) => {
+        // A long press opens the browser menu on some phones. The tip replaces it.
+        if (start.current !== null || swallow.current) e.preventDefault();
+      }}
+      onClickCapture={(e) => {
+        if (!swallow.current) return;
+        swallow.current = false;
+        e.preventDefault();
+        e.stopPropagation();
       }}
       onKeyDown={() => {
         byPointer.current = false;
@@ -108,11 +185,7 @@ export function Tip({ label, text, info = true, children }: Props): React.JSX.El
       }}
     >
       {control}
-      {(info || control !== null) && (
-        <button type="button" className={info ? 'tip-btn' : 'tip-btn tip-touch'} aria-label={`About ${label}`} aria-describedby={control === null ? described : undefined} onClick={onInfo}>
-          ?
-        </button>
-      )}
+      <span id={descId} className="sr-only">{text}</span>
       {open && (
         <span ref={bubble} id={id} role="tooltip" className={reduced ? 'tip-bubble' : 'tip-bubble tip-anim'}>
           {text}

@@ -303,7 +303,7 @@ export function App({ engine, clock = realClock, store: storeProp, bridgeCreate 
         <p className="tag">{COPY.tagline}</p>
         <nav className="toolbar" aria-label="Panels">
           {PRIMARY.map((d) => (
-            <Tip key={d.id} label={d.label} text={d.tip} info={false}>
+            <Tip key={d.id} text={d.tip}>
               <button
                 type="button"
                 className="btn"
@@ -319,7 +319,7 @@ export function App({ engine, clock = realClock, store: storeProp, bridgeCreate 
           <MoreMenu open={moreOpen} items={moreItems} onToggle={() => setMoreOpen((v) => !v)} onClose={() => setMoreOpen(false)} />
         </nav>
         <div className="help-wrap">
-          <Tip label="keyboard shortcuts" text={COPY.tips.shortcuts} info={false}>
+          <Tip text={COPY.tips.shortcuts}>
             <button type="button" className="btn" aria-expanded={help} aria-controls="help-pop" onClick={() => setHelp((v) => !v)}>
               Help
             </button>
@@ -342,7 +342,7 @@ export function App({ engine, clock = realClock, store: storeProp, bridgeCreate 
           <section className="stage" aria-label="Controls">
             <Mascot playing={snap.playing} synced={synced} reduced={reduced} getVoice={getVoice} getLevel={getLevel} onToggle={toggle} mood={snap.templateId?.replace(/^starter-/, '') ?? null} />
             <div className="controls">
-              <Tip label="Play and Stop" text={COPY.tips.play}>
+              <Tip text={COPY.tips.play}>
                 <button type="button" className="btn btn-primary" data-testid="play-button" onClick={toggle}>
                   {snap.playing ? 'Stop' : 'Play'}
                 </button>
@@ -350,11 +350,10 @@ export function App({ engine, clock = realClock, store: storeProp, bridgeCreate 
               <span className="qs-status" role="status" data-testid="status-plain">
                 {snap.playing ? COPY.playing : COPY.stopped}
               </span>
-              <Tip label="the mascot" text={COPY.tips.mascot} />
               <label htmlFor="preset" className="sr-only">
                 Preset
               </label>
-              <Tip label="the sound picker" text={`${COPY.tips.preset} ${COPY.helper.preset}`}>
+              <Tip text={`${COPY.tips.preset} ${COPY.helper.preset}`}>
               <select
                 id="preset"
                 data-testid="preset-select"
@@ -379,12 +378,12 @@ export function App({ engine, clock = realClock, store: storeProp, bridgeCreate 
                   Follow crew
                 </button>
               )}
-              <Tip label="Breathe" text={COPY.tips.breathe}>
+              <Tip text={COPY.tips.breathe}>
                 <button type="button" className="btn" data-testid="breathe-toggle" aria-pressed={breathe} onClick={() => setBreathe((v) => !v)}>
                   Breathe
                 </button>
               </Tip>
-              <Tip label="motion options" text={COPY.tips.reduceMotion}>
+              <Tip text={COPY.tips.reduceMotion}>
                 <label className="check">
                   <input type="checkbox" checked={userReduced} onChange={(e) => setUserReduced(e.target.checked)} />
                   Reduce motion
