@@ -45,27 +45,33 @@ export function HeadLayer({ id, mood, plain }: IdProps & { readonly mood: Mascot
   const [eyeL, eyeR] = EYES[mood];
   return (
     <svg className="cm-layer cm-face" viewBox={VB_FULL} aria-hidden="true" focusable="false">
-      <g transform={HEAD_T} filter={plain ? undefined : `url(#${id}-paint)`}>
+      <g transform={HEAD_T}>
         <g className="cm-pod cm-podl">
-          <rect className="cm-f-cup cm-s-ink" x="8" y="196" width="68" height="120" rx="30" fill="#6B4A3C" strokeWidth="6" />
-          <rect className="cm-f-mask cm-s-ink" x="22" y="212" width="40" height="88" rx="16" fill="#241F2B" strokeWidth="4" />
+          <rect className="cm-f-cup cm-s-ink" x="8" y="196" width="68" height="120" rx="30" fill={`url(#${id}-cup)`} strokeWidth="6" />
+          <rect className="cm-f-mask cm-s-ink" x="22" y="212" width="40" height="88" rx="16" fill="#2E2433" strokeWidth="4" />
           <rect className="cm-slit" x="35" y="234" width="14" height="10" rx="3" />
           <rect className="cm-slit" x="35" y="268" width="14" height="10" rx="3" />
+          <path className="cm-bevel" d="M20 232V226Q20 212 34 207" />
         </g>
         <g className="cm-pod cm-podr">
-          <rect className="cm-f-cup cm-s-ink" x="436" y="196" width="68" height="120" rx="30" fill="#6B4A3C" strokeWidth="6" />
-          <rect className="cm-f-mask cm-s-ink" x="450" y="212" width="40" height="88" rx="16" fill="#241F2B" strokeWidth="4" />
+          <rect className="cm-f-cup cm-s-ink" x="436" y="196" width="68" height="120" rx="30" fill={`url(#${id}-cup)`} strokeWidth="6" />
+          <rect className="cm-f-mask cm-s-ink" x="450" y="212" width="40" height="88" rx="16" fill="#2E2433" strokeWidth="4" />
           <rect className="cm-slit" x="463" y="234" width="14" height="10" rx="3" />
           <rect className="cm-slit" x="463" y="268" width="14" height="10" rx="3" />
+          <path className="cm-bevel" d="M440 232V226Q440 212 454 207" />
         </g>
         <circle className="cm-f-gold" cx="256" cy="256" r="200" fill={`url(#${id}-gold)`} />
-        <circle className="cm-shade" cx="256" cy="256" r="200" fill={`url(#${id}-shade)`} />
-        <circle className="cm-rim" cx="256" cy="256" r="186" fill="none" stroke="#FFF3B0" strokeOpacity="0.7" strokeWidth="12" strokeDasharray="330 1500" strokeLinecap="round" transform="rotate(200 256 256)" />
+        {!plain && <circle className="cm-grain" cx="256" cy="256" r="200" fill="#FBD84A" filter={`url(#${id}-grain)`} />}
+        {!plain && <circle className="cm-key" cx="256" cy="256" r="200" fill={`url(#${id}-key)`} />}
+        {!plain && <circle className="cm-cel" cx="256" cy="256" r="170" fill="none" stroke="#B8741C" strokeOpacity="0.26" strokeWidth="60" strokeDasharray="330 1100" transform="rotate(5 256 256)" />}
+        {!plain && <circle className="cm-cool" cx="256" cy="256" r="191" fill="none" stroke="#CFE8F4" strokeOpacity="0.28" strokeWidth="4" strokeDasharray="200 1200" strokeLinecap="round" transform="rotate(30 256 256)" />}
+        {!plain && <circle className="cm-rim" cx="256" cy="256" r="186" fill="none" stroke="#FFF3B0" strokeOpacity="0.7" strokeWidth="12" strokeDasharray="330 1500" strokeLinecap="round" transform="rotate(200 256 256)" />}
         <circle className="cm-s-ink" cx="256" cy="256" r="200" fill="none" stroke="#3A2A2E" strokeWidth="8" />
         <circle className="cm-s-ink" cx="256" cy="256" r="200" fill="none" stroke="#3A2A2E" strokeWidth="6" strokeDasharray="420 1500" strokeLinecap="round" transform="rotate(100 256 256)" />
         <rect className="cm-f-mask" x="218" y="146" width="76" height="8" rx="4" fill="#241F2B" />
-        <polygon className="cm-f-mask cm-s-ink" points="96,240 240,276 240,350 168,370 120,320" fill="#2F2430" strokeWidth="11" strokeLinejoin="round" />
-        <polygon className="cm-f-mask cm-s-ink" points="416,240 272,276 272,350 344,370 392,320" fill="#2F2430" strokeWidth="11" strokeLinejoin="round" />
+        <polygon className="cm-f-mask cm-s-ink" points="96,240 240,276 240,350 168,370 120,320" fill={`url(#${id}-mask)`} strokeWidth="11" strokeLinejoin="round" />
+        <polygon className="cm-f-mask cm-s-ink" points="416,240 272,276 272,350 344,370 392,320" fill={`url(#${id}-mask)`} strokeWidth="11" strokeLinejoin="round" />
+        <path className="cm-bevel cm-bevel-m" d="M112 252L232 282M400 252L280 282" />
         <polygon className="cm-gem" points="256,300 270,316 256,332 242,316" fill="#00E5A8" fillOpacity="0.35" stroke="#00E5A8" strokeWidth="5" strokeLinejoin="round" />
         <Eye cx={178} kind={eyeL} side={-1} />
         <Eye cx={334} kind={eyeR} side={1} />
@@ -100,23 +106,34 @@ export function MotesLayer(): JSX.Element {
   );
 }
 
-/** Shared paint: gold gradient, shade and the displacement that gives lines a hand-drawn wobble. Ids are per instance. */
-export function Defs({ id }: IdProps): JSX.Element {
+/** Shared paint: warm matte gradients, a key light, and one grain filter (only when `lite` is false). Ids are per instance. */
+export function Defs({ id, lite }: IdProps & { readonly lite: boolean }): JSX.Element {
   return (
     <svg className="cm-defs" width="0" height="0" aria-hidden="true" focusable="false">
       <defs>
-        <linearGradient id={`${id}-gold`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#FFE600" />
-          <stop offset="1" stopColor="#FFB800" />
+        <linearGradient id={`${id}-gold`} x1="0.2" y1="0" x2="0.3" y2="1">
+          <stop offset="0" stopColor="#FBD84A" />
+          <stop offset="1" stopColor="#E8A128" />
         </linearGradient>
-        <radialGradient id={`${id}-shade`} cx="0.35" cy="0.3" r="0.9">
-          <stop offset="0.5" stopColor="#C9772A" stopOpacity="0" />
-          <stop offset="1" stopColor="#C9772A" stopOpacity="0.35" />
+        <linearGradient id={`${id}-mask`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#54415A" />
+          <stop offset="1" stopColor="#2E2433" />
+        </linearGradient>
+        <linearGradient id={`${id}-cup`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#CC7F5E" />
+          <stop offset="1" stopColor="#9C4F3A" />
+        </linearGradient>
+        <radialGradient id={`${id}-key`} cx="0.3" cy="0.25" r="0.7">
+          <stop offset="0" stopColor="#FFF4B8" stopOpacity="0.7" />
+          <stop offset="1" stopColor="#FFF4B8" stopOpacity="0" />
         </radialGradient>
-        <filter id={`${id}-paint`} x="-5%" y="-5%" width="110%" height="110%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="t" />
-          <feDisplacementMap in="SourceGraphic" in2="t" scale="9" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
+        {!lite && (
+          <filter id={`${id}-grain`} x="0" y="0" width="1" height="1">
+            <feTurbulence type="fractalNoise" baseFrequency="0.012 0.24" numOctaves="2" seed="4" result="n" />
+            <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.45  0 0 0 0 0.24  0 0 0 0 0  0.6 0 0 0 -0.14" result="m" />
+            <feComposite in="m" in2="SourceAlpha" operator="in" />
+          </filter>
+        )}
       </defs>
     </svg>
   );

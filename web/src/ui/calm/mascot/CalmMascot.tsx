@@ -18,6 +18,8 @@ const unit = (v: number | undefined): number => (v !== undefined && Number.isFin
 
 /** Up to this pixel size only the head is drawn, cropped, with the paint filter off. */
 const COMPACT_MAX = 96;
+/** Below this size no filter, grain or shade is drawn: bold shapes only. */
+const LITE_BELOW = 72;
 
 export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = 'Zonked mascot', breathPhase, level, situation }: CalmMascotProps): JSX.Element {
   const id = `cm${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
@@ -25,6 +27,7 @@ export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = '
   const still = reducedMotion ?? prefersReduced();
   const px = Number.isFinite(size) ? Math.max(24, Math.min(640, size)) : 220;
   const compact = px <= COMPACT_MAX;
+  const lite = px < LITE_BELOW;
   // The head breathes: about 3 percent larger and a little higher on inhale. Still under reduced motion.
   const lift: CSSProperties | undefined = breathPhase !== undefined && !still ? { scale: String(1 + unit(breathPhase) * 0.03), translate: `0 ${(-unit(breathPhase) * 1.2).toFixed(2)}%` } : undefined;
   useParallax(stage, !still && !compact);
@@ -39,13 +42,13 @@ export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = '
       data-mood={mood}
       data-situation={situation}
     >
-      <Defs id={id} />
+      <Defs id={id} lite={lite} />
       <div className="cm-body">
         {!compact && <ShadowLayer />}
         <div className="cm-sway" style={lift}>
           <div className="cm-head">
             {!compact && <RippleLayer marked={mood === 'listening'} />}
-            <HeadLayer id={id} mood={mood} plain={compact} />
+            <HeadLayer id={id} mood={mood} plain={lite} />
             <BandLayer />
             <PropLayer mood={mood} />
             {!compact && <MotesLayer />}

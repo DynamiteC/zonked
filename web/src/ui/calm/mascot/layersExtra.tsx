@@ -9,7 +9,8 @@ export function BandLayer(): JSX.Element {
   return (
     <svg className="cm-layer cm-band" viewBox={VB} aria-hidden="true" focusable="false">
       <g transform={HEAD_T}>
-        <path className="cm-s-ink cm-bandink" d="M42 204C20 -34 492 -34 470 204" fill="none" stroke={INK} strokeWidth="16" strokeLinecap="round" />
+        <path className="cm-s-ink cm-bandink" d="M42 204C20 -34 492 -34 470 204" fill="none" stroke={INK} strokeWidth="26" strokeLinecap="round" />
+        <path className="cm-bandcol" d="M42 204C20 -34 492 -34 470 204" fill="none" stroke="#C27A5A" strokeWidth="15" strokeLinecap="round" />
         <path d="M60 190C50 10 462 10 452 190" fill="none" stroke="#FFF3D0" strokeOpacity="0.22" strokeWidth="5" strokeLinecap="round" />
       </g>
     </svg>

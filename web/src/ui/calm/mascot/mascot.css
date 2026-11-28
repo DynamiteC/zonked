@@ -2,7 +2,7 @@
 .cm-defs{position:absolute;width:0;height:0}
 .cm-body{position:absolute;inset:0;transform-style:preserve-3d}
 .cm-sway{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 60%;transition:scale .3s linear,translate .3s linear;animation:cm-sway var(--sw) ease-in-out infinite}
-.cm-head{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .25s ease-out,translate .8s ease,rotate .8s ease;filter:drop-shadow(0 3px 5px rgba(58,42,46,.18))}
+.cm-head{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .45s ease-out,translate .8s ease,rotate .8s ease}
 .cm-layer{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .cm-shadow{transform:translateZ(-40px)}
 .cm-ripples{transform:translateZ(-18px);pointer-events:none}
@@ -12,12 +12,13 @@
 .cm-gshadow{transform-box:fill-box;transform-origin:center;transform:scaleX(calc(1 - var(--bp) * .08))}
 .cm-compact{overflow:hidden}
 .cm-compact .cm-body{scale:1.1;translate:0 1.5%}
-.cm-compact .cm-head{filter:none}
-.cm-compact .cm-shade,.cm-compact .cm-rim{display:none}
 
 /* paint */
 .cm-slit{fill:#241F2B;stroke:#FFD23A;stroke-width:3}
-.cm-shade{mix-blend-mode:multiply}
+.cm-grain,.cm-key,.cm-cel,.cm-cool{pointer-events:none}
+.cm-bevel{fill:none;stroke:#EBC7D8;stroke-opacity:.5;stroke-width:5;stroke-linecap:round}
+.cm-pod .cm-bevel{stroke:#F0B598;stroke-opacity:.75}
+.cm-bandcol{pointer-events:none}
 .cm-eye{transform-box:fill-box;transform-origin:center;transform:scaleY(var(--eye));transition:transform .12s ease-out}
 .cm-blinking .cm-eye{transform:scaleY(.08)}
 .cm-dial{transform-box:fill-box;transform-origin:center;animation:cm-spin 14s linear infinite}
@@ -49,7 +50,7 @@
 .cm-sleepy .cm-z3{animation:cm-zee 5s ease-in-out -3.4s infinite}
 .cm-listening{--sw:6s}
 .cm-listening .cm-slit,.cm-steering .cm-slit{fill:#00E5A8}
-.cm-listening .cm-pod{filter:drop-shadow(0 0 calc(2px + var(--lv) * 9px) rgba(0,229,168,calc(.25 + var(--lv) * .6)))}
+.cm-listening .cm-pod .cm-f-cup{stroke:#00E5A8;stroke-opacity:calc(.3 + var(--lv) * .7)}
 .cm-breathing .cm-body{animation:cm-breathe 8s ease-in-out infinite}
 .cm-breathing .cm-bar,.cm-driven .cm-bar{transform:scaleY(calc(.85 + var(--bp) * .3))}
 .cm-breathing.cm-driven .cm-eye{transform:scaleY(calc(.12 + var(--bp) * .88))}
@@ -58,10 +59,10 @@
 .cm-breathing.cm-driven .cm-wisp{animation:none;opacity:calc(.8 - var(--bp) * .7)}
 .cm-focus{--sw:16s}
 .cm-focus .cm-head{rotate:3deg;translate:0 1.5%}
-.cm-focus .cm-gem{fill-opacity:.7;filter:drop-shadow(0 0 4px #00E5A8)}
+.cm-focus .cm-gem{fill-opacity:.7;stroke-width:8}
 .cm-focus .cm-glow{animation:cm-gem 4s ease-in-out infinite}
 .cm-steering .cm-body{animation:cm-float 7s ease-in-out infinite}
-.cm-steering .cm-gem{fill-opacity:.9;animation:cm-gem 3s ease-in-out infinite;filter:drop-shadow(0 0 6px #00E5A8)}
+.cm-steering .cm-gem{fill-opacity:.9;animation:cm-gem 3s ease-in-out infinite;stroke-width:8}
 .cm-steering .cm-spark{animation:cm-spark 3s ease-in-out infinite}
 .cm-tired{--sw:14s}
 .cm-tired .cm-head{rotate:-5deg;translate:0 2.5%}
@@ -85,19 +86,21 @@
 /* paint, dark and contrast variants */
 [data-theme='dark'] .cm-gshadow{fill:#000;opacity:.4}
 [data-theme='dark'] .cm-bandink{stroke:#8A7480}
+[data-theme='dark'] .cm-cel{stroke-opacity:.34}
+[data-theme='dark'] .cm-cool{stroke:#9DB8D8}
 [data-theme='dark'] .cm-pk{stroke:#CCD6FF}
 [data-contrast='high'] .cm-s-ink{stroke:#000}
 [data-theme='dark'][data-contrast='high'] .cm-s-ink{stroke:#fff}
 [data-theme='dark'][data-contrast='high'] .cm-bandink{stroke:#fff}
 @media (forced-colors:active){
-  .cm-shadow,.cm-shade,.cm-rim,.cm-motes,.cm-ripples,.cm-props{display:none}
+  .cm-shadow,.cm-grain,.cm-key,.cm-cel,.cm-cool,.cm-bevel,.cm-rim,.cm-motes,.cm-ripples,.cm-props{display:none}
   .cm-f-gold,.cm-f-cup,.cm-slit,.cm-pupil{fill:Canvas}
   .cm-f-mask,.cm-bar{fill:CanvasText}
   .cm-bar{stroke:CanvasText}
   .cm-s-ink,.cm-bandink{stroke:CanvasText}
+  .cm-bandcol{stroke:Canvas}
   .cm-s-gold,.cm-ring,.cm-slit{stroke:Canvas}
   .cm-gem{fill:Canvas;stroke:Highlight}
-  .cm-head{filter:none}
 }
 
 .cm-cue{margin:.4em 0 0;text-align:center;font-size:.95rem;letter-spacing:.04em;opacity:.85}

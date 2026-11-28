@@ -16,7 +16,7 @@ All numbers are in the 512 unit space of the 2018 `logo.svg`.
 
 | Part | Rule |
 |---|---|
-| Head | One circle, radius 200, centred at 256,256. Gold: `#FFE600` at the top to `#FFB800` at the bottom. |
+| Head | One circle, radius 200, centred at 256,256. Gold. The 2018 value was `#FFE600` to `#FFB800`. The drawing now uses a warmer matte gold, `#FBD84A` to `#E8A128`, a deliberate tone change (see the final look below). |
 | Outline | One closed ring around the head. |
 | Eyes | Two ring eyes at 178,150 and 334,150. Dark disc r40, gold ring r24, gold pupil r7. A short bar joins them at y146. |
 | Mask | Two dark angular plates, left `96,240 240,276 240,350 168,370 120,320`, right mirrored `416,240 272,276 272,350 344,370 392,320`. A gap of 32 between them. |
@@ -30,10 +30,10 @@ All numbers are in the 512 unit space of the 2018 `logo.svg`.
 
 | Allowed | How it is done |
 |---|---|
-| Ink line with weight variation | A 8 px ink ring plus a 6 px dashed overlay, and a small wobble filter above 96 px. |
-| Soft watercolor fill | The gold gradient, a warm radial shade at the lower right, and a pale rim light arc at the top left. |
-| Dark mask colour | Warm plum `#2F2430` with rounded line joins, instead of the 2018 near black with neon. |
-| Headphones | A band over the head that ends in a brown cup around each ear pod. The pod is the inner part of the cup, so nothing is drawn twice. |
+| Ink line with weight variation | A 8 px ink ring plus a 6 px dashed overlay. No wobble filter any more. |
+| Matte warm fill | The gold gradient, a warm key light at the top left, a hard cel shadow crescent at the lower right, a thin cool rim line, and a light brush grain from 72 px. |
+| Dark mask colour | Softer plum, `#54415A` at the top to `#2E2433`, with a light bevel line on the top edge of each plate. |
+| Headphones | A terracotta band (`#C27A5A`) over the head that ends in a terracotta cup (`#CC7F5E` to `#9C4F3A`) around each ear pod, with a small bevel highlight. |
 | Head only | The mascot is the head, the headphones and the mood prop. No body, hoodie, arms, feet or hill, at every size and mood. A soft round shadow sits under the head. |
 | 3D | Layers at different depth. The head tilts up to 8 degrees toward the pointer. |
 
@@ -60,14 +60,14 @@ Props: `mood`, `size`, `reducedMotion`, `label`, `breathPhase`, `level`, `situat
 
 Each mood is a pair of eye shape and prop, so no two match. Props are drawn only for their mood. Listening uses the sound ripples as its prop.
 
-Rules: every loop is 1 second or slower, so no flash exceeds 3 per second. Blinks use a seeded timer and stop on unmount. All animation pauses while the tab is hidden. Reduced motion (the prop or the OS setting) removes all animation and the pointer tilt.
+Rules: every loop is 1 second or slower, so no flash exceeds 3 per second. Blinks use a seeded timer and stop on unmount. All animation pauses while the tab is hidden. Reduced motion (the prop or the OS setting) removes all animation and the pointer turn. The turn is up to 6 degrees, smoothed by a CSS transition, throttled to one update per 50 ms, and runs only on a fine pointer (mouse or pen). Touch gets none. Device tilt is used only when the accelerometer permission is already granted. The mascot never asks.
 
 ## Sizes
 
 | Size | Drawn |
 |---|---|
-| 24 (nav), 40 | Head, pods and band only, cropped. No paint filter, no shade. Thicker lines. |
-| 72 (headers) | Same as 40. |
+| 24 (nav), 40 | Head, pods and band only, cropped. No filter, no grain, no shade, no key light. Bold flat shapes. |
+| 72 (headers) | Same crop, plus grain, key light, cel shadow and rim. This is the first size with the one grain filter. |
 | 120 (onboarding) | Head with headphones, ground shadow. |
 | 190 and up (player scene) | Head, ground shadow, motes, ripples, paint filter. |
 
@@ -93,6 +93,18 @@ Made from the same coordinates by a script in the working folder, then rendered 
 | `web/public/apple-touch-icon.png` | 180, full square. |
 | `app/assets/icon.png` | 512 by 512, RGB, no alpha. |
 
+## Final look: a mix of three concepts
+
+![B, C, A and the final mix](ux-shots/mascot-final-mix.png)
+
+| From | Taken |
+|---|---|
+| B Vinyl toy | Bold bevelled shapes: light bevel line on each plate and cup, five depth layers (shadow, ripples, face, band, props and motes), the head turns toward the pointer. Stays clear at 24 and 40 px. No gloss highlights, no lacquer. |
+| C Painted 3D | Warm key light, hard cel shadow crescent, light brush grain, ink line. The torn displacement edges were dropped, because they looked ragged at 200 px. |
+| A Soft clay | The matte warm gold, the softer plum mask and the terracotta band and cups. A thin cool rim line, without A's blurred rim that read as a grey smudge. |
+
+Filters: one grain filter per instance, only from 72 px. Nothing animates a filter. The old head drop shadow, the pod glow and the gem glow were removed (the ground shadow and strokes do those jobs).
+
 ## How close is it
 
 ![All moods and sizes, light](ux-shots/mascot-sheet.png)
@@ -100,6 +112,7 @@ Made from the same coordinates by a script in the working folder, then rendered 
 
 Honest view after looking at the shots:
 
+- Final mix, honest view: it is warmer and less glossy than B, and not as shiny as the 2018 neon. It still reads a bit stern at rest because the plates are large and dark. A pale patch from my first cel shadow cap showed at the right edge in the first render; I switched to a flat-ended arc and it is gone. Grain shows as light horizontal streaks and is easy to see at 200 px. At 24 px the moods differ little.
 - The parts match the original one to one: ring eyes joined by a bar, two angular plates, teal gem in the gap, four slits, side pods. A person who knows the 2018 logo should see it at once, mostly from the plates and the gem.
 - It is not the same picture. The original is a neon outline on black. The new one is a filled gold head with dark plates. The plates are large and dark, so at rest the face can still read as stern. I softened the colour and corners but kept the silhouette, as the rules require.
 - Moods differ mainly by eyes, slits and pose. At 24 px only happy, sleepy, tired and the plain faces can be told apart. Glow moods (steering, listening) are clear only from 72 px.

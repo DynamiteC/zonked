@@ -11,7 +11,12 @@ import { CalmMascot, type MascotMood } from './index';
 const MOODS: readonly MascotMood[] = ['idle', 'happy', 'sleepy', 'listening', 'breathing', 'focus', 'steering', 'tired', 'done', 'offline', 'error', 'loading'];
 const SIZES = [24, 40, 72, 120, 190, 400] as const;
 const css = readFileSync(join(__dirname, 'mascot.css'), 'utf8');
-afterEach(() => { cleanup(); vi.restoreAllMocks(); });
+afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
+
+/** Stubs matchMedia so only the listed queries match. */
+function media(on: readonly string[]): void {
+  vi.stubGlobal('matchMedia', (q: string) => ({ matches: on.some((k) => q.includes(k)), media: q, addEventListener: () => undefined, removeEventListener: () => undefined }));
+}
 
 describe('CalmMascot', () => {
   it.each(MOODS)('renders mood %s', (mood) => {
@@ -36,6 +41,7 @@ describe('CalmMascot', () => {
   it('adds listeners and removes them on unmount', () => {
     const add = vi.spyOn(window, 'addEventListener');
     const del = vi.spyOn(window, 'removeEventListener');
+    media(['pointer: fine']);
     const { unmount } = render(<CalmMascot reducedMotion={false} />);
     expect(add.mock.calls.some(([t]) => t === 'pointermove')).toBe(true);
     unmount();
@@ -44,9 +50,42 @@ describe('CalmMascot', () => {
   });
 
   it('turns the head on pointer move', () => {
+    media(['pointer: fine']);
     render(<CalmMascot reducedMotion={false} />);
     window.dispatchEvent(new PointerEvent('pointermove', { clientX: window.innerWidth, clientY: 0 }));
-    expect(screen.getByRole('img').style.getPropertyValue('--ry')).toBe('8.00deg');
+    expect(screen.getByRole('img').style.getPropertyValue('--ry')).toBe('6.00deg');
+  });
+
+  it('adds no pointer listener on a coarse pointer and never asks for tilt permission', () => {
+    media(['pointer: coarse']);
+    const add = vi.spyOn(window, 'addEventListener');
+    const ask = vi.fn();
+    vi.stubGlobal('DeviceOrientationEvent', Object.assign(function Dev() { return undefined; }, { requestPermission: ask }));
+    render(<CalmMascot reducedMotion={false} />);
+    expect(add.mock.calls.some(([t]) => t === 'pointermove')).toBe(false);
+    expect(ask).not.toHaveBeenCalled();
+  });
+
+  it('draws filters only from 72 px: none at 24 and 40, one grain filter above', () => {
+    for (const size of [24, 40]) {
+      const { container, unmount } = render(<CalmMascot size={size} reducedMotion />);
+      expect(container.querySelectorAll('filter')).toHaveLength(0);
+      expect(container.querySelector('.cm-grain')).toBeNull();
+      expect(container.querySelector('[filter]')).toBeNull();
+      unmount();
+    }
+    for (const size of [72, 120, 200]) {
+      const { container, unmount } = render(<CalmMascot size={size} reducedMotion />);
+      expect(container.querySelectorAll('filter')).toHaveLength(1);
+      expect(container.querySelectorAll('[filter]')).toHaveLength(1);
+      unmount();
+    }
+  });
+
+  it('uses no filter in css and no body part in any size', () => {
+    expect(css).not.toMatch(/drop-shadow|filter\s*:\s*blur/);
+    const { container } = render(<CalmMascot size={200} reducedMotion />);
+    expect(container.querySelector('.cm-bodyl')).toBeNull();
   });
 
   it.each(SIZES)('renders every mood at size %i with role img and a label', (size) => {

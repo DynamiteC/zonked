@@ -83,9 +83,10 @@ describe('painted canvas and mascot', () => {
     expect(here('painted.css')).toContain('prefers-reduced-motion');
   });
 
-  it.each(['idle', 'happy', 'sleepy', 'listening', 'breathing'] as MascotMood[])('draws mood %s with a body and headphones', (mood) => {
+  it.each(['idle', 'happy', 'sleepy', 'listening', 'breathing'] as MascotMood[])('draws mood %s as a head with headphones and no body', (mood) => {
     const { container } = render(<CalmMascot mood={mood} reducedMotion />);
-    expect(container.querySelector('.cm-bodyl')).not.toBeNull();
+    expect(container.querySelector('.cm-bodyl')).toBeNull();
+    expect(container.querySelector('.cm-face')).not.toBeNull();
     expect(container.querySelector('.cm-band')).not.toBeNull();
     expect(container.querySelector('.cm-still')).not.toBeNull();
   });
