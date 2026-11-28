@@ -42,10 +42,10 @@ describe('catalog copy', () => {
       expect(t.reasonTemplate.replace('{minutes}', '')).not.toMatch(/[{}]/);
       if (t.source !== 'original') expect(t.reasonTemplate).not.toContain('{minutes}');
     }
-    const creative = getTemplates().find((t) => t.id === 'android-creativity');
-    expect(creative?.reasonTemplate).toBe('Drifts back and forth between 10 and 6 Hz.');
-    const smr = getTemplates().find((t) => t.id === 'android-smr-sleep');
-    expect(smr?.reasonTemplate.startsWith('Beats crossing')).toBe(true);
+    const creative = getTemplates().find((t) => t.id === 'seed-idea-drift');
+    expect(creative?.reasonTemplate).toBe('A slow wave between 9 and 11.5 Hz, one swing every four minutes.');
+    const smr = getTemplates().find((t) => t.id === 'seed-light-sleep-weave');
+    expect(smr?.reasonTemplate.startsWith('Five ten-minute weaves')).toBe(true);
   });
 
   it('never says a length twice and keeps band jargon out of plain cards', () => {

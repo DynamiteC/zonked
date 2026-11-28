@@ -12,7 +12,7 @@ export const SX = {
   },
   mission: {
     heading: 'Zonked is free, for everyone',
-    body: 'Zonked is a quiet place to rest. It helps with stress, work and AI burnout, a tired mind and trouble sleeping. It costs nothing and it always will.',
+    body: 'Zonked is a quiet place to rest. Some people use it to unwind after work or a long coding session. It costs nothing and it always will.',
     facts: [
       'No account. You never sign in.',
       'No ads. No payments. No upsell.',
@@ -29,15 +29,15 @@ export const SX = {
     items: [
       {
         title: 'What the sound does',
-        body: 'Zonked plays steady tones, soft noise and gentle layers such as pads, chimes and lo-fi warmth. A slow, even sound gives a busy mind something calm to follow. People often find it easier to relax or to focus. It does not work the same for everyone.',
+        body: 'Zonked plays steady tones, soft noise and gentle layers such as pads, chimes and lo-fi warmth. A slow, even sound gives a busy mind something calm to follow. Some people find it easier to relax or to focus, and some notice nothing. It does not work the same for everyone.',
       },
       {
         title: 'Why headphones',
-        body: 'A binaural beat is two slightly different tones, one in each ear. Your brain hears the small difference. This only works with stereo headphones. On speakers you still get the calm layers, but not the beat.',
+        body: 'A binaural beat is two slightly different tones, one in each ear. You hear a slow pulse from that small difference. This only works with stereo headphones. On speakers you still get the calm layers, but not the beat.',
       },
       {
         title: 'Listen safely',
-        body: 'Start with the volume low. The sound fades in slowly on its own. Keep it quiet enough to hold a conversation. Stop if you feel dizzy, uneasy or in pain. Do not listen while you drive or do anything that needs full attention. Zonked never plays louder than a fixed safe limit.',
+        body: 'Ask a doctor first if you have a seizure disorder, a serious mental health condition, tinnitus or sensitive hearing. Start at a very low volume. The sound fades in slowly on its own. Keep it quiet enough to hold a conversation. Stop if you feel dizzy, anxious or in pain, or if your ears ring or feel full. Do not listen while you drive or do anything that needs full attention. Zonked never plays louder than a fixed safe limit.',
       },
       {
         title: 'Flashing and motion',
@@ -45,7 +45,7 @@ export const SX = {
       },
       {
         title: 'What it cannot do',
-        body: 'Zonked is not a medical device. It does not diagnose, treat or cure. If you have trouble sleeping for weeks, feel very low or anxious, have seizures or ringing in the ears, or feel unsafe, please talk to a doctor or a crisis line in your country.',
+        body: 'Zonked is not a medical device. It does not diagnose, treat or cure. If sleep problems last for weeks, feel very low or anxious, have seizures or ringing in the ears, or feel unsafe, please talk to a doctor or a crisis line in your country.',
       },
     ],
   },

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { CATEGORIES, LAYER_TAGS, VIBES, searchTemplates } from '../catalog';
+import { CATEGORIES, CATEGORY_LABEL, LAYER_TAGS, VIBES, searchTemplates } from '../catalog';
 import type { Category, LayerTag, Template, Vibe } from '../catalog/types';
 import { COPY } from './copy';
 import { Drawer } from './Drawer';
@@ -57,7 +57,7 @@ export function Catalog({ currentId, onPlay, onClose }: Props): React.JSX.Elemen
           <option value="">All</option>
           {CATEGORIES.map((c) => (
             <option key={c} value={c}>
-              {c}
+              {CATEGORY_LABEL[c]}
             </option>
           ))}
         </select>
@@ -78,7 +78,7 @@ export function Catalog({ currentId, onPlay, onClose }: Props): React.JSX.Elemen
           checked={adhd}
           onChange={(e) => reset(setAdhd)(e.target.checked)}
         />
-        ADHD friendly only
+        Steady sounds only
       </label>
       <div className="chips" role="group" aria-label="Layer tags">
         {LAYER_TAGS.map((t) => (
@@ -109,7 +109,7 @@ export function Catalog({ currentId, onPlay, onClose }: Props): React.JSX.Elemen
             >
               <span className="catalog-name">{t.name}</span>
               <span className="meta">
-                {t.category}, {t.vibe}, {t.recommendedMinutes} min
+                {CATEGORY_LABEL[t.category]}, {t.vibe}, {t.recommendedMinutes} min
               </span>
             </button>
           </li>

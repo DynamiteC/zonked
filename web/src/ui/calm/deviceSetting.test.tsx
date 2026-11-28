@@ -20,6 +20,6 @@ describe('listening device setting', () => {
   });
 
   it('the Bluetooth tip is one plain line about the sound input', () => {
-    expect(CALM.btTip).toBe("If it sounds swooshy, set your computer's sound input to its own microphone so the headphones stay in music mode.");
+    expect(CALM.btTip).toBe("If it sounds swooshy, set your computer's sound input to its own microphone so the headphones stay in music mode. In-ear and Bluetooth headphones can sound louder than you expect, so start very quiet.");
   });
 });

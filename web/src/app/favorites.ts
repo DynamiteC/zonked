@@ -1,4 +1,5 @@
 /** Favorites: templates and mixes the listener wants close at hand. Pure, immutable, local only. */
+import { currentTemplateId } from '../catalog/legacyIds';
 import { cleanId, field, isRecord, num } from './mixes';
 
 export const MAX_FAVORITES = 500;
@@ -27,7 +28,8 @@ export function parseFavorites(x: unknown, now: number): Favorites {
   for (const r of raw.slice(0, MAX_FAVORITES * 2)) {
     if (!isRecord(r)) continue;
     const kind = field(r, 'kind');
-    const id = cleanId(field(r, 'id'));
+    const rawId = cleanId(field(r, 'id'));
+    const id = rawId !== null && kind === 'template' ? currentTemplateId(rawId) : rawId;
     if ((kind !== 'template' && kind !== 'mix') || id === null) continue;
     const key = `${kind}:${id}`;
     if (seen.has(key)) continue;

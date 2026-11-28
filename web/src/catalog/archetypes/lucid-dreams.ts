@@ -9,7 +9,7 @@ export const LUCID_DREAMS: CategorySpec = {
     arch({
       slug: 'wbtb-theta', shape: 'plateau', from: 9, to: 5, ret: 8, mins: [90, 120, 180], carriers: [160, 180, 200],
       modes: ['binaural', 'monaural'], noises: [['pink', 0.15]], layers: [['piano', 'pad'], ['pad', 'chimes']], vibes: ['dreamy', 'ethereal', 'deep'],
-      situations: ['lucid-dream', 'cant-sleep'], intensity: 2, gain: 0.4, count: 6, reason: 'Theta plateau with a light return, built for wake-back-to-bed lucid practice.',
+      situations: ['lucid-dream', 'cant-sleep'], intensity: 2, gain: 0.4, count: 6, reason: 'Theta plateau with a light return, sized for a long, quiet night.',
     }),
     arch({
       slug: 'rem-ladder', shape: 'ladder', from: 8, to: 4, mins: [60, 90, 120], carriers: [150, 170],
