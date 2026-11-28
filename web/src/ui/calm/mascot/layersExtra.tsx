@@ -23,7 +23,7 @@ export function RippleLayer({ marked = false }: { readonly marked?: boolean }): 
       key={`${cx}-${k}`}
       className="cm-ripple"
       style={{ animationDelay: `${k * -1.6}s` }}
-      d={`M${cx + dir * 14} 170Q${cx + dir * 50} 215 ${cx + dir * 14} 260`}
+      d={`M${cx + dir * 12} 222Q${cx + dir * 44} 266 ${cx + dir * 12} 310`}
       fill="none"
       stroke="#8FE3D0"
       strokeWidth="5"
@@ -32,8 +32,8 @@ export function RippleLayer({ marked = false }: { readonly marked?: boolean }): 
   );
   return (
     <svg className="cm-layer cm-ripples" data-prop={marked ? 'ripples' : undefined} viewBox={VB} aria-hidden="true" focusable="false">
-      {[0, 1, 2].map((k) => ring(96, -1, k))}
-      {[0, 1, 2].map((k) => ring(416, 1, k))}
+      {[0, 1, 2].map((k) => ring(56, -1, k))}
+      {[0, 1, 2].map((k) => ring(456, 1, k))}
     </svg>
   );
 }

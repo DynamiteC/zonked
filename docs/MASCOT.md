@@ -6,6 +6,10 @@ Source of truth for the look of the mascot. The drawing is `web/src/ui/calm/masc
 
 Left: the 2018 logo as committed at 96d55ca. Middle: the new mascot at hero size. Right: the new `logo.svg`, favicon, apple touch icon and maskable icon.
 
+## Head only rule
+
+The owner asked to keep only the head in every situation. Never add a body, clothes, limbs or a seat back. Breath moves the head itself. The head fills the box (transform `translate(46.1 56.1) scale(.82)` on the 2018 coordinates), and props sit around it inside the box.
+
 ## Identity rules (never change)
 
 All numbers are in the 512 unit space of the 2018 `logo.svg`.
@@ -30,7 +34,7 @@ All numbers are in the 512 unit space of the 2018 `logo.svg`.
 | Soft watercolor fill | The gold gradient, a warm radial shade at the lower right, and a pale rim light arc at the top left. |
 | Dark mask colour | Warm plum `#2F2430` with rounded line joins, instead of the 2018 near black with neon. |
 | Headphones | A band over the head that ends in a brown cup around each ear pod. The pod is the inner part of the cup, so nothing is drawn twice. |
-| Body | A seated figure in a soft deep-teal hoodie on a green hill, shown from 120 px up. Hood behind the head, gold trim on neck and cuffs, two cream drawstrings, a chest pocket. The headphone band stays over it. |
+| Head only | The mascot is the head, the headphones and the mood prop. No body, hoodie, arms, feet or hill, at every size and mood. A soft round shadow sits under the head. |
 | 3D | Layers at different depth. The head tilts up to 8 degrees toward the pointer. |
 
 Not allowed: changing the plate shapes, the number of slits, the eye rings, the head shape or the gold. No new characters, no faces with curved mouths.
@@ -45,7 +49,7 @@ Props: `mood`, `size`, `reducedMotion`, `label`, `breathPhase`, `level`, `situat
 | listening | sound plays | half | ripples | straight | head sway 6 s, ripples follow `level` |
 | happy | success | arc (upturned) | none | smile, outer slits tilt out | one small bounce |
 | sleepy | sleep timer | lid (low) | zzz | short | slow drooping nod 7 s, letters drift up |
-| breathing | player | ring, closes on exhale | wisp | follow `breathPhase` | chest and hoodie rise with `breathPhase` |
+| breathing | player | ring, closes on exhale | wisp | follow `breathPhase` | the head scales about 3 percent and lifts on inhale, eyes close on exhale |
 | focus | focus journeys | narrow | glow (line on gem) | short | forward lean, no blink |
 | steering | crew steers the sound | ring | spark (near ear pod) | straight | gem pulse once per 3 s |
 | tired | burned out step | heavy (tilted lid) | sweat | frown | head drops, blink every 6 to 11 s |
@@ -64,17 +68,17 @@ Rules: every loop is 1 second or slower, so no flash exceeds 3 per second. Blink
 |---|---|
 | 24 (nav), 40 | Head, pods and band only, cropped. No paint filter, no shade. Thicker lines. |
 | 72 (headers) | Same as 40. |
-| 120 (onboarding) | Full figure with hill. |
-| 190 and up (player scene) | Full figure, motes, ripples, paint filter. |
+| 120 (onboarding) | Head with headphones, ground shadow. |
+| 190 and up (player scene) | Head, ground shadow, motes, ripples, paint filter. |
 
 ## Themes
 
 | Variant | Switch |
 |---|---|
 | Light | default |
-| Dark | `[data-theme='dark']` ancestor: darker hill, lighter band line |
+| Dark | `[data-theme='dark']` ancestor: darker ground shadow, lighter band line |
 | High contrast | `[data-contrast='high']` ancestor: black or white ink |
-| Forced colors | `@media (forced-colors: active)`: Canvas and CanvasText only, no hill or glow |
+| Forced colors | `@media (forced-colors: active)`: Canvas and CanvasText only, no shadow or glow |
 
 ## Icons
 
@@ -99,5 +103,5 @@ Honest view after looking at the shots:
 - The parts match the original one to one: ring eyes joined by a bar, two angular plates, teal gem in the gap, four slits, side pods. A person who knows the 2018 logo should see it at once, mostly from the plates and the gem.
 - It is not the same picture. The original is a neon outline on black. The new one is a filled gold head with dark plates. The plates are large and dark, so at rest the face can still read as stern. I softened the colour and corners but kept the silhouette, as the rules require.
 - Moods differ mainly by eyes, slits and pose. At 24 px only happy, sleepy, tired and the plain faces can be told apart. Glow moods (steering, listening) are clear only from 72 px.
-- The body is a plain blue-grey figure and is the weakest part. It has no link to the original.
+- The body was removed. Only the head stays, in every situation.
 - Not checked: real devices, a screen reader pass, forced-colors in a real browser (rules were written, not seen), motion at real speed.

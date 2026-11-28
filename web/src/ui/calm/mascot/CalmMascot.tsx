@@ -1,7 +1,6 @@
 import { useId, useRef, type CSSProperties, type JSX } from 'react';
 import './mascot.css';
 import { Defs, HeadLayer, MotesLayer, ShadowLayer } from './layers';
-import { BodyLayer } from './hoodie';
 import { BandLayer, RippleLayer } from './layersExtra';
 import { PropLayer } from './props';
 import type { CalmMascotProps } from './types';
@@ -26,6 +25,8 @@ export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = '
   const still = reducedMotion ?? prefersReduced();
   const px = Number.isFinite(size) ? Math.max(24, Math.min(640, size)) : 220;
   const compact = px <= COMPACT_MAX;
+  // The head breathes: about 3 percent larger and a little higher on inhale. Still under reduced motion.
+  const lift: CSSProperties | undefined = breathPhase !== undefined && !still ? { scale: String(1 + unit(breathPhase) * 0.03), translate: `0 ${(-unit(breathPhase) * 1.2).toFixed(2)}%` } : undefined;
   useParallax(stage, !still && !compact);
   useLife(stage, mood, still);
   return (
@@ -41,8 +42,7 @@ export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = '
       <Defs id={id} />
       <div className="cm-body">
         {!compact && <ShadowLayer />}
-        {!compact && <BodyLayer id={id} />}
-        <div className="cm-sway">
+        <div className="cm-sway" style={lift}>
           <div className="cm-head">
             {!compact && <RippleLayer marked={mood === 'listening'} />}
             <HeadLayer id={id} mood={mood} plain={compact} />

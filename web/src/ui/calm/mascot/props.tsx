@@ -14,7 +14,7 @@ const PROPS: Partial<Record<MascotMood, () => JSX.Element>> = {
     </g>
   ),
   breathing: () => (
-    <path className="cm-wisp" d="M306 336q14-12 28 0t28 0t28 0" fill="none" stroke="#BFE9E3" strokeWidth="5" strokeLinecap="round" />
+    <path className="cm-wisp" d="M326 396q12-10 24 0t24 0t24 0" fill="none" stroke="#BFE9E3" strokeWidth="5" strokeLinecap="round" />
   ),
   focus: () => <path className="cm-glow" d="M241 252h30" fill="none" stroke="#9CFFE3" strokeWidth="4" strokeLinecap="round" />,
   steering: () => (

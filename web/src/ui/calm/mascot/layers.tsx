@@ -2,9 +2,9 @@ import type { JSX } from 'react';
 import { Eye, EYES } from './eyes';
 import type { MascotMood } from './types';
 
-/** Canvas of the whole drawing. The head uses the 2018 logo coordinates (circle r200 at 256,256) under HEAD_T. */
+/** Canvas of the whole drawing. The head uses the 2018 logo coordinates (circle r200 at 256,256) under HEAD_T, which fills the box. */
 export const VB_FULL = '0 0 512 512';
-export const HEAD_T = 'translate(97.3 56.3) scale(.62)';
+export const HEAD_T = 'translate(46.1 56.1) scale(.82)';
 
 interface IdProps {
   readonly id: string;
@@ -30,13 +30,11 @@ const MOUTH: Readonly<Record<MascotMood, MouthShape>> = {
   loading: { dy: [0, 0, 0, 0], len: 0.6 },
 };
 
-/** The hill the character sits on. Soft edge, no outline. */
+/** A soft round shadow under the head. It shrinks a little when the head lifts on inhale. */
 export function ShadowLayer(): JSX.Element {
   return (
     <svg className="cm-layer cm-shadow" viewBox={VB_FULL} aria-hidden="true" focusable="false">
-      <path className="cm-hill-a" d="M-20 512C20 462 120 440 256 440C392 440 492 462 532 512Z" fill="#9DB07E" />
-      <path className="cm-hill-b" d="M40 512C90 474 170 458 256 458C342 458 422 474 472 512Z" fill="#B3C28F" opacity="0.7" />
-      <ellipse cx="256" cy="470" rx="120" ry="12" fill="#4F5F3C" opacity="0.28" />
+      <ellipse className="cm-gshadow" cx="256" cy="452" rx="112" ry="13" fill="#4A3A40" opacity="0.2" />
     </svg>
   );
 }

@@ -59,14 +59,27 @@ describe('CalmMascot', () => {
     }
   });
 
-  it('draws the head only at small sizes and the body and hill at large sizes', () => {
-    const small = render(<CalmMascot size={40} />);
-    expect(small.container.querySelector('.cm-bodyl')).toBeNull();
-    expect(small.container.querySelector('.cm-compact')).not.toBeNull();
-    small.unmount();
-    const big = render(<CalmMascot size={120} />);
-    expect(big.container.querySelector('.cm-bodyl')).not.toBeNull();
-    expect(big.container.querySelector('.cm-compact')).toBeNull();
+  it('draws the head only: no body, hoodie, arms, feet or hill at any size or mood', () => {
+    for (const size of SIZES) for (const mood of MOODS) {
+      const { container, unmount } = render(<CalmMascot size={size} mood={mood} />);
+      for (const c of ['cm-bodyl', 'cm-hood', 'cm-trim', 'cm-pocket', 'cm-cord', 'cm-chest', 'cm-hill-a', 'cm-hill-b']) expect(container.querySelector(`.${c}`)).toBeNull();
+      expect(container.querySelector('.cm-compact') !== null).toBe(size <= 96);
+      expect(container.querySelector('.cm-gshadow') !== null).toBe(size > 96);
+      unmount();
+    }
+    expect(css).not.toMatch(/hill|chest|bodyl/);
+  });
+
+  it('breathes on the head: scale about 3 percent and a lift follow breathPhase', () => {
+    const inhale = render(<CalmMascot mood="breathing" breathPhase={1} reducedMotion={false} />);
+    const sway = inhale.container.querySelector<HTMLElement>('.cm-sway');
+    expect(Number(sway?.style.scale)).toBeCloseTo(1.03, 3);
+    expect(sway?.style.translate).toMatch(/^0px? -1\.2\d*%$|^0 -1\.20%$/);
+    inhale.rerender(<CalmMascot mood="breathing" breathPhase={0} reducedMotion={false} />);
+    expect(Number(sway?.style.scale)).toBe(1);
+    inhale.unmount();
+    const still = render(<CalmMascot mood="breathing" breathPhase={1} reducedMotion />);
+    expect(still.container.querySelector<HTMLElement>('.cm-sway')?.style.scale).toBe('');
   });
 
   it('keeps the original parts: ring eyes, two plates, four slits, two ear pods, gem', () => {
@@ -125,12 +138,6 @@ describe('CalmMascot', () => {
     a.unmount();
     const b = render(<CalmMascot mood="idle" size={72} reducedMotion />);
     expect(b.container.querySelector('.cm-props')).toBeNull();
-  });
-
-  it('draws the hoodie: hood, trim, two cords and a pocket', () => {
-    const { container } = render(<CalmMascot size={200} reducedMotion />);
-    for (const c of ['cm-hood', 'cm-trim', 'cm-pocket']) expect(container.querySelectorAll(`.${c}`)).toHaveLength(1);
-    expect(container.querySelector('.cm-cord')?.getAttribute('d')?.split('M')).toHaveLength(3);
   });
 
   it('blinks on a seeded 4 to 7 s timer and clears it on unmount', () => {

@@ -1,18 +1,17 @@
 .cm-stage{position:relative;perspective:700px;display:inline-block;--rx:0deg;--ry:0deg;--bp:0;--lv:0;--sw:9s;--eye:1;font-family:system-ui,sans-serif}
 .cm-defs{position:absolute;width:0;height:0}
 .cm-body{position:absolute;inset:0;transform-style:preserve-3d}
-.cm-sway{position:absolute;inset:0;transform-style:preserve-3d;translate:0 calc(var(--bp) * -5px);transform-origin:50% 80%;animation:cm-sway var(--sw) ease-in-out infinite}
+.cm-sway{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 60%;transition:scale .3s linear,translate .3s linear;animation:cm-sway var(--sw) ease-in-out infinite}
 .cm-head{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .25s ease-out,translate .8s ease,rotate .8s ease;filter:drop-shadow(0 3px 5px rgba(58,42,46,.18))}
 .cm-layer{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .cm-shadow{transform:translateZ(-40px)}
-.cm-bodyl{transform:translateZ(-24px)}
 .cm-ripples{transform:translateZ(-18px);pointer-events:none}
 .cm-face{transform:translateZ(0)}
 .cm-band{transform:translateZ(26px)}
 .cm-motes{transform:translateZ(46px);pointer-events:none}
-.cm-chest{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(calc(var(--bp) * -10px)) scale(calc(1 + var(--bp) * .045))}
+.cm-gshadow{transform-box:fill-box;transform-origin:center;transform:scaleX(calc(1 - var(--bp) * .08))}
 .cm-compact{overflow:hidden}
-.cm-compact .cm-body{scale:1.552;translate:0 12.4%}
+.cm-compact .cm-body{scale:1.1;translate:0 1.5%}
 .cm-compact .cm-head{filter:none}
 .cm-compact .cm-shade,.cm-compact .cm-rim{display:none}
 
@@ -84,22 +83,20 @@
 .cm-paused,.cm-paused *{animation-play-state:paused!important}
 
 /* paint, dark and contrast variants */
-[data-theme='dark'] .cm-hill-a{fill:#3C4A4F}
-[data-theme='dark'] .cm-hill-b{fill:#4A5A5C}
+[data-theme='dark'] .cm-gshadow{fill:#000;opacity:.4}
 [data-theme='dark'] .cm-bandink{stroke:#8A7480}
 [data-theme='dark'] .cm-pk{stroke:#CCD6FF}
 [data-contrast='high'] .cm-s-ink{stroke:#000}
 [data-theme='dark'][data-contrast='high'] .cm-s-ink{stroke:#fff}
 [data-theme='dark'][data-contrast='high'] .cm-bandink{stroke:#fff}
 @media (forced-colors:active){
-  .cm-hill-a,.cm-hill-b,.cm-shade,.cm-rim,.cm-motes,.cm-ripples,.cm-props{display:none}
+  .cm-shadow,.cm-shade,.cm-rim,.cm-motes,.cm-ripples,.cm-props{display:none}
   .cm-f-gold,.cm-f-cup,.cm-slit,.cm-pupil{fill:Canvas}
   .cm-f-mask,.cm-bar{fill:CanvasText}
   .cm-bar{stroke:CanvasText}
   .cm-s-ink,.cm-bandink{stroke:CanvasText}
   .cm-s-gold,.cm-ring,.cm-slit{stroke:Canvas}
   .cm-gem{fill:Canvas;stroke:Highlight}
-  .cm-bodyl *{fill:Canvas;stroke:CanvasText}
   .cm-head{filter:none}
 }
 
@@ -109,7 +106,7 @@
 @keyframes cm-drift{0%,100%{transform:translate(0,0);opacity:.3}50%{transform:translate(6px,-14px);opacity:.9}}
 @keyframes cm-gem{0%,100%{opacity:.7}50%{opacity:1}}
 @keyframes cm-zee{0%{opacity:0;transform:translate(0,12px)}30%{opacity:.9}100%{opacity:0;transform:translate(10px,-26px)}}
-@keyframes cm-breathe{0%,100%{transform:scale(1)}40%{transform:scale(1.04)}}
+@keyframes cm-breathe{0%,100%{transform:scale(1) translateY(0)}40%{transform:scale(1.03) translateY(-1.2%)}}
 @keyframes cm-sway{0%,100%{rotate:-1.6deg}50%{rotate:1.6deg}}
 @keyframes cm-rip{0%{opacity:0;transform:scale(.7)}30%{opacity:calc(var(--lv) * .7)}100%{opacity:0;transform:scale(1.7)}}
 @keyframes cm-spin{to{transform:rotate(360deg)}}
