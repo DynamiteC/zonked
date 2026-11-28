@@ -2,6 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { Player, realClock } from '../../app/player';
 import type { AudioEngine } from '../../audio/types';
 import { PRESETS } from '../../sbg';
+import { SAFETY_KEY, readFlag } from '../../storage/prefs';
+import { createStore } from '../../storage/db';
+import type { Store } from '../../storage/db';
+import { DataPanel } from '../sanctuary/DataPanel';
+import { MixesPanel } from '../sanctuary/MixesPanel';
+import { useSanctuaryData } from '../sanctuary/useSanctuaryData';
+import '../sanctuary/sanctuary.css';
 import { CalmAlertPanel } from './CalmAlertPanel';
 import { EditorPanel } from './EditorPanel';
 import { ImportExportPanel } from './ImportExportPanel';
@@ -22,22 +29,26 @@ export interface AdvancedPanelsProps {
   player?: Player;
   /** Called by the Close button. When omitted no Close button is drawn. */
   onClose?: () => void;
+  /** Where favorites, mixes and history live. Defaults to the app database. */
+  store?: Store;
 }
 
-const SECTIONS = ['Mix', 'Calm to Alert', 'Editor', 'Import and export', 'Timers', 'Scope', 'Sound health'] as const;
+const SECTIONS = ['Mix', 'Calm to Alert', 'Editor', 'Import and export', 'Timers', 'Scope', 'Sound health', 'Saved mixes', 'Your data'] as const;
 
 /**
  * The pro options as plain panels: Mix, Calm to Alert, Editor, Import and export, Timers, Scope.
  * Each sits in a closed-by-default disclosure except Mix. No page chrome. Styled with the Calm tokens only.
  * Load with React.lazy so it stays out of first load.
  */
-export function AdvancedPanels({ engine, player: given, onClose }: AdvancedPanelsProps): React.JSX.Element {
+export function AdvancedPanels({ engine, player: given, onClose, store: givenStore }: AdvancedPanelsProps): React.JSX.Element {
   const own = useMemo(() => given ?? new Player(engine, realClock, () => undefined), [given, engine]);
   useEffect(() => {
     if (given !== undefined) return undefined;
     return () => void own.stop();
   }, [given, own]);
   const snap = usePlayerSnapshot(own);
+  const store = useMemo(() => givenStore ?? createStore(), [givenStore]);
+  const data = useSanctuaryData(store, Date.now);
   const [text, setText] = useState(PRESETS[0]?.sbg ?? '');
   const [name, setName] = useState('script');
   const panels: Readonly<Record<(typeof SECTIONS)[number], React.JSX.Element>> = {
@@ -57,6 +68,23 @@ export function AdvancedPanels({ engine, player: given, onClose }: AdvancedPanel
     Timers: <TimersPanel timer={snap.timer} player={own} />,
     Scope: <ScopePanel telemetry={engine.telemetry} />,
     'Sound health': <HealthPanel />,
+    'Saved mixes': (
+      <div className="adv-panel sx-root" data-testid="adv-mixes">
+        {data.ready ? (
+          <MixesPanel
+            data={data}
+            nowPlaying={snap.templateId !== null ? { kind: 'template', id: snap.templateId } : null}
+            currentMix={() => own.getMixDraft()}
+            onLoadMix={(m) => readFlag(SAFETY_KEY) && own.playMix(m)}
+          />
+        ) : null}
+      </div>
+    ),
+    'Your data': (
+      <div className="adv-panel sx-root" data-testid="adv-data">
+        {data.ready ? <DataPanel data={data} now={Date.now} /> : null}
+      </div>
+    ),
   };
   return (
     <div className="adv-panels" data-testid="advanced-panels">
