@@ -4,6 +4,8 @@ import type { AudioEngine } from '../../audio/types';
 import { listSamples } from '../../audio/samples';
 import { CALM, EVIDENCE } from './copy';
 import { Slider } from './nature/NatureScreen';
+import { RangeField } from '../shared/RangeField';
+import type { RangeTick } from '../shared/RangeField';
 import { orderForDevice } from './data';
 import type { Device } from './data';
 import { MAX_NATURE_LEVEL } from './nature/prefs';
@@ -12,6 +14,17 @@ import { TimerChips } from './TimerChips';
 import { loadAdvanced } from './advancedLoader';
 
 const AdvancedPanels = lazy(loadAdvanced);
+
+const BLEND_TICKS: readonly RangeTick[] = [
+  { value: 0, label: 'More beats' },
+  { value: 0.5, label: 'Even' },
+  { value: 1, label: 'More nature' },
+];
+
+function blendText(v: number): string {
+  if (v < 0.4) return 'More beats';
+  return v > 0.6 ? 'More nature' : 'Even';
+}
 
 interface Props {
   readonly player: Player;
@@ -78,7 +91,10 @@ export function OptionsSheet({ player, snap, nature, favorite, evidence, onFavor
               </button>
             ))}
           </div>
-          <Slider id="c-blend" label={CALM.natureBlend} value={nature.prefs.blend} max={1} onChange={nature.setBlend} />
+          <div className="c-slider c-blend">
+            <label htmlFor="c-blend">{CALM.natureBlend}</label>
+            <RangeField id="c-blend" min={0} max={1} step={0.05} value={nature.prefs.blend} valueText={blendText(nature.prefs.blend)} bubbleText={blendText(nature.prefs.blend)} ticks={BLEND_TICKS} onChange={nature.setBlend} />
+          </div>
           {nature.on !== null && <Slider id="c-nlevel" label={CALM.natureLevel} value={nature.prefs.level} max={MAX_NATURE_LEVEL} onChange={nature.setLevel} />}
           <p className="c-status" role="status">{nature.message}</p>
         </section>
