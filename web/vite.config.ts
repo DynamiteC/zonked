@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import { SAMPLE_CACHE_NAME } from './src/audio/samples/cacheName';
 
 // Required for SharedArrayBuffer in dev and preview. Mirrors public/_headers.
 const isolationHeaders = {
@@ -24,8 +25,10 @@ export default defineConfig({
         runtimeCaching: [{
           urlPattern: ({ url, sameOrigin }) => sameOrigin && /^\/samples\/[a-z]+\.mp3\.json$/.test(url.pathname),
           handler: 'CacheFirst',
-          options: { cacheName: 'zonked-samples', cacheableResponse: { statuses: [200] }, expiration: { maxEntries: 40 } },
+          options: { cacheName: SAMPLE_CACHE_NAME, cacheableResponse: { statuses: [200] }, expiration: { maxEntries: 40 } },
         }],
+        // Loop URLs carry ?v=<content hash>. The precached starters match without it.
+        ignoreURLParametersMatching: [/^utm_/, /^fbclid$/, /^v$/],
         maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,

@@ -33,6 +33,27 @@ export function hasSeamJump(first: number, last: number, peak: number): boolean 
   return Math.abs(first - last) > SEAM_LIMIT * peak;
 }
 
+/** A loop whose wrap step is more than this many times the 99.9th percentile of its normal sample steps would tick. */
+export const SEAM_STEP_RATIO = 2;
+
+/** 99.9th percentile of |sample step| over the first `max` steps. 0 for fewer than 2 samples. */
+export function stepP999(data: ArrayLike<number>, max = 1 << 17): number {
+  const n = Math.min(Math.max(0, data.length - 1), max);
+  const d = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    const v = Math.abs((data[i + 1] ?? 0) - (data[i] ?? 0));
+    d[i] = Number.isFinite(v) ? v : 0;
+  }
+  d.sort();
+  return n === 0 ? 0 : (d[Math.min(n - 1, Math.floor(n * 0.999))] ?? 0);
+}
+
+/** True when the wrap step from the last sample to the first is over SEAM_STEP_RATIO times a normal loud step. */
+export function hasSeamTick(first: number, last: number, p999: number): boolean {
+  if (!Number.isFinite(first) || !Number.isFinite(last) || !Number.isFinite(p999) || p999 <= 0) return false;
+  return Math.abs(first - last) > SEAM_STEP_RATIO * p999;
+}
+
 interface Hiccup {
   readonly at: number;
   readonly kind: HiccupKind;

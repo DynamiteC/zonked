@@ -1,16 +1,18 @@
 import { describe, it, expect, vi } from 'vitest';
 import { SAMPLES } from './catalog';
 import type { SampleBus } from './bus';
-import { createSampleLayer } from './layer';
+import { XFADE_SEC, createSampleLayer } from './layer';
+import { SAMPLE_REV } from './versions';
 import {
-  DUCK_DEPTH, FADE_IN_SEC, FADE_OUT_SEC, MAX_SAMPLE_LEVEL, OUTPUT_CEILING,
-  blendFromLevel, clampBlend, clampLevel, duckGain, guardCurve,
+  DUCK_DEPTH_DB, FADE_IN_SEC, FADE_OUT_SEC, MAX_SAMPLE_LEVEL, OUTPUT_CEILING,
+  blendFromLevel, clampBlend, clampLevel, duckGain, guardCurve, trimGain,
 } from './math';
 
 class FakeParam {
   value = 0;
   calls: Array<[string, number, number]> = [];
   setValueAtTime(v: number, t: number) { this.value = v; this.calls.push(['set', v, t]); return this; }
+  setValueCurveAtTime(c: Float32Array, t: number, d: number) { this.calls.push(['curve', c[c.length - 1] ?? 0, d]); void t; return this; }
   linearRampToValueAtTime(v: number, t: number) { this.calls.push(['ramp', v, t]); return this; }
   setTargetAtTime(v: number, t: number, tau: number) { this.calls.push(['target', v, tau]); void t; return this; }
   cancelScheduledValues() { this.calls.push(['cancel', 0, 0]); return this; }
@@ -50,9 +52,10 @@ describe('math', () => {
     expect(clampBlend(NaN, 0.5)).toBe(0.5);
     expect(clampBlend(Infinity)).toBe(0);
   });
-  it('duck gain is 1 at blend 0, 0.4 at blend 1, monotonic', () => {
+  it('duck gain is 0, -10 and -20 dB at blend 0, 0.5 and 1, monotonic', () => {
     expect(duckGain(0)).toBe(1);
-    expect(duckGain(1)).toBeCloseTo(1 - DUCK_DEPTH);
+    expect(duckGain(0.5)).toBeCloseTo(10 ** (-10 / 20));
+    expect(duckGain(1)).toBeCloseTo(10 ** (DUCK_DEPTH_DB / 20));
     expect(duckGain(NaN)).toBe(1);
     let prev = 2;
     for (let b = 0; b <= 1; b += 0.1) { const g = duckGain(b); expect(g).toBeLessThanOrEqual(prev); prev = g; }
@@ -64,8 +67,8 @@ describe('math', () => {
   });
   it('guard curve never exceeds the ceiling', () => {
     const c = guardCurve();
-    expect(Math.max(...c)).toBeCloseTo(OUTPUT_CEILING);
-    expect(Math.min(...c)).toBeCloseTo(-OUTPUT_CEILING);
+    expect(Math.max(...c)).toBeLessThanOrEqual(OUTPUT_CEILING);
+    expect(Math.min(...c)).toBeGreaterThanOrEqual(-OUTPUT_CEILING);
     expect(guardCurve(1).length).toBe(3);
   });
   it('fade constants meet the safety rules', () => {
@@ -104,7 +107,7 @@ describe('layer', () => {
     await layer.start('rain', 0.4);
     await layer.start('rain', 0.4);
     expect(f).toHaveBeenCalledTimes(1);
-    expect(f.mock.calls[0]?.[0]).toBe('http://localhost/samples/rain.mp3.json');
+    expect(f.mock.calls[0]?.[0]).toBe(`http://localhost/samples/rain.mp3.json?v=${SAMPLE_REV['rain']}`);
   });
   it('loops, fades in over 2 s and ducks the beat', async () => {
     const m = makeBus();
@@ -112,8 +115,8 @@ describe('layer', () => {
     expect((await layer.start('ocean', 0.85)).ok).toBe(true);
     const h = m.made[0];
     expect(h?.src['loop']).toBe(true);
-    expect(h?.gain.gain.calls).toContainEqual(['ramp', 0.85, 1 + FADE_IN_SEC]);
-    expect(m.duck.gain.calls.at(-1)?.[1]).toBeCloseTo(0.4);
+    expect(h?.gain.gain.calls).toContainEqual(['ramp', 0.85 * trimGain(2.5), 1 + FADE_IN_SEC]);
+    expect(m.duck.gain.calls.at(-1)?.[1]).toBeCloseTo(trimGain(-8) * 0.1);
   });
   it('clamps hostile levels', async () => {
     const m = makeBus();
@@ -121,18 +124,18 @@ describe('layer', () => {
     await layer.start('rain', Infinity);
     expect(m.made[0]?.gain.gain.calls).toContainEqual(['ramp', 0, 1 + FADE_IN_SEC]);
     layer.setLevel(99);
-    expect(m.made[0]?.gain.gain.calls.filter((c) => c[0] === 'target').at(-1)?.[1]).toBe(MAX_SAMPLE_LEVEL);
+    expect(m.made[0]?.gain.gain.calls.filter((c) => c[0] === 'target').at(-1)?.[1]).toBeCloseTo(MAX_SAMPLE_LEVEL * trimGain(2));
     layer.setLevel(NaN);
-    expect(m.made[0]?.gain.gain.calls.filter((c) => c[0] === 'target').at(-1)?.[1]).toBe(MAX_SAMPLE_LEVEL);
+    expect(m.made[0]?.gain.gain.calls.filter((c) => c[0] === 'target').at(-1)?.[1]).toBeCloseTo(MAX_SAMPLE_LEVEL * trimGain(2));
   });
   it('explicit blend wins and NaN keeps the last value', async () => {
     const m = makeBus();
     const layer = createSampleLayer(deps(m.bus));
     await layer.start('rain', 0.85);
     layer.setBlend(0.5);
-    expect(m.duck.gain.calls.at(-1)?.[1]).toBeCloseTo(0.7);
+    expect(m.duck.gain.calls.at(-1)?.[1]).toBeCloseTo(trimGain(-8) * trimGain(-10));
     layer.setBlend(NaN);
-    expect(m.duck.gain.calls.at(-1)?.[1]).toBeCloseTo(0.7);
+    expect(m.duck.gain.calls.at(-1)?.[1]).toBeCloseTo(trimGain(-8) * trimGain(-10));
   });
   it('stop fades out over at least 250 ms and restores the beat', async () => {
     const m = makeBus();
@@ -141,7 +144,7 @@ describe('layer', () => {
     layer.stop();
     const g = m.made[0]?.gain.gain;
     expect(g?.calls).toContainEqual(['ramp', 0, 1 + FADE_OUT_SEC]);
-    expect(m.duck.gain.calls.at(-1)?.[1]).toBe(1);
+    expect(m.duck.gain.calls.at(-1)?.[1]).toBeCloseTo(trimGain(-8));
     expect(layer.playing()).toBeNull();
     layer.stop();
   });
@@ -151,7 +154,7 @@ describe('layer', () => {
     await layer.start('rain', 0.5);
     await layer.start('birds', 0.5);
     expect(m.made).toHaveLength(2);
-    expect(m.made[0]?.gain.gain.calls).toContainEqual(['ramp', 0, 1 + FADE_OUT_SEC]);
+    expect(m.made[0]?.gain.gain.calls).toContainEqual(['curve', 0, XFADE_SEC]);
     expect(layer.playing()).toBe('birds');
   });
   it('setLevel and setBlend are safe with no bus or no sample', () => {

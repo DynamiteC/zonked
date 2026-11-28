@@ -5,6 +5,7 @@ import { prepareOwn } from './own';
 import { createSampleLayer } from './layer';
 import type { SampleResult } from './layer';
 import type { SampleInfo } from './catalog';
+import { dropOldSampleCaches } from './cacheName';
 
 export type { SampleResult, SampleInfo };
 export { MAX_SAMPLE_LEVEL, duckGain } from './math';
@@ -21,6 +22,8 @@ const layer = createSampleLayer({
   baseUrl: import.meta.env.BASE_URL,
   origin: typeof location === 'undefined' ? '' : location.href,
 });
+
+dropOldSampleCaches();
 
 export const listSamples = (): readonly SampleInfo[] => layer.list();
 export const startSample = (id: string, level: number): Promise<SampleResult> => layer.start(id, level);
