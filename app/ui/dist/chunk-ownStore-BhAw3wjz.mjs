@@ -94,13 +94,23 @@ var v = async (e) => {
 		channels: Array.from({ length: n.numberOfChannels }, (e, t) => n.getChannelData(t)),
 		sampleRate: n.sampleRate
 	};
-};
-async function y(t, n = v) {
+}, y = 1e4;
+function b(e, t) {
+	return new Promise((n, r) => {
+		let i = setTimeout(() => r(/* @__PURE__ */ Error("decode timeout")), t);
+		e.then((e) => {
+			clearTimeout(i), n(e);
+		}, (e) => {
+			clearTimeout(i), r(e instanceof Error ? e : /* @__PURE__ */ Error("decode failed"));
+		});
+	});
+}
+async function x(t, n = v) {
 	if (t.byteLength > 8388608) return i("This file is bigger than 8 MB.");
 	if (t.byteLength === 0) return i("This file is empty.");
 	let r;
 	try {
-		r = await n(t);
+		r = await b(n(t), y);
 	} catch {
 		return i("This file is not a sound this browser can read.");
 	}
@@ -111,4 +121,4 @@ async function y(t, n = v) {
 		value: !0
 	} : i(a.error);
 }
-export { _ as a, p as i, m as n, g as o, o as r, y as s, h as t };
+export { _ as a, p as i, m as n, g as o, o as r, x as s, h as t };

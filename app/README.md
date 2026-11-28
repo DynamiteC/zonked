@@ -8,7 +8,7 @@ Trust the app when you enable it. Kiro Crew asks before an app may register agen
 
 ## Private and local
 
-- No account, no analytics, no internet at run time. The engine makes beats, noise, lo-fi and piano in your browser. 22 short CC0 or public domain nature loops (MP3, lazy loaded, 6 saved at install and the rest after first play) play only when chosen, and each is listed in `docs/SAMPLES-LICENSES.md`. Ten more sounds are made in the browser. Your own sound file never leaves your device.
+- No account, no analytics, no internet at run time. The engine makes beats, noise, lo-fi and piano in your browser. 20 short CC0 or public domain nature loops (MP3, lazy loaded, 6 saved at install and the rest after first play) play only when chosen, and each is listed in `docs/SAMPLES-LICENSES.md`. Ten more sounds are made in the browser. Your own sound file never leaves your device.
 - The small backend binds to the loopback address only and stores one small memory file in the app data folder. What is kept on the device and how to delete it: `docs/PRIVACY.md`.
 - The app's MCP stdio server has no authentication by design. It runs only as the local user that Kiro Crew starts it as, and it is not meant to be exposed on a network. See `SECURITY.md`.
 - The crew link is optional. The app works fully without it.

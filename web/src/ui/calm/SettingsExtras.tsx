@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getTemplates } from '../../catalog';
+import { CALM } from './copy';
 import { UX } from './copy-ux';
 import { helpedCounts } from './data';
 import type { FeelEntry } from './data';
@@ -18,6 +19,8 @@ export function PrivacyNote(): React.JSX.Element {
           {UX.privacyLines.map((l) => (
             <p key={l} className="c-muted">{l}</p>
           ))}
+          <p className="c-muted" data-testid="adults-note">{CALM.adultsNote}</p>
+          <p className="c-muted" data-testid="help-line">{CALM.helpLine}</p>
         </section>
       )}
     </div>

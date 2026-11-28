@@ -86,6 +86,7 @@ export function Today({ profile, week, reduced, crewConnected, hasHistory = true
           <p className="c-eyebrow" data-testid="plan-eyebrow">{UX.planEyebrow[plan.kind]}</p>
           <h2 id="c-daily-h">{`${UX.planTitle[plan.kind]}: ${pick.template.name}`}</h2>
           <p className="c-muted">{`${UX.minutes(plan.minutes)}. ${plainLine(pick.template)}`}</p>
+          {plan.kind === 'winddown' && <p className="c-muted" data-testid="sleep-note">{CALM.sleepNote}</p>}
           <FormFoot left={{ label: CALM.notThisOne, onClick: () => setSkip((n) => n + 1) }} next={{ label: UX.planStart[plan.kind], onClick: () => playPlan(pick.template), testid: 'today-play' }} />
         </section>
       )}

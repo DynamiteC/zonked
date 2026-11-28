@@ -1,4 +1,4 @@
-import "./chunk-crewLink-TXTH-ttS.mjs";
+import "./chunk-crewLink-B-5l2pQt.mjs";
 // ../../web/src/catalog/dsl.ts
 function e(e) {
 	return {
@@ -297,7 +297,7 @@ var g = (e) => String(e).padStart(2, "0"), _ = {
 	"chimes",
 	"percussion"
 ];
-function te(e, t, n, r, i) {
+function y(e, t, n, r, i) {
 	let a = i[0], o = [`${_[e]}, ${t} Hz carrier, ${n} minutes, ${r} mood`];
 	a !== void 0 && a.noise !== "off" && a.noiseLevel > 0 && o.push(`${a.noise} noise`);
 	let s = i[i.length - 1];
@@ -305,7 +305,7 @@ function te(e, t, n, r, i) {
 	let c = p(i).filter((e) => v.includes(e));
 	return c.length > 0 && o.push(c.join(" and ")), `${o.join(", ")}.`;
 }
-function ne(e, n, r, i) {
+function b(e, n, r, i) {
 	let a = t(n.mins, r), o = t(n.carriers, r * 3 + 1), s = t(n.modes, r + (r >> 2)), c = f(n, r, a, o, s), l = n.to < 4 ? "delta" : n.to < 8 ? "theta" : n.to < 12 ? "alpha" : n.to < 30 ? "beta" : "gamma";
 	return {
 		id: `${e.prefix}-${n.slug}-${g(r + 1)}`,
@@ -324,16 +324,16 @@ function ne(e, n, r, i) {
 		intensity: n.intensity,
 		adhdFriendly: m(c, n.intensity),
 		stages: c,
-		reasonTemplate: `${n.reason.replace("{tone}", _[s])} ${te(s, o, a, t(n.vibes, r), c)}`,
+		reasonTemplate: `${n.reason.replace("{tone}", _[s])} ${y(s, o, a, t(n.vibes, r), c)}`,
 		source: "original",
 		...n.breath === void 0 ? {} : { breath: n.breath }
 	};
 }
-function re(e) {
+function x(e) {
 	let t = 0;
-	return y(e.archs.flatMap((n) => Array.from({ length: n.count }, (r, i) => ne(e, n, i, t++))));
+	return te(e.archs.flatMap((n) => Array.from({ length: n.count }, (r, i) => b(e, n, i, t++))));
 }
-function y(e) {
+function te(e) {
 	let t = /* @__PURE__ */ new Map();
 	return e.map((e) => {
 		let n = e.reasonTemplate.replaceAll("{minutes}", String(e.recommendedMinutes)), r = (t.get(n) ?? 0) + 1;
@@ -344,7 +344,7 @@ function y(e) {
 	});
 }
 // ../../web/src/catalog/archetypes/adhd-control.ts
-var b = {
+var ne = {
 	category: "adhd-control",
 	prefix: "adhd",
 	adjectives: [
@@ -529,14 +529,14 @@ var b = {
 			reason: "Four small, announced steps through the beta band for a structured work block."
 		})
 	]
-}, x = {
+}, S = {
 	category: "focus",
 	prefix: "focus",
 	adjectives: [
 		"Sharp",
 		"Deep",
 		"Clear",
-		"Lucid",
+		"Limpid",
 		"Bright",
 		"Keen",
 		"Locked",
@@ -721,25 +721,25 @@ var b = {
 			reason: "Four rising steps with soft percussion."
 		})
 	]
-}, S = {
+}, re = {
 	category: "healing",
 	prefix: "healing",
 	adjectives: [
-		"Mending",
+		"Quiet",
 		"Tender",
-		"Restoring",
+		"Mellow",
 		"Kind",
 		"Balmy",
-		"Soothing",
-		"Renewing",
+		"Silken",
+		"Fresh",
 		"Warming",
 		"Settled",
 		"Easing",
 		"Gentle",
-		"Whole"
+		"Round"
 	],
 	nouns: [
-		"Balm",
+		"Meadow",
 		"Spring",
 		"Embrace",
 		"Garden",
@@ -913,7 +913,7 @@ var b = {
 			reason: "A gentle brightening ramp that stays soft."
 		})
 	]
-}, C = {
+}, ie = {
 	category: "lucid-dreams",
 	prefix: "lucid",
 	adjectives: [
@@ -973,7 +973,7 @@ var b = {
 			intensity: 2,
 			gain: .4,
 			count: 6,
-			reason: "Theta plateau with a light return, built for wake-back-to-bed lucid practice."
+			reason: "Theta plateau with a light return, sized for a long, quiet night."
 		}),
 		e({
 			slug: "rem-ladder",
@@ -1068,7 +1068,7 @@ var b = {
 			reason: "Relaxed theta with a slow instrument drone."
 		})
 	]
-}, w = {
+}, ae = {
 	category: "meditation",
 	prefix: "meditation",
 	adjectives: [
@@ -1259,7 +1259,7 @@ var b = {
 			reason: "A long fall into delta."
 		})
 	]
-}, T = {
+}, C = {
 	category: "sleep",
 	prefix: "sleep",
 	adjectives: [
@@ -1468,7 +1468,7 @@ var b = {
 			reason: "A soft noise bed with a faint low-end hum."
 		})
 	]
-}, E = {
+}, w = {
 	category: "vibes",
 	prefix: "vibe",
 	adjectives: [
@@ -1652,7 +1652,7 @@ var b = {
 			reason: "A light groove with soft percussion and a bright, steady feel."
 		})
 	]
-}, ie = {
+}, T = {
 	category: "work-recovery",
 	prefix: "recovery",
 	adjectives: [
@@ -1852,12 +1852,12 @@ var b = {
 			reason: "Closes the work day with a calm descent that works over speakers."
 		})
 	]
-}, D = (e) => Math.round(e * 1e3) / 1e3, O = (e) => Math.min(40, Math.max(.5, e)), k = (e) => e.segs.reduce((e, t) => e + t[0], 0) * (e.scale ?? 1);
+}, E = " This is a long session. Take a break if you need one.", D = (e) => Math.round(e * 1e3) / 1e3, O = (e) => Math.min(40, Math.max(.5, e)), k = (e) => e.segs.reduce((e, t) => e + t[0], 0) * (e.scale ?? 1);
 function A(e, t) {
-	let n = e.carrier ?? 200;
+	let n = e.carrier ?? 210;
 	return e.carrierEnd === void 0 ? n : Math.round(n + (e.carrierEnd - n) * t / Math.max(k(e), 1));
 }
-function ae(e) {
+function j(e) {
 	let t = [], [n, r] = e.noise ?? ["off", 0], i = 0;
 	return e.segs.forEach((a, o) => {
 		let s = a[1] !== a[2], c = e.segs[o + 1];
@@ -1865,7 +1865,7 @@ function ae(e) {
 			atMin: D(i / 60),
 			beatHz: D(O(a[1])),
 			carrierHz: A(e, i),
-			gain: e.gain ?? .5,
+			gain: e.gain ?? .45,
 			mode: e.mode ?? "binaural",
 			noise: n,
 			noiseLevel: r,
@@ -1879,807 +1879,616 @@ function ae(e) {
 		});
 	}), t;
 }
-var oe = (e, t) => e.replaceAll("{minutes}", String(t)).replaceAll("{duration}", `${t} minutes`);
-function j(e) {
-	let t = ae(e), n = Math.max(1, Math.round(k(e) / 60));
+var M = (e, t) => e.replaceAll("{minutes}", String(t)).replaceAll("{duration}", `${t} minutes`);
+function N(e) {
+	let t = j(e), n = Math.max(1, Math.round(k(e) / 60));
 	return {
 		id: e.id,
 		name: e.name,
 		category: e.category,
 		vibe: e.vibe,
-		tags: [...e.tags, e.source],
+		tags: [...e.tags, "original"],
 		layerTags: p(t),
 		situations: e.situations,
 		recommendedMinutes: n,
 		intensity: e.intensity,
 		adhdFriendly: m(t, e.intensity),
 		stages: t,
-		reasonTemplate: oe(e.reason, n),
-		source: e.source
+		reasonTemplate: M(e.reason, n) + (n > 60 ? E : ""),
+		source: "original"
 	};
 }
-var M = ["white", .3], N = ["pink", .3], P = ["brown", .3], F = [
-	[
-		60,
-		10,
-		8
-	],
-	[
-		60,
-		8,
-		8
-	],
-	[
-		60,
-		8,
-		6
-	],
-	[
-		60,
-		6,
-		6
-	],
-	[
-		120,
-		6,
-		5
-	],
-	[
-		360,
-		5,
-		5
-	],
-	[
-		10,
-		5,
-		8
-	],
-	[
-		10,
-		8,
-		5
-	],
-	[
-		180,
-		5,
-		5
-	],
-	[
-		10,
-		5,
-		8
-	],
-	[
-		10,
-		8,
-		5
-	],
-	[
-		90,
-		5,
-		5
-	],
-	[
-		10,
-		5,
-		8
-	],
-	[
-		10,
-		8,
-		5
-	],
-	[
-		240,
-		5,
-		5
-	],
-	[
-		10,
-		5,
-		8
-	],
-	[
-		10,
-		8,
-		5
-	],
-	[
-		480,
-		5,
-		5
-	],
-	[
-		10,
-		5,
-		8
-	],
-	[
-		10,
-		8,
-		5
-	],
-	[
-		360,
-		5,
-		5
-	],
-	[
-		480,
-		5,
-		12
-	]
-], I = [
-	[
-		120,
-		10,
-		8
-	],
-	[
-		120,
-		8,
-		8
-	],
-	[
-		120,
-		8,
-		6
-	],
-	[
-		240,
-		6,
-		6
-	],
-	[
-		240,
-		6,
-		5
-	],
-	[
-		420,
-		5,
-		5
-	],
-	[
-		20,
-		5,
-		8
-	],
-	[
-		20,
-		8,
-		5
-	],
-	[
-		360,
-		5,
-		5
-	],
-	[
-		20,
-		5,
-		8
-	],
-	[
-		20,
-		8,
-		5
-	],
-	[
-		180,
-		5,
-		5
-	],
-	[
-		900,
-		5,
-		5
-	],
-	[
-		900,
-		5,
-		5
-	],
-	[
-		360,
-		5,
-		5
-	],
-	[
-		360,
-		5,
-		12
-	]
-], L = [
-	[
-		15,
-		10,
-		8
-	],
-	[
-		240,
-		8,
-		8
-	],
-	[
-		15,
-		8,
-		6
-	],
-	[
-		240,
-		6,
-		6
-	],
-	[
-		15,
-		6,
-		8
-	],
-	[
-		555,
-		8,
-		8
-	],
-	[
-		15,
-		8,
-		6
-	],
-	[
-		75,
-		6,
-		6
-	],
-	[
-		15,
-		6,
-		8
-	],
-	[
-		45,
-		8,
-		8
-	]
-], R = [
-	[
-		333,
-		8,
-		8
-	],
-	[
-		333,
-		8,
-		10
-	],
-	[
-		333,
-		10,
-		12
-	],
-	[
-		333,
-		12,
-		12
-	],
-	[
-		333,
-		12,
-		10
-	],
-	[
-		333,
-		10,
-		8
-	],
-	[
-		333,
-		8,
-		10
-	]
-], z = [
-	[
-		120,
-		20,
-		40
-	],
-	...Array.from({ length: 8 }, () => [[
-		20,
-		40,
-		40
-	], [
-		10,
-		8,
-		8
-	]]).flat(),
-	[
-		120,
-		40,
-		10
-	]
-], B = (e) => ({
-	...e,
-	source: "android",
-	carrier: 200
-}), V = [
-	B({
-		id: "android-self-hypnosis",
-		name: "Mind Bridge",
+var P = ["white", .3], F = ["pink", .3], I = ["brown", .3], L = (e, t, n, r) => Array.from({ length: e }, (e, i) => i % 2 == 0 ? [
+	t,
+	n,
+	r
+] : [
+	t,
+	r,
+	n
+]), R = (e) => e, z = [
+	R({
+		id: "seed-slow-settle",
+		name: "Slow Settle",
 		category: "meditation",
 		vibe: "deep",
-		situations: ["meditate", "heal-stress"],
+		situations: ["meditate"],
 		intensity: 2,
 		segs: [
 			[
-				300,
-				12,
-				4
+				480,
+				10,
+				6
 			],
 			[
-				600,
-				4,
-				4
+				720,
+				6,
+				6
 			],
 			[
-				300,
-				4,
-				12
+				240,
+				6,
+				9
 			]
 		],
-		noise: M,
-		tags: ["theta", "hypnosis"],
-		reason: "Five minutes down to 4 Hz, ten minutes holding there, five minutes back up."
+		carrier: 210,
+		noise: F,
+		tags: ["alpha", "theta"],
+		reason: "Eight minutes sliding from 10 to 6 Hz, twelve minutes steady, then a short lift."
 	}),
-	B({
-		id: "android-highest-mental-activity",
-		name: "Spark Burst",
+	R({
+		id: "seed-bright-run",
+		name: "Bright Run",
 		category: "focus",
 		vibe: "energized",
 		situations: ["deep-work"],
-		intensity: 5,
+		intensity: 4,
 		segs: [
 			[
-				120,
-				12,
-				40
+				180,
+				14,
+				20
 			],
 			[
-				600,
-				40,
-				40
+				900,
+				20,
+				20
 			],
 			[
-				120,
-				40,
-				12
+				180,
+				20,
+				14
 			]
 		],
-		noise: M,
-		tags: ["gamma", "boost"],
-		reason: "Two minutes up to the 40 Hz ceiling, a ten minute hold, two minutes back to 12 Hz."
+		carrier: 240,
+		noise: ["white", .2],
+		tags: ["beta", "work"],
+		reason: "A three minute climb to 20 Hz, a fifteen minute hold, then a three minute return."
 	}),
-	B({
-		id: "android-unity",
-		name: "Unity Delta",
+	R({
+		id: "seed-low-hour",
+		name: "Low Hour",
 		category: "meditation",
 		vibe: "ethereal",
 		situations: ["meditate", "cant-sleep"],
 		intensity: 1,
 		segs: [[
-			3600,
-			3.7,
-			3.7
+			900,
+			5,
+			3
+		], [
+			2700,
+			3,
+			2
 		]],
-		noise: P,
-		gain: .45,
+		carrier: 190,
+		noise: I,
+		gain: .4,
 		tags: ["delta", "long"],
-		reason: "A flat 3.7 Hz hour under brown noise, wide and quiet."
+		reason: "A slow slide to very low beats under brown noise, then a long quiet stretch."
 	}),
-	B({
-		id: "android-morphine",
-		name: "Morphine Ease",
+	R({
+		id: "seed-warm-hum",
+		name: "Warm Hum",
 		category: "healing",
 		vibe: "warm",
-		situations: ["heal-stress"],
+		situations: ["heal-stress", "quick-reset"],
 		intensity: 2,
 		segs: [[
-			3600,
-			10,
-			10
+			600,
+			9.5,
+			9
+		], [
+			1200,
+			9,
+			8.5
 		]],
-		noise: N,
-		tags: ["alpha", "pain"],
-		reason: "An hour at a steady 10 Hz under pink noise."
+		carrier: 200,
+		noise: F,
+		tags: ["alpha", "warm"],
+		reason: "Half an hour of an almost still 9 Hz beat under pink noise."
 	}),
-	B({
-		id: "android-learning",
-		name: "Long Study Bed",
+	R({
+		id: "seed-reading-room",
+		name: "Reading Room",
 		category: "focus",
 		vibe: "bright",
 		situations: ["deep-work"],
 		intensity: 3,
 		segs: [[
-			120,
-			40,
-			14
+			300,
+			12,
+			16
 		], [
-			7080,
-			14,
-			14
+			3300,
+			16,
+			16
 		]],
-		gain: .5,
+		carrier: 230,
 		tags: ["beta", "study"],
-		reason: "A two minute lift, then two hours at 14 Hz for long reading blocks."
+		reason: "A five minute lift to 16 Hz, then a steady hour for reading or writing."
 	}),
-	B({
-		id: "android-creativity",
-		name: "Creative Waves",
+	R({
+		id: "seed-idea-drift",
+		name: "Idea Drift",
 		category: "vibes",
 		vibe: "bright",
 		situations: ["quick-reset", "deep-work"],
 		intensity: 2,
-		segs: L,
-		noise: ["white", .4],
-		tags: [
-			"alpha",
-			"theta",
-			"creative"
-		],
-		reason: "Drifts back and forth between 10 and 6 Hz."
+		segs: L(6, 240, 9, 11.5),
+		carrier: 220,
+		noise: ["white", .25],
+		tags: ["alpha", "wave"],
+		reason: "A slow wave between 9 and 11.5 Hz, one swing every four minutes."
 	}),
-	B({
-		id: "android-wakeful-relax",
-		name: "Quiet Alert",
+	R({
+		id: "seed-gentle-landing",
+		name: "Gentle Landing",
 		category: "meditation",
 		vibe: "calm",
 		situations: ["meditate", "quick-reset"],
 		intensity: 1,
 		segs: [[
-			120,
-			12,
-			7.83
+			180,
+			11,
+			9
 		], [
-			780,
-			7.83,
-			7.83
+			720,
+			9,
+			8
 		]],
-		noise: ["white", .4],
-		tags: ["alpha", "zen"],
-		reason: "Parked at 7.83 Hz with white noise."
+		carrier: 205,
+		noise: P,
+		tags: ["alpha", "short"],
+		reason: "Three minutes settling from 11 Hz, then a calm stretch near 8 Hz."
 	}),
-	B({
-		id: "android-schumann",
-		name: "Earth Hum",
+	R({
+		id: "seed-quiet-ground",
+		name: "Quiet Ground",
 		category: "healing",
 		vibe: "grounded",
 		situations: ["heal-stress", "meditate"],
 		intensity: 2,
 		segs: [
 			[
-				300,
-				12,
-				7.83
+				420,
+				10,
+				7
 			],
 			[
 				600,
-				7.83,
-				7.83
+				7,
+				7
 			],
 			[
-				300,
-				7.83,
-				12
+				420,
+				7,
+				10
 			]
 		],
-		noise: ["white", .4],
-		tags: ["alpha", "earth"],
-		reason: "Ramps to 7.83 Hz, holds there ten minutes, then climbs back to 12 Hz."
+		carrier: 175,
+		noise: I,
+		tags: ["alpha", "theta"],
+		reason: "Seven minutes down to 7 Hz, ten minutes steady, seven minutes back up."
 	}),
-	B({
-		id: "android-astral-relax",
-		name: "Dream Gate Relax",
+	R({
+		id: "seed-evening-slope",
+		name: "Evening Slope",
 		category: "lucid-dreams",
 		vibe: "ethereal",
 		situations: ["lucid-dream", "meditate"],
 		intensity: 2,
 		segs: [[
-			600,
-			15,
-			10
+			900,
+			12,
+			8
 		], [
-			4800,
-			10,
-			10
+			2400,
+			8,
+			6
 		]],
-		noise: ["white", .4],
-		tags: ["alpha", "astral"],
-		reason: "A ten minute slide from 15 to 10 Hz, then a long steady, calm rest."
+		carrier: 195,
+		noise: ["pink", .25],
+		tags: ["alpha", "theta"],
+		reason: "Fifteen minutes from 12 to 8 Hz, then a long slow slope toward 6 Hz."
 	}),
-	B({
-		id: "android-interval-pulse",
-		name: "Interval Pulse",
+	R({
+		id: "seed-pace-steps",
+		name: "Pace Steps",
 		category: "focus",
 		vibe: "energized",
 		situations: ["deep-work"],
-		intensity: 5,
-		segs: z,
-		tags: [
-			"beta",
-			"gamma",
-			"interval"
+		intensity: 4,
+		segs: [
+			[
+				180,
+				14,
+				22
+			],
+			...Array.from({ length: 5 }, () => [[
+				150,
+				22,
+				22
+			], [
+				90,
+				14,
+				14
+			]]).flat(),
+			[
+				180,
+				22,
+				12
+			]
 		],
-		reason: "Eight short high and low rounds between a warm up and a cool down."
+		carrier: 235,
+		tags: ["beta", "interval"],
+		reason: "Five rounds of a brisk 22 Hz step and a short easy 14 Hz step, with a warm up and a cool down."
 	}),
-	B({
-		id: "android-hallucination",
-		name: "Hazy Visions",
+	R({
+		id: "seed-soft-fade",
+		name: "Soft Fade",
 		category: "vibes",
 		vibe: "ethereal",
 		situations: ["quick-reset"],
-		intensity: 3,
+		intensity: 2,
 		segs: [[
-			600,
-			15,
-			10
+			720,
+			12,
+			8
 		]],
+		carrier: 215,
 		noise: ["white", .2],
-		tags: ["alpha", "trippy"],
-		reason: "A single {minutes} minute slide from 15 to 10 Hz, soft and dreamy."
+		tags: ["alpha", "glide"],
+		reason: "One {minutes} minute glide from 12 to 8 Hz."
 	}),
-	B({
-		id: "android-sleep-induction",
-		name: "Drift Down",
+	R({
+		id: "seed-night-descent",
+		name: "Night Descent",
 		category: "sleep",
 		vibe: "calm",
 		situations: ["cant-sleep"],
 		intensity: 1,
 		segs: [
 			[
-				360,
-				9.7,
-				3.4
+				900,
+				10,
+				5
 			],
 			[
-				1620,
-				3.4,
-				2.4
+				1500,
+				5,
+				2.5
 			],
 			[
-				1620,
-				2.4,
-				3.4
+				1200,
+				2.5,
+				1.5
 			]
 		],
-		noise: P,
-		gain: .5,
-		tags: ["delta", "induction"],
-		reason: "A six minute fall to delta, then a long gentle rise and dip for the rest of the hour."
+		carrier: 185,
+		noise: I,
+		gain: .42,
+		tags: ["delta", "theta"],
+		reason: "A long staircase from 10 Hz down to 1.5 Hz over {minutes} minutes."
 	}),
-	B({
-		id: "android-lucid-dreams",
-		name: "Lucid Dream Cycle",
+	R({
+		id: "seed-dream-hour",
+		name: "Dream Hour",
 		category: "lucid-dreams",
 		vibe: "dreamy",
 		situations: ["lucid-dream"],
 		intensity: 2,
-		segs: F,
-		gain: .5,
-		tags: ["theta", "lucid"],
-		reason: "A theta bed with brief alpha lifts and a soft ending."
+		segs: [
+			[
+				600,
+				9,
+				6
+			],
+			[
+				1500,
+				6,
+				5.5
+			],
+			[
+				60,
+				5.5,
+				7
+			],
+			[
+				1500,
+				5.5,
+				5
+			],
+			[
+				60,
+				5,
+				7
+			],
+			[
+				900,
+				5,
+				4.5
+			]
+		],
+		carrier: 200,
+		noise: ["pink", .2],
+		tags: ["theta"],
+		reason: "A theta bed with two small lifts, about an hour in all."
 	}),
-	B({
-		id: "android-shamanic-rhythm",
-		name: "Ember Circle",
+	R({
+		id: "seed-campfire-hush",
+		name: "Campfire Hush",
 		category: "meditation",
 		vibe: "grounded",
-		situations: ["meditate", "heal-stress"],
+		situations: ["meditate"],
 		intensity: 2,
 		segs: [
 			[
-				300,
-				9,
-				4.5
+				600,
+				8,
+				5.5
 			],
 			[
-				3e3,
-				4.5,
-				4.5
+				1800,
+				5.5,
+				5
 			],
 			[
-				300,
-				4.5,
-				9
+				600,
+				5,
+				8
 			]
 		],
-		noise: ["white", .4],
-		tags: ["theta", "journey"],
-		reason: "Five minutes down to 4.5 Hz, fifty minutes of hold, five minutes back up."
+		carrier: 170,
+		noise: ["white", .35],
+		tags: ["theta"],
+		reason: "Ten minutes down to 5.5 Hz, half an hour of slow theta, ten minutes back."
 	}),
-	B({
-		id: "android-smr-sleep",
-		name: "SMR Sleep Weave",
+	R({
+		id: "seed-light-sleep-weave",
+		name: "Light Sleep Weave",
 		category: "sleep",
 		vibe: "minimal",
-		situations: ["cant-sleep", "heal-stress"],
+		situations: ["cant-sleep"],
 		intensity: 2,
-		segs: R,
-		tags: ["alpha", "smr"],
-		reason: "Beats crossing between a calm pace and the low SMR band."
+		segs: [
+			[
+				600,
+				7,
+				4
+			],
+			[
+				600,
+				4,
+				6
+			],
+			[
+				600,
+				6,
+				3.5
+			],
+			[
+				600,
+				3.5,
+				5
+			],
+			[
+				600,
+				5,
+				2.5
+			]
+		],
+		carrier: 195,
+		tags: ["theta", "delta"],
+		reason: "Five ten-minute weaves that each end a little lower than the last."
 	}),
-	B({
-		id: "android-lucid-dreams-2",
-		name: "Long Lucid Night",
+	R({
+		id: "seed-long-night",
+		name: "Long Night",
 		category: "lucid-dreams",
 		vibe: "deep",
 		situations: ["lucid-dream", "cant-sleep"],
 		intensity: 2,
 		segs: [
 			[
-				600,
-				9.7,
-				3.4
+				900,
+				8,
+				4
 			],
 			[
-				5400,
-				3.4,
-				2.4
+				3600,
+				4,
+				3
 			],
-			...I
+			[
+				1800,
+				3,
+				2
+			],
+			[
+				1800,
+				2,
+				3
+			],
+			[
+				900,
+				3,
+				6
+			]
 		],
-		noise: N,
-		gain: .5,
-		tags: [
-			"delta",
-			"theta",
-			"lucid"
-		],
-		reason: "A delta fall followed by a long night plan with timed theta pulses."
+		carrier: 180,
+		noise: F,
+		gain: .4,
+		tags: ["delta", "long"],
+		reason: "A two hour night plan: a slow fall, a deep middle and a soft rise."
 	}),
-	B({
-		id: "android-adhd-cycle",
-		name: "Focus Cycle",
+	R({
+		id: "seed-steady-blocks",
+		name: "Steady Blocks",
 		category: "adhd-control",
 		vibe: "energized",
 		situations: ["adhd-focus", "deep-work"],
 		intensity: 3,
 		segs: [
 			[
-				300,
-				40,
-				12
+				240,
+				14,
+				16
 			],
 			[
 				300,
-				20,
-				20
+				16,
+				16
 			],
 			[
 				300,
-				12,
-				12
+				13,
+				13
 			],
 			[
 				300,
-				20,
-				20
+				16,
+				16
 			],
 			[
 				300,
-				12,
-				12
-			],
-			[
-				300,
-				20,
-				20
+				13,
+				13
 			]
 		],
-		noise: M,
-		tags: ["beta", "cycle"],
-		reason: "Five minute blocks that swap between 12 and 20 Hz after a 40 Hz opener."
+		carrier: 225,
+		noise: ["white", .25],
+		tags: ["beta", "blocks"],
+		reason: "Five minute blocks that alternate between 16 and 13 Hz."
 	}),
-	B({
-		id: "android-self-hypnosis-short",
-		name: "Quick Mind Bridge",
+	R({
+		id: "seed-short-settle",
+		name: "Short Settle",
 		category: "meditation",
 		vibe: "calm",
 		situations: ["meditate", "quick-reset"],
 		intensity: 2,
 		segs: [
 			[
-				300,
-				12,
-				4
+				240,
+				10,
+				6
 			],
 			[
-				600,
-				4,
-				4
+				240,
+				6,
+				6
 			],
 			[
-				300,
-				4,
-				12
+				120,
+				6,
+				9
 			]
 		],
-		noise: M,
-		scale: .5,
-		tags: ["theta", "short"],
-		reason: "The Mind Bridge shape made shorter."
+		carrier: 210,
+		noise: P,
+		tags: ["alpha", "short"],
+		reason: "The slow settle shape in {minutes} minutes."
 	}),
-	B({
-		id: "android-wakeful-relax-5",
-		name: "Five Minute Calm",
+	R({
+		id: "seed-pause-five",
+		name: "Five Minute Pause",
 		category: "work-recovery",
 		vibe: "calm",
 		situations: ["quick-reset", "ai-burnout"],
 		intensity: 1,
 		segs: [[
-			120,
-			12,
-			7.83
+			100,
+			11,
+			8
 		], [
-			780,
-			7.83,
-			7.83
+			200,
+			8,
+			8
 		]],
-		noise: ["white", .3],
-		scale: 1 / 3,
+		carrier: 205,
+		noise: ["white", .25],
 		tags: ["alpha", "short"],
-		reason: "A {minutes} minute Quiet Alert between tasks."
+		reason: "A {minutes} minute pause between tasks."
 	}),
-	B({
-		id: "android-schumann-short",
-		name: "Earth Reset",
+	R({
+		id: "seed-ground-reset",
+		name: "Ground Reset",
 		category: "healing",
 		vibe: "grounded",
 		situations: ["heal-stress", "quick-reset"],
 		intensity: 2,
-		segs: [
-			[
-				300,
-				12,
-				7.83
-			],
-			[
-				600,
-				7.83,
-				7.83
-			],
-			[
-				300,
-				7.83,
-				12
-			]
-		],
-		noise: ["white", .3],
-		scale: .5,
+		segs: [[
+			360,
+			10,
+			7
+		], [
+			240,
+			7,
+			7
+		]],
+		carrier: 175,
+		noise: ["brown", .25],
 		tags: ["alpha", "short"],
-		reason: "A {minutes} minute version of the Earth Hum shape."
+		reason: "A {minutes} minute version of a slow slide to 7 Hz."
 	}),
-	B({
-		id: "android-lucid-dreams-short",
-		name: "Lucid Nap Cycle",
+	R({
+		id: "seed-nap-window",
+		name: "Nap Window",
 		category: "lucid-dreams",
 		vibe: "dreamy",
 		situations: ["lucid-dream", "cant-sleep"],
 		intensity: 2,
-		segs: F.slice(0, 12),
-		gain: .5,
-		tags: [
-			"theta",
-			"lucid",
-			"short"
+		segs: [
+			[
+				480,
+				9,
+				6
+			],
+			[
+				1080,
+				6,
+				5
+			],
+			[
+				60,
+				5,
+				7
+			],
+			[
+				420,
+				5,
+				4.5
+			]
 		],
-		reason: "The opening stretch of the Lucid Dream Cycle, sized for naps."
+		carrier: 200,
+		tags: ["theta", "short"],
+		reason: "A theta bed sized for a short rest, with one small lift."
 	})
-], H = (e) => ({
-	...e,
-	source: "gnaural"
-}), U = [
-	H({
-		id: "gnaural-power-nap",
-		name: "Midday Nap",
+], B = [
+	R({
+		id: "seed-midday-rest",
+		name: "Midday Rest",
 		category: "sleep",
 		vibe: "warm",
 		situations: [
@@ -2690,205 +2499,106 @@ var M = ["white", .3], N = ["pink", .3], P = ["brown", .3], F = [
 		intensity: 1,
 		segs: [
 			[
-				13,
-				11,
-				8.8
-			],
-			[
-				17,
-				8.8,
-				7
-			],
-			[
-				29,
-				7,
-				5.2
-			],
-			[
-				38,
-				5.2,
-				4.4
-			],
-			[
-				50,
-				4.4,
-				4.2
-			],
-			[
-				68,
-				4.2,
-				4
-			],
-			[
-				877,
-				4,
-				4
-			],
-			[
-				37,
-				4,
-				4.2
-			],
-			[
-				32,
-				4.2,
-				5.1
-			],
-			[
-				20,
-				5.1,
-				6.8
-			],
-			[
-				15,
-				6.8,
-				9.8
-			],
-			[
-				4,
-				9.8,
-				9.8
-			]
-		],
-		carrier: 164,
-		carrierEnd: 110,
-		noise: N,
-		gain: .5,
-		tags: [
-			"delta",
-			"nap",
-			"schedule"
-		],
-		reason: "A fast fall to 4 Hz, a long hold, then a slow climb."
-	}),
-	H({
-		id: "gnaural-airplane-aid",
-		name: "Long Haul Calm",
-		category: "meditation",
-		vibe: "calm",
-		situations: [
-			"meditate",
-			"quick-reset",
-			"heal-stress"
-		],
-		intensity: 1,
-		segs: [
-			[
-				9,
-				.5,
-				12
-			],
-			[
-				45,
-				12,
-				8
-			],
-			[
-				60,
-				8,
+				240,
+				10,
 				6
 			],
 			[
-				120,
+				720,
 				6,
-				5
+				3.5
 			],
 			[
-				180,
-				5,
-				4.3
+				360,
+				3.5,
+				3.5
 			],
 			[
-				180,
-				4.3,
-				4
-			],
-			[
-				900,
-				4,
-				4
-			],
-			[
-				900,
-				4,
-				4.2
-			],
-			[
-				900,
-				4.2,
-				3.9
-			],
-			[
-				900,
-				3.9,
-				3.9
-			],
-			[
-				400,
-				3.9,
-				4.3
+				240,
+				3.5,
+				8
 			]
 		],
-		carrier: 280,
-		carrierEnd: 140,
-		noise: P,
-		gain: .5,
-		tags: [
-			"theta",
-			"travel",
-			"schedule"
-		],
-		reason: "A falling carrier tone over theta beats, built for long seated trips."
+		carrier: 180,
+		carrierEnd: 145,
+		noise: F,
+		tags: ["delta", "rest"],
+		reason: "A short rest: settle, hold low, then a gentle rise at the end."
 	}),
-	H({
-		id: "gnaural-arrive-sharp",
-		name: "Arrive Sharp",
+	R({
+		id: "seed-long-trip",
+		name: "Long Trip",
+		category: "meditation",
+		vibe: "calm",
+		situations: ["meditate", "quick-reset"],
+		intensity: 1,
+		segs: [
+			[
+				300,
+				10,
+				7
+			],
+			[
+				1500,
+				7,
+				5.5
+			],
+			[
+				1500,
+				5.5,
+				4.5
+			],
+			[
+				1500,
+				4.5,
+				6
+			]
+		],
+		carrier: 250,
+		carrierEnd: 160,
+		noise: I,
+		tags: ["theta", "long"],
+		reason: "A tone that slowly lowers over theta beats, sized for a long sit or ride."
+	}),
+	R({
+		id: "seed-morning-lift",
+		name: "Morning Lift",
 		category: "focus",
 		vibe: "bright",
 		situations: ["deep-work"],
-		intensity: 4,
+		intensity: 3,
 		segs: [
 			[
-				236,
-				10.1,
-				10.1
+				300,
+				9,
+				12
 			],
 			[
-				132,
-				12.1,
-				12.1
+				600,
+				12,
+				15
 			],
 			[
-				661,
-				28.5,
-				28.5
+				900,
+				15,
+				18
 			],
 			[
-				209,
-				5.4,
-				5.4
-			],
-			[
-				73,
-				7.3,
-				7.3
+				300,
+				18,
+				12
 			]
 		],
-		carrier: 200,
-		gain: .5,
-		tags: [
-			"beta",
-			"gamma",
-			"schedule"
-		],
-		reason: "Five steps from alpha up to a 28.5 Hz middle, then back down."
+		carrier: 220,
+		tags: ["alpha", "beta"],
+		reason: "Three steps up from 9 to 18 Hz over {minutes} minutes, then an easy return."
 	})
 ];
-function W() {
-	return [...V, ...U].map(j);
+function V() {
+	return [...z, ...B].map(N);
 }
 // ../../web/src/catalog/soundMenu.ts
-var G = [
+var H = [
 	{
 		id: "lofi",
 		name: "Lo-fi",
@@ -2968,9 +2678,9 @@ var G = [
 		templateId: "starter-beats",
 		evidence: "mixed"
 	}
-], K = (e) => Number.isFinite(e) ? Math.min(1, Math.max(0, e)) : 0;
-function se(e, t) {
-	let n = K(t);
+], U = (e) => Number.isFinite(e) ? Math.min(1, Math.max(0, e)) : 0;
+function W(e, t) {
+	let n = U(t);
 	switch (e) {
 		case "lofi": return {
 			noise: "off",
@@ -3033,28 +2743,28 @@ function se(e, t) {
 		};
 	}
 }
-var q = [
+var G = [
 	2.5,
 	6,
 	10,
 	14,
 	20
 ];
-function ce(e) {
-	let t = K(e), n = Math.min(q.length - 1, Math.floor(t * q.length));
-	return Math.min(40, Math.max(.5, q[n] ?? 2.5));
+function oe(e) {
+	let t = U(e), n = Math.min(G.length - 1, Math.floor(t * G.length));
+	return Math.min(40, Math.max(.5, G[n] ?? 2.5));
 }
-function le(e, t) {
-	let n = K(e);
+function K(e, t) {
+	let n = U(e);
 	return {
-		breathDepth: K(t.breathDepth * (1 - .6 * n)),
+		breathDepth: U(t.breathDepth * (1 - .6 * n)),
 		breathRateHz: Math.min(.2, Math.max(.05, .06 + .1 * n)),
 		instBpm: Math.min(180, Math.max(30, Math.round(t.instBpm * (.8 + .6 * n)))),
-		lofiWarmth: K(t.lofiWarmth * (1 - .4 * n))
+		lofiWarmth: U(t.lofiWarmth * (1 - .4 * n))
 	};
 }
 // ../../web/src/catalog/starters.ts
-var ue = {
+var q = {
 	warm: "warm",
 	calm: "calm",
 	bright: "bright",
@@ -3062,8 +2772,8 @@ var ue = {
 	dreamy: "dreamy",
 	neutral: "minimal"
 };
-function de(e) {
-	let t = se(e.id, e.defaultLevel), n = Object.keys(t.layers).length > 0, r = [{
+function se(e) {
+	let t = W(e.id, e.defaultLevel), n = Object.keys(t.layers).length > 0, r = [{
 		atMin: 0,
 		beatHz: 8,
 		carrierHz: 200,
@@ -3078,7 +2788,7 @@ function de(e) {
 		id: e.templateId,
 		name: e.name,
 		category: "vibes",
-		vibe: ue[e.mood] ?? "calm",
+		vibe: q[e.mood] ?? "calm",
 		tags: [
 			"starter",
 			"sound-first",
@@ -3094,30 +2804,30 @@ function de(e) {
 		source: "original"
 	};
 }
-function fe() {
-	return G.map(de);
+function ce() {
+	return H.map(se);
 }
 // ../../web/src/catalog/build.ts
-function pe() {
+function le() {
 	return [
-		...fe(),
-		...W(),
+		...ce(),
+		...V(),
 		...[
-			E,
-			S,
-			C,
 			w,
-			T,
-			b,
-			x,
-			ie
-		].flatMap(re)
+			re,
+			ie,
+			ae,
+			C,
+			ne,
+			S,
+			T
+		].flatMap(x)
 	];
 }
 // ../../web/src/catalog/registry.ts
 var J;
 function Y() {
-	return J ??= pe(), J;
+	return J ??= le(), J;
 }
 new Proxy([], {
 	get: (e, t) => Reflect.get(Y(), t),
@@ -3142,7 +2852,7 @@ function Q(e) {
 	return e.stages.some((e) => e.mode === "binaural");
 }
 // ../../web/src/catalog/recommend.ts
-var me = {
+var ue = {
 	focus: [
 		1,
 		1,
@@ -3191,22 +2901,22 @@ var me = {
 		.6,
 		1
 	]
-}, he = {
+}, de = {
 	morning: 0,
 	afternoon: 1,
 	evening: 2,
 	night: 3
-}, ge = (e) => Math.round(e * 10) / 10;
+}, fe = (e) => Math.round(e * 10) / 10;
 function $(e, t, n) {
 	let r = Math.max(1, t);
 	if (e <= r) return n.push(`Fits your ${r} minutes (${e} min).`), 15 * (.6 + e / r * .4);
 	let i = (e - r) / r;
 	return n.push(`Runs ${e} min, longer than your ${r}; you can stop any time.`), Math.max(0, 15 * (1 - i * 1.5)) - (i > .5 ? 5 : 0);
 }
-function _e(e, t, n) {
+function pe(e, t, n) {
 	return t.deviceType === "speaker" ? Q(e) ? (n.push("Warning: binaural beats need headphones. A speaker will not deliver the effect; pick an isochronic or monaural template if you can."), -8) : (n.push("Isochronic or monaural beats work over speakers."), 10) : (n.push(t.deviceType === "bluetooth" ? "Good over Bluetooth headphones." : "Headphones suit every beat type."), Q(e) ? 10 : 8);
 }
-function ve(e, t, n) {
+function me(e, t, n) {
 	let r = e.intensity > 3 || X(e) || Z(e), i = t.sensorySensitivity;
 	return i === "low" ? {
 		pts: 10,
@@ -3222,23 +2932,23 @@ function ve(e, t, n) {
 		sensitive: !1
 	});
 }
-function ye(e, t) {
+function he(e, t) {
 	let n = [e.reasonTemplate.replace("{minutes}", String(e.recommendedMinutes))], r = e.situations.includes(t.situation), i = 0;
 	r ? (i += 40, n.push(`Made for: ${t.situation}.`)) : n.push(`Related option: not built for ${t.situation}, but close in mood.`), t.vibe === void 0 ? i += 7 : t.vibe === e.vibe && (i += 15, n.push(`Matches your ${t.vibe} vibe.`)), i += $(e.recommendedMinutes, t.availableMinutes, n);
-	let a = (me[e.category][he[t.timeOfDay]] ?? 0) * 10;
-	i += a, a >= 8 && n.push(`Suits the ${t.timeOfDay}.`), e.intensity >= 4 && t.timeOfDay === "night" && (i -= 5), i += _e(e, t, n);
-	let o = ve(e, t, n);
+	let a = (ue[e.category][de[t.timeOfDay]] ?? 0) * 10;
+	i += a, a >= 8 && n.push(`Suits the ${t.timeOfDay}.`), e.intensity >= 4 && t.timeOfDay === "night" && (i -= 5), i += pe(e, t, n);
+	let o = me(e, t, n);
 	return i += o.pts, {
 		template: e,
-		score: Math.max(0, ge(i)),
+		score: Math.max(0, fe(i)),
 		reasons: n,
 		sensitive: o.sensitive,
 		onSituation: r
 	};
 }
-var be = (e, t) => t.score - e.score || (e.template.id < t.template.id ? -1 : +(e.template.id > t.template.id));
-function xe(e, t = 5, n = Y()) {
-	let r = Math.max(1, Math.floor(t)), i = n.map((t) => ye(t, e)).sort(be), a = [
+var ge = (e, t) => t.score - e.score || (e.template.id < t.template.id ? -1 : +(e.template.id > t.template.id));
+function _e(e, t = 5, n = Y()) {
+	let r = Math.max(1, Math.floor(t)), i = n.map((t) => he(t, e)).sort(ge), a = [
 		i.filter((e) => e.onSituation && !e.sensitive),
 		i.filter((e) => !e.sensitive),
 		i
@@ -3252,7 +2962,7 @@ function xe(e, t = 5, n = Y()) {
 	}));
 }
 // ../../web/src/catalog/search.ts
-function Se(e, t = Y()) {
+function ve(e, t = Y()) {
 	let n = (e.text ?? "").toLowerCase().split(/\s+/).filter((e) => e.length > 0), r = e.layerTags ?? [];
 	return t.filter((t) => {
 		if (e.category !== void 0 && t.category !== e.category || e.vibe !== void 0 && t.vibe !== e.vibe || e.adhdFriendly !== void 0 && t.adhdFriendly !== e.adhdFriendly || !r.every((e) => t.layerTags.includes(e))) return !1;
@@ -3260,4 +2970,4 @@ function Se(e, t = Y()) {
 		return n.every((e) => i.includes(e));
 	});
 }
-export { Y as a, le as c, X as i, p as l, xe as n, G as o, Z as r, ce as s, Se as t, m as u };
+export { Y as a, K as c, X as i, p as l, _e as n, H as o, Z as r, oe as s, ve as t, m as u };

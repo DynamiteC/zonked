@@ -1,5 +1,5 @@
 import { useEffect as e, useState as t } from "react";
-import { c as n, d as r, f as i, i as a, l as o, m as s, n as c, nt as l, o as u, p as d, r as f, t as p, u as m } from "./chunk-crewLink-TXTH-ttS.mjs";
+import { c as n, d as r, f as i, i as a, l as o, m as s, n as c, o as l, p as u, r as d, st as f, t as p, u as m } from "./chunk-crewLink-B-5l2pQt.mjs";
 import { jsx as h, jsxs as g } from "react/jsx-runtime";
 // src/Panel.tsx
 function _(e) {
@@ -8,15 +8,15 @@ function _(e) {
 }
 function v(e) {
 	let t = _(e);
-	return e.playing ? t === null ? l.panelPlaying : `${l.panelPlaying} About ${String(t)} min left.` : d() ? e.templateId === null ? l.panelPickFirst : l.panelStopped : l.panelOpenFirst;
+	return e.playing ? t === null ? f.panelPlaying : `${f.panelPlaying} About ${String(t)} min left.` : u() ? e.templateId === null ? f.panelPickFirst : f.panelStopped : f.panelOpenFirst;
 }
 function y() {
-	a(import.meta.url), f();
-	let { player: o } = r(), [m, _] = t(u), [y, b] = t(p), [x, S] = t(i);
+	a(import.meta.url), d();
+	let { player: o } = r(), [m, _] = t(l), [y, b] = t(p), [x, S] = t(i);
 	e(() => c(b), []), e(() => s(S), []);
 	let [C, w] = t(() => o.snapshot());
 	e(() => (w(o.snapshot()), o.subscribe(w)), [o]);
-	let T = d() && C.templateId !== null, E = m ? y === "connected" ? l.panelCrewOn : l.panelCrewLost : l.panelCrewOff;
+	let T = u() && C.templateId !== null, E = m ? y === "connected" ? f.panelCrewOn : f.panelCrewLost : f.panelCrewOff;
 	return /* @__PURE__ */ h("div", {
 		className: "c-app c-panel",
 		"data-testid": "zonked-panel",
@@ -26,7 +26,7 @@ function y() {
 			children: [
 				/* @__PURE__ */ h("strong", {
 					"data-testid": "panel-title",
-					children: C.templateName ?? l.brand
+					children: C.templateName ?? f.brand
 				}),
 				/* @__PURE__ */ h("p", {
 					className: "c-muted",
@@ -39,14 +39,14 @@ function y() {
 					className: "c-btn c-small",
 					"data-testid": "panel-stop",
 					onClick: () => void o.stop(),
-					children: l.stop
+					children: f.stop
 				}) : /* @__PURE__ */ h("button", {
 					type: "button",
 					className: "c-btn c-small",
 					"data-testid": "panel-play",
 					disabled: !T,
 					onClick: () => void o.play(),
-					children: l.play
+					children: f.play
 				}),
 				/* @__PURE__ */ g("label", {
 					className: "c-switch",
@@ -64,7 +64,7 @@ function y() {
 							className: "c-track",
 							"aria-hidden": "true"
 						}),
-						/* @__PURE__ */ h("span", { children: l.panelCrewLabel })
+						/* @__PURE__ */ h("span", { children: f.panelCrewLabel })
 					]
 				}),
 				/* @__PURE__ */ h("p", {

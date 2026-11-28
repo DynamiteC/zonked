@@ -482,16 +482,24 @@ var S = [
 	previewing: "Playing a short preview",
 	safetyTitle: "Before you start",
 	safetyLines: [
+		"Ask a doctor first if you have a seizure disorder, a serious mental health condition, tinnitus or sensitive hearing.",
+		"Start at a very low volume. Raise it only until you can still talk easily.",
 		"Use stereo headphones for the best effect.",
-		"Keep the volume low.",
 		"Zonked fades in slowly.",
-		"Zonked is not a medical device.",
-		"Stop any time.",
-		"Stop if anything feels uncomfortable."
+		"Do not use it while driving or operating machinery.",
+		"If flashing or motion bothers you, turn on Reduce motion.",
+		"Stop if you feel dizzy, anxious, in pain, or your ears ring or feel full.",
+		"Stop if anything feels uncomfortable.",
+		"Zonked is not a medical device."
 	],
-	safetyLimits: "Built-in limits: carrier tone 20 to 1500 Hz, beat at most 40 Hz, volume always capped.",
+	safetyLimits: "Zonked keeps every sound inside fixed safe limits and never goes above a set volume cap. Your headphones still decide how loud it is.",
 	safetyAccept: "I understand, start",
 	notMedical: "Zonked is not a medical device.",
+	adultsNote: "Zonked is made for adults. Ask a parent or carer before a child listens.",
+	helpLine: "If you feel very low or in distress, please contact a local helpline or someone you trust. Zonked cannot help in a crisis.",
+	sleepNote: "If sleep trouble lasts, talk to a doctor.",
+	untilStopHint: "Until I stop plays for up to 2 hours, then fades out on its own.",
+	longSessionNote: "This is a long session. Take a break if you need one.",
 	dailyEyebrow: "Your session for today",
 	suggested: "Suggested for you",
 	forYou: "For you",
@@ -552,9 +560,9 @@ var S = [
 	whyTitle: "What the research says",
 	whyBody: "Some small studies suggest slow beats may help people relax. Results vary and may not happen for you. Zonked is not a medical device.",
 	volumeCapped: "Volume is capped for your safety.",
-	btTip: "If it sounds swooshy, set your computer's sound input to its own microphone so the headphones stay in music mode.",
+	btTip: "If it sounds swooshy, set your computer's sound input to its own microphone so the headphones stay in music mode. In-ear and Bluetooth headphones can sound louder than you expect, so start very quiet.",
 	deviceTitle: "How do you listen?",
-	deviceHint: "Bluetooth mode softens hiss that Bluetooth can smear. It never changes the beat or the volume limits.",
+	deviceHint: "Bluetooth mode softens hiss that Bluetooth can smear. It never changes the beat or the volume limits. In-ear and Bluetooth headphones can sound louder than you expect, so start very quiet.",
 	favorite: "Favorite",
 	guideLink: "How it works",
 	guideStep: (e) => `${e} of 3`,
@@ -564,11 +572,11 @@ var S = [
 	guideCards: [
 		{
 			title: "Press Start, and the sound fades in slowly",
-			body: "Pick a sound or press Start on Today. The sound rises softly over a few seconds, and you can stop whenever you like."
+			body: "Pick a sound or press Start on Today. The sound rises softly over a few seconds, and you can stop whenever you like. Start very quiet, and raise the volume only until you can still talk easily."
 		},
 		{
 			title: "Options holds the extras",
-			body: "Open Options on the player for the timer, a nature sound and your favorite. Everything else stays out of the way."
+			body: "Open Options on the player for the timer, a nature sound and your favorite. Everything else stays out of the way. Ask a doctor first if you have a seizure disorder, a serious mental health condition, tinnitus or sensitive hearing. Stop if you feel dizzy or your ears ring."
 		},
 		{
 			title: "Crew can ease the sound while you code",
@@ -589,8 +597,8 @@ var S = [
 	studioHint: "For advanced controls. Shortcut: Alt+Shift+S.",
 	studioNote: "More controls are in Options on the Player, or press Alt+Shift+S.",
 	backToCalm: "Back to Calm",
-	crewTitle: "Crew",
-	crewIntro: "Your coding session can watch itself and ease the sound. When you have been working hard, Zonked slowly moves toward calmer sound. You stay in control.",
+	crewTitle: "Sound that follows your coding",
+	crewIntro: "This page runs when you use Zonked inside Kiro Crew. It reads counts from git on your computer: commits, open changes and failed builds. When a session gets heavy, the sound slowly moves toward calmer sound. You stay in control.",
 	crewSwitch: "Let Crew ease the sound",
 	crewOff: "Not connected",
 	crewWhyOff: "Crew is not connected because the local feed is not running, or the Crew switch on this page is off. Zonked works fully without it.",
@@ -601,7 +609,7 @@ var S = [
 	crewBreak: "Time for a break",
 	crewPrivacy: "Nothing leaves your computer.",
 	crewOptional: "Crew is optional. Zonked works fully without it.",
-	crewScore: "Load score",
+	crewScore: "Activity score",
 	crewBeat: "Beat now",
 	crewNext: "Next change",
 	crewWhyTitle: "Why",
@@ -612,7 +620,7 @@ var S = [
 	crewFollowing: "Following the Crew",
 	crewOverridden: "You picked a sound yourself, so the Crew is not steering it.",
 	crewFollowNow: "Let the Crew steer",
-	crewNextReal: (e) => `Not before ${e}, and only if your load moves to another band.`,
+	crewNextReal: (e) => `Not before ${e}, and only if your activity moves to another band.`,
 	crewNextWait: "Waiting for the first change.",
 	crewNextDemo: (e) => `in ${e} s`,
 	crewNextDemoLast: (e) => `none, the demo ends in ${e} s`,
@@ -626,6 +634,7 @@ var S = [
 	gentleHint: "Picks softer sounds and keeps the screen still.",
 	reduceMotion: "Reduce motion",
 	themeTitle: "Look",
+	contrastHint: "High contrast stays bright at night. Choose Dark for a dim screen.",
 	themeChoices: {
 		system: "System",
 		light: "Light",
@@ -639,11 +648,11 @@ var S = [
 	resetEntry: "A short pause, 90 seconds",
 	resetEntryHint: "Slow breathing with soft sound.",
 	resetTitle: "A short pause",
-	resetIntro: "Ninety seconds of slow breathing with a soft sound. Stop any time.",
+	resetIntro: "Ninety seconds of slow breathing with a soft sound. Stop if you feel dizzy, or any time.",
 	breatheEntry: "Breathe, 5 minutes",
 	breatheEntryHint: "Many people find slow breathing calming.",
 	breatheTitle: "Breathe, 5 minutes",
-	breatheIntro: "Many people find slow breathing calming. Soft noise, nothing to follow. Stop any time.",
+	breatheIntro: "Many people find slow breathing calming. Soft noise, nothing to follow. Stop if you feel dizzy, or any time.",
 	breatheDoneLine: "That was 5 minutes of slow breathing.",
 	breatheAgain: "Breathe again",
 	breatheLeft: (e) => `${Math.floor(e / 60)}:${String(e % 60).padStart(2, "0")} left`,
@@ -691,7 +700,7 @@ var S = [
 	nav: [
 		"Today",
 		"Sounds",
-		"Crew",
+		"Coding",
 		"You"
 	],
 	sounds: (e) => `${e} ${e === 1 ? "sound" : "sounds"}`
@@ -721,7 +730,7 @@ var S = [
 	},
 	{
 		id: "adhd-focus",
-		label: "Steady attention",
+		label: "Steady",
 		mood: "Even and plain",
 		icon: "wave"
 	},
@@ -745,7 +754,7 @@ var S = [
 	},
 	{
 		id: "lucid-dream",
-		label: "Dream",
+		label: "Dreamy",
 		mood: "Drifting",
 		icon: "cloud"
 	},
@@ -762,20 +771,20 @@ var S = [
 		icon: "bolt"
 	}
 ], Me = {
-	strong: "Several studies exist.",
+	strong: "Some studies exist, and results vary.",
 	mixed: "Studies disagree.",
 	preliminary: "Early, small studies.",
 	limited: "Very little research.",
 	preference: "People simply like it."
 };
 function Ne(e) {
-	return e >= 5 && e < 12 ? "Good morning." : e >= 12 && e < 17 ? "Good afternoon." : e >= 17 && e < 21 ? "Good evening." : "Hello, night owl.";
+	return e >= 5 && e < 12 ? "Good morning." : e >= 12 && e < 17 ? "Good afternoon." : e >= 17 && e < 22 ? "Good evening." : "Hello, night owl.";
 }
 var Pe = {
-	focus: "Your load looks light",
-	flow: "Your load is building",
-	recovery: "Your load is high",
-	decompress: "Your load is very high"
+	focus: "Your activity looks light",
+	flow: "Your activity is building",
+	recovery: "Your activity is high",
+	decompress: "Your activity is very high"
 }, Fe = (e) => Number.isInteger(e) ? String(e) : e.toFixed(1);
 function Ie(e) {
 	if (e.why !== void 0) return e.why;
@@ -1684,36 +1693,49 @@ function Ft(e) {
 	};
 }
 // ../../web/src/audio/samples/bus.ts
-var It = null;
-function Lt(e) {
-	It = e;
+var It = -3.0103;
+function Lt(e, t, n) {
+	let r = e.createBiquadFilter();
+	return r.type = "highpass", r.frequency.value = n, r.Q.value = It, r.connect(t), r;
 }
-function Rt() {
-	return It;
+var Rt = null;
+function zt(e) {
+	Rt = e;
+}
+function Bt() {
+	return Rt;
 }
 // ../../web/src/audio/health.ts
-var zt = 3e5, Bt = 500, Vt = .04, Ht = .5;
-function Ut(e, t, n = Vt) {
+var Vt = 3e5, Ht = 500, Ut = .04;
+function Wt(e, t, n = Ut) {
 	return !Number.isFinite(e) || !Number.isFinite(t) || e < 0 || t < 0 ? !1 : t - e > n;
 }
-function Wt(e, t, n) {
-	return !Number.isFinite(e) || !Number.isFinite(t) || !Number.isFinite(n) || n <= 0 ? !1 : Math.abs(e - t) > Ht * n;
+function Gt(e, t = 1 << 17) {
+	let n = Math.min(Math.max(0, e.length - 1), t), r = new Float32Array(n);
+	for (let t = 0; t < n; t++) {
+		let n = Math.abs((e[t + 1] ?? 0) - (e[t] ?? 0));
+		r[t] = Number.isFinite(n) ? n : 0;
+	}
+	return r.sort(), n === 0 ? 0 : r[Math.min(n - 1, Math.floor(n * .999))] ?? 0;
+}
+function Kt(e, t, n) {
+	return !Number.isFinite(e) || !Number.isFinite(t) || !Number.isFinite(n) || n <= 0 ? !1 : Math.abs(e - t) > 2 * n;
 }
 var I = new class {
 	events = [];
 	record(e, t, n = 1) {
 		if (!Number.isFinite(e) || !Number.isFinite(n)) return;
-		let r = Math.min(Math.max(0, Math.floor(n)), Bt);
+		let r = Math.min(Math.max(0, Math.floor(n)), Ht);
 		for (let n = 0; n < r; n++) this.events.push({
 			at: e,
 			kind: t
 		});
-		this.events.length > Bt && (this.events = this.events.slice(this.events.length - Bt));
+		this.events.length > Ht && (this.events = this.events.slice(this.events.length - Ht));
 	}
-	count(e, t = zt) {
+	count(e, t = Vt) {
 		return this.events.filter((n) => n.at <= e && e - n.at < t).length;
 	}
-	byKind(e, t = zt) {
+	byKind(e, t = Vt) {
 		let n = {
 			underrun: 0,
 			late: 0,
@@ -1727,46 +1749,70 @@ var I = new class {
 		this.events = [];
 	}
 }();
-function Gt(e) {
+function qt(e) {
 	return e <= 0 ? "Sound health: smooth" : `${e} ${e === 1 ? "hiccup" : "hiccups"} in the last 5 minutes`;
 }
-function Kt(e) {
+function Jt(e) {
 	return e > 0 ? "Close heavy apps and move closer to your device. If it keeps happening, try wired headphones." : "";
 }
 // ../../web/src/audio/samples/math.ts
-var qt = .85, Jt = .3, Yt = .15, Xt = .4, Zt = .6, Qt = .95, $t = (e, t, n) => e < t ? t : e > n ? n : e;
-function en(e, t = 0) {
-	return $t(Number.isFinite(e) ? e : Number.isFinite(t) ? t : 0, 0, qt);
+var Yt = .85, Xt = .3, Zt = .15, Qt = .4, $t = .3, en = .95, tn = .8, nn = (e, t, n) => e < t ? t : e > n ? n : e;
+function rn(e, t = 0) {
+	return nn(Number.isFinite(e) ? e : Number.isFinite(t) ? t : 0, 0, Yt);
 }
-function tn(e, t = 0) {
-	return $t(Number.isFinite(e) ? e : Number.isFinite(t) ? t : 0, 0, 1);
+function an(e, t = 0) {
+	return nn(Number.isFinite(e) ? e : Number.isFinite(t) ? t : 0, 0, 1);
 }
-function nn(e) {
-	return 1 - Zt * tn(e);
+var on = (e) => 10 ** (e / 20);
+function sn(e) {
+	return Number.isFinite(e) ? on(e) : 1;
 }
-function rn(e) {
-	return en(e) / qt;
+function cn(e) {
+	return on(-20 * an(e));
 }
-function an(e = 2049) {
+function ln(e) {
+	return on(-8) * cn(e);
+}
+function un(e) {
+	let t = an(e);
+	return Math.min(1, Math.sin(t * Math.PI / 2) / Math.sin($t * Math.PI / 2));
+}
+function dn(e) {
+	return rn(e) / Yt;
+}
+function fn(e) {
+	if (Number.isNaN(e)) return 0;
+	let t = Math.abs(e), n = .1499999999999999, r = t <= .8 ? t : tn + n * Math.tanh((t - tn) / n);
+	return Math.sign(e) * Math.min(r, en);
+}
+function pn(e = 2049) {
 	let t = Math.max(3, e | 0), n = new Float32Array(t);
-	for (let e = 0; e < t; e++) n[e] = $t(e / (t - 1) * 2 - 1, -.95, Qt);
+	for (let e = 0; e < t; e++) n[e] = fn(e / (t - 1) * 2 - 1);
+	return n;
+}
+function mn(e, t = 64) {
+	let n = new Float32Array(Math.max(2, t | 0));
+	for (let t = 0; t < n.length; t++) {
+		let r = t / (n.length - 1);
+		n[t] = e ? Math.sin(r * Math.PI / 2) : Math.cos(r * Math.PI / 2);
+	}
 	return n;
 }
 // ../../web/src/storage/prefs.ts
-var on = "zonked.safety.v1", sn = "zonked.reduceMotion";
-function L(e, t = cn()) {
+var hn = "zonked.safety.v1", gn = "zonked.reduceMotion";
+function L(e, t = _n()) {
 	try {
 		return t?.getItem(e) === "1";
 	} catch {
 		return !1;
 	}
 }
-function R(e, t, n = cn()) {
+function R(e, t, n = _n()) {
 	try {
 		n?.setItem(e, t ? "1" : "0");
 	} catch {}
 }
-function cn() {
+function _n() {
 	try {
 		return typeof localStorage > "u" ? void 0 : localStorage;
 	} catch {
@@ -1774,15 +1820,15 @@ function cn() {
 	}
 }
 // ../../web/src/app/useReducedMotion.ts
-function ln() {
+function vn() {
 	try {
 		return typeof localStorage > "u" ? null : localStorage;
 	} catch {
 		return null;
 	}
 }
-function un() {
-	let [n, r] = t(() => L(sn)), [i, a] = t(() => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? !1);
+function yn() {
+	let [n, r] = t(() => L(gn)), [i, a] = t(() => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? !1);
 	return e(() => {
 		let e = window.matchMedia?.("(prefers-reduced-motion: reduce)");
 		if (e === void 0) return;
@@ -1791,13 +1837,13 @@ function un() {
 	}, []), [
 		n || i,
 		(e) => {
-			R(sn, e), r(e);
+			R(gn, e), r(e);
 		},
 		n
 	];
 }
 // ../../web/src/audio/worklet.ts?worker&url
-var dn = new URL("assets/worklet-DIdmPxVX.js", import.meta.url).href, fn = new URL(new URL("assets/dsp_core.wasm.json", import.meta.url).href).href, pn = "audio-unsupported", z = {
+var bn = new URL("assets/worklet-DIdmPxVX.js", import.meta.url).href, xn = new URL(new URL("assets/dsp_core.wasm.json", import.meta.url).href).href, Sn = "audio-unsupported", z = {
 	carrierHz: {
 		min: 20,
 		max: 1500,
@@ -1865,8 +1911,8 @@ var dn = new URL("assets/worklet-DIdmPxVX.js", import.meta.url).href, fn = new U
 function V(e, t, n, r) {
 	return typeof e != "number" || !Number.isFinite(e) ? r : e < t ? t : e > n ? n : e;
 }
-var mn = (e, t = z.carrierHz.def) => V(e, z.carrierHz.min, z.carrierHz.max, t), hn = (e, t = z.beatHz.def) => V(e, z.beatHz.min, z.beatHz.max, t), gn = (e, t = 0) => V(e, z.gain.min, z.gain.max, t), _n = (e, t = 0) => V(e, z.noiseLevel.min, z.noiseLevel.max, t), vn = (e, t = z.beatLevel.def) => e === void 0 ? t : V(e, z.beatLevel.min, z.beatLevel.max, t), yn = (e, t = z.rampSec.def) => V(e, z.rampSec.min, z.rampSec.max, t), H = r, U = (e, t) => V(e, H.level.min, H.level.max, t), W = (e, t = 0) => V(typeof e == "number" ? Math.round(e) : e, 0, H.enumMax, t), bn = (e, t) => V(e, H.bpm.min, H.bpm.max, t);
-function xn(e) {
+var Cn = (e, t = z.carrierHz.def) => V(e, z.carrierHz.min, z.carrierHz.max, t), wn = (e, t = z.beatHz.def) => V(e, z.beatHz.min, z.beatHz.max, t), Tn = (e, t = 0) => V(e, z.gain.min, z.gain.max, t), En = (e, t = 0) => V(e, z.noiseLevel.min, z.noiseLevel.max, t), Dn = (e, t = z.beatLevel.def) => e === void 0 ? t : V(e, z.beatLevel.min, z.beatLevel.max, t), On = (e, t = z.rampSec.def) => V(e, z.rampSec.min, z.rampSec.max, t), H = r, U = (e, t) => V(e, H.level.min, H.level.max, t), W = (e, t = 0) => V(typeof e == "number" ? Math.round(e) : e, 0, H.enumMax, t), kn = (e, t) => V(e, H.bpm.min, H.bpm.max, t);
+function An(e) {
 	let t = i, n = e ?? t;
 	return {
 		lofiLevel: U(n.lofiLevel, t.lofiLevel),
@@ -1876,14 +1922,14 @@ function xn(e) {
 		instKind: V(typeof n.instKind == "number" ? Math.round(n.instKind) : n.instKind, 0, H.instKindMax, t.instKind),
 		instRootHz: V(n.instRootHz, H.instRootHz.min, H.instRootHz.max, t.instRootHz),
 		instScale: W(n.instScale, t.instScale),
-		instBpm: bn(n.instBpm, t.instBpm),
+		instBpm: kn(n.instBpm, t.instBpm),
 		padLevel: U(n.padLevel, t.padLevel),
 		padChord: W(n.padChord, t.padChord),
 		padRootHz: V(n.padRootHz, H.padRootHz.min, H.padRootHz.max, t.padRootHz),
 		chimeLevel: U(n.chimeLevel, t.chimeLevel),
 		chimeRatePerMin: V(n.chimeRatePerMin, H.chimeRatePerMin.min, H.chimeRatePerMin.max, t.chimeRatePerMin),
 		percLevel: U(n.percLevel, t.percLevel),
-		percBpm: bn(n.percBpm, t.percBpm),
+		percBpm: kn(n.percBpm, t.percBpm),
 		percPattern: W(n.percPattern, t.percPattern),
 		lofiProgression: W(n.lofiProgression, t.lofiProgression),
 		tapeWow: U(n.tapeWow, t.tapeWow),
@@ -1895,36 +1941,36 @@ function xn(e) {
 		panRateHz: V(n.panRateHz, H.panRateHz.min, H.panRateHz.max, t.panRateHz)
 	};
 }
-var Sn = {
+var jn = {
 	binaural: 0,
 	monaural: 1,
 	isochronic: 2
-}, Cn = {
+}, Mn = {
 	off: 0,
 	white: 1,
 	pink: 2,
 	brown: 3,
 	violet: 4
 };
-function wn(e, t) {
+function Nn(e, t) {
 	t[B.lofiLevel] = e.lofiLevel, t[B.lofiWarmth] = e.lofiWarmth, t[B.crackle] = e.crackle, t[B.instLevel] = e.instLevel, t[B.instKind] = e.instKind, t[B.instRootHz] = e.instRootHz, t[B.instScale] = e.instScale, t[B.instBpm] = e.instBpm, t[B.padLevel] = e.padLevel, t[B.padChord] = e.padChord, t[B.padRootHz] = e.padRootHz, t[B.chimeLevel] = e.chimeLevel, t[B.chimeRatePerMin] = e.chimeRatePerMin, t[B.percLevel] = e.percLevel, t[B.percBpm] = e.percBpm, t[B.percPattern] = e.percPattern, t[B.lofiProgression] = e.lofiProgression, t[B.tapeWow] = e.tapeWow, t[B.pianoPedal] = e.pianoPedal, t[B.breathDepth] = e.breathDepth, t[B.breathRateHz] = e.breathRateHz, t[B.stereoWidth] = e.stereoWidth, t[B.panDepth] = e.panDepth, t[B.panRateHz] = e.panRateHz;
 }
-function Tn(e, t, n) {
-	return n[B.carrierHz] = mn(e.carrierHz), n[B.beatHz] = hn(e.beatHz), n[B.gain] = gn(e.gain), n[B.mode] = Sn[e.mode] ?? 0, n[B.noiseKind] = Cn[e.noise] ?? 0, n[B.noiseLevel] = _n(e.noiseLevel), n[B.rampSec] = yn(t), n[B.beatLevel] = vn(e.beatLevel), wn(xn(e.layers), n), n;
+function Pn(e, t, n) {
+	return n[B.carrierHz] = Cn(e.carrierHz), n[B.beatHz] = wn(e.beatHz), n[B.gain] = Tn(e.gain), n[B.mode] = jn[e.mode] ?? 0, n[B.noiseKind] = Mn[e.noise] ?? 0, n[B.noiseLevel] = En(e.noiseLevel), n[B.rampSec] = On(t), n[B.beatLevel] = Dn(e.beatLevel), Nn(An(e.layers), n), n;
 }
-function En(e, t) {
+function Fn(e, t) {
 	return {
-		carrierHz: mn(e.carrierHz, t?.carrierHz),
-		beatHz: hn(e.beatHz, t?.beatHz),
-		noise: e.noise in Cn ? e.noise : t?.noise ?? "off",
-		noiseLevel: _n(e.noiseLevel, t?.noiseLevel),
-		mode: e.mode in Sn ? e.mode : t?.mode ?? "binaural",
-		gain: gn(e.gain, t?.gain),
-		...e.beatLevel === void 0 ? {} : { beatLevel: vn(e.beatLevel, t?.beatLevel) },
-		...e.layers === void 0 ? {} : { layers: xn(e.layers) }
+		carrierHz: Cn(e.carrierHz, t?.carrierHz),
+		beatHz: wn(e.beatHz, t?.beatHz),
+		noise: e.noise in Mn ? e.noise : t?.noise ?? "off",
+		noiseLevel: En(e.noiseLevel, t?.noiseLevel),
+		mode: e.mode in jn ? e.mode : t?.mode ?? "binaural",
+		gain: Tn(e.gain, t?.gain),
+		...e.beatLevel === void 0 ? {} : { beatLevel: Dn(e.beatLevel, t?.beatLevel) },
+		...e.layers === void 0 ? {} : { layers: An(e.layers) }
 	};
 }
-var Dn = class {
+var In = class {
 	seq;
 	data;
 	constructor(e) {
@@ -1935,16 +1981,16 @@ var Dn = class {
 		for (let t = 0; t < 32; t++) this.data[t] = e[t] ?? 0;
 		Atomics.add(this.seq, 0, 1);
 	}
-}, On = 6e3, kn = 9e3, An = 10 ** -.15, jn = .25;
-function Mn(e, t) {
-	return Number.isFinite(e) ? t ? e * An : e : 0;
+}, Ln = 6e3, Rn = 9e3, zn = 10 ** -.15, Bn = .25;
+function Vn(e, t) {
+	return Number.isFinite(e) ? t ? e * zn : e : 0;
 }
-function Nn(e, t, n) {
+function Hn(e, t, n) {
 	let r = e.createGain(), i = e.createGain(), a = e.createBiquadFilter(), o = e.createBiquadFilter();
-	a.type = "highshelf", a.frequency.value = On, a.gain.value = -6, o.type = "lowpass", o.frequency.value = kn, r.gain.value = 1, i.gain.value = 0, t.connect(r).connect(n), t.connect(a).connect(o).connect(i).connect(n);
+	a.type = "highshelf", a.frequency.value = Ln, a.gain.value = -6, o.type = "lowpass", o.frequency.value = Rn, r.gain.value = 1, i.gain.value = 0, t.connect(r).connect(n), t.connect(a).connect(o).connect(i).connect(n);
 	let s = !1, c = (t, n) => {
 		let r = e.currentTime;
-		t.cancelScheduledValues(r), t.setValueAtTime(t.value, r), t.linearRampToValueAtTime(n, r + jn);
+		t.cancelScheduledValues(r), t.setValueAtTime(t.value, r), t.linearRampToValueAtTime(n, r + Bn);
 	};
 	return {
 		on: () => s,
@@ -1954,35 +2000,35 @@ function Nn(e, t, n) {
 	};
 }
 // ../../web/src/audio/telemetry.ts
-var Pn = 8192, Fn = 8191, In = 8, Ln = 65544;
-function Rn(e) {
-	return e ? new SharedArrayBuffer(Ln) : new ArrayBuffer(Ln);
+var Un = 8192, Wn = 8191, Gn = 8, Kn = 65544;
+function qn(e) {
+	return e ? new SharedArrayBuffer(Kn) : new ArrayBuffer(Kn);
 }
-var zn = class {
+var Jn = class {
 	idx;
 	ring;
 	constructor(e) {
-		this.idx = new Int32Array(e, 0, 2), this.ring = new Float32Array(e, In, Pn * 2);
+		this.idx = new Int32Array(e, 0, 2), this.ring = new Float32Array(e, Gn, Un * 2);
 	}
 	read(e) {
 		let t = Atomics.load(this.idx, 0), n = t - Atomics.load(this.idx, 1) | 0;
 		if (n <= 0) return 0;
-		n > 8192 && (n = Pn);
+		n > 8192 && (n = Un);
 		let r = Math.min(n, e.length >> 1), i = t - r | 0;
 		for (let t = 0; t < r; t++) {
-			let n = (i & Fn) * 2;
+			let n = (i & Wn) * 2;
 			e[t * 2] = this.ring[n] ?? 0, e[t * 2 + 1] = this.ring[n + 1] ?? 0, i = i + 1 | 0;
 		}
 		return Atomics.store(this.idx, 1, t), r;
 	}
-}, Bn = { read: () => 0 }, Vn = 2, Hn = .3, Un = 1e3, Wn = class {
+}, Yn = { read: () => 0 }, Xn = 2, Zn = .3, Qn = 1e3, $n = class {
 	_status;
 	listeners = /* @__PURE__ */ new Set();
 	ctx = null;
 	node = null;
 	master = null;
 	writer = null;
-	tele = Bn;
+	tele = Yn;
 	voice = null;
 	startedAt = 0;
 	statsId = 0;
@@ -2040,9 +2086,9 @@ var zn = class {
 			this.ctx === null && await this.build();
 			let t = this.ctx;
 			if (t === null || this.master === null) throw Error("audio graph missing");
-			this.voice = En(e), this.pushVoice(this.voice, Vn), this.startedAt = t.currentTime;
+			this.voice = Fn(e), this.pushVoice(this.voice, Xn), this.startedAt = t.currentTime;
 			let n = this.master.gain;
-			n.cancelScheduledValues(t.currentTime), n.setValueAtTime(0, t.currentTime), n.linearRampToValueAtTime(1, t.currentTime + Vn), await t.resume(), this.startWatch(t), this.setStatus({ state: "running" });
+			n.cancelScheduledValues(t.currentTime), n.setValueAtTime(0, t.currentTime), n.linearRampToValueAtTime(1, t.currentTime + Xn), await t.resume(), this.startWatch(t), this.setStatus({ state: "running" });
 		} catch (e) {
 			this.setStatus({
 				state: "error",
@@ -2052,11 +2098,11 @@ var zn = class {
 	}
 	async build() {
 		let e = new AudioContext({ latencyHint: "interactive" });
-		if (this.ctx = e, typeof AudioWorkletNode > "u" || e.audioWorklet === void 0) throw Error(pn);
-		await e.audioWorklet.addModule(dn);
-		let t = await fetch(fn);
+		if (this.ctx = e, typeof AudioWorkletNode > "u" || e.audioWorklet === void 0) throw Error(Sn);
+		await e.audioWorklet.addModule(bn);
+		let t = await fetch(xn);
 		if (!t.ok) throw Error(`wasm fetch failed: ${t.status}`);
-		let n = await t.arrayBuffer(), r = typeof SharedArrayBuffer < "u" && this._status.crossOriginIsolated, i = r ? new SharedArrayBuffer(132) : void 0, a = r ? Rn(!0) : void 0, o = new AudioWorkletNode(e, "zonked-dsp", {
+		let n = await t.arrayBuffer(), r = typeof SharedArrayBuffer < "u" && this._status.crossOriginIsolated, i = r ? new SharedArrayBuffer(132) : void 0, a = r ? qn(!0) : void 0, o = new AudioWorkletNode(e, "zonked-dsp", {
 			numberOfInputs: 0,
 			outputChannelCount: [2]
 		}), s = new Promise((e, t) => {
@@ -2074,16 +2120,18 @@ var zn = class {
 		}), await s, o.port.onmessage = (e) => this.onWorkletMessage(e.data);
 		let c = e.createGain();
 		c.gain.value = 0;
-		let l = e.createGain(), u = e.createWaveShaper();
-		u.curve = an();
-		let d = Nn(e, c, u);
+		let l = e.createGain();
+		l.gain.value = ln(0);
+		let u = e.createWaveShaper();
+		u.curve = pn();
+		let d = Hn(e, c, u);
 		o.connect(l).connect(c), u.connect(e.destination);
 		let f = e.createAnalyser();
-		f.fftSize = 4096, f.smoothingTimeConstant = 0, u.connect(f), this.bt = d, this.analyser = f, this.freq = new Float32Array(f.frequencyBinCount), d.setOn(this.listening === "bluetooth"), Lt({
+		f.fftSize = 4096, f.smoothingTimeConstant = 0, u.connect(f), this.bt = d, this.analyser = f, this.freq = new Float32Array(f.frequencyBinCount), d.setOn(this.listening === "bluetooth"), zt({
 			ctx: e,
-			input: c,
+			input: Lt(e, c, 40),
 			duck: l
-		}), this.node = o, this.master = c, this.writer = i ? new Dn(i) : null, this.tele = a ? new zn(a) : Bn, this.setStatus({
+		}), this.node = o, this.master = c, this.writer = i ? new In(i) : null, this.tele = a ? new Jn(a) : Yn, this.setStatus({
 			sampleRate: e.sampleRate,
 			usesSharedMemory: r
 		});
@@ -2112,8 +2160,8 @@ var zn = class {
 		this.listening !== e && (this.listening = e, this.bt?.setOn(e === "bluetooth"), this.voice !== null && this.pushVoice(this.voice, .5));
 	}
 	pushVoice(e, t) {
-		let n = Mn(e.noiseLevel, this.listening === "bluetooth");
-		Tn(n === e.noiseLevel ? e : {
+		let n = Vn(e.noiseLevel, this.listening === "bluetooth");
+		Pn(n === e.noiseLevel ? e : {
 			...e,
 			noiseLevel: n
 		}, t, this.block), this.writer === null ? this.node?.port.postMessage({
@@ -2122,9 +2170,9 @@ var zn = class {
 		}) : this.writer.write(this.block);
 	}
 	setVoice(e, t) {
-		this.voice = En(e, this.voice ?? void 0);
-		let n = yn(t ?? .05);
-		this.ctx !== null && this.ctx.currentTime - this.startedAt < 4 && (n = Math.max(n, Vn)), this.pushVoice(this.voice, n);
+		this.voice = Fn(e, this.voice ?? void 0);
+		let n = On(t ?? .05);
+		this.ctx !== null && this.ctx.currentTime - this.startedAt < 4 && (n = Math.max(n, Xn)), this.pushVoice(this.voice, n);
 	}
 	stop() {
 		if (this.pendingStop !== null) return this.pendingStop;
@@ -2146,7 +2194,7 @@ var zn = class {
 			gain: 0
 		}, .1);
 		let t = this.master?.gain;
-		t && (t.cancelScheduledValues(e.currentTime), t.setValueAtTime(t.value, e.currentTime), t.linearRampToValueAtTime(0, e.currentTime + Hn)), await new Promise((e) => setTimeout(e, 350));
+		t && (t.cancelScheduledValues(e.currentTime), t.setValueAtTime(t.value, e.currentTime), t.linearRampToValueAtTime(0, e.currentTime + Zn)), await new Promise((e) => setTimeout(e, 350));
 		try {
 			await e.suspend(), this.setStatus({ state: "stopped" });
 		} catch (e) {
@@ -2161,7 +2209,7 @@ var zn = class {
 		let t = e.playbackStats;
 		this.lastUnderruns = t?.underrunEvents ?? 0, this.watchTimer = setInterval(() => {
 			let n = Date.now(), r = e.baseLatency + (e.outputLatency || 0);
-			Ut(this.lastLatency, r) && I.record(n, "late"), this.lastLatency = r;
+			Wt(this.lastLatency, r) && I.record(n, "late"), this.lastLatency = r;
 			let i = t?.underrunEvents;
 			typeof i == "number" && i > this.lastUnderruns && I.record(n, "underrun", i - this.lastUnderruns), typeof i == "number" && (this.lastUnderruns = i);
 		}, 1e3);
@@ -2201,7 +2249,7 @@ var zn = class {
 		return t === null ? Promise.resolve(e) : new Promise((n) => {
 			let r = ++this.statsId, i = setTimeout(() => {
 				this.pending.delete(r), n(e);
-			}, Un);
+			}, Qn);
 			this.pending.set(r, {
 				resolve: n,
 				timer: i
@@ -2213,10 +2261,10 @@ var zn = class {
 	}
 };
 // ../../web/src/audio/index.ts
-function Gn() {
-	return new Wn();
+function er() {
+	return new $n();
 }
-var G = (e) => e.mediaSession ?? void 0, Kn = [{
+var G = (e) => e.mediaSession ?? void 0, tr = [{
 	src: "/pwa-512x512.png",
 	sizes: "512x512",
 	type: "image/png"
@@ -2224,7 +2272,7 @@ var G = (e) => e.mediaSession ?? void 0, Kn = [{
 	src: "/pwa-192x192.png",
 	sizes: "192x192",
 	type: "image/png"
-}], qn = [
+}], nr = [
 	"play",
 	"pause",
 	"stop",
@@ -2233,7 +2281,7 @@ var G = (e) => e.mediaSession ?? void 0, Kn = [{
 	"seekforward",
 	"seekbackward"
 ];
-function Jn(e, t) {
+function rr(e, t) {
 	switch (e) {
 		case "play": return () => t.play();
 		case "pause": return () => t.pause();
@@ -2245,18 +2293,18 @@ function Jn(e, t) {
 		default: return null;
 	}
 }
-function Yn(e, t = navigator) {
+function ir(e, t = navigator) {
 	let n = G(t);
 	if (n !== void 0 && typeof MediaMetadata < "u") try {
 		n.metadata = new MediaMetadata({
 			title: e?.name ?? "Zonked",
 			artist: "Zonked",
-			album: e?.category ?? "Acoustic recovery",
-			artwork: Kn
+			album: "Zonked",
+			artwork: tr
 		});
 	} catch {}
 }
-function Xn(e, t, n = navigator) {
+function ar(e, t, n = navigator) {
 	let r = G(n);
 	if (r !== void 0 && typeof r.setPositionState == "function") try {
 		if (!Number.isFinite(e) || e <= 0 || !Number.isFinite(t)) {
@@ -2271,15 +2319,15 @@ function Xn(e, t, n = navigator) {
 		});
 	} catch {}
 }
-function Zn(e, t = navigator) {
+function or(e, t = navigator) {
 	let n = G(t);
 	if (n === void 0) return () => void 0;
-	Yn(null, t);
-	for (let t of qn) try {
-		n.setActionHandler(t, Jn(t, e));
+	ir(null, t);
+	for (let t of nr) try {
+		n.setActionHandler(t, rr(t, e));
 	} catch {}
 	return () => {
-		for (let e of qn) try {
+		for (let e of nr) try {
 			n.setActionHandler(e, null);
 		} catch {}
 		try {
@@ -2287,12 +2335,12 @@ function Zn(e, t = navigator) {
 		} catch {}
 	};
 }
-function Qn(e, t = navigator) {
+function sr(e, t = navigator) {
 	let n = G(t);
 	n !== void 0 && (n.playbackState = e ? "playing" : "paused");
 }
 // ../../web/src/app/visibility.ts
-async function $n(e) {
+async function cr(e) {
 	if (!e.isPlaying()) return !1;
 	let t = e.engine.contextState?.();
 	if (t !== "suspended" && t !== "interrupted" || e.engine.resume === void 0) return !1;
@@ -2301,17 +2349,17 @@ async function $n(e) {
 	} catch {}
 	return !0;
 }
-function er(e) {
+function lr(e) {
 	let t = e.doc ?? (typeof document > "u" ? void 0 : document), n = e.win ?? (typeof window > "u" ? void 0 : window), r = () => {
 		let n = t?.hidden === !0;
-		e.onVisibility?.(n), $n(e);
-	}, i = () => void $n(e);
+		e.onVisibility?.(n), cr(e);
+	}, i = () => void cr(e);
 	return t?.addEventListener("visibilitychange", r), n?.addEventListener("pageshow", i), n?.addEventListener("pointerdown", i), n?.addEventListener("keydown", i), () => {
 		t?.removeEventListener("visibilitychange", r), n?.removeEventListener("pageshow", i), n?.removeEventListener("pointerdown", i), n?.removeEventListener("keydown", i);
 	};
 }
 // ../../web/src/app/wakeLock.ts
-var tr = "zonked.wakeLock", nr = class {
+var ur = "zonked.wakeLock", dr = class {
 	nav;
 	storage;
 	sentinel = null;
@@ -2334,7 +2382,7 @@ var tr = "zonked.wakeLock", nr = class {
 	async setEnabled(e) {
 		this.enabled = e;
 		try {
-			this.storage?.setItem(tr, e ? "1" : "0");
+			this.storage?.setItem(ur, e ? "1" : "0");
 		} catch {}
 		await this.sync();
 	}
@@ -2372,23 +2420,23 @@ var tr = "zonked.wakeLock", nr = class {
 	}
 	readPref() {
 		try {
-			return this.storage?.getItem(tr) === "1";
+			return this.storage?.getItem(ur) === "1";
 		} catch {
 			return !1;
 		}
 	}
-}, rr = ["favorites", "milestones"], ir = "zonked", K = "scripts", q = "logs", J = "mixes", Y = "records", ar = 2, or = 80, X = (e) => typeof e == "number" && Number.isFinite(e);
-function sr(e) {
+}, fr = ["favorites", "milestones"], pr = "zonked", K = "scripts", q = "logs", J = "mixes", Y = "records", mr = 2, hr = 80, X = (e) => typeof e == "number" && Number.isFinite(e);
+function gr(e) {
 	if (typeof e != "object" || !e) return !1;
 	let t = e;
-	return X(t.id) && typeof t.name == "string" && t.name.length >= 1 && t.name.length <= or && typeof t.text == "string" && t.text.length <= a.maxBytes && X(t.updatedAt);
+	return X(t.id) && typeof t.name == "string" && t.name.length >= 1 && t.name.length <= hr && typeof t.text == "string" && t.text.length <= a.maxBytes && X(t.updatedAt);
 }
-function cr(e) {
+function _r(e) {
 	if (typeof e != "object" || !e) return !1;
 	let t = e;
-	return X(t.id) && X(t.startedAt) && X(t.endedAt) && X(t.peakScore) && typeof t.presetId == "string" && t.presetId.length <= or;
+	return X(t.id) && X(t.startedAt) && X(t.endedAt) && X(t.peakScore) && typeof t.presetId == "string" && t.presetId.length <= hr;
 }
-function lr(e) {
+function vr(e) {
 	let t = {
 		id: e.id,
 		startedAt: e.startedAt,
@@ -2412,9 +2460,9 @@ function Q(e) {
 		e.oncomplete = () => t(), e.onerror = () => n(e.error ?? /* @__PURE__ */ Error("IndexedDB transaction failed")), e.onabort = () => n(e.error ?? /* @__PURE__ */ Error("IndexedDB transaction aborted"));
 	});
 }
-function ur(e) {
+function yr(e) {
 	return new Promise((t, n) => {
-		let r = e.open(ir, ar);
+		let r = e.open(pr, mr);
 		r.onupgradeneeded = () => {
 			let e = r.result, t = (t) => e.objectStoreNames.contains(t);
 			t(K) || e.createObjectStore(K, {
@@ -2427,17 +2475,17 @@ function ur(e) {
 		}, r.onsuccess = () => t(r.result), r.onerror = () => n(r.error ?? /* @__PURE__ */ Error("IndexedDB open failed")), r.onblocked = () => n(/* @__PURE__ */ Error("IndexedDB open blocked"));
 	});
 }
-function dr(e, t) {
+function br(e, t) {
 	if (t.length > a.maxBytes) throw RangeError("Script exceeds 256 KB");
-	let n = e.trim().slice(0, or);
+	let n = e.trim().slice(0, hr);
 	return n.length > 0 ? n : "Untitled";
 }
-function fr() {
+function xr() {
 	let e = 1, t = [], n = [], r = /* @__PURE__ */ new Map(), i = /* @__PURE__ */ new Map();
 	return {
 		persistent: () => Promise.resolve(!1),
 		saveScript(n, r) {
-			let i = dr(n, r), a = {
+			let i = br(n, r), a = {
 				id: t.find((e) => e.name === i)?.id ?? e++,
 				name: i,
 				text: r,
@@ -2473,16 +2521,16 @@ function fr() {
 		}
 	};
 }
-function pr(e = globalThis.indexedDB) {
-	let t = fr();
+function Sr(e = globalThis.indexedDB) {
+	let t = xr();
 	if (e === void 0) return t;
-	let n = null, r = () => (n ??= ur(e).catch(() => null), n);
+	let n = null, r = () => (n ??= yr(e).catch(() => null), n);
 	return {
 		persistent: async () => await r() !== null,
 		async saveScript(e, n) {
 			let i = await r();
 			if (i === null) return t.saveScript(e, n);
-			let a = dr(e, n), o = i.transaction(K, "readwrite"), s = o.objectStore(K), c = (await Z(s.getAll())).filter(sr).find((e) => e.name === a), l = {
+			let a = br(e, n), o = i.transaction(K, "readwrite"), s = o.objectStore(K), c = (await Z(s.getAll())).filter(gr).find((e) => e.name === a), l = {
 				name: a,
 				text: n,
 				updatedAt: Date.now()
@@ -2497,7 +2545,7 @@ function pr(e = globalThis.indexedDB) {
 		},
 		async listScripts() {
 			let e = await r();
-			return e === null ? t.listScripts() : (await Z(e.transaction(K).objectStore(K).getAll())).filter(sr).sort((e, t) => t.updatedAt - e.updatedAt);
+			return e === null ? t.listScripts() : (await Z(e.transaction(K).objectStore(K).getAll())).filter(gr).sort((e, t) => t.updatedAt - e.updatedAt);
 		},
 		async deleteScript(e) {
 			let n = await r();
@@ -2513,7 +2561,7 @@ function pr(e = globalThis.indexedDB) {
 		},
 		async listLogs(e = 50) {
 			let n = await r();
-			return n === null ? t.listLogs(e) : (await Z(n.transaction(q).objectStore(q).getAll())).filter(cr).map(lr).sort((e, t) => t.startedAt - e.startedAt).slice(0, e);
+			return n === null ? t.listLogs(e) : (await Z(n.transaction(q).objectStore(q).getAll())).filter(_r).map(vr).sort((e, t) => t.startedAt - e.startedAt).slice(0, e);
 		},
 		async listMixes() {
 			let e = await r();
@@ -2536,7 +2584,7 @@ function pr(e = globalThis.indexedDB) {
 		},
 		async getRecord(e) {
 			let n = await r();
-			return n === null || !rr.includes(e) ? t.getRecord(e) : await Z(n.transaction(Y).objectStore(Y).get(e));
+			return n === null || !fr.includes(e) ? t.getRecord(e) : await Z(n.transaction(Y).objectStore(Y).get(e));
 		},
 		async setRecord(e, n) {
 			let i = await r();
@@ -2557,74 +2605,74 @@ function pr(e = globalThis.indexedDB) {
 	};
 }
 // src/engine/session.ts
-var mr = 5, hr = (e) => p(e), gr = null, _r = () => L(on);
-function vr(e, t, n) {
-	Zn({
+var Cr = 5, wr = (e) => p(e), Tr = null, Er = () => L(hn);
+function Dr(e, t, n) {
+	or({
 		play: () => {
-			_r() && !e.snapshot().playing && e.play();
+			Er() && !e.snapshot().playing && e.play();
 		},
 		pause: () => void e.stop(),
 		stop: () => void e.stop(),
 		seekBy: (t) => e.seekBy(t)
-	}), er({
+	}), lr({
 		engine: t,
 		isPlaying: () => e.snapshot().playing,
 		onVisibility: (e) => void n.setHidden(e)
 	});
 	let r = "";
 	e.subscribe((t) => {
-		let i = Math.floor(t.elapsedSec / mr), a = `${String(t.playing)}|${t.templateId ?? ""}|${t.timer.kind}|${t.timer.phase}|${String(i)}`;
+		let i = Math.floor(t.elapsedSec / Cr), a = `${String(t.playing)}|${t.templateId ?? ""}|${t.timer.kind}|${t.timer.phase}|${String(i)}`;
 		if (a === r) return;
-		r = a, Qn(t.playing), Yn(t.templateName === null ? null : {
+		r = a, sr(t.playing), ir(t.templateName === null ? null : {
 			name: t.templateName,
 			category: t.templateCategory ?? ""
 		});
 		let o = e.positionState();
-		o === null ? Xn(0, 0) : Xn(o.durationSec, o.positionSec), n.setPlaying(t.playing);
+		o === null ? ar(0, 0) : ar(o.durationSec, o.positionSec), n.setPlaying(t.playing);
 	});
 }
 function $() {
-	if (gr !== null) return gr;
-	let e = Gn(), t = pr(), n = new it(e, qe, (e) => void t.addLog(e).catch(() => void 0), { toEvents: hr });
-	return vr(n, e, new nr(void 0, ln())), gr = {
+	if (Tr !== null) return Tr;
+	let e = er(), t = Sr(), n = new it(e, qe, (e) => void t.addLog(e).catch(() => void 0), { toEvents: wr });
+	return Dr(n, e, new dr(void 0, vn())), Tr = {
 		engine: e,
 		player: n,
 		store: t
-	}, gr;
+	}, Tr;
 }
-var yr = 0, br = /* @__PURE__ */ new Set(), xr = () => yr > 0;
-function Sr(e) {
-	return br.add(e), () => void br.delete(e);
-}
-function Cr(e) {
-	yr = Math.max(0, yr + (e ? 1 : -1));
-	for (let e of br) e(yr > 0);
-}
-var wr = () => $().engine.getStats(), Tr = () => $().engine.status.state, Er = 1e3, Dr = 3e4, Or = "zonked.crew.v1", kr = /* @__PURE__ */ new Set();
-function Ar() {
-	try {
-		if (typeof location < "u" && new URLSearchParams(location.search).get("crew") === "1") return R(Or, !0), !0;
-	} catch {}
-	return L(Or);
-}
+var Or = 0, kr = /* @__PURE__ */ new Set(), Ar = () => Or > 0;
 function jr(e) {
-	R(Or, e);
-	for (let t of [...kr]) try {
+	return kr.add(e), () => void kr.delete(e);
+}
+function Mr(e) {
+	Or = Math.max(0, Or + (e ? 1 : -1));
+	for (let e of kr) e(Or > 0);
+}
+var Nr = () => $().engine.getStats(), Pr = () => $().engine.status.state, Fr = 1e3, Ir = 3e4, Lr = "zonked.crew.v1", Rr = /* @__PURE__ */ new Set();
+function zr() {
+	try {
+		if (typeof location < "u" && new URLSearchParams(location.search).get("crew") === "1") return R(Lr, !0), !0;
+	} catch {}
+	return L(Lr);
+}
+function Br(e) {
+	R(Lr, e);
+	for (let t of [...Rr]) try {
 		t(e);
 	} catch {}
 }
-function Mr(e) {
-	return kr.add(e), () => {
-		kr.delete(e);
+function Vr(e) {
+	return Rr.add(e), () => {
+		Rr.delete(e);
 	};
 }
-function Nr(e) {
-	return Math.min(Dr, Er * 2 ** Math.min(Number.isFinite(e) ? Math.max(0, Math.floor(e)) : 0, 10));
+function Hr(e) {
+	return Math.min(Ir, Fr * 2 ** Math.min(Number.isFinite(e) ? Math.max(0, Math.floor(e)) : 0, 10));
 }
-function Pr(e) {
+function Ur(e) {
 	return typeof EventSource > "u" ? null : new EventSource(e);
 }
-var Fr = class {
+var Wr = class {
 	deps;
 	es = null;
 	timer = null;
@@ -2640,13 +2688,13 @@ var Fr = class {
 		return this.status;
 	}
 	start() {
-		this.wanted || (this.wanted = !0, this.unsub = Mr(() => this.sync()), this.sync());
+		this.wanted || (this.wanted = !0, this.unsub = Vr(() => this.sync()), this.sync());
 	}
 	stop() {
 		this.wanted = !1, this.unsub?.(), this.unsub = null, this.sync();
 	}
 	isEnabled() {
-		return this.deps.enabled ? this.deps.enabled() : this.deps.create !== void 0 || Ar();
+		return this.deps.enabled ? this.deps.enabled() : this.deps.create !== void 0 || zr();
 	}
 	sync() {
 		let e = this.wanted && this.isEnabled();
@@ -2654,7 +2702,7 @@ var Fr = class {
 	}
 	connect() {
 		if (this.stopped) return;
-		let e = this.deps.create ?? Pr, t = null;
+		let e = this.deps.create ?? Ur, t = null;
 		try {
 			t = e(this.deps.url ?? "http://localhost:43210/events");
 		} catch {
@@ -2683,7 +2731,7 @@ var Fr = class {
 	}
 	scheduleRetry() {
 		if (this.stopped) return;
-		let e = Nr(this.attempt);
+		let e = Hr(this.attempt);
 		this.attempt += 1;
 		let t = this.deps.setTimer ?? ((e, t) => setTimeout(e, t));
 		this.timer = t(() => {
@@ -2708,51 +2756,51 @@ var Fr = class {
 			} catch {}
 		}
 	}
-}, Ir = "zonked.css";
-function Lr(e) {
-	let t = new URL(Ir, e).href;
+}, Gr = "zonked.css";
+function Kr(e) {
+	let t = new URL(Gr, e).href;
 	if ([...document.querySelectorAll("link[data-zonked-css]")].some((e) => e.getAttribute("href") === t)) return;
 	let n = document.createElement("link");
 	n.rel = "stylesheet", n.href = t, n.setAttribute("data-zonked-css", "1"), document.head.appendChild(n);
 }
 // src/engine/crewLink.ts
-var Rr = "/apps/zonked/api/state", zr = 15e3, Br = null, Vr = null, Hr = "standalone", Ur = "", Wr = /* @__PURE__ */ new Set(), Gr = () => Hr;
-function Kr(e) {
-	return Wr.add(e), () => void Wr.delete(e);
+var qr = "/apps/zonked/api/state", Jr = 15e3, Yr = null, Xr = null, Zr = "standalone", Qr = "", $r = /* @__PURE__ */ new Set(), ei = () => Zr;
+function ti(e) {
+	return $r.add(e), () => void $r.delete(e);
 }
-function qr(e) {
-	if (e !== Hr) {
-		Hr = e;
-		for (let t of [...Wr]) t(e);
+function ni(e) {
+	if (e !== Zr) {
+		Zr = e;
+		for (let t of [...$r]) t(e);
 	}
 }
-function Jr() {
-	Hr === "connected" && $().player.crewLost(), kt(), Ur = "", qr("standalone");
+function ri() {
+	Zr === "connected" && $().player.crewLost(), kt(), Qr = "", ni("standalone");
 }
-async function Yr() {
-	if (Br === null || !Ar()) return Jr();
+async function ii() {
+	if (Yr === null || !zr()) return ri();
 	try {
-		let e = Ft((await Br.get(Rr)).crew);
-		if (e === null) return Jr();
-		qr("connected");
+		let e = Ft((await Yr.get(qr)).crew);
+		if (e === null) return ri();
+		ni("connected");
 		let t = JSON.stringify([
 			e.burnout,
 			e.target,
 			e.why ?? ""
 		]);
-		if (t === Ur) return;
-		Ur = t, Ot($().player, e);
+		if (t === Qr) return;
+		Qr = t, Ot($().player, e);
 	} catch {
-		Jr();
+		ri();
 	}
 }
-function Xr(e) {
-	Br = e, Vr === null && (Vr = setInterval(() => void Yr(), zr), Mr(() => void Yr()), Yr());
+function ai(e) {
+	Yr = e, Xr === null && (Xr = setInterval(() => void ii(), Jr), Vr(() => void ii()), ii());
 }
-function Zr() {
+function oi() {
 	let t = n.useAppApi, r = t === void 0 ? null : t();
 	e(() => {
-		r !== null && Xr(r);
+		r !== null && ai(r);
 	}, [r]);
 }
-export { xt as $, zt as A, kt as B, Jt as C, tn as D, rn as E, Rt as F, dt as G, P as H, Ft as I, yt as J, k as K, St as L, Kt as M, Gt as N, en as O, I as P, bt as Q, Tt as R, Xt as S, qt as T, At as U, jt as V, Et as W, A as X, vt as Y, _t as Z, pn as _, Fr as a, je as at, L as b, jr as c, Le as ct, $ as d, Fe as dt, it as et, xr as f, S as ft, pr as g, Cr as h, i as ht, Lr as i, Me as it, Wt as j, nn as k, Tr as l, Ie as lt, Sr as m, a as mt, Kr as n, De as nt, Ar as o, Oe as ot, _r as p, x as pt, O as q, Zr as r, Ae as rt, Mr as s, ke as st, Gr as t, qe as tt, wr as u, Ne as ut, un as v, Yt as w, R as x, on as y, Ot as z };
+export { yt as $, cn as A, Bt as B, Xt as C, dn as D, ln as E, Kt as F, kt as G, St as H, Jt as I, At as J, jt as K, qt as L, un as M, sn as N, an as O, Vt as P, O as Q, I as R, Qt as S, Yt as T, Tt as U, Ft as V, Ot as W, dt as X, Et as Y, k as Z, Sn as _, S as _t, Wr as a, it as at, L as b, i as bt, Br as c, Ae as ct, $ as d, Oe as dt, vt as et, Ar as f, ke as ft, Sr as g, Fe as gt, Mr as h, Ne as ht, Kr as i, xt as it, mn as j, rn as k, Pr as l, Me as lt, jr as m, Ie as mt, ti as n, _t as nt, zr as o, qe as ot, Er as p, Le as pt, P as q, oi as r, bt as rt, Vr as s, De as st, ei as t, A as tt, Nr as u, je as ut, yn as v, x as vt, Zt as w, R as x, hn as y, a as yt, Gt as z };
