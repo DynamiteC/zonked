@@ -1,47 +1,80 @@
-import { jsx as a, jsxs as p } from "react/jsx-runtime";
-import { useState as l, useEffect as r } from "react";
-import { H as w, I as b, j as C, l as y, K as S, N, O, Q as L, k as o, C as t, R as P } from "./chunk-crewLink-uOIAoAgB.mjs";
-import { T, U as $ } from "./chunk-crewLink-uOIAoAgB.mjs";
-function x(e) {
-  const n = e.timer;
-  return n.kind !== "countdown" || !n.running ? null : Math.ceil(n.remainingSec / 60);
+import { useEffect as e, useState as t } from "react";
+import { W as n, c as r, d as i, f as a, i as o, l as s, m as c, n as l, o as u, p as d, r as f, t as p, u as m } from "./chunk-crewLink-CH1NzHoN.mjs";
+import { jsx as h, jsxs as g } from "react/jsx-runtime";
+// src/Panel.tsx
+function _(e) {
+	let t = e.timer;
+	return t.kind !== "countdown" || !t.running ? null : Math.ceil(t.remainingSec / 60);
 }
 function v(e) {
-  const n = x(e);
-  return e.playing ? n === null ? t.panelPlaying : `${t.panelPlaying} About ${String(n)} min left.` : o() ? e.templateId === null ? t.panelPickFirst : t.panelStopped : t.panelOpenFirst;
+	let t = _(e);
+	return e.playing ? t === null ? n.panelPlaying : `${n.panelPlaying} About ${String(t)} min left.` : d() ? e.templateId === null ? n.panelPickFirst : n.panelStopped : n.panelOpenFirst;
 }
-function F() {
-  w(import.meta.url), b();
-  const { player: e } = C(), [n, d] = l(y), [u, m] = l(S), [h, f] = l(N);
-  r(() => O(m), []), r(() => L(f), []);
-  const [s, i] = l(() => e.snapshot());
-  r(() => (i(e.snapshot()), e.subscribe(i)), [e]);
-  const g = o() && s.templateId !== null, k = n ? u === "connected" ? t.panelCrewOn : t.panelCrewLost : t.panelCrewOff;
-  return /* @__PURE__ */ a("div", { className: "c-app c-panel", "data-testid": "zonked-panel", "data-theme": "auto", children: /* @__PURE__ */ p("div", { className: "c-card", children: [
-    /* @__PURE__ */ a("strong", { "data-testid": "panel-title", children: s.templateName ?? t.brand }),
-    /* @__PURE__ */ a("p", { className: "c-muted", "data-testid": "panel-hint", role: "status", children: v(s) }),
-    h ? null : s.playing ? /* @__PURE__ */ a("button", { type: "button", className: "c-btn c-small", "data-testid": "panel-stop", onClick: () => void e.stop(), children: t.stop }) : /* @__PURE__ */ a("button", { type: "button", className: "c-btn c-small", "data-testid": "panel-play", disabled: !g, onClick: () => void e.play(), children: t.play }),
-    /* @__PURE__ */ p("label", { className: "c-switch", children: [
-      /* @__PURE__ */ a(
-        "input",
-        {
-          type: "checkbox",
-          role: "switch",
-          "data-testid": "panel-crew",
-          checked: n,
-          onChange: (c) => {
-            d(c.target.checked), P(c.target.checked);
-          }
-        }
-      ),
-      /* @__PURE__ */ a("span", { className: "c-track", "aria-hidden": "true" }),
-      /* @__PURE__ */ a("span", { children: t.panelCrewLabel })
-    ] }),
-    /* @__PURE__ */ a("p", { className: "c-muted", "data-testid": "panel-crew-status", role: "status", children: k })
-  ] }) });
+function y() {
+	o(import.meta.url), f();
+	let { player: s } = i(), [m, _] = t(u), [y, b] = t(p), [x, S] = t(a);
+	e(() => l(b), []), e(() => c(S), []);
+	let [C, w] = t(() => s.snapshot());
+	e(() => (w(s.snapshot()), s.subscribe(w)), [s]);
+	let T = d() && C.templateId !== null, E = m ? y === "connected" ? n.panelCrewOn : n.panelCrewLost : n.panelCrewOff;
+	return /* @__PURE__ */ h("div", {
+		className: "c-app c-panel",
+		"data-testid": "zonked-panel",
+		"data-theme": "auto",
+		children: /* @__PURE__ */ g("div", {
+			className: "c-card",
+			children: [
+				/* @__PURE__ */ h("strong", {
+					"data-testid": "panel-title",
+					children: C.templateName ?? n.brand
+				}),
+				/* @__PURE__ */ h("p", {
+					className: "c-muted",
+					"data-testid": "panel-hint",
+					role: "status",
+					children: v(C)
+				}),
+				x ? null : C.playing ? /* @__PURE__ */ h("button", {
+					type: "button",
+					className: "c-btn c-small",
+					"data-testid": "panel-stop",
+					onClick: () => void s.stop(),
+					children: n.stop
+				}) : /* @__PURE__ */ h("button", {
+					type: "button",
+					className: "c-btn c-small",
+					"data-testid": "panel-play",
+					disabled: !T,
+					onClick: () => void s.play(),
+					children: n.play
+				}),
+				/* @__PURE__ */ g("label", {
+					className: "c-switch",
+					children: [
+						/* @__PURE__ */ h("input", {
+							type: "checkbox",
+							role: "switch",
+							"data-testid": "panel-crew",
+							checked: m,
+							onChange: (e) => {
+								_(e.target.checked), r(e.target.checked);
+							}
+						}),
+						/* @__PURE__ */ h("span", {
+							className: "c-track",
+							"aria-hidden": "true"
+						}),
+						/* @__PURE__ */ h("span", { children: n.panelCrewLabel })
+					]
+				}),
+				/* @__PURE__ */ h("p", {
+					className: "c-muted",
+					"data-testid": "panel-crew-status",
+					role: "status",
+					children: E
+				})
+			]
+		})
+	});
 }
-export {
-  F as default,
-  T as engineState,
-  $ as engineStats
-};
+export { y as default, s as engineState, m as engineStats };
