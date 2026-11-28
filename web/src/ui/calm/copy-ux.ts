@@ -1,0 +1,75 @@
+/** Wave U text. Kept apart from copy.ts so the copy wave and the UX wave do not collide. Plain words, no pressure. */
+import type { PlanKind } from './data/todayPlan';
+
+export const UX = {
+  planTitle: {
+    sprint: 'Study sprint',
+    winddown: 'Wind down',
+    focus: 'Focus session',
+    calm: 'A calm break',
+    reset: '10 minute calm start',
+  } satisfies Record<PlanKind, string>,
+  planEyebrow: {
+    sprint: 'Today: 25 minutes of focus, then 5 minutes of rest',
+    winddown: 'Today: a gentle wind down',
+    focus: 'Today: a focus session',
+    calm: 'Today: a short calm break',
+    reset: 'Today: a quick, quiet reset',
+  } satisfies Record<PlanKind, string>,
+  planStart: {
+    sprint: 'Start sprint',
+    winddown: 'Start',
+    focus: 'Start',
+    calm: 'Start',
+    reset: 'Start',
+  } satisfies Record<PlanKind, string>,
+  useCasesTitle: 'Start with',
+  useCases: { winddown: 'Wind down', sleep: 'Sleep', focus: 'Focus' },
+  minutes: (n: number) => `${n} min`,
+  hearIntro: 'You will hear',
+  hearJoin: (parts: readonly string[]): string =>
+    parts.length < 2 ? (parts[0] ?? 'soft sound') : `${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1] ?? ''}`,
+  hearParts: {
+    binaural: 'two soft tones',
+    isochronic: 'a slow pulse',
+    monaural: 'a gentle pulse',
+    noise: 'soft rushing hush',
+    lofi: 'warm lo-fi texture',
+    instrument: 'quiet notes',
+    pad: 'a warm pad',
+    chimes: 'light chimes',
+    percussion: 'a soft beat',
+  } as const,
+  /** Feel echo on Today. {name} is the sound. One question, no pressure. */
+  echo: {
+    calmer: (when: string, name: string) => `${when} ${name} felt calmer. Play it again?`,
+    same: (when: string, name: string) => `${when} ${name} felt about the same. Play it again if you like.`,
+    when: (daysAgo: number) => (daysAgo <= 0 ? 'Earlier,' : daysAgo === 1 ? 'Yesterday' : 'Last time'),
+    play: 'Play it again',
+  },
+  untilStopHint: 'Until I stop ends after 2 hours with a soft fade.',
+  restLine: 'Time for a rest.',
+  privacyLink: 'Privacy notice',
+  privacyTitle: 'Privacy',
+  privacyBack: 'Back to settings',
+  privacyLines: [
+    'Zonked has no account, no analytics and no tracking. It sends nothing anywhere.',
+    'Your answers, favorites and your own sound files stay on this device.',
+    'The app makes no network calls while you use it. Only the optional Crew link talks to your own computer.',
+    'To remove it all, use Forget my data in Settings. It clears your answers, notes, saved mixes, your own sounds and the offline sound cache.',
+    'Zonked is made for adults and is not meant for children under 13. It collects no data about anyone.',
+    'Zonked is not a medical device. See the notice you saw before your first sound.',
+  ] as const,
+  doneCard: {
+    addHome: 'You can add Zonked to your home screen from your browser menu.',
+  },
+  helped: {
+    title: 'What helped',
+    empty: 'Your answers will show here after you tell Zonked how a sound felt. They stay on this device.',
+    row: (name: string, calmer: number, same: number, not: number) => `${name}: ${calmer} calmer, ${same} same, ${not} not for me`,
+  },
+  listened: {
+    today: (min: number) => `About ${min} minutes of sound today.`,
+    rest: 'You have listened for a while. A short rest for your ears may feel good.',
+  },
+} as const;

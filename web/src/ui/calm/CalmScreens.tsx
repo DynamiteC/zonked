@@ -2,10 +2,11 @@ import { lazy } from 'react';
 import type { Mix } from '../../app/mixes';
 import type { Template } from '../../catalog/types';
 import type { View } from './CalmChrome';
-import type { FeelEntry } from './data';
+import type { FeelEntry, Goal } from './data';
 import type { CalmData } from './useCalmData';
 import { today } from './useCalmData';
 import { toDayNumber } from './data';
+import { sessionMinutes } from '../../app/milestones';
 import type { CalmSession } from './useCalmSession';
 import type { CrewInfo } from './useCrewBridge';
 import { resumeCrew, snoozeCrew } from '../../app/crewFeed';
@@ -26,7 +27,7 @@ const SettingsScreen = lazy(() => import('./SettingsScreen').then((m) => ({ defa
 
 export interface Handlers {
   readonly go: (v: View) => void;
-  readonly play: (t: Template) => void;
+  readonly play: (t: Template, minutes?: number | null, goal?: Goal) => void;
   readonly playDay: (id: string, no: number, t: Template) => void;
   readonly openJourney: (id: string) => void;
   readonly forget: () => void;
@@ -78,7 +79,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
     case 'nature':
       return <NatureScreen nature={nature} device={data.profile.device} reduced={still} onBack={() => h.go('library')} />;
     case 'player':
-      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} device={data.profile.device} theme={look.theme} announce={prefs.announce} sprint={sprint} openAdvanced={h.advancedPending} onAdvancedShown={h.advancedShown} />;
+      return <PlayerScreen player={s.player} snap={s.snap} still={still} favorite={fav.on} onToggle={s.toggle} onFavorite={fav.toggle} nature={nature} engine={s.engine} device={data.profile.device} goal={data.profile.goal} theme={look.theme} announce={prefs.announce} sprint={sprint} openAdvanced={h.advancedPending} onAdvancedShown={h.advancedShown} />;
     case 'reset':
       return <ResetScreen s={s} still={still} theme={look.theme} announce={prefs.announce} onBack={() => h.go('today')} />;
     case 'breathe':
@@ -110,6 +111,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
           prefs={prefs}
           onPrefs={onPrefs}
           onGuide={h.openGuide}
+          feel={feel}
         />
       );
     default:
@@ -124,6 +126,7 @@ export function Screens({ view, journeyId, s, data, crewInfo, nature, still, fav
           crewConnected={crewInfo.enabled && crewInfo.status === 'connected'}
           last={last}
           feel={feel}
+          todayMinutes={data.logs.filter((l) => toDayNumber(l.startedAt) === today()).reduce((n, l) => n + sessionMinutes(l), 0)}
           onSprint={(t) => {
             sprint.start(t);
             h.go('player');

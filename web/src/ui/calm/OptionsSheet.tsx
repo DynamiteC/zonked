@@ -7,7 +7,7 @@ import { Slider } from './nature/NatureScreen';
 import { RangeField } from '../shared/RangeField';
 import type { RangeTick } from '../shared/RangeField';
 import { orderForDevice } from './data';
-import type { Device } from './data';
+import type { Device, Goal } from './data';
 import { MAX_NATURE_LEVEL } from './nature/prefs';
 import type { Nature } from './nature/useNature';
 import { TimerChips } from './TimerChips';
@@ -37,13 +37,15 @@ interface Props {
   readonly engine: AudioEngine;
   /** How the person listens. Bluetooth shows a tip and lists soft sounds first. */
   readonly device?: Device;
+  /** The saved goal. Sleep hides the open-ended timer chip. */
+  readonly goal?: Goal;
   /** Opens with the Advanced section expanded (Studio shortcut). */
   readonly advancedOpen?: boolean;
   readonly sprint?: { readonly onSprint: () => void; readonly onSprintEnd: () => void };
 }
 
 /** Bottom sheet with every player option: Timer, Nature sound, More. Escape closes it and focus returns to Options. */
-export function OptionsSheet({ player, snap, nature, favorite, evidence, onFavorite, onClose, sprint, engine, device = 'wired', advancedOpen = false }: Props): React.JSX.Element {
+export function OptionsSheet({ player, snap, nature, favorite, evidence, onFavorite, onClose, sprint, engine, device = 'wired', goal, advancedOpen = false }: Props): React.JSX.Element {
   const box = useRef<HTMLDivElement>(null);
   const [why, setWhy] = useState(false);
   const [adv, setAdv] = useState(advancedOpen);
@@ -77,7 +79,7 @@ export function OptionsSheet({ player, snap, nature, favorite, evidence, onFavor
         </div>
         <section aria-labelledby="c-o-timer">
           <h3 id="c-o-timer" className="c-o-h">{CALM.optTimer}</h3>
-          <TimerChips timer={snap.timer} player={player} {...(sprint !== undefined ? { onSprint: sprint.onSprint, onSprintEnd: sprint.onSprintEnd } : {})} />
+          <TimerChips timer={snap.timer} player={player} hideUntilStop={goal === 'sleep'} {...(sprint !== undefined ? { onSprint: sprint.onSprint, onSprintEnd: sprint.onSprintEnd } : {})} />
         </section>
         <section aria-labelledby="c-o-nature">
           <h3 id="c-o-nature" className="c-o-h">{CALM.optNature}</h3>
