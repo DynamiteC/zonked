@@ -9,7 +9,7 @@ import { NATURE_GROUPS, groupOf } from './groups';
 import { MAX_NATURE_LEVEL } from './prefs';
 import type { Nature } from './useNature';
 
-const ICON: Readonly<Record<string, string>> = { wind: 'breeze', waterfall: 'rapids', flute: 'wave' };
+const ICON: Readonly<Record<string, string>> = { wind: 'breeze', waterfall: 'falls', flute: 'wave' };
 const MySounds = lazy(() => import('./MySounds').then((m) => ({ default: m.MySounds })));
 const Credits = lazy(() => import('./Credits').then((m) => ({ default: m.Credits })));
 

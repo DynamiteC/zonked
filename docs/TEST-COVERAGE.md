@@ -104,6 +104,7 @@ Rows marked REMOVED are decisions, not gaps: the feature is gone from the produc
 | F11 | Soft start: the first moments are quieter than the settled level, and the stop ramp keeps frames flowing |
 | F12 | Hottest settings: dial at maximum and every layer at maximum keep the peak at 0.95 or less |
 | F13 | Frame time with the CPU slowed 4 times: 20 ms or less, or the low-power path switches on |
+| F14 | Night dim on a phone: the Options sheet stays inside the screen and its controls can be tapped (the matrix found this bug) |
 
 ## Feature list from the owner and where each is checked
 

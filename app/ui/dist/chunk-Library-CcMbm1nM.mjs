@@ -2,7 +2,7 @@ import { useEffect as e, useMemo as t, useState as n } from "react";
 import { r, t as i } from "./chunk-favorites-D5uR-Ors.mjs";
 import { a, o, t as s } from "./chunk-catalog-DQXidRzG.mjs";
 import { lt as c, st as l, ut as u } from "./chunk-crewLink-B-5l2pQt.mjs";
-import { t as d } from "./chunk-icons-C-FdU5cO.mjs";
+import { t as d } from "./chunk-icons-h6Wr9KyH.mjs";
 import { n as f } from "./chunk-MascotView-BrlUzit0.mjs";
 import { Fragment as p, jsx as m, jsxs as h } from "react/jsx-runtime";
 // ../../web/src/ui/calm/Library.tsx

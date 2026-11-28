@@ -1,7 +1,7 @@
 import { Suspense as e, lazy as t, useState as n } from "react";
 import { r, t as i } from "./chunk-samples-_x0GtVlI.mjs";
 import { st as a } from "./chunk-crewLink-B-5l2pQt.mjs";
-import { t as o } from "./chunk-icons-C-FdU5cO.mjs";
+import { t as o } from "./chunk-icons-h6Wr9KyH.mjs";
 import { n as s } from "./chunk-MascotView-BrlUzit0.mjs";
 import { T as c } from "./chunk-data-DrI3L2nM.mjs";
 import { jsx as l, jsxs as u } from "react/jsx-runtime";
@@ -72,9 +72,9 @@ function E() {
 // ../../web/src/ui/calm/nature/NatureScreen.tsx
 var D = /* @__PURE__ */ r({ NatureScreen: () => F }), O = {
 	wind: "breeze",
-	waterfall: "rapids",
+	waterfall: "falls",
 	flute: "wave"
-}, k = t(() => import("./chunk-MySounds-CqsQ0Q6J.mjs").then((e) => ({ default: e.MySounds }))), A = t(() => import("./chunk-Credits-D_uwXSzL.mjs").then((e) => ({ default: e.Credits })));
+}, k = t(() => import("./chunk-MySounds-DBLiTN9s.mjs").then((e) => ({ default: e.MySounds }))), A = t(() => import("./chunk-Credits-D_uwXSzL.mjs").then((e) => ({ default: e.Credits })));
 function j({ id: e, label: t, value: n, max: r, onChange: i }) {
 	return /* @__PURE__ */ u("div", {
 		className: "c-slider",
