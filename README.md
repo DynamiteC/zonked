@@ -6,6 +6,15 @@ License: MIT ([`LICENSE`](LICENSE), [`NOTICE`](NOTICE)). Not a medical device.
 
 [Demo video](media/zonked-demo.mp4) (2:50)
 
+## Try it
+
+```bash
+npm ci --prefix web
+npm --prefix web run dev
+```
+
+Open the address it prints, press **Skip, just play**, read the short safety notice and accept it. Sound starts quietly and fades in.
+
 ![Zonked](media/poster.png)
 
 > ## Try the Crew in 2 minutes

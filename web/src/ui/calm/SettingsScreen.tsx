@@ -47,6 +47,7 @@ function ThemePicker({ value, onChange }: { readonly value: ThemeChoice; readonl
           <span>{CALM.themeChoices[c]}</span>
         </label>
       ))}
+      {value === 'contrast' && <p className="c-muted" data-testid="contrast-hint">{CALM.contrastHint}</p>}
     </fieldset>
   );
 }
