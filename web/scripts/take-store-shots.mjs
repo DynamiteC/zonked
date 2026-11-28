@@ -9,14 +9,15 @@ import { startServer } from './e2e-lib.mjs';
 const out = resolve(process.argv[2] ?? 'app/assets');
 mkdirSync(join(out, 'screenshots'), { recursive: true });
 
-const INIT = ({ safety }) => {
+const INIT = ({ safety, scheme }) => {
+  localStorage.setItem('zonked.theme.v2', JSON.stringify({ choice: scheme, dim: false, announce: true }));
   if (safety) localStorage.setItem('zonked.safety.v1', '1');
   localStorage.setItem('zonked.profile.v1', JSON.stringify({ v: 1, goal: 'calm', timeOfDay: 'evening', device: 'headphones', extraGentle: false, createdAt: 1_700_000_000_000 }));
 };
 
-async function open(browser, origin, size, safety) {
-  const context = await browser.newContext({ viewport: size, reducedMotion: 'no-preference' });
-  await context.addInitScript(INIT, { safety });
+async function open(browser, origin, size, safety, colorScheme = 'dark') {
+  const context = await browser.newContext({ viewport: size, reducedMotion: 'no-preference', colorScheme });
+  await context.addInitScript(INIT, { safety, scheme: colorScheme });
   const page = await context.newPage();
   await page.goto(`${origin}/?e2e=1`);
   await page.getByTestId('greeting').waitFor();
@@ -57,9 +58,15 @@ try {
     await context.close();
   }
   {
-    const { context, page } = await open(browser, server.origin, { width: 1200, height: 675 }, true);
+    const { context, page } = await open(browser, server.origin, { width: 1200, height: 675 }, true, 'light');
     await addPromise(page);
     await page.screenshot({ path: join(out, 'hero.png') });
+    await context.close();
+  }
+  {
+    const { context, page } = await open(browser, server.origin, { width: 1200, height: 675 }, true, 'dark');
+    await addPromise(page);
+    await page.screenshot({ path: join(out, 'hero-dark.png') });
     await context.close();
   }
 } finally {

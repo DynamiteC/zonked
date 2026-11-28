@@ -70,6 +70,7 @@ export function useNature(s: CalmSession): Nature {
   }, []);
   const update = useCallback((patch: Partial<NaturePrefs>, apply: (m: typeof import('../../../audio/samples')) => void) => {
     const next = { ...ref.current, ...patch };
+    ref.current = next;
     setPrefs(next);
     savePrefs(next);
     if (activeNature() !== null) void lazySamples().then(apply);
