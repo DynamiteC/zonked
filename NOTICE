@@ -61,18 +61,16 @@ C. Credits and lineage
    final-year web application, its research and its yellow mask mascot were
    made after studying that Android app.
 
-8. Templates whose values came from those sources
-   21 templates in web/src/catalog/seeds.ts have source "android" and 3 have
-   source "gnaural". Their step values (beat Hz, step length) follow the
-   published schedules in those sources, with original names and wording. A
-   single frequency or duration is a number, not expression. A long ordered
-   table of values taken from one work is a weaker case. Gnaural files carry
-   no licence, and the Android app is GPLv3. A separate wave of this release
-   (wave C) is replacing these 24 templates with original schedules built by
-   the Zonked archetype generator, and will drop the "android" and "gnaural"
-   ids. Until that is merged, this item stands as written. LAWYER: whether the
-   old tables are a derivative work, and the final wording of this item, need
-   a qualified lawyer. Nothing here is a legal opinion.
+8. The 24 seed templates. These 24 templates in web/src/catalog/seeds.ts
+   (ids that start with seed-) used to follow the step tables of the Android
+   app and of the Gnaural files. They are now original schedules written for
+   Zonked, with new ids and source "original". Saved favorites that used the
+   old ids are moved to the new ids when they are read (web/src/catalog/
+   legacyIds.ts). The Android app, the Gnaural files and SBaGen stay credited
+   as inspiration in item 7, and the reference copies in legacy/ stay where
+   they are, unshipped. LAWYER: whether the earlier release history of this
+   repository needs any statement about the old tables, and the final wording
+   of this item. Nothing here is a legal opinion.
 
 D. Not a medical device
 

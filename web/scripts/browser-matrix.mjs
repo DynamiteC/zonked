@@ -365,7 +365,8 @@ async function collectFeatureChecks(browser, origin, extra) {
   const found = [];
   const wrapped = {
     newContext: (o = {}) => {
-      const isDefault = o.viewport?.width === 1280 && o.viewport?.height === 720;
+      // A check that asks for 1280x720 itself keeps it. Only phone sizes replace the default.
+      const isDefault = o.viewport?.width === 1280 && o.viewport?.height === 720 && extra.viewport.width < 1280;
       return browser.newContext({ ...o, ...(isDefault ? extra : {}) });
     },
   };

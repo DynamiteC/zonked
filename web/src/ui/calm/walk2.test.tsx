@@ -74,8 +74,8 @@ describe('walk 2 fixes', () => {
     await act(async () => fireEvent.click(await screen.findByTestId('today-play')));
     const nav = screen.getByRole('navigation', { name: 'Main' });
     fireEvent.click(within(nav).getByRole('button', { name: CALM.nav[0] }));
-    expect(screen.queryByRole('group', { name: 'Now playing' })).not.toBeNull();
+    expect(screen.queryByRole('region', { name: 'Now playing' })).not.toBeNull();
     fireEvent.click(within(nav).getByRole('button', { name: CALM.nav[2] }));
-    expect(screen.queryByRole('group', { name: 'Now playing' })).toBeNull();
+    expect(screen.queryByRole('region', { name: 'Now playing' })).toBeNull();
   });
 });

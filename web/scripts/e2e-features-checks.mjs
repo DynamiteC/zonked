@@ -294,9 +294,7 @@ export async function runFeatureChecks(h) {
   await check('F11 soft start: the first second is quieter than the settled level, and the stop ramp keeps frames flowing', async () => {
     const s = await newSession(h);
     try {
-      await s.page.goto(`${h.origin}/?e2e=1`);
-      await s.page.getByRole('button', { name: 'Skip, just play' }).click();
-      await s.page.getByTestId('player-toggle').waitFor();
+      await skipToPlayer(s.page, h.origin);
       await s.page.waitForFunction(() => window.__zonked?.status.state === 'running', null, { timeout: 20000 });
       const early = await measure(s.page, 400);
       await settle(s.page);
@@ -351,9 +349,7 @@ export async function runFeatureChecks(h) {
         return 'skipped: CPU throttling needs Chromium';
       }
       await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
-      await s.page.goto(`${h.origin}/?e2e=1`);
-      await s.page.getByRole('button', { name: 'Skip, just play' }).click();
-      await s.page.getByTestId('player-toggle').waitFor();
+      await skipToPlayer(s.page, h.origin);
       await waitSound(s.page);
       await s.page.waitForTimeout(6000);
       const mean = await s.page.evaluate(

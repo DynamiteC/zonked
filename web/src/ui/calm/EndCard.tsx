@@ -1,3 +1,4 @@
+import { useEscape } from './useEscape';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { PlayerSnapshot } from '../../app/player';
 import { CALM } from './copy';
@@ -74,8 +75,9 @@ function FeelRow({ onFeel }: { readonly onFeel: (a: FeelAnswer) => void }): Reac
 export function EndCard({ info, onAgain, onClose, firstRun = false, onFeel }: Props): React.JSX.Element {
   const again = useRef<HTMLButtonElement>(null);
   useEffect(() => again.current?.focus(), []);
+  useEscape(onClose);
   return (
-    <div className="c-overlay" onKeyDown={(e) => e.key === 'Escape' && onClose()}>
+    <div className="c-overlay">
       <div className="c-dialog c-end" role="dialog" aria-modal="true" aria-labelledby="c-end-title" data-testid="end-card">
         <h2 id="c-end-title" className="c-h1">
           {CALM.endTitle}
