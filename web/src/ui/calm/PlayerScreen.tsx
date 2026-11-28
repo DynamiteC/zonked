@@ -1,4 +1,4 @@
-import type { Device } from './data';
+import type { Device, Goal } from './data';
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import type { Player, PlayerSnapshot } from '../../app/player';
 import type { AudioEngine } from '../../audio/types';
@@ -78,6 +78,7 @@ interface Props {
   readonly nature: Nature;
   readonly engine: AudioEngine;
   readonly device?: Device;
+  readonly goal?: Goal;
   readonly theme: 'light' | 'dark';
   readonly announce?: boolean;
   readonly sprint?: Sprint;
@@ -86,7 +87,7 @@ interface Props {
   readonly onAdvancedShown?: () => void;
 }
 
-export function PlayerScreen({ engine, device, theme, announce = true, sprint, openAdvanced = false, onAdvancedShown, player, snap, still, favorite, onToggle, onFavorite, nature }: Props): React.JSX.Element {
+export function PlayerScreen({ engine, device, goal, theme, announce = true, sprint, openAdvanced = false, onAdvancedShown, player, snap, still, favorite, onToggle, onFavorite, nature }: Props): React.JSX.Element {
   const [open, setOpen] = useState(openAdvanced);
   const [adv, setAdv] = useState(openAdvanced);
   useEffect(() => {
@@ -131,6 +132,7 @@ export function PlayerScreen({ engine, device, theme, announce = true, sprint, o
           onClose={close}
           engine={engine}
           {...(device !== undefined ? { device } : {})}
+          {...(goal !== undefined ? { goal } : {})}
           advancedOpen={adv}
           {...(sprint !== undefined && current !== undefined ? { sprint: { onSprint: () => sprint.start(current), onSprintEnd: sprint.cancel } } : {})}
         />

@@ -110,7 +110,7 @@ describe('Today play again', () => {
   const props = { profile: DEFAULT_PROFILE, week: { daysListened: 0, goalDays: 3, goalMet: false, quietWeek: true, dots: ['rest','rest','rest','rest','rest','rest','rest'] } as never, progress: {}, reduced: true, crewConnected: false, onPlay: noop, onOpenJourney: noop, onGo: noop, onReset: noop };
   it('shows Play again only when the last session differs from the pick', () => {
     const { container } = render(<Today {...props} last={null} />);
-    const name = container.querySelector('#c-daily-h')?.textContent;
+    const name = container.querySelector('#c-daily-h')?.textContent?.split(': ').slice(1).join(': ');
     const same = getTemplates().find((t) => t.name === name) ?? null;
     const other = getTemplates().find((t) => t.name !== name) ?? null;
     expect(same).not.toBeNull();

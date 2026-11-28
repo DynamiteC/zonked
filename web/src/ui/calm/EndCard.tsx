@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { PlayerSnapshot } from '../../app/player';
 import { CALM } from './copy';
+import { UX } from './copy-ux';
+import { UNTIL_STOP_MIN } from './TimerChips';
 import type { FeelAnswer } from './data';
 
 /** A session shorter than this ends without a card, so quick toggles and previews stay quiet. */
@@ -79,8 +81,10 @@ export function EndCard({ info, onAgain, onClose, firstRun = false, onFeel }: Pr
         </h2>
         <p>{CALM.endLine(info.name, info.minutes)}</p>
         <p className="c-muted">{CALM.endNote}</p>
+        {info.minutes >= UNTIL_STOP_MIN - 5 && <p data-testid="rest-line">{UX.restLine}</p>}
         {onFeel !== undefined && <FeelRow onFeel={onFeel} />}
         {firstRun && <p className="c-note" data-testid="first-run-note">{CALM.studioNote}</p>}
+        {firstRun && <p className="c-muted" data-testid="home-screen-line">{UX.doneCard.addHome}</p>}
         <div className="c-actions">
           <button ref={again} type="button" className="c-btn c-primary" data-testid="end-again" onClick={onAgain}>
             {CALM.playAgain}

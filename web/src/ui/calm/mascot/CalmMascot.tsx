@@ -1,9 +1,10 @@
-import { useId, useRef, type CSSProperties, type JSX } from 'react';
+import { useId, useMemo, useRef, type CSSProperties, type JSX } from 'react';
 import './mascot.css';
 import { Defs, HeadLayer, MotesLayer, ShadowLayer } from './layers';
 import { BandLayer, RippleLayer } from './layersExtra';
 import { PropLayer } from './props';
 import type { CalmMascotProps } from './types';
+import { isLowPower } from './lowPower';
 import { useLife } from './useLife';
 import { useParallax } from './useParallax';
 
@@ -27,10 +28,11 @@ export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = '
   const still = reducedMotion ?? prefersReduced();
   const px = Number.isFinite(size) ? Math.max(24, Math.min(640, size)) : 220;
   const compact = px <= COMPACT_MAX;
-  const lite = px < LITE_BELOW;
+  const lowPower = useMemo(() => still || isLowPower(), [still]);
+  const lite = px < LITE_BELOW || lowPower;
   // The head breathes: about 3 percent larger and a little higher on inhale. Still under reduced motion.
   const lift: CSSProperties | undefined = breathPhase !== undefined && !still ? { scale: String(1 + unit(breathPhase) * 0.03), translate: `0 ${(-unit(breathPhase) * 1.2).toFixed(2)}%` } : undefined;
-  useParallax(stage, !still && !compact);
+  useParallax(stage, !lowPower && !compact);
   useLife(stage, mood, still);
   return (
     <div

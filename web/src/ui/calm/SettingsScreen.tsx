@@ -1,6 +1,7 @@
 import { CALM, DEVICE_LABEL } from './copy';
 import { DEVICES } from './data';
-import type { Device } from './data';
+import type { Device, FeelEntry } from './data';
+import { Helped, PrivacyNote } from './SettingsExtras';
 import { dimOn } from './look';
 import type { Prefs, ThemeChoice } from './look';
 import { PageHead } from './MascotView';
@@ -18,6 +19,7 @@ interface Props {
   readonly prefs: Prefs;
   readonly onPrefs: (p: Prefs) => void;
   readonly onGuide?: () => void;
+  readonly feel?: readonly FeelEntry[];
 }
 
 function Switch({ label, hint, checked, onChange, testId }: { readonly label: string; readonly hint?: string; readonly checked: boolean; readonly onChange: (v: boolean) => void; readonly testId: string }): React.JSX.Element {
@@ -49,7 +51,7 @@ function ThemePicker({ value, onChange }: { readonly value: ThemeChoice; readonl
   );
 }
 
-export function SettingsScreen({ device, onDevice, gentle, reduceMotion, reduced = false, onGentle, onReduceMotion, onStudio, onForget, prefs, onPrefs, onGuide }: Props): React.JSX.Element {
+export function SettingsScreen({ device, onDevice, gentle, reduceMotion, reduced = false, onGentle, onReduceMotion, onStudio, onForget, prefs, onPrefs, onGuide, feel = [] }: Props): React.JSX.Element {
   return (
     <div>
       <PageHead title={CALM.settingsTitle} reduced={reduced} />
@@ -84,7 +86,9 @@ export function SettingsScreen({ device, onDevice, gentle, reduceMotion, reduced
           {CALM.forget}
         </button>
         <p className="c-muted">{CALM.forgetHint}</p>
+        <PrivacyNote />
       </div>
+      <Helped feel={feel} />
       <p className="c-muted">{CALM.offline}</p>
     </div>
   );

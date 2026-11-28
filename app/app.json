@@ -2,7 +2,7 @@
   "name": "zonked",
   "version": "0.1.0",
   "displayName": "Zonked",
-  "description": "Acoustic recovery companion: binaural beats, noise and lo-fi layers made by a no_std Rust WASM engine, with hearing safety limits built in.",
+  "description": "Calm sound for tired minds. Soft tones, noise and nature sounds, made on your device. Free, private, no account, works offline. Safe volume limits are built in. Not a medical device.",
   "author": "Zonked contributors",
   "license": "MIT",
   "minKiroCrewVersion": "0.13.1",
@@ -16,7 +16,15 @@
   "tags": [
     "audio",
     "focus",
-    "recovery"
+    "productivity",
+    "sound"
+  ],
+  "highlights": [
+    "Free, no account, no ads, no tracking.",
+    "Works offline. Sound is made on your device.",
+    "Safe volume: slow fade in and a hard cap on loudness.",
+    "239 sounds, 22 nature loops, a breathing session and a 25 plus 5 study sprint.",
+    "Optional Crew link: the sound can ease down when a long coding session gets heavy."
   ],
   "agents": [
     "agents/burnout-sentinel.json",
