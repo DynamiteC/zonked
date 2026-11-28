@@ -16,11 +16,11 @@ interface MouthShape { readonly dy: Row; readonly len: number; readonly rot?: Ro
 const MOUTH_X: Row = [190, 226, 286, 322];
 /** Four vertical slits, as in the original. Mood bends the row like a smile or a frown. */
 const MOUTH: Readonly<Record<MascotMood, MouthShape>> = {
-  idle: { dy: [0, 0, 0, 0], len: 1 },
-  listening: { dy: [0, 0, 0, 0], len: 1 },
-  happy: { dy: [-9, 4, 4, -9], len: 0.9, rot: [-16, -5, 5, 16] },
+  idle: { dy: [-14, 4, 4, -14], len: 0.3 },
+  listening: { dy: [-14, 4, 4, -14], len: 0.3 },
+  happy: { dy: [-18, 6, 6, -18], len: 0.4 },
   sleepy: { dy: [0, 0, 0, 0], len: 0.45 },
-  breathing: { dy: [0, 0, 0, 0], len: 0.8 },
+  breathing: { dy: [-14, 4, 4, -14], len: 0.3 },
   focus: { dy: [0, 0, 0, 0], len: 0.7 },
   steering: { dy: [0, 0, 0, 0], len: 1 },
   tired: { dy: [7, -2, -2, 7], len: 0.7, rot: [10, 3, -3, -10] },
@@ -39,7 +39,7 @@ export function ShadowLayer(): JSX.Element {
   );
 }
 
-/** The gold head: hand-drawn ink outline, watercolor shade, rim light, ring eyes, angular mask and slit mouth. */
+/** The gold head: hand-drawn ink outline, watercolor shade, rim light, ring eyes, soft rounded mask and slit mouth. */
 export function HeadLayer({ id, mood, plain }: IdProps & { readonly mood: MascotMood; readonly plain: boolean }): JSX.Element {
   const m = MOUTH[mood];
   const [eyeL, eyeR] = EYES[mood];
@@ -69,10 +69,10 @@ export function HeadLayer({ id, mood, plain }: IdProps & { readonly mood: Mascot
         <circle className="cm-s-ink" cx="256" cy="256" r="200" fill="none" stroke="#3A2A2E" strokeWidth="8" />
         <circle className="cm-s-ink" cx="256" cy="256" r="200" fill="none" stroke="#3A2A2E" strokeWidth="6" strokeDasharray="420 1500" strokeLinecap="round" transform="rotate(100 256 256)" />
         <rect className="cm-f-mask" x="218" y="146" width="76" height="8" rx="4" fill="#241F2B" />
-        <polygon className="cm-f-mask cm-s-ink" points="96,240 240,276 240,350 168,370 120,320" fill={`url(#${id}-mask)`} strokeWidth="11" strokeLinejoin="round" />
-        <polygon className="cm-f-mask cm-s-ink" points="416,240 272,276 272,350 344,370 392,320" fill={`url(#${id}-mask)`} strokeWidth="11" strokeLinejoin="round" />
+        <path className="cm-f-mask cm-s-ink" d="M104 250Q98 238 112 242L230 272Q241 275 241 288V338Q241 349 231 352L178 368Q166 371 158 363L128 330Q110 312 106 288Q102 268 104 250Z" fill={`url(#${id}-mask)`} strokeWidth="11" strokeLinejoin="round" />
+        <path className="cm-f-mask cm-s-ink" d="M408 250Q414 238 400 242L282 272Q271 275 271 288V338Q271 349 281 352L334 368Q346 371 354 363L384 330Q402 312 406 288Q410 268 408 250Z" fill={`url(#${id}-mask)`} strokeWidth="11" strokeLinejoin="round" />
         <path className="cm-bevel cm-bevel-m" d="M112 252L232 282M400 252L280 282" />
-        <polygon className="cm-gem" points="256,300 270,316 256,332 242,316" fill="#00E5A8" fillOpacity="0.35" stroke="#00E5A8" strokeWidth="5" strokeLinejoin="round" />
+        <ellipse className="cm-gem" cx="256" cy="316" rx="13" ry="16" fill="#00E5A8" fillOpacity="0.35" stroke="#00E5A8" strokeWidth="5" />
         <Eye cx={178} kind={eyeL} side={-1} />
         <Eye cx={334} kind={eyeR} side={1} />
         <g className="cm-mouth" style={{ ['--ml' as string]: m.len }}>
@@ -116,8 +116,8 @@ export function Defs({ id, lite }: IdProps & { readonly lite: boolean }): JSX.El
           <stop offset="1" stopColor="#E8A128" />
         </linearGradient>
         <linearGradient id={`${id}-mask`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#54415A" />
-          <stop offset="1" stopColor="#2E2433" />
+          <stop offset="0" stopColor="#7A5878" />
+          <stop offset="1" stopColor="#4B3652" />
         </linearGradient>
         <linearGradient id={`${id}-cup`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#CC7F5E" />

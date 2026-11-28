@@ -125,9 +125,9 @@ export const CALM = {
   studioHint: 'For advanced controls. Shortcut: Alt+Shift+S.',
   studioNote: 'More controls are in Options on the Player, or press Alt+Shift+S.',
   backToCalm: 'Back to Calm',
-  crewTitle: 'Crew',
+  crewTitle: 'Sound that follows your coding',
   crewIntro:
-    'Your coding session can watch itself and ease the sound. When you have been working hard, Zonked slowly moves toward calmer sound. You stay in control.',
+    'This page runs when you use Zonked inside Kiro Crew. It reads counts from git on your computer: commits, open changes and failed builds. When a session gets heavy, the sound slowly moves toward calmer sound. You stay in control.',
   crewSwitch: 'Let Crew ease the sound',
   crewOff: 'Not connected',
   crewWhyOff: 'Crew is not connected because the local feed is not running, or the Crew switch on this page is off. Zonked works fully without it.',
@@ -220,7 +220,7 @@ export const CALM = {
   errorAudio: 'Sound could not start. Tap Play to try again.',
   errorStorage: 'We could not save this on your device. Your session still works.',
   loading: 'Loading',
-  nav: ['Today', 'Sounds', 'Crew', 'You'],
+  nav: ['Today', 'Sounds', 'Coding', 'You'],
   sounds: (n: number) => `${n} ${n === 1 ? 'sound' : 'sounds'}`,
 } as const;
 
