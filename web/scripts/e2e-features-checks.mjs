@@ -265,6 +265,7 @@ export async function runFeatureChecks(h) {
       await s.page.getByTestId('privacy-link').click();
       const text = await s.page.getByTestId('privacy-text').innerText();
       assert(/device/i.test(text) && /(nothing|never|no)/i.test(text), `privacy text: ${text.slice(0, 200)}`);
+      assert(/adults/i.test(text) && /helpline/i.test(text), `privacy note lacks the adults line or the help line: ${text.slice(0, 300)}`);
       await s.page.getByTestId('settings-guide').click();
       const guide = await s.page.getByTestId('guide').innerText();
       await s.page.getByTestId('guide-skip').click();

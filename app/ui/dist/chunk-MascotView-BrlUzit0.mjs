@@ -1,7 +1,7 @@
 import { Suspense as e, lazy as t } from "react";
 import { jsx as n, jsxs as r } from "react/jsx-runtime";
 // ../../web/src/ui/calm/MascotView.tsx
-var i = t(() => import("./chunk-mascot-BpzGguPW.mjs").then((e) => ({ default: e.CalmMascot })));
+var i = t(() => import("./chunk-mascot-DOUK_zQE.mjs").then((e) => ({ default: e.CalmMascot })));
 function a({ size: t, mood: r = "idle", reduced: a }) {
 	return /* @__PURE__ */ n(e, {
 		fallback: /* @__PURE__ */ n("span", {

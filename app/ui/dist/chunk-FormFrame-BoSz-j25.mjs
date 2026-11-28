@@ -1,4 +1,4 @@
-import { t as e } from "./chunk-MascotView-Cmnhlpu8.mjs";
+import { t as e } from "./chunk-MascotView-BrlUzit0.mjs";
 import { Fragment as t, jsx as n, jsxs as r } from "react/jsx-runtime";
 // ../../web/src/ui/calm/FormFrame.tsx
 function i({ step: t, text: i, mood: a = "idle", reduced: o }) {

@@ -1,4 +1,4 @@
-import { nt as e } from "./chunk-crewLink-TXTH-ttS.mjs";
+import { st as e } from "./chunk-crewLink-B-5l2pQt.mjs";
 import { jsx as t, jsxs as n } from "react/jsx-runtime";
 // ../../web/src/ui/calm/nature/credits.json
 var r = [
@@ -14,20 +14,6 @@ var r = [
 		title: "Stream, river water up close",
 		author: "jackthemurray (Freesound 433589)",
 		source: "Wikimedia Commons, File:433589_jackthemurray_stream-river-water-up-close.wav",
-		licence: "CC0 1.0"
-	},
-	{
-		id: "ocean",
-		title: "Ocean Waves on a Tropical Beach",
-		author: "Jarrod stanley",
-		source: "Wikimedia Commons, File:Ocean_Waves_on_a_Tropical_Beach.ogg",
-		licence: "CC0 1.0"
-	},
-	{
-		id: "rapids",
-		title: "Florida Rapids",
-		author: "Jarrod stanley",
-		source: "Wikimedia Commons, File:Florida_Rapids.ogg",
 		licence: "CC0 1.0"
 	},
 	{

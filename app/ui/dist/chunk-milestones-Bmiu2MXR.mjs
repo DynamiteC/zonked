@@ -1,4 +1,4 @@
-import { K as e, X as t, q as n } from "./chunk-crewLink-TXTH-ttS.mjs";
+import { Q as e, Z as t, tt as n } from "./chunk-crewLink-B-5l2pQt.mjs";
 var r = 864e5, i = [
 	{
 		id: "first-session",
@@ -75,21 +75,21 @@ function d(e) {
 	return t.length > 0 ? t : l;
 }
 function f(a, o) {
-	if (!n(a) || e(a, "v") !== 1) return u;
-	let s = {}, c = e(a, "earned");
-	if (n(c)) for (let n of i) {
-		let i = e(c, n.id);
-		typeof i == "number" && Number.isFinite(i) && (s[n.id] = t(i, 0, o + r, o));
+	if (!e(a) || t(a, "v") !== 1) return u;
+	let s = {}, c = t(a, "earned");
+	if (e(c)) for (let e of i) {
+		let i = t(c, e.id);
+		typeof i == "number" && Number.isFinite(i) && (s[e.id] = n(i, 0, o + r, o));
 	}
-	let l = e(a, "reminder"), f = n(l) ? l : {};
+	let l = t(a, "reminder"), f = e(l) ? l : {};
 	return {
 		v: 1,
-		hidden: e(a, "hidden") === !0,
+		hidden: t(a, "hidden") === !0,
 		earned: s,
 		reminder: {
-			on: e(f, "on") === !0,
-			text: d(e(f, "text")),
-			shownDay: Math.round(t(e(f, "shownDay"), -1, 1e6, -1))
+			on: t(f, "on") === !0,
+			text: d(t(f, "text")),
+			shownDay: Math.round(n(t(f, "shownDay"), -1, 1e6, -1))
 		}
 	};
 }

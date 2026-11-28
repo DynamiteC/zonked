@@ -1,113 +1,114 @@
 import { Suspense as e, lazy as t, useCallback as n, useEffect as r, useId as i, useMemo as a, useRef as o, useState as s, useSyncExternalStore as c } from "react";
-import { B as l, H as u, I as d, R as f, U as p, V as m, W as h, a as g, ct as _, d as v, ft as y, h as b, i as x, it as S, nt as C, o as w, ot as T, p as E, r as D, s as ee, ut as O, v as k, x as A, y as j, z as te } from "./chunk-crewLink-TXTH-ttS.mjs";
-import { a as M, l as ne, o as N, u as P } from "./chunk-catalog-CdNrcMzw.mjs";
-import { r as F, t as I } from "./chunk-RangeField-D77jQUlk.mjs";
-import { t as L } from "./chunk-icons-C-FdU5cO.mjs";
-import { t as R } from "./chunk-MascotView-Cmnhlpu8.mjs";
-import { Fragment as z, jsx as B, jsxs as V } from "react/jsx-runtime";
-import { _ as re, a as ie, c as ae, d as oe, f as se, h as ce, i as le, l as ue, n as de, o as fe, p as pe, r as me, s as he, t as ge, u as _e, v as ve, y as ye } from "./chunk-data-B5J84IqW.mjs";
-import { t as be } from "./chunk-SafetyNotice-Cf8oSBFS.mjs";
-import { c as xe } from "./chunk-milestones-Dwormqum.mjs";
-import { n as H } from "./chunk-FormFrame-DeBPfgdj.mjs";
-import { r as Se, t as Ce } from "./chunk-samples-BWg4CeGQ.mjs";
-import { a as we, i as Te, n as Ee, o as De } from "./chunk-NatureScreen-BOjsvGVc.mjs";
-import { n as Oe } from "./chunk-useBreath-BZ3euK4B.mjs";
-import { n as ke } from "./chunk-look-C_f0p27a.mjs";
-import { a as Ae, n as je, r as Me } from "./chunk-ownStore-DzrxOebU.mjs";
-import { a as Ne, n as Pe, r as Fe, t as Ie } from "./chunk-favorites-BbDg4vkc.mjs";
+import { G as l, J as u, K as d, U as f, V as p, W as m, Y as h, _t as g, a as _, d as v, dt as y, h as b, ht as x, i as S, lt as C, o as w, p as T, q as E, r as D, s as O, st as k, v as ee, x as te, y as A } from "./chunk-crewLink-B-5l2pQt.mjs";
+import { a as j, l as ne, o as re, u as ie } from "./chunk-catalog-DQXidRzG.mjs";
+import { r as M, t as N } from "./chunk-RangeField-D77jQUlk.mjs";
+import { t as P } from "./chunk-icons-C-FdU5cO.mjs";
+import { t as F } from "./chunk-MascotView-BrlUzit0.mjs";
+import { Fragment as I, jsx as L, jsxs as R } from "react/jsx-runtime";
+import { C as z, D as B, T as ae, _ as oe, a as se, b as ce, c as V, d as le, f as ue, g as de, h as fe, l as pe, m as me, n as he, o as ge, p as _e, r as ve, s as ye, t as be, u as xe, v as Se, x as Ce, y as we } from "./chunk-data-DrI3L2nM.mjs";
+import { t as H } from "./chunk-useEscape-DDjzYcK_.mjs";
+import { t as Te } from "./chunk-SafetyNotice-CJuWch_-.mjs";
+import { c as Ee } from "./chunk-milestones-Bmiu2MXR.mjs";
+import { n as De } from "./chunk-FormFrame-BoSz-j25.mjs";
+import { r as Oe, t as ke } from "./chunk-samples-_x0GtVlI.mjs";
+import { a as Ae, c as je, i as Me, n as Ne, o as Pe, r as Fe, s as Ie } from "./chunk-NatureScreen-QpnFXjpL.mjs";
+import { n as Le } from "./chunk-useBreath-BZ3euK4B.mjs";
+import { n as Re } from "./chunk-look-C_f0p27a.mjs";
+import { a as ze, n as Be, r as Ve } from "./chunk-ownStore-BhAw3wjz.mjs";
+import { a as He, n as Ue, r as We, t as Ge } from "./chunk-favorites-D5uR-Ors.mjs";
 // ../../web/src/ui/calm/CalmChrome.tsx
-var Le = [
+var Ke = [
 	{
 		view: "today",
-		label: C.nav[0],
+		label: k.nav[0],
 		icon: "today"
 	},
 	{
 		view: "library",
-		label: C.nav[1],
+		label: k.nav[1],
 		icon: "library"
 	},
 	{
 		view: "crew",
-		label: C.nav[2],
+		label: k.nav[2],
 		icon: "crew"
 	},
 	{
 		view: "settings",
-		label: C.nav[3],
+		label: k.nav[3],
 		icon: "settings"
 	}
 ];
-function Re({ view: e, onGo: t, reduced: n = !1 }) {
+function qe({ view: e, onGo: t, reduced: n = !1 }) {
 	let r = e === "journey" || e === "journeys" ? "today" : e === "nature" ? "library" : e === "reset" || e === "breathe" ? "today" : e;
-	return /* @__PURE__ */ V("nav", {
+	return /* @__PURE__ */ R("nav", {
 		className: "c-tabbar",
 		"aria-label": "Main",
-		children: [/* @__PURE__ */ V("div", {
+		children: [/* @__PURE__ */ R("div", {
 			className: "c-rail-brand",
 			"aria-hidden": "true",
-			children: [/* @__PURE__ */ B(R, {
+			children: [/* @__PURE__ */ L(F, {
 				size: 40,
 				reduced: n
-			}), /* @__PURE__ */ B("span", {
+			}), /* @__PURE__ */ L("span", {
 				className: "c-brand",
-				children: C.brand
+				children: k.brand
 			})]
-		}), Le.map((e) => /* @__PURE__ */ V("button", {
+		}), Ke.map((e) => /* @__PURE__ */ R("button", {
 			type: "button",
 			className: "c-nav",
 			"aria-current": r === e.view ? "page" : void 0,
 			onClick: () => t(e.view),
-			children: [/* @__PURE__ */ B(L, { name: e.icon }), /* @__PURE__ */ B("span", { children: e.label })]
+			children: [/* @__PURE__ */ L(P, { name: e.icon }), /* @__PURE__ */ L("span", { children: e.label })]
 		}, e.view))]
 	});
 }
-function ze(e, t = null) {
+function Je(e, t = null) {
 	if (e.templateName !== null) return e.templateName;
-	let n = e.source === "crew", r = n ? t ?? e.presetId : e.presetId, i = y.find((e) => e.id === r)?.name;
-	return i === void 0 ? C.brand : n ? `Crew: ${i}` : i;
+	let n = e.source === "crew", r = n ? t ?? e.presetId : e.presetId, i = g.find((e) => e.id === r)?.name;
+	return i === void 0 ? k.brand : n ? `Crew: ${i}` : i;
 }
-function Be({ snap: e, crewPresetId: t = null, onOpen: n, onStop: r }) {
+function Ye({ snap: e, crewPresetId: t = null, onOpen: n, onStop: r }) {
 	if (!e.playing) return null;
-	let i = e.timer.kind !== "none" && e.timer.running ? F(e.timer.remainingSec) : "";
-	return /* @__PURE__ */ V("div", {
+	let i = e.timer.kind !== "none" && e.timer.running ? M(e.timer.remainingSec) : "";
+	return /* @__PURE__ */ R("div", {
 		className: "c-mini",
-		role: "group",
+		role: "region",
 		"aria-label": "Now playing",
-		children: [/* @__PURE__ */ V("button", {
+		children: [/* @__PURE__ */ R("button", {
 			type: "button",
 			className: "c-btn c-link c-mini-open",
 			onClick: n,
-			children: [ze(e, t), i !== "" && /* @__PURE__ */ B("span", {
+			children: [Je(e, t), i !== "" && /* @__PURE__ */ L("span", {
 				className: "c-digits",
 				children: ` ${i}`
 			})]
-		}), /* @__PURE__ */ B("button", {
+		}), /* @__PURE__ */ L("button", {
 			type: "button",
 			className: "c-btn c-small",
 			"data-testid": "mini-stop",
 			onClick: r,
-			children: C.stop
+			children: k.stop
 		})]
 	});
 }
-var Ve = 864e5, He = 4;
+var Xe = 864e5, Ze = 4;
 function U(e) {
 	if (!Number.isFinite(e)) return 0;
 	let t = new Date(e).getTimezoneOffset() * 6e4;
-	return Math.floor((e - t) / Ve);
+	return Math.floor((e - t) / Xe);
 }
-var W = (e) => Number.isInteger(e) && e >= 0 && e < 1e7;
-function Ue(e) {
-	return Number.isFinite(e) ? Math.min(7, Math.max(1, Math.floor(e))) : He;
+var Qe = (e) => Number.isInteger(e) && e >= 0 && e < 1e7;
+function $e(e) {
+	return Number.isFinite(e) ? Math.min(7, Math.max(1, Math.floor(e))) : Ze;
 }
-function We(e) {
+function et(e) {
 	return e - (e + 3) % 7;
 }
-function Ge(e, t, n) {
+function tt(e, t, n) {
 	let r = /* @__PURE__ */ new Map();
 	for (let i of e) {
-		if (!W(i.day) || i.day < t || i.day > n) continue;
+		if (!Qe(i.day) || i.day < t || i.day > n) continue;
 		let e = Number.isFinite(i.minutes) && i.minutes > 0 ? i.minutes : 0;
 		r.set(i.day, (r.get(i.day) ?? 0) + e);
 	}
@@ -116,12 +117,12 @@ function Ge(e, t, n) {
 		e >= 3 && i.add(t);
 	}), i;
 }
-function Ke(e, t, n) {
+function nt(e, t, n) {
 	return n.has(e) ? "listened" : e === t ? "today" : e > t ? "upcoming" : "rest";
 }
-function qe(e, t, n = He) {
-	let r = Ue(n);
-	if (!W(t)) {
+function rt(e, t, n = Ze) {
+	let r = $e(n);
+	if (!Qe(t)) {
 		let e = Object.freeze(Array.from({ length: 7 }, () => "upcoming"));
 		return Object.freeze({
 			daysListened: 0,
@@ -131,7 +132,7 @@ function qe(e, t, n = He) {
 			dots: e
 		});
 	}
-	let i = We(t), a = Ge(e, i, t), o = Object.freeze(Array.from({ length: 7 }, (e, n) => Ke(i + n, t, a)));
+	let i = et(t), a = tt(e, i, t), o = Object.freeze(Array.from({ length: 7 }, (e, n) => nt(i + n, t, a)));
 	return Object.freeze({
 		daysListened: a.size,
 		goalDays: r,
@@ -140,14 +141,209 @@ function qe(e, t, n = He) {
 		dots: o
 	});
 }
-var Je = 400;
-function Ye(e, t, i = null) {
+// ../../web/src/ui/calm/data/forget.ts
+var it = "zonked.", at = "zonked-samples";
+async function ot(e, t, n = st(), r = ct()) {
+	if (xe(e), n !== void 0) try {
+		for (let e of Object.keys(n)) e.startsWith(it) && n.removeItem(e);
+	} catch {}
+	await W(t.clearSanctuary()), await W(t.listScripts().then((e) => Promise.all(e.map((e) => t.deleteScript(e.id))))), r !== void 0 && await W(r.delete(at));
+}
+var W = async (e) => {
+	try {
+		await e;
+	} catch {}
+};
+function st() {
+	try {
+		return typeof localStorage > "u" ? void 0 : localStorage;
+	} catch {
+		return;
+	}
+}
+function ct() {
+	try {
+		return typeof caches > "u" ? void 0 : caches;
+	} catch {
+		return;
+	}
+}
+function lt(e) {
+	if (e.kind === "sleep-fade") return e.totalSec >= 7200 ? 3 : 4;
+	if (e.kind === "pomodoro") return 5;
+	if (e.kind !== "countdown") return -1;
+	let t = Math.round(e.totalSec / 60);
+	return t === 15 ? 0 : t === 30 ? 1 : t === 60 ? 2 : -1;
+}
+function ut({ timer: e, player: t, onSprint: n, onSprintEnd: r, hideUntilStop: i = !1 }) {
+	let a = (i) => {
+		if (i === 5) return e.kind === "pomodoro" ? r?.() : n?.();
+		r?.(), i <= 2 ? t.startTimer({
+			kind: "countdown",
+			minutes: [
+				15,
+				30,
+				60
+			][i] ?? 15
+		}) : i === 3 ? t.startTimer({
+			kind: "sleep-fade",
+			minutes: 120
+		}) : t.startTimer({
+			kind: "sleep-fade",
+			minutes: 20
+		});
+	}, o = lt(e);
+	return /* @__PURE__ */ R("div", { children: [/* @__PURE__ */ L("div", {
+		className: "c-chips",
+		role: "group",
+		"aria-label": "Timer",
+		children: k.timerChips.map((e, t) => t === 5 && n === void 0 || t === 3 && i ? null : /* @__PURE__ */ L("button", {
+			type: "button",
+			"aria-pressed": o === t,
+			className: "c-tchip",
+			onClick: () => a(t),
+			children: e
+		}, e))
+	}), !i && /* @__PURE__ */ L("p", {
+		className: "c-muted",
+		"data-testid": "until-stop-hint",
+		children: V.untilStopHint
+	})] });
+}
+function dt({ timer: e }) {
+	return e.kind === "none" || !e.running ? null : /* @__PURE__ */ R("p", {
+		className: "c-time",
+		"data-testid": "time-left",
+		children: [e.kind === "pomodoro" ? `${e.phase === "break" ? k.sprintBreakLeft : k.sprintFocusLeft} ` : "", M(e.remainingSec)]
+	});
+}
+// ../../web/src/ui/calm/calmCard.ts
+var G = 1080, ft = 40, K = [
+	"A quiet moment, all yours.",
+	"Soft sound, made on this device.",
+	"Easy does it.",
+	"Slow and gentle is fine."
+];
+function pt(e) {
+	let t = 0;
+	for (let n of e) t = t * 31 + n.charCodeAt(0) >>> 0;
+	return K[t % K.length] ?? K[0] ?? "";
+}
+function mt(e) {
+	let t = e.name.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, ft) || k.brand, n = Number.isFinite(e.minutes) ? Math.max(0, Math.round(e.minutes)) : 0;
+	return {
+		name: t,
+		time: n < 1 ? "under a minute" : n === 1 ? "1 minute" : `${n} minutes`,
+		line: pt(t)
+	};
+}
+function q(e, t, n, r, i) {
+	let a = n;
+	for (e.font = `${r} ${a}px system-ui, sans-serif`; a > 24 && e.measureText(t).width > i;) a -= 4, e.font = `${r} ${a}px system-ui, sans-serif`;
+}
+function ht(e, t, n, r) {
+	let i = r / 200, a = (r) => {
+		e.fillStyle = "#B8624A", e.beginPath(), e.ellipse(t + r * i, n, 34 * i, 60 * i, 0, 0, Math.PI * 2), e.fill();
+	};
+	a(-196), a(196);
+	let o = e.createLinearGradient(t - r, n - r, t + r * .6, n + r);
+	o.addColorStop(0, "#FBD84A"), o.addColorStop(1, "#E8A128"), e.fillStyle = o, e.strokeStyle = "#3A2A2E", e.lineWidth = 8 * i, e.beginPath(), e.arc(t, n, r, 0, Math.PI * 2), e.fill(), e.stroke(), e.fillStyle = "#3F3247";
+	for (let r of [-1, 1]) e.beginPath(), e.ellipse(t + r * 78 * i, n + 56 * i, 70 * i, 52 * i, r * .2, 0, Math.PI * 2), e.fill();
+	e.fillStyle = "#00E5A8", e.beginPath(), e.ellipse(t, n + 60 * i, 13 * i, 16 * i, 0, 0, Math.PI * 2), e.fill(), e.strokeStyle = "#FFE9A8", e.lineWidth = 9 * i, e.lineCap = "round";
+	for (let r of [-1, 1]) e.beginPath(), e.arc(t + r * 78 * i, n + 52 * i, 26 * i, Math.PI * 1.15, Math.PI * 1.85), e.stroke();
+	e.strokeStyle = "#3A2A2E", e.lineWidth = 11 * i, e.beginPath(), e.arc(t, n + 108 * i, 52 * i, Math.PI * .15, Math.PI * .85), e.stroke();
+}
+function gt(e, t, n = G) {
+	let r = mt(t), i = e.createLinearGradient(0, 0, 0, n);
+	i.addColorStop(0, "#FFF3D6"), i.addColorStop(1, "#F6D9E0"), e.fillStyle = i, e.fillRect(0, 0, n, n), ht(e, n / 2, n * .35, n * .2), e.textAlign = "center", e.textBaseline = "alphabetic", e.fillStyle = "#2B2233", q(e, r.name, 76, "700", n * .84), e.fillText(r.name, n / 2, n * .68), e.fillStyle = "#4C4256", q(e, r.time, 52, "400", n * .84), e.fillText(r.time, n / 2, n * .76), q(e, r.line, 46, "400", n * .84), e.fillText(r.line, n / 2, n * .84), e.fillStyle = "#6B6075", q(e, k.brand, 40, "600", n * .5), e.fillText(k.brand, n / 2, n * .94);
+}
+function _t(e, t = document) {
+	return new Promise((n, r) => {
+		let i = t.createElement("canvas");
+		i.width = G, i.height = G;
+		let a = i.getContext("2d");
+		if (a === null) return r(/* @__PURE__ */ Error("no canvas"));
+		gt(a, e), i.toBlob((e) => e === null ? r(/* @__PURE__ */ Error("no png")) : n(e), "image/png");
+	});
+}
+var J = "zonked-calm-card.png";
+function vt(e, t = document) {
+	let n = URL.createObjectURL(e), r = t.createElement("a");
+	r.href = n, r.download = J, t.body.appendChild(r), r.click(), r.remove(), window.setTimeout(() => URL.revokeObjectURL(n), 1e4);
+}
+function yt(e, t = navigator) {
+	return typeof t.canShare != "function" || typeof t.share != "function" ? !1 : t.canShare({ files: [new File([e], J, { type: "image/png" })] });
+}
+async function bt(e, t = navigator) {
+	try {
+		return await t.share({ files: [new File([e], J, { type: "image/png" })] }), !0;
+	} catch (e) {
+		if (e instanceof DOMException && e.name === "AbortError") return !1;
+		throw e;
+	}
+}
+// ../../web/src/ui/calm/CalmCardAction.tsx
+function xt({ info: e }) {
+	let [t, n] = s("idle"), [r, i] = s(null), [a, o] = s(""), c = () => {
+		n("making"), _t(e).then((e) => {
+			i(e), n("ready");
+		}, () => n("failed"));
+	}, l = (e) => {
+		bt(e).then((e) => o(e ? V.card.shared : ""), () => o(V.card.failed));
+	};
+	return /* @__PURE__ */ R("div", {
+		className: "c-card-action",
+		"data-testid": "calm-card",
+		children: [
+			t !== "ready" && /* @__PURE__ */ L("button", {
+				type: "button",
+				className: "c-btn c-link",
+				"data-testid": "calm-card-make",
+				disabled: t === "making",
+				onClick: c,
+				children: t === "making" ? V.card.making : V.card.save
+			}),
+			t === "ready" && r !== null && /* @__PURE__ */ R(I, { children: [/* @__PURE__ */ L("p", {
+				className: "c-muted",
+				role: "status",
+				children: V.card.ready
+			}), /* @__PURE__ */ R("div", {
+				className: "c-chips",
+				children: [/* @__PURE__ */ L("button", {
+					type: "button",
+					className: "c-tchip",
+					"data-testid": "calm-card-download",
+					onClick: () => vt(r),
+					children: V.card.download
+				}), yt(r) && /* @__PURE__ */ L("button", {
+					type: "button",
+					className: "c-tchip",
+					"data-testid": "calm-card-share",
+					onClick: () => l(r),
+					children: V.card.share
+				})]
+			})] }),
+			t === "failed" && /* @__PURE__ */ L("p", {
+				className: "c-muted",
+				role: "status",
+				children: V.card.failed
+			}),
+			a !== "" && /* @__PURE__ */ L("p", {
+				className: "c-muted",
+				role: "status",
+				children: a
+			})
+		]
+	});
+}
+var St = 400;
+function Ct(e, t, i = null) {
 	let c = o(null), [l, u] = s(null);
 	r(() => {
 		if (e.playing) {
 			u(null), c.current = e.templateId === null ? null : {
 				id: i?.id ?? e.templateId,
-				name: i?.name ?? e.templateName ?? C.brand,
+				name: i?.name ?? e.templateName ?? k.brand,
 				minutes: e.elapsedSec / 60
 			};
 			return;
@@ -157,7 +353,7 @@ function Ye(e, t, i = null) {
 		let r = window.setTimeout(() => u({
 			...n,
 			minutes: Math.round(n.minutes)
-		}), Je);
+		}), St);
 		return () => window.clearTimeout(r);
 	}, [
 		e.playing,
@@ -174,30 +370,30 @@ function Ye(e, t, i = null) {
 		dismiss: d
 	}), [l, d]);
 }
-var Xe = [
-	["calmer", C.feelCalmer],
-	["same", C.feelSame],
-	["not", C.feelNot]
+var wt = [
+	["calmer", k.feelCalmer],
+	["same", k.feelSame],
+	["not", k.feelNot]
 ];
-function Ze({ onFeel: e }) {
+function Tt({ onFeel: e }) {
 	let [t, n] = s(!1);
-	return t ? /* @__PURE__ */ B("p", {
+	return t ? /* @__PURE__ */ L("p", {
 		className: "c-muted",
 		role: "status",
 		"data-testid": "feel-saved",
-		children: C.feelSaved
-	}) : /* @__PURE__ */ V("div", {
+		children: k.feelSaved
+	}) : /* @__PURE__ */ R("div", {
 		role: "group",
 		"aria-labelledby": "c-feel-q",
 		className: "c-feel",
 		"data-testid": "feel-row",
-		children: [/* @__PURE__ */ B("p", {
+		children: [/* @__PURE__ */ L("p", {
 			id: "c-feel-q",
 			className: "c-muted",
-			children: C.feelQuestion
-		}), /* @__PURE__ */ B("div", {
+			children: k.feelQuestion
+		}), /* @__PURE__ */ L("div", {
 			className: "c-chips",
-			children: Xe.map(([t, r]) => /* @__PURE__ */ B("button", {
+			children: wt.map(([t, r]) => /* @__PURE__ */ L("button", {
 				type: "button",
 				className: "c-tchip",
 				"data-testid": `feel-${t}`,
@@ -209,104 +405,74 @@ function Ze({ onFeel: e }) {
 		})]
 	});
 }
-function Qe({ info: e, onAgain: t, onClose: n, firstRun: i = !1, onFeel: a }) {
+function Et({ info: e, onAgain: t, onClose: n, firstRun: i = !1, onFeel: a }) {
 	let s = o(null);
-	return r(() => s.current?.focus(), []), /* @__PURE__ */ B("div", {
+	return r(() => s.current?.focus(), []), H(n), /* @__PURE__ */ L("div", {
 		className: "c-overlay",
-		onKeyDown: (e) => e.key === "Escape" && n(),
-		children: /* @__PURE__ */ V("div", {
+		children: /* @__PURE__ */ R("div", {
 			className: "c-dialog c-end",
 			role: "dialog",
 			"aria-modal": "true",
 			"aria-labelledby": "c-end-title",
 			"data-testid": "end-card",
 			children: [
-				/* @__PURE__ */ B("h2", {
+				/* @__PURE__ */ L("h2", {
 					id: "c-end-title",
 					className: "c-h1",
-					children: C.endTitle
+					children: k.endTitle
 				}),
-				/* @__PURE__ */ B("p", { children: C.endLine(e.name, e.minutes) }),
-				/* @__PURE__ */ B("p", {
+				/* @__PURE__ */ L("p", { children: k.endLine(e.name, e.minutes) }),
+				/* @__PURE__ */ L("p", {
 					className: "c-muted",
-					children: C.endNote
+					children: k.endNote
 				}),
-				a !== void 0 && /* @__PURE__ */ B(Ze, { onFeel: a }),
-				i && /* @__PURE__ */ B("p", {
+				e.minutes >= 115 && /* @__PURE__ */ L("p", {
+					"data-testid": "rest-line",
+					children: V.restLine
+				}),
+				a !== void 0 && /* @__PURE__ */ L(Tt, { onFeel: a }),
+				i && /* @__PURE__ */ L("p", {
 					className: "c-note",
 					"data-testid": "first-run-note",
-					children: C.studioNote
+					children: k.studioNote
 				}),
-				/* @__PURE__ */ V("div", {
+				i && /* @__PURE__ */ L("p", {
+					className: "c-muted",
+					"data-testid": "home-screen-line",
+					children: V.doneCard.addHome
+				}),
+				/* @__PURE__ */ L(xt, { info: {
+					name: e.name,
+					minutes: e.minutes
+				} }),
+				/* @__PURE__ */ R("div", {
 					className: "c-actions",
-					children: [/* @__PURE__ */ B("button", {
+					children: [/* @__PURE__ */ L("button", {
 						ref: s,
 						type: "button",
 						className: "c-btn c-primary",
 						"data-testid": "end-again",
 						onClick: t,
-						children: C.playAgain
-					}), /* @__PURE__ */ B("button", {
+						children: k.playAgain
+					}), /* @__PURE__ */ L("button", {
 						type: "button",
 						className: "c-btn",
 						"data-testid": "end-close",
 						onClick: n,
-						children: C.close
+						children: k.close
 					})]
 				})
 			]
 		})
 	});
 }
-function $e(e) {
-	if (e.kind === "sleep-fade") return 4;
-	if (e.kind === "pomodoro") return 5;
-	if (e.kind !== "countdown") return 3;
-	let t = Math.round(e.totalSec / 60);
-	return t === 15 ? 0 : t === 30 ? 1 : t === 60 ? 2 : -1;
-}
-function et({ timer: e, player: t, onSprint: n, onSprintEnd: r }) {
-	let i = (i) => {
-		if (i === 5) return e.kind === "pomodoro" ? r?.() : n?.();
-		r?.(), i <= 2 ? t.startTimer({
-			kind: "countdown",
-			minutes: [
-				15,
-				30,
-				60
-			][i] ?? 15
-		}) : i === 3 ? t.stopTimer() : t.startTimer({
-			kind: "sleep-fade",
-			minutes: 20
-		});
-	}, a = $e(e);
-	return /* @__PURE__ */ B("div", { children: /* @__PURE__ */ B("div", {
-		className: "c-chips",
-		role: "group",
-		"aria-label": "Timer",
-		children: C.timerChips.map((e, t) => t === 5 && n === void 0 ? null : /* @__PURE__ */ B("button", {
-			type: "button",
-			"aria-pressed": a === t,
-			className: "c-tchip",
-			onClick: () => i(t),
-			children: e
-		}, e))
-	}) });
-}
-function tt({ timer: e }) {
-	return e.kind === "none" || !e.running ? null : /* @__PURE__ */ V("p", {
-		className: "c-time",
-		"data-testid": "time-left",
-		children: [e.kind === "pomodoro" ? `${e.phase === "break" ? C.sprintBreakLeft : C.sprintFocusLeft} ` : "", F(e.remainingSec)]
-	});
-}
 // ../../web/src/ui/calm/useCalmData.ts
-var nt = 200, G = (e = Date.now) => U(e());
-function rt(e, t) {
-	let i = a(() => me(), []), [o, c] = s(() => ie(i)), [l, u] = s(() => fe(i)), [d, f] = s([]), [p, m] = s(0);
+var Dt = 200, Y = (e = Date.now) => U(e());
+function Ot(e, t) {
+	let i = a(() => le(), []), [o, c] = s(() => _e(i)), [l, u] = s(() => me(i)), [d, f] = s([]), [p, m] = s(0);
 	return r(() => {
 		let t = !0;
-		return e.listLogs(nt).then((e) => t && f(e)).catch(() => void 0), () => {
+		return e.listLogs(Dt).then((e) => t && f(e)).catch(() => void 0), () => {
 			t = !1;
 		};
 	}, [
@@ -317,13 +483,13 @@ function rt(e, t) {
 		storage: i,
 		profile: o,
 		progress: l,
-		week: a(() => qe(d.map((e) => ({
+		week: a(() => rt(d.map((e) => ({
 			day: U(e.startedAt),
-			minutes: xe(e)
-		})), G()), [d]),
+			minutes: Ee(e)
+		})), Y()), [d]),
 		logs: d,
 		setProfile: n((e) => {
-			c(e), ae(i, e);
+			c(e), de(i, e);
 		}, [i]),
 		setJourney: n((e, t) => {
 			u((n) => {
@@ -331,14 +497,14 @@ function rt(e, t) {
 					...a,
 					[e]: t
 				};
-				return ue(i, o), o;
+				return oe(i, o), o;
 			});
 		}, [i]),
 		refresh: n(() => m((e) => e + 1), [])
 	};
 }
 // ../../web/src/app/demoFeed.ts
-var K = 15e3, q = 6e4, J = [
+var kt = 15e3, At = 6e4, X = [
 	{
 		score: 22,
 		level: "focus",
@@ -376,8 +542,8 @@ var K = 15e3, q = 6e4, J = [
 		why: "Simulated: burned out. The beat settles to 6 Hz and the sound goes quiet."
 	}
 ];
-function it(e, t) {
-	let n = J[Math.min(Math.max(0, Math.trunc(e)), J.length - 1)];
+function jt(e, t) {
+	let n = X[Math.min(Math.max(0, Math.trunc(e)), X.length - 1)];
 	return n === void 0 ? null : {
 		version: 1,
 		at: t,
@@ -397,32 +563,32 @@ function it(e, t) {
 		why: n.why
 	};
 }
-function at(e, t) {
-	return d(JSON.parse(JSON.stringify(it(e, t))));
+function Mt(e, t) {
+	return p(JSON.parse(JSON.stringify(jt(e, t))));
 }
-var ot = {
+var Nt = {
 	now: () => Date.now(),
 	setTimer: (e, t) => setTimeout(e, t),
 	clearTimer: (e) => clearTimeout(e)
-}, Y = [], st = ot;
-function X() {
-	for (let e of Y) st.clearTimer(e);
-	Y = [];
+}, Z = [], Pt = Nt;
+function Ft() {
+	for (let e of Z) Pt.clearTimer(e);
+	Z = [];
 }
-function ct(e, t, n, r) {
-	let i = r.now(), a = at(t, Math.trunc(i / 1e3));
+function It(e, t, n, r) {
+	let i = r.now(), a = Mt(t, Math.trunc(i / 1e3));
 	if (a === null) return;
-	let o = t >= J.length - 1;
-	u({
+	let o = t >= X.length - 1;
+	E({
 		state: a,
 		source: "demo",
 		changedAtMs: i,
 		snoozeUntilMs: 0,
-		demoNextAtMs: n + (o ? q : (t + 1) * K)
+		demoNextAtMs: n + (o ? At : (t + 1) * kt)
 	}), e.applyCrew(a), e.followCrew();
 }
-function lt(e) {
-	X(), u({
+function Lt(e) {
+	Ft(), E({
 		state: null,
 		source: "none",
 		changedAtMs: 0,
@@ -430,15 +596,15 @@ function lt(e) {
 		demoNextAtMs: null
 	}), e.crewLost();
 }
-function ut(e, t = ot) {
-	X(), st = t;
+function Rt(e, t = Nt) {
+	Ft(), Pt = t;
 	let n = t.now();
-	ct(e, 0, n, t), e.snapshot().playing || e.play();
-	for (let r = 1; r < J.length; r += 1) Y.push(t.setTimer(() => ct(e, r, n, t), r * K));
-	Y.push(t.setTimer(() => lt(e), q));
+	It(e, 0, n, t), e.snapshot().playing || e.play();
+	for (let r = 1; r < X.length; r += 1) Z.push(t.setTimer(() => It(e, r, n, t), r * kt));
+	Z.push(t.setTimer(() => Lt(e), At));
 }
 // ../../web/src/ui/calm/WeekDots.tsx
-var dt = [
+var zt = [
 	"Mon",
 	"Tue",
 	"Wed",
@@ -446,7 +612,7 @@ var dt = [
 	"Fri",
 	"Sat",
 	"Sun"
-], ft = [
+], Bt = [
 	"Monday",
 	"Tuesday",
 	"Wednesday",
@@ -454,189 +620,236 @@ var dt = [
 	"Friday",
 	"Saturday",
 	"Sunday"
-], pt = {
+], Vt = {
 	listened: "listened",
 	rest: "rest day",
 	today: "today",
 	upcoming: "coming up"
 };
-function mt(e, t = !0, n = !1) {
-	return e.quietWeek && n && !t ? C.joinedLine : e.quietWeek ? t ? C.welcomeBack : C.firstWeek : `${C.weekOf(e.daysListened)}. ${C.restCount}`;
+function Ht(e, t = !0, n = !1) {
+	return e.quietWeek && n && !t ? k.joinedLine : e.quietWeek ? t ? k.welcomeBack : k.firstWeek : `${k.weekOf(e.daysListened)}. ${k.restCount}`;
 }
-function ht({ week: e, hasHistory: t = !0, joinedToday: n = !1, compact: r = !1 }) {
+function Ut({ week: e, hasHistory: t = !0, joinedToday: n = !1, compact: r = !1 }) {
 	let i = n && !t && e.quietWeek;
-	return /* @__PURE__ */ V("div", {
+	return /* @__PURE__ */ R("div", {
 		className: r ? "c-week c-week-compact" : "c-week",
-		children: [/* @__PURE__ */ B("ul", {
+		children: [/* @__PURE__ */ L("ul", {
 			className: "c-dots",
 			"aria-label": "This week",
 			children: e.dots.map((e, t) => {
 				let n = i && e === "today";
-				return /* @__PURE__ */ V("li", {
+				return /* @__PURE__ */ R("li", {
 					className: `c-dot c-dot-${e}${n ? " c-dot-joined" : ""}`,
 					"data-state": e,
 					children: [
-						/* @__PURE__ */ B("span", {
+						/* @__PURE__ */ L("span", {
 							className: "c-mark",
 							"aria-hidden": "true",
-							children: n || e === "listened" ? /* @__PURE__ */ B(L, {
+							children: n || e === "listened" ? /* @__PURE__ */ L(P, {
 								name: "check",
 								size: 16
 							}) : ""
 						}),
-						/* @__PURE__ */ B("span", {
+						/* @__PURE__ */ L("span", {
 							className: "c-dayname",
 							"aria-hidden": "true",
-							children: dt[t]
+							children: zt[t]
 						}),
-						/* @__PURE__ */ B("span", {
+						/* @__PURE__ */ L("span", {
 							className: "c-sr",
-							children: `${ft[t]}, ${n ? C.joinedToday : pt[e]}`
+							children: `${Bt[t]}, ${n ? k.joinedToday : Vt[e]}`
 						})
 					]
-				}, ft[t]);
+				}, Bt[t]);
 			})
-		}), /* @__PURE__ */ B("p", {
+		}), /* @__PURE__ */ L("p", {
 			className: "c-muted",
 			"data-testid": r ? void 0 : "week-text",
-			children: mt(e, t, i)
+			children: Ht(e, t, i)
 		})]
 	});
 }
 // ../../web/src/ui/calm/Today.tsx
-var gt = () => /* @__PURE__ */ new Date(), _t = [], vt = ["focus", "study"];
-function yt({ profile: e, week: t, reduced: n, crewConnected: r, hasHistory: i = !0, joinedToday: o = !1, now: c = gt, last: l = null, feel: u = _t, onSprint: d, onPlay: f, onGo: p, onReset: m, onBreathe: h, onGuide: g }) {
-	let [v, y] = s(0), b = a(() => {
-		let t = ve(e, c());
-		return pe(ye(t, e.device, 5), u.length === 0 ? [] : ye(t, e.device, 12), u);
+var Wt = () => /* @__PURE__ */ new Date(), Gt = [], Kt = ["focus", "study"], qt = 120, Jt = [];
+function Yt({ profile: e, week: t, reduced: n, crewConnected: r, hasHistory: i = !0, joinedToday: o = !1, todayMinutes: c = 0, now: l = Wt, last: u = null, feel: d = Gt, onSprint: f, onPlay: p, onGo: m, onReset: h, onBreathe: g, onGuide: _ }) {
+	let [v, b] = s(0), S = a(() => ge(e, l()), [e, l]), C = a(() => {
+		let t = B(S.ctx, e.device, 5);
+		return Ce(t, d.length === 0 ? Jt : B(S.ctx, e.device, 12), d);
 	}, [
-		e,
-		c,
-		u
-	]), x = b[v % Math.max(1, b.length)];
-	return /* @__PURE__ */ V("div", {
+		S,
+		e.device,
+		d
+	]), w = C[v % Math.max(1, C.length)], T = a(() => ve(d, U(l().getTime())), [d, l]), E = T === null ? void 0 : j().find((e) => e.id === T.id), D = (t) => S.kind === "sprint" && f !== void 0 ? f(t) : p(t, S.minutes, S.fade ? "sleep" : e.goal), O = (t) => {
+		let n = ye(e, l(), t), r = B(n.ctx, e.device, 1)[0];
+		r !== void 0 && p(r.template, n.minutes, n.fade ? "sleep" : e.goal);
+	};
+	return /* @__PURE__ */ R("div", {
 		className: "c-today",
 		children: [
-			/* @__PURE__ */ V("header", {
+			/* @__PURE__ */ R("header", {
 				className: "c-pagehead",
-				children: [/* @__PURE__ */ B(R, {
+				children: [/* @__PURE__ */ L(F, {
 					size: 72,
 					reduced: n
-				}), /* @__PURE__ */ B("h1", {
+				}), /* @__PURE__ */ L("h1", {
 					className: "c-greet",
 					"data-testid": "greeting",
-					children: O(c().getHours())
+					children: x(l().getHours())
 				})]
 			}),
-			l !== null && l.id !== x?.template.id && /* @__PURE__ */ B("button", {
+			u !== null && u.id !== w?.template.id && /* @__PURE__ */ L("button", {
 				type: "button",
 				className: "c-btn c-wide c-again",
 				"data-testid": "play-again",
-				onClick: () => f(l),
-				children: `${C.playAgain}: ${l.name}`
+				onClick: () => p(u),
+				children: `${k.playAgain}: ${u.name}`
 			}),
-			x !== void 0 && /* @__PURE__ */ V("section", {
+			T !== null && E !== void 0 && /* @__PURE__ */ R("p", {
+				className: "c-echo",
+				"data-testid": "feel-echo",
+				children: [
+					he(E.name, T),
+					" ",
+					/* @__PURE__ */ L("button", {
+						type: "button",
+						className: "c-btn c-link",
+						"data-testid": "feel-echo-play",
+						onClick: () => p(E),
+						children: V.echo.play
+					})
+				]
+			}),
+			w !== void 0 && /* @__PURE__ */ R("section", {
 				className: "c-daily",
 				"aria-labelledby": "c-daily-h",
+				"data-plan": S.kind,
 				children: [
-					/* @__PURE__ */ B("p", {
+					/* @__PURE__ */ L("p", {
 						className: "c-eyebrow",
-						children: C.dailyEyebrow
+						"data-testid": "plan-eyebrow",
+						children: V.planEyebrow[S.kind]
 					}),
-					/* @__PURE__ */ B("h2", {
+					/* @__PURE__ */ L("h2", {
 						id: "c-daily-h",
-						children: x.template.name
+						children: `${V.planTitle[S.kind]}: ${w.template.name}`
 					}),
-					/* @__PURE__ */ B("p", {
+					/* @__PURE__ */ L("p", {
 						className: "c-muted",
-						children: `${x.template.recommendedMinutes} min. ${_(x.reasons[0] ?? C.suggested)}`
+						children: `${V.minutes(S.minutes)}. ${se(w.template)}`
 					}),
-					/* @__PURE__ */ B(H, {
+					S.kind === "winddown" && /* @__PURE__ */ L("p", {
+						className: "c-muted",
+						"data-testid": "sleep-note",
+						children: k.sleepNote
+					}),
+					/* @__PURE__ */ L(De, {
 						left: {
-							label: C.notThisOne,
-							onClick: () => y((e) => e + 1)
+							label: k.notThisOne,
+							onClick: () => b((e) => e + 1)
 						},
 						next: {
-							label: C.start,
-							onClick: () => f(x.template),
+							label: V.planStart[S.kind],
+							onClick: () => D(w.template),
 							testid: "today-play"
 						}
 					})
 				]
 			}),
-			d !== void 0 && x !== void 0 && vt.includes(e.goal) && /* @__PURE__ */ V("button", {
+			/* @__PURE__ */ R("section", {
+				"aria-labelledby": "c-uses-h",
+				children: [/* @__PURE__ */ L("h2", {
+					id: "c-uses-h",
+					className: "c-h3",
+					children: V.useCasesTitle
+				}), /* @__PURE__ */ L("div", {
+					className: "c-chips",
+					children: be.map((e) => /* @__PURE__ */ L("button", {
+						type: "button",
+						className: "c-tchip",
+						"data-testid": `use-${e}`,
+						onClick: () => O(e),
+						children: V.useCases[e]
+					}, e))
+				})]
+			}),
+			f !== void 0 && w !== void 0 && S.kind !== "sprint" && Kt.includes(e.goal) && /* @__PURE__ */ R("button", {
 				type: "button",
 				className: "c-link-card c-sprint-entry",
 				"data-testid": "today-sprint",
-				onClick: () => d(x.template),
-				children: [/* @__PURE__ */ B("b", { children: C.sprintTitle }), /* @__PURE__ */ B("small", { children: C.sprintLine })]
+				onClick: () => f(w.template),
+				children: [/* @__PURE__ */ L("b", { children: k.sprintTitle }), /* @__PURE__ */ L("small", { children: k.sprintLine })]
 			}),
-			/* @__PURE__ */ V("button", {
+			/* @__PURE__ */ R("button", {
 				type: "button",
 				className: "c-link-card c-reset-entry",
 				"data-testid": "today-reset",
-				onClick: m,
-				children: [/* @__PURE__ */ B("b", { children: C.resetEntry }), /* @__PURE__ */ B("small", { children: C.resetEntryHint })]
+				onClick: h,
+				children: [/* @__PURE__ */ L("b", { children: k.resetEntry }), /* @__PURE__ */ L("small", { children: k.resetEntryHint })]
 			}),
-			h !== void 0 && e.goal === "calm" && /* @__PURE__ */ V("button", {
+			g !== void 0 && e.goal === "calm" && /* @__PURE__ */ R("button", {
 				type: "button",
 				className: "c-link-card c-breathe-entry",
 				"data-testid": "today-breathe",
-				onClick: h,
-				children: [/* @__PURE__ */ B("b", { children: C.breatheEntry }), /* @__PURE__ */ B("small", { children: C.breatheEntryHint })]
+				onClick: g,
+				children: [/* @__PURE__ */ L("b", { children: k.breatheEntry }), /* @__PURE__ */ L("small", { children: k.breatheEntryHint })]
 			}),
-			/* @__PURE__ */ V("section", {
+			/* @__PURE__ */ R("section", {
 				"aria-labelledby": "c-goal-h",
-				children: [/* @__PURE__ */ B("h2", {
+				children: [/* @__PURE__ */ L("h2", {
 					id: "c-goal-h",
 					className: "c-h3",
-					children: `Your goal: ${T[e.goal]}`
-				}), /* @__PURE__ */ B(ht, {
+					children: `Your goal: ${y[e.goal]}`
+				}), /* @__PURE__ */ L(Ut, {
 					week: t,
 					hasHistory: i,
 					joinedToday: o
 				})]
 			}),
-			/* @__PURE__ */ V("section", {
+			/* @__PURE__ */ R("section", {
 				"aria-labelledby": "c-for-h",
-				children: [/* @__PURE__ */ B("h2", {
+				children: [/* @__PURE__ */ L("h2", {
 					id: "c-for-h",
 					className: "c-h3",
-					children: C.forYou
-				}), /* @__PURE__ */ B("ul", {
+					children: k.forYou
+				}), /* @__PURE__ */ L("ul", {
 					className: "c-rows",
-					children: b.slice(0, 3).map((e) => /* @__PURE__ */ B("li", { children: /* @__PURE__ */ V("button", {
+					children: C.slice(0, 3).map((e) => /* @__PURE__ */ L("li", { children: /* @__PURE__ */ R("button", {
 						type: "button",
 						className: "c-mini-card",
-						onClick: () => f(e.template),
+						onClick: () => p(e.template),
 						children: [
-							/* @__PURE__ */ B("b", { children: e.template.name }),
-							/* @__PURE__ */ B("small", { children: _(e.reasons[0] ?? C.suggested) }),
-							/* @__PURE__ */ B("em", { children: `${e.template.recommendedMinutes} min` })
+							/* @__PURE__ */ L("b", { children: e.template.name }),
+							/* @__PURE__ */ L("small", { children: se(e.template) }),
+							/* @__PURE__ */ L("em", { children: `${e.template.recommendedMinutes} min` })
 						]
 					}) }, e.template.id))
 				})]
 			}),
-			/* @__PURE__ */ B("button", {
+			c >= qt && /* @__PURE__ */ L("p", {
+				className: "c-muted",
+				"data-testid": "rest-note",
+				children: `${V.listened.today(Math.round(c))} ${V.listened.rest}`
+			}),
+			/* @__PURE__ */ L("button", {
 				type: "button",
 				className: "c-link-card",
-				onClick: () => p("library"),
-				children: /* @__PURE__ */ B("b", { children: "Browse all sounds" })
+				onClick: () => m("library"),
+				children: /* @__PURE__ */ L("b", { children: "Browse all sounds" })
 			}),
-			/* @__PURE__ */ B("button", {
+			/* @__PURE__ */ L("button", {
 				type: "button",
 				className: "c-link-card",
-				onClick: () => p("journeys"),
-				children: /* @__PURE__ */ B("b", { children: C.journeysTitle })
+				onClick: () => m("journeys"),
+				children: /* @__PURE__ */ L("b", { children: k.journeysTitle })
 			}),
-			g !== void 0 && /* @__PURE__ */ B("button", {
+			_ !== void 0 && /* @__PURE__ */ L("button", {
 				type: "button",
 				className: "c-btn c-ghost c-guide-link",
 				"data-testid": "today-guide",
-				onClick: g,
-				children: C.guideLink
+				onClick: _,
+				children: k.guideLink
 			}),
-			r && /* @__PURE__ */ B("p", {
+			r && /* @__PURE__ */ L("p", {
 				className: "c-crew-chip",
 				role: "status",
 				children: "Crew connected: easing the sound"
@@ -645,7 +858,7 @@ function yt({ profile: e, week: t, reduced: n, crewConnected: r, hasHistory: i =
 	});
 }
 // ../../web/src/ui/calm/breathe.ts
-var bt = "calm-breathe-5", Z = {
+var Xt = "calm-breathe-5", Zt = {
 	atMin: 0,
 	beatHz: .5,
 	carrierHz: 20,
@@ -655,25 +868,62 @@ var bt = "calm-breathe-5", Z = {
 	noiseLevel: .45,
 	beatLevel: 0,
 	ramp: !1
-}, xt = {
-	id: bt,
+}, Qt = {
+	id: Xt,
 	name: "Breathe, 5 minutes",
 	category: "meditation",
 	vibe: "calm",
 	tags: ["breathing", "no-beat"],
-	layerTags: ne([Z]),
+	layerTags: ne([Zt]),
 	situations: ["meditate", "quick-reset"],
 	recommendedMinutes: 5,
 	intensity: 1,
-	adhdFriendly: P([Z], 1),
-	stages: [Z],
+	adhdFriendly: ie([Zt], 1),
+	stages: [Zt],
 	reasonTemplate: "Soft pink noise, paced 4 seconds in and 4 seconds out.",
 	source: "original",
 	breath: {
 		inSec: 4,
 		outSec: 4
 	}
-}, St = t(() => import("./chunk-advanced-C2eFfoNq.mjs").then((e) => ({ default: e.AdvancedPanels }))), Ct = [
+}, $t = /^ZK1-([a-z0-9]{3,24})-(\d{1,3})-(\d{1,3})$/;
+function en(e) {
+	let t = (e, t) => Math.round(Math.min(t, Math.max(0, Number.isFinite(e) ? e : 0)) * 100);
+	return `ZK1-${e.id}-${t(e.blend, 1)}-${t(e.level, Fe)}`;
+}
+function tn(e, t) {
+	let n = e.trim();
+	if (n.length === 0 || n.length > 64) return {
+		ok: !1,
+		error: "This is not a Zonked mix code."
+	};
+	if (/^ZK\d+-/.test(n) && !n.startsWith("ZK1-")) return {
+		ok: !1,
+		error: "This mix code is from a newer Zonked. Update the app to use it."
+	};
+	let r = $t.exec(n);
+	if (r === null) return {
+		ok: !1,
+		error: "This is not a Zonked mix code."
+	};
+	let i = r[1] ?? "", a = Number(r[2]), o = Number(r[3]);
+	return t.includes(i) ? a > 100 || o > 100 ? {
+		ok: !1,
+		error: "This mix code has a value out of range."
+	} : {
+		ok: !0,
+		mix: {
+			id: i,
+			blend: a / 100,
+			level: Math.min(Fe, o / 100)
+		}
+	} : {
+		ok: !1,
+		error: "This mix uses a sound that is not in this app."
+	};
+}
+// ../../web/src/ui/calm/OptionsNature.tsx
+var nn = [
 	{
 		value: 0,
 		label: "More beats"
@@ -687,187 +937,285 @@ var bt = "calm-breathe-5", Z = {
 		label: "More nature"
 	}
 ];
-function wt(e) {
+function rn(e) {
 	return e < .4 ? "More beats" : e > .6 ? "More nature" : "Even";
 }
-function Tt({ player: t, snap: n, nature: i, favorite: a, evidence: c, onFavorite: l, onClose: u, sprint: d, engine: f, device: p = "wired", advancedOpen: m = !1 }) {
-	let h = o(null), [g, _] = s(!1), [v, y] = s(m);
-	r(() => h.current?.querySelector("button")?.focus(), []);
-	let b = (e) => {
-		if (e.key === "Escape") e.stopPropagation(), u();
-		else if (e.key === "Tab") {
-			let t = Array.from(h.current?.querySelectorAll("button:not([disabled]), input, select") ?? []), n = t[0], r = t[t.length - 1];
-			e.shiftKey && document.activeElement === n ? (e.preventDefault(), r?.focus()) : !e.shiftKey && document.activeElement === r && (e.preventDefault(), n?.focus());
-		}
-	}, x = re(Ce(), p);
-	return /* @__PURE__ */ B("div", {
+function an({ nature: e }) {
+	let [t, n] = s(""), [r, i] = s(""), [a, o] = s("");
+	return /* @__PURE__ */ R("div", {
+		className: "c-mix",
+		"data-testid": "mix-code",
+		children: [
+			/* @__PURE__ */ L("div", {
+				className: "c-chips c-left",
+				children: /* @__PURE__ */ L("button", {
+					type: "button",
+					className: "c-tchip",
+					"data-testid": "mix-copy",
+					onClick: () => {
+						if (e.on === null || e.on.startsWith("own:")) return i(V.mix.none);
+						let t = en({
+							id: e.on,
+							blend: e.prefs.blend,
+							level: e.prefs.level
+						}), n = typeof navigator > "u" ? void 0 : navigator.clipboard;
+						if (n === void 0) return o(t), i(V.mix.copyFailed);
+						n.writeText(t).then(() => {
+							o(""), i(V.mix.copied);
+						}, () => {
+							o(t), i(V.mix.copyFailed);
+						});
+					},
+					children: V.mix.copy
+				})
+			}),
+			a !== "" && /* @__PURE__ */ L("p", {
+				className: "c-muted c-mixcode",
+				"data-testid": "mix-shown",
+				children: a
+			}),
+			/* @__PURE__ */ L("label", {
+				htmlFor: "c-mix-in",
+				className: "c-o-sub",
+				children: V.mix.pasteTitle
+			}),
+			/* @__PURE__ */ R("div", {
+				className: "c-mix-row",
+				children: [/* @__PURE__ */ L("input", {
+					id: "c-mix-in",
+					className: "c-mix-in",
+					type: "text",
+					inputMode: "text",
+					autoComplete: "off",
+					autoCapitalize: "characters",
+					spellCheck: !1,
+					maxLength: 64,
+					placeholder: V.mix.pasteHint,
+					"aria-label": V.mix.pasteLabel,
+					"data-testid": "mix-input",
+					value: t,
+					onChange: (e) => n(e.currentTarget.value)
+				}), /* @__PURE__ */ L("button", {
+					type: "button",
+					className: "c-tchip",
+					"data-testid": "mix-apply",
+					disabled: t.trim() === "",
+					onClick: () => {
+						let r = tn(t, ke().map((e) => e.id));
+						if (!r.ok) return i(r.error);
+						e.setBlend(r.mix.blend), e.setLevel(r.mix.level), e.start(r.mix.id), n(""), i(V.mix.applied);
+					},
+					children: V.mix.apply
+				})]
+			}),
+			/* @__PURE__ */ L("p", {
+				className: "c-muted",
+				role: "status",
+				"data-testid": "mix-note",
+				children: r
+			})
+		]
+	});
+}
+function on({ nature: e, device: t }) {
+	let n = ke();
+	return /* @__PURE__ */ R(I, { children: [
+		/* @__PURE__ */ R("div", {
+			className: "c-nature-groups",
+			role: "group",
+			"aria-label": k.optNature,
+			children: [/* @__PURE__ */ L("button", {
+				type: "button",
+				className: "c-tchip",
+				"aria-pressed": e.on === null,
+				"data-testid": "sheet-nature-none",
+				onClick: e.stop,
+				children: k.natureNone
+			}), Ie.map((r) => {
+				let i = ae(n.filter((e) => je(e) === r), t);
+				return i.length === 0 ? null : /* @__PURE__ */ R("div", {
+					role: "group",
+					"aria-label": r,
+					"data-testid": `sheet-group-${r.replaceAll(" ", "-")}`,
+					children: [/* @__PURE__ */ L("p", {
+						className: "c-o-sub",
+						children: r
+					}), /* @__PURE__ */ L("div", {
+						className: "c-chips c-left c-nature-row",
+						children: i.map((t) => /* @__PURE__ */ L("button", {
+							type: "button",
+							className: "c-tchip",
+							"aria-pressed": e.on === t.id,
+							"data-testid": `sheet-nature-${t.id}`,
+							onClick: () => e.on === t.id ? e.stop() : e.start(t.id),
+							children: t.label
+						}, t.id))
+					})]
+				}, r);
+			})]
+		}),
+		/* @__PURE__ */ R("div", {
+			className: "c-slider c-blend",
+			children: [/* @__PURE__ */ L("label", {
+				htmlFor: "c-blend",
+				children: k.natureBlend
+			}), /* @__PURE__ */ L(N, {
+				id: "c-blend",
+				min: 0,
+				max: 1,
+				step: .05,
+				value: e.prefs.blend,
+				valueText: rn(e.prefs.blend),
+				bubbleText: rn(e.prefs.blend),
+				ticks: nn,
+				onChange: e.setBlend
+			})]
+		}),
+		e.on !== null && /* @__PURE__ */ L(Ne, {
+			id: "c-nlevel",
+			label: k.natureLevel,
+			value: e.prefs.level,
+			max: .85,
+			onChange: e.setLevel
+		}),
+		/* @__PURE__ */ L(an, { nature: e }),
+		/* @__PURE__ */ L("p", {
+			className: "c-status",
+			role: "status",
+			children: e.message
+		})
+	] });
+}
+// ../../web/src/ui/calm/OptionsSheet.tsx
+var sn = t(() => import("./chunk-advanced-DcPhviGl.mjs").then((e) => ({ default: e.AdvancedPanels })));
+function cn({ player: t, snap: n, nature: i, favorite: a, evidence: c, onFavorite: l, onClose: u, sprint: d, engine: f, device: p = "wired", goal: m, advancedOpen: h = !1 }) {
+	let g = o(null), [_, v] = s(!1), [y, b] = s(h);
+	return r(() => g.current?.querySelector("button")?.focus(), []), H(u), /* @__PURE__ */ L("div", {
 		className: "c-overlay c-sheet-wrap",
 		onClick: u,
-		children: /* @__PURE__ */ V("div", {
-			ref: h,
+		children: /* @__PURE__ */ R("div", {
+			ref: g,
 			className: "c-opts",
 			role: "dialog",
 			"aria-modal": "true",
 			"aria-labelledby": "c-opts-title",
 			"data-testid": "options-sheet",
-			onKeyDown: b,
+			onKeyDown: (e) => {
+				if (e.key === "Tab") {
+					let t = Array.from(g.current?.querySelectorAll("button:not([disabled]), input, select") ?? []), n = t[0], r = t[t.length - 1];
+					e.shiftKey && document.activeElement === n ? (e.preventDefault(), r?.focus()) : !e.shiftKey && document.activeElement === r && (e.preventDefault(), n?.focus());
+				}
+			},
 			onClick: (e) => e.stopPropagation(),
 			children: [
-				/* @__PURE__ */ V("div", {
+				/* @__PURE__ */ R("div", {
 					className: "c-opts-head",
-					children: [/* @__PURE__ */ B("h2", {
+					children: [/* @__PURE__ */ L("h2", {
 						id: "c-opts-title",
-						children: C.optionsTitle
-					}), /* @__PURE__ */ B("button", {
+						children: k.optionsTitle
+					}), /* @__PURE__ */ L("button", {
 						type: "button",
 						className: "c-btn c-ghost",
 						onClick: u,
-						children: C.optionsClose
+						children: k.optionsClose
 					})]
 				}),
-				/* @__PURE__ */ V("section", {
+				/* @__PURE__ */ R("section", {
 					"aria-labelledby": "c-o-timer",
-					children: [/* @__PURE__ */ B("h3", {
+					children: [/* @__PURE__ */ L("h3", {
 						id: "c-o-timer",
 						className: "c-o-h",
-						children: C.optTimer
-					}), /* @__PURE__ */ B(et, {
+						children: k.optTimer
+					}), /* @__PURE__ */ L(ut, {
 						timer: n.timer,
 						player: t,
+						hideUntilStop: m === "sleep",
 						...d === void 0 ? {} : {
 							onSprint: d.onSprint,
 							onSprintEnd: d.onSprintEnd
 						}
 					})]
 				}),
-				/* @__PURE__ */ V("section", {
+				/* @__PURE__ */ R("section", {
 					"aria-labelledby": "c-o-nature",
-					children: [
-						/* @__PURE__ */ B("h3", {
-							id: "c-o-nature",
-							className: "c-o-h",
-							children: C.optNature
-						}),
-						/* @__PURE__ */ V("div", {
-							className: "c-chips c-left c-nature-row",
-							role: "group",
-							"aria-label": C.optNature,
-							children: [/* @__PURE__ */ B("button", {
-								type: "button",
-								className: "c-tchip",
-								"aria-pressed": i.on === null,
-								"data-testid": "sheet-nature-none",
-								onClick: i.stop,
-								children: C.natureNone
-							}), x.map((e) => /* @__PURE__ */ B("button", {
-								type: "button",
-								className: "c-tchip",
-								"aria-pressed": i.on === e.id,
-								"data-testid": `sheet-nature-${e.id}`,
-								onClick: () => i.on === e.id ? i.stop() : i.start(e.id),
-								children: e.label
-							}, e.id))]
-						}),
-						/* @__PURE__ */ V("div", {
-							className: "c-slider c-blend",
-							children: [/* @__PURE__ */ B("label", {
-								htmlFor: "c-blend",
-								children: C.natureBlend
-							}), /* @__PURE__ */ B(I, {
-								id: "c-blend",
-								min: 0,
-								max: 1,
-								step: .05,
-								value: i.prefs.blend,
-								valueText: wt(i.prefs.blend),
-								bubbleText: wt(i.prefs.blend),
-								ticks: Ct,
-								onChange: i.setBlend
-							})]
-						}),
-						i.on !== null && /* @__PURE__ */ B(Ee, {
-							id: "c-nlevel",
-							label: C.natureLevel,
-							value: i.prefs.level,
-							max: .85,
-							onChange: i.setLevel
-						}),
-						/* @__PURE__ */ B("p", {
-							className: "c-status",
-							role: "status",
-							children: i.message
-						})
-					]
+					children: [/* @__PURE__ */ L("h3", {
+						id: "c-o-nature",
+						className: "c-o-h",
+						children: k.optNature
+					}), /* @__PURE__ */ L(on, {
+						nature: i,
+						device: p
+					})]
 				}),
-				/* @__PURE__ */ V("section", {
+				/* @__PURE__ */ R("section", {
 					"aria-labelledby": "c-o-more",
 					children: [
-						/* @__PURE__ */ B("h3", {
+						/* @__PURE__ */ L("h3", {
 							id: "c-o-more",
 							className: "c-o-h",
-							children: C.optMore
+							children: k.optMore
 						}),
-						/* @__PURE__ */ V("div", {
+						/* @__PURE__ */ R("div", {
 							className: "c-chips c-left",
-							children: [/* @__PURE__ */ B("button", {
+							children: [/* @__PURE__ */ L("button", {
 								type: "button",
 								className: "c-tchip",
 								"aria-pressed": a,
 								"data-testid": "sheet-favorite",
 								onClick: l,
-								children: a ? C.saved : C.favorite
-							}), /* @__PURE__ */ B("button", {
+								children: a ? k.saved : k.favorite
+							}), /* @__PURE__ */ L("button", {
 								type: "button",
 								className: "c-tchip",
-								"aria-expanded": g,
+								"aria-expanded": _,
 								"aria-controls": "c-why-box",
-								onClick: () => _((e) => !e),
-								children: C.whyTitle
+								onClick: () => v((e) => !e),
+								children: k.whyTitle
 							})]
 						}),
-						/* @__PURE__ */ V("div", {
+						/* @__PURE__ */ R("div", {
 							id: "c-why-box",
-							hidden: !g,
-							children: [/* @__PURE__ */ B("p", { children: C.whyBody }), /* @__PURE__ */ B("p", { children: `Evidence: ${c}. ${S[c] ?? ""}` })]
+							hidden: !_,
+							children: [/* @__PURE__ */ L("p", { children: k.whyBody }), /* @__PURE__ */ L("p", { children: `Evidence: ${c}. ${C[c] ?? ""}` })]
 						}),
-						/* @__PURE__ */ B("p", {
+						/* @__PURE__ */ L("p", {
 							className: "c-muted",
-							children: C.volumeCapped
+							children: k.volumeCapped
 						}),
-						p === "bluetooth" && /* @__PURE__ */ B("p", {
+						p === "bluetooth" && /* @__PURE__ */ L("p", {
 							className: "c-muted",
 							"data-testid": "bt-tip",
-							children: C.btTip
+							children: k.btTip
 						})
 					]
 				}),
-				/* @__PURE__ */ V("section", {
+				/* @__PURE__ */ R("section", {
 					"aria-labelledby": "c-o-adv",
-					children: [/* @__PURE__ */ B("h3", {
+					children: [/* @__PURE__ */ L("h3", {
 						id: "c-o-adv",
 						className: "c-o-h",
-						children: /* @__PURE__ */ B("button", {
+						children: /* @__PURE__ */ L("button", {
 							type: "button",
 							className: "c-btn c-ghost c-adv-btn",
 							"data-testid": "options-advanced",
-							"aria-expanded": v,
+							"aria-expanded": y,
 							"aria-controls": "c-adv-box",
-							onClick: () => y((e) => !e),
-							children: C.optAdvanced
+							onClick: () => b((e) => !e),
+							children: k.optAdvanced
 						})
-					}), /* @__PURE__ */ B("div", {
+					}), /* @__PURE__ */ L("div", {
 						id: "c-adv-box",
-						hidden: !v,
-						children: v && /* @__PURE__ */ B(e, {
-							fallback: /* @__PURE__ */ B("p", {
+						hidden: !y,
+						children: y && /* @__PURE__ */ L(e, {
+							fallback: /* @__PURE__ */ L("p", {
 								className: "c-muted",
 								role: "status",
-								children: C.loading
+								children: k.loading
 							}),
-							children: /* @__PURE__ */ B(St, {
+							children: /* @__PURE__ */ L(sn, {
 								engine: f,
 								player: t,
-								onClose: () => y(!1)
+								onClose: () => b(!1)
 							})
 						})
 					})]
@@ -877,26 +1225,26 @@ function Tt({ player: t, snap: n, nature: i, favorite: a, evidence: c, onFavorit
 	});
 }
 // ../../web/src/ui/calm/BreathLive.tsx
-var Et = {
+var ln = {
 	label: "Breathe in",
 	count: 4
 };
-function Dt(e) {
+function un(e) {
 	let [t, n] = s(0);
 	if (r(() => {
 		if (n(0), !e) return;
 		let t = window.setInterval(() => n((e) => e + 1), 1e3);
 		return () => window.clearInterval(t);
-	}, [e]), !e) return Et;
+	}, [e]), !e) return ln;
 	let i = t % 8;
 	return {
 		label: i < 4 ? "Breathe in" : "Breathe out",
 		count: 4 - i % 4
 	};
 }
-var Ot = (e) => e.label === "Breathe in" ? C.counterIn(e.count) : C.counterOut(e.count);
-function kt({ label: e, on: t, announce: n }) {
-	return /* @__PURE__ */ B("p", {
+var dn = (e) => e.label === "Breathe in" ? k.counterIn(e.count) : k.counterOut(e.count);
+function fn({ label: e, on: t, announce: n }) {
+	return /* @__PURE__ */ L("p", {
 		className: "c-sr",
 		role: "status",
 		"aria-live": "polite",
@@ -905,18 +1253,18 @@ function kt({ label: e, on: t, announce: n }) {
 	});
 }
 // ../../web/src/ui/calm/playerScene.ts
-var At = ["cant-sleep", "lucid-dream"], jt = [
+var pn = ["cant-sleep", "lucid-dream"], mn = [
 	"adhd-focus",
 	"deep-work",
 	"ai-burnout"
 ];
-function Mt(e, t) {
+function hn(e, t) {
 	if (t) return "nature";
-	let n = (e === null ? void 0 : M().find((t) => t.id === e))?.situations ?? [];
-	return n.some((e) => At.includes(e)) ? "sleep" : n.some((e) => jt.includes(e)) ? "focus" : "calm";
+	let n = (e === null ? void 0 : j().find((t) => t.id === e))?.situations ?? [];
+	return n.some((e) => pn.includes(e)) ? "sleep" : n.some((e) => mn.includes(e)) ? "focus" : "calm";
 }
-var Nt = 400;
-function Pt(e, t) {
+var gn = 400;
+function _n(e, t) {
 	let [n, i] = s(0);
 	return r(() => {
 		if (!t) {
@@ -928,33 +1276,33 @@ function Pt(e, t) {
 				let t = Number.isFinite(e.rms) ? Math.min(1, Math.max(0, e.rms * 4)) : 0;
 				n && i((e) => e * .6 + t * .4);
 			}).catch(() => void 0);
-		}, Nt);
+		}, gn);
 		return () => {
 			n = !1, window.clearInterval(r);
 		};
 	}, [e, t]), n;
 }
 // ../../web/src/ui/calm/PlayerScreen.tsx
-var Ft = /* @__PURE__ */ Se({ PlayerScreen: () => Bt }), It = t(() => import("./chunk-mascot-BpzGguPW.mjs").then((e) => ({ default: e.CalmMascot }))), Lt = t(() => import("./chunk-visuals-BqbfvuFC.mjs").then((e) => ({ default: e.SceneLoop }))), Rt = t(() => import("./chunk-mascot-BpzGguPW.mjs").then((e) => ({ default: e.BreathCue })));
-function zt({ still: t, playing: n, situation: r, theme: i, level: a, announce: o = !0 }) {
-	let s = Oe(n && !t), c = Dt(n && t), l = n && !t;
-	return /* @__PURE__ */ V(z, { children: [/* @__PURE__ */ B("div", {
+var vn = /* @__PURE__ */ Oe({ PlayerScreen: () => Cn }), yn = t(() => import("./chunk-mascot-DOUK_zQE.mjs").then((e) => ({ default: e.CalmMascot }))), bn = t(() => import("./chunk-visuals-BqbfvuFC.mjs").then((e) => ({ default: e.SceneLoop }))), xn = t(() => import("./chunk-mascot-DOUK_zQE.mjs").then((e) => ({ default: e.BreathCue })));
+function Sn({ still: t, playing: n, situation: r, theme: i, level: a, announce: o = !0 }) {
+	let s = Le(n && !t), c = un(n && t), l = n && !t;
+	return /* @__PURE__ */ R(I, { children: [/* @__PURE__ */ L("div", {
 		className: "c-stage",
 		"data-testid": "breath-ring",
 		"data-still": t ? "true" : "false",
 		"data-situation": r,
-		children: /* @__PURE__ */ V(e, {
+		children: /* @__PURE__ */ R(e, {
 			fallback: null,
-			children: [/* @__PURE__ */ B("div", {
+			children: [/* @__PURE__ */ L("div", {
 				className: "c-stage-scene",
-				children: /* @__PURE__ */ B(Lt, {
+				children: /* @__PURE__ */ L(bn, {
 					situation: r,
 					reducedMotion: t,
 					theme: i
 				})
-			}), /* @__PURE__ */ B("div", {
+			}), /* @__PURE__ */ L("div", {
 				className: "c-stage-mascot",
-				children: /* @__PURE__ */ B(It, {
+				children: /* @__PURE__ */ L(yn, {
 					mood: n ? "breathing" : "idle",
 					size: 190,
 					reducedMotion: t,
@@ -964,111 +1312,112 @@ function zt({ still: t, playing: n, situation: r, theme: i, level: a, announce: 
 				})
 			})]
 		})
-	}), /* @__PURE__ */ V("div", {
+	}), /* @__PURE__ */ R("div", {
 		className: "c-cue",
-		children: [l ? /* @__PURE__ */ B(e, {
+		children: [l ? /* @__PURE__ */ L(e, {
 			fallback: null,
-			children: /* @__PURE__ */ B(Rt, {
+			children: /* @__PURE__ */ L(xn, {
 				label: s.label,
 				className: "c-cue-text",
 				live: !1
 			})
-		}) : n ? /* @__PURE__ */ B("p", {
+		}) : n ? /* @__PURE__ */ L("p", {
 			className: "c-cue-text",
 			"data-testid": "breath-counter",
-			children: Ot(c)
-		}) : /* @__PURE__ */ B("p", {
+			children: dn(c)
+		}) : /* @__PURE__ */ L("p", {
 			className: "c-cue-text",
-			children: C.breathe
-		}), /* @__PURE__ */ B(kt, {
+			children: k.breathe
+		}), /* @__PURE__ */ L(fn, {
 			label: l ? s.label : c.label,
 			on: n,
 			announce: o
 		})]
 	})] });
 }
-function Bt({ engine: e, device: t, theme: n, announce: i = !0, sprint: a, openAdvanced: c = !1, onAdvancedShown: l, player: u, snap: d, still: f, favorite: p, onToggle: m, onFavorite: h, nature: g }) {
-	let [_, v] = s(c), [y, b] = s(c);
+function Cn({ engine: e, device: t, goal: n, theme: i, announce: a = !0, sprint: c, openAdvanced: l = !1, onAdvancedShown: u, player: d, snap: f, still: p, favorite: m, onToggle: h, onFavorite: g, nature: _ }) {
+	let [v, y] = s(l), [b, x] = s(l);
 	r(() => {
-		c && (v(!0), b(!0), l?.());
-	}, [c, l]);
-	let x = o(null), S = () => {
-		v(!1), b(!1), x.current?.focus();
-	}, w = Pt(e, d.playing), T = N.find((e) => e.templateId === d.templateId)?.evidence ?? "mixed", E = Mt(a?.focus?.id ?? d.templateId, g.on !== null), D = M().find((e) => e.id === (a?.focus?.id ?? d.templateId));
-	return /* @__PURE__ */ V("div", {
+		l && (y(!0), x(!0), u?.());
+	}, [l, u]);
+	let S = o(null), C = () => {
+		y(!1), x(!1), S.current?.focus();
+	}, w = _n(e, f.playing), T = re.find((e) => e.templateId === f.templateId)?.evidence ?? "mixed", E = hn(c?.focus?.id ?? f.templateId, _.on !== null), D = j().find((e) => e.id === (c?.focus?.id ?? f.templateId));
+	return /* @__PURE__ */ R("div", {
 		className: "c-player",
 		children: [
-			/* @__PURE__ */ B("h1", {
+			/* @__PURE__ */ L("h1", {
 				className: "c-h1",
-				children: d.templateName ?? C.brand
+				children: f.templateName ?? k.brand
 			}),
-			/* @__PURE__ */ B(zt, {
-				still: f,
-				playing: d.playing,
+			/* @__PURE__ */ L(Sn, {
+				still: p,
+				playing: f.playing,
 				situation: E,
-				theme: n,
+				theme: i,
 				level: w,
-				announce: i
+				announce: a
 			}),
-			/* @__PURE__ */ B(tt, { timer: d.timer }),
-			/* @__PURE__ */ B("div", {
+			/* @__PURE__ */ L(dt, { timer: f.timer }),
+			/* @__PURE__ */ L("div", {
 				className: "c-controls",
-				children: /* @__PURE__ */ B("button", {
+				children: /* @__PURE__ */ L("button", {
 					type: "button",
 					className: "c-btn c-primary c-big c-round",
 					"data-testid": "player-toggle",
-					onClick: m,
-					children: d.playing ? C.stop : C.play
+					onClick: h,
+					children: f.playing ? k.stop : k.play
 				})
 			}),
-			/* @__PURE__ */ B("button", {
-				ref: x,
+			/* @__PURE__ */ L("button", {
+				ref: S,
 				type: "button",
 				className: "c-btn c-ghost c-options-btn",
 				"data-testid": "player-options",
 				"aria-haspopup": "dialog",
-				onClick: () => v(!0),
-				children: C.optionsBtn
+				onClick: () => y(!0),
+				children: k.optionsBtn
 			}),
-			_ && /* @__PURE__ */ B(Tt, {
-				player: u,
-				snap: d,
-				nature: g,
-				favorite: p,
+			v && /* @__PURE__ */ L(cn, {
+				player: d,
+				snap: f,
+				nature: _,
+				favorite: m,
 				evidence: T,
-				onFavorite: h,
-				onClose: S,
+				onFavorite: g,
+				onClose: C,
 				engine: e,
 				...t === void 0 ? {} : { device: t },
-				advancedOpen: y,
-				...a !== void 0 && D !== void 0 ? { sprint: {
-					onSprint: () => a.start(D),
-					onSprintEnd: a.cancel
+				...n === void 0 ? {} : { goal: n },
+				advancedOpen: b,
+				...c !== void 0 && D !== void 0 ? { sprint: {
+					onSprint: () => c.start(D),
+					onSprintEnd: c.cancel
 				} } : {}
 			})
 		]
 	});
 }
-var Vt = "android-wakeful-relax-5", Ht = {
+var wn = "seed-pause-five", Tn = {
 	kind: "reset",
 	seconds: 90,
-	template: () => M().find((e) => e.id === Vt),
-	title: C.resetTitle,
-	intro: C.resetIntro,
-	done: C.resetDoneLine,
-	again: C.resetAgain,
-	left: C.resetLeft
-}, Ut = {
+	template: () => j().find((e) => e.id === wn),
+	title: k.resetTitle,
+	intro: k.resetIntro,
+	done: k.resetDoneLine,
+	again: k.resetAgain,
+	left: k.resetLeft
+}, En = {
 	kind: "breathe",
 	seconds: 300,
-	template: () => xt,
-	title: C.breatheTitle,
-	intro: C.breatheIntro,
-	done: C.breatheDoneLine,
-	again: C.breatheAgain,
-	left: C.breatheLeft
+	template: () => Qt,
+	title: k.breatheTitle,
+	intro: k.breatheIntro,
+	done: k.breatheDoneLine,
+	again: k.breatheAgain,
+	left: k.breatheLeft
 };
-function Wt(e, t = Ht) {
+function Dn(e, t = Tn) {
 	let [i, a] = s("idle"), [c, l] = s(t.seconds), u = o(0), { player: d, guarded: f, playTemplate: p } = e, m = n(() => {
 		let e = t.template();
 		e !== void 0 && f(() => {
@@ -1102,27 +1451,27 @@ function Wt(e, t = Ht) {
 		stop: h
 	};
 }
-function Gt({ s: e, still: t, theme: n, announce: r, onBack: i, plan: a = Ht }) {
-	let o = Wt(e, a), s = Pt(e.engine, e.snap.playing), c = Mt(e.snap.templateId, !1);
-	return o.phase === "done" ? /* @__PURE__ */ B(Kt, {
+function On({ s: e, still: t, theme: n, announce: r, onBack: i, plan: a = Tn }) {
+	let o = Dn(e, a), s = _n(e.engine, e.snap.playing), c = hn(e.snap.templateId, !1);
+	return o.phase === "done" ? /* @__PURE__ */ L(kn, {
 		plan: a,
 		onAgain: o.begin,
 		onBack: i
-	}) : /* @__PURE__ */ V("div", {
+	}) : /* @__PURE__ */ R("div", {
 		className: "c-player c-reset",
 		"data-testid": "reset-screen",
 		"data-kind": a.kind,
 		"data-phase": o.phase,
 		children: [
-			/* @__PURE__ */ B("h1", {
+			/* @__PURE__ */ L("h1", {
 				className: "c-h1",
 				children: a.title
 			}),
-			o.phase === "idle" && /* @__PURE__ */ B("p", {
+			o.phase === "idle" && /* @__PURE__ */ L("p", {
 				className: "c-lead",
 				children: a.intro
 			}),
-			/* @__PURE__ */ B(zt, {
+			/* @__PURE__ */ L(Sn, {
 				still: t,
 				playing: o.phase === "running" && e.snap.playing,
 				situation: c,
@@ -1130,67 +1479,67 @@ function Gt({ s: e, still: t, theme: n, announce: r, onBack: i, plan: a = Ht }) 
 				level: s,
 				announce: r
 			}),
-			o.phase === "running" ? /* @__PURE__ */ V(z, { children: [/* @__PURE__ */ B("p", {
+			o.phase === "running" ? /* @__PURE__ */ R(I, { children: [/* @__PURE__ */ L("p", {
 				className: "c-muted c-digits",
 				"data-testid": "reset-left",
 				"aria-hidden": "true",
 				children: a.left(o.left)
-			}), /* @__PURE__ */ B("div", {
+			}), /* @__PURE__ */ L("div", {
 				className: "c-controls",
-				children: /* @__PURE__ */ B("button", {
+				children: /* @__PURE__ */ L("button", {
 					type: "button",
 					className: "c-btn c-round c-big",
 					"data-testid": "reset-stop",
 					onClick: o.stop,
-					children: C.stop
+					children: k.stop
 				})
-			})] }) : /* @__PURE__ */ V("div", {
+			})] }) : /* @__PURE__ */ R("div", {
 				className: "c-actions",
-				children: [/* @__PURE__ */ B("button", {
+				children: [/* @__PURE__ */ L("button", {
 					type: "button",
 					className: "c-btn c-primary",
 					"data-testid": "reset-begin",
 					onClick: o.begin,
-					children: C.resetStart
-				}), /* @__PURE__ */ B("button", {
+					children: k.resetStart
+				}), /* @__PURE__ */ L("button", {
 					type: "button",
 					className: "c-btn c-link",
 					onClick: i,
-					children: C.resetBack
+					children: k.resetBack
 				})]
 			}),
-			/* @__PURE__ */ B("p", {
+			/* @__PURE__ */ L("p", {
 				className: "c-muted",
-				children: C.volumeCapped
+				children: k.volumeCapped
 			})
 		]
 	});
 }
-function Kt({ plan: e, onAgain: t, onBack: n }) {
+function kn({ plan: e, onAgain: t, onBack: n }) {
 	let i = o(null);
-	return r(() => i.current?.focus(), []), /* @__PURE__ */ V("div", {
+	return r(() => i.current?.focus(), []), /* @__PURE__ */ R("div", {
 		className: "c-end c-reset",
 		"data-testid": "reset-end",
 		children: [
-			/* @__PURE__ */ B("h1", {
+			/* @__PURE__ */ L("h1", {
 				className: "c-h1",
-				children: C.endTitle
+				children: k.endTitle
 			}),
-			/* @__PURE__ */ B("p", { children: e.done }),
-			/* @__PURE__ */ B("p", {
+			/* @__PURE__ */ L("p", { children: e.done }),
+			/* @__PURE__ */ L("p", {
 				className: "c-muted",
-				children: C.endNote
+				children: k.endNote
 			}),
-			/* @__PURE__ */ V("div", {
+			/* @__PURE__ */ R("div", {
 				className: "c-actions",
-				children: [/* @__PURE__ */ B("button", {
+				children: [/* @__PURE__ */ L("button", {
 					ref: i,
 					type: "button",
 					className: "c-btn c-primary",
 					"data-testid": "reset-back",
 					onClick: n,
-					children: C.resetBack
-				}), /* @__PURE__ */ B("button", {
+					children: k.resetBack
+				}), /* @__PURE__ */ L("button", {
 					type: "button",
 					className: "c-btn",
 					"data-testid": "reset-again",
@@ -1202,25 +1551,25 @@ function Kt({ plan: e, onAgain: t, onBack: n }) {
 	});
 }
 // ../../web/src/ui/calm/CalmScreens.tsx
-var qt = t(() => import("./chunk-Journeys-CLSqniA0.mjs").then((e) => ({ default: e.JourneyList }))), Jt = t(() => import("./chunk-Journeys-CLSqniA0.mjs").then((e) => ({ default: e.JourneyDetail }))), Yt = t(() => import("./chunk-Library-BkTIQgr8.mjs").then((e) => ({ default: e.Library }))), Xt = t(() => Promise.resolve().then(() => Ft).then((e) => ({ default: e.PlayerScreen }))), Zt = t(() => import("./chunk-CrewScreen-B6cie4_r.mjs").then((e) => ({ default: e.CrewScreen }))), Qt = t(() => import("./chunk-NatureScreen-BOjsvGVc.mjs").then((e) => e.t).then((e) => ({ default: e.NatureScreen }))), $t = t(() => import("./chunk-SettingsScreen-Bu00vMz0.mjs").then((e) => ({ default: e.SettingsScreen })));
-function en({ view: e, journeyId: t, s: n, data: r, crewInfo: i, nature: a, still: o, fav: s, last: c, look: l, prefs: u, onPrefs: d, feel: f, sprint: h, handlers: g }) {
+var An = t(() => import("./chunk-Journeys-D_5fPE50.mjs").then((e) => ({ default: e.JourneyList }))), jn = t(() => import("./chunk-Journeys-D_5fPE50.mjs").then((e) => ({ default: e.JourneyDetail }))), Mn = t(() => import("./chunk-Library-CtlV2q_x.mjs").then((e) => ({ default: e.Library }))), Nn = t(() => Promise.resolve().then(() => vn).then((e) => ({ default: e.PlayerScreen }))), Pn = t(() => import("./chunk-CrewScreen-DYpfF6Xm.mjs").then((e) => ({ default: e.CrewScreen }))), Fn = t(() => import("./chunk-NatureScreen-QpnFXjpL.mjs").then((e) => e.t).then((e) => ({ default: e.NatureScreen }))), In = t(() => import("./chunk-SettingsScreen-CaVT2IU7.mjs").then((e) => ({ default: e.SettingsScreen })));
+function Ln({ view: e, journeyId: t, s: n, data: r, crewInfo: i, nature: a, still: o, fav: s, last: c, look: l, prefs: f, onPrefs: p, feel: m, sprint: h, handlers: g }) {
 	switch (e) {
-		case "journeys": return /* @__PURE__ */ B(qt, {
+		case "journeys": return /* @__PURE__ */ L(An, {
 			progress: r.progress,
 			onOpen: g.openJourney,
 			reduced: o
 		});
-		case "journey": return /* @__PURE__ */ B(Jt, {
+		case "journey": return /* @__PURE__ */ L(jn, {
 			id: t ?? "",
 			profile: r.profile,
 			progress: r.progress,
-			todayDay: G(),
+			todayDay: Y(),
 			onBack: () => g.go("journeys"),
 			onStartJourney: r.setJourney,
 			onRestart: (e) => r.setJourney(e, null),
 			onPlayDay: g.playDay
 		});
-		case "library": return /* @__PURE__ */ B(Yt, {
+		case "library": return /* @__PURE__ */ L(Mn, {
 			store: n.store,
 			logs: r.logs,
 			reduced: o,
@@ -1229,13 +1578,13 @@ function en({ view: e, journeyId: t, s: n, data: r, crewInfo: i, nature: a, stil
 			onPlayMix: g.onMix,
 			onBreathe: () => g.go("breathe")
 		});
-		case "nature": return /* @__PURE__ */ B(Qt, {
+		case "nature": return /* @__PURE__ */ L(Fn, {
 			nature: a,
 			device: r.profile.device,
 			reduced: o,
 			onBack: () => g.go("library")
 		});
-		case "player": return /* @__PURE__ */ B(Xt, {
+		case "player": return /* @__PURE__ */ L(Nn, {
 			player: n.player,
 			snap: n.snap,
 			still: o,
@@ -1245,37 +1594,38 @@ function en({ view: e, journeyId: t, s: n, data: r, crewInfo: i, nature: a, stil
 			nature: a,
 			engine: n.engine,
 			device: r.profile.device,
+			goal: r.profile.goal,
 			theme: l.theme,
-			announce: u.announce,
+			announce: f.announce,
 			sprint: h,
 			openAdvanced: g.advancedPending,
 			onAdvancedShown: g.advancedShown
 		});
-		case "reset": return /* @__PURE__ */ B(Gt, {
+		case "reset": return /* @__PURE__ */ L(On, {
 			s: n,
 			still: o,
 			theme: l.theme,
-			announce: u.announce,
+			announce: f.announce,
 			onBack: () => g.go("today")
 		});
-		case "breathe": return /* @__PURE__ */ B(Gt, {
+		case "breathe": return /* @__PURE__ */ L(On, {
 			s: n,
 			still: o,
 			theme: l.theme,
-			announce: u.announce,
+			announce: f.announce,
 			onBack: () => g.go("today"),
-			plan: Ut
+			plan: En
 		});
-		case "crew": return /* @__PURE__ */ B(Zt, {
+		case "crew": return /* @__PURE__ */ L(Pn, {
 			crew: i,
 			overridden: n.snap.overridden,
-			onDemo: () => n.guarded(() => ut(n.player)),
-			onStopDemo: () => lt(n.player),
-			onNotNow: () => p(n.player),
-			onResume: () => m(n.player),
+			onDemo: () => n.guarded(() => Rt(n.player)),
+			onStopDemo: () => Lt(n.player),
+			onNotNow: () => u(n.player),
+			onResume: () => d(n.player),
 			onFollow: () => n.player.followCrew()
 		});
-		case "settings": return /* @__PURE__ */ B($t, {
+		case "settings": return /* @__PURE__ */ L(In, {
 			gentle: r.profile.extraGentle,
 			reduceMotion: n.userReduced,
 			reduced: o,
@@ -1291,20 +1641,22 @@ function en({ view: e, journeyId: t, s: n, data: r, crewInfo: i, nature: a, stil
 			onReduceMotion: n.setReduced,
 			onStudio: g.onStudio,
 			onForget: g.forget,
-			prefs: u,
-			onPrefs: d,
-			onGuide: g.openGuide
+			prefs: f,
+			onPrefs: p,
+			onGuide: g.openGuide,
+			feel: m
 		});
-		default: return /* @__PURE__ */ B(yt, {
+		default: return /* @__PURE__ */ L(Yt, {
 			profile: r.profile,
 			week: r.week,
 			progress: r.progress,
 			reduced: o,
-			hasHistory: r.logs.some((e) => U(e.startedAt) < G()),
-			joinedToday: U(r.profile.createdAt) === G(),
+			hasHistory: r.logs.some((e) => U(e.startedAt) < Y()),
+			joinedToday: U(r.profile.createdAt) === Y(),
 			crewConnected: i.enabled && i.status === "connected",
 			last: c,
-			feel: f,
+			feel: m,
+			todayMinutes: r.logs.filter((e) => U(e.startedAt) === Y()).reduce((e, t) => e + Ee(t), 0),
 			onSprint: (e) => {
 				h.start(e), g.go("player");
 			},
@@ -1318,47 +1670,47 @@ function en({ view: e, journeyId: t, s: n, data: r, crewInfo: i, nature: a, stil
 	}
 }
 // ../../web/src/ui/calm/nature/active.ts
-var Q = null, tn = () => Q, nn = (e) => void (Q = e);
-function rn() {
-	Q !== null && (Q = null, import("./chunk-samples-BWg4CeGQ.mjs").then((e) => e.n).then((e) => e.stopSample()).catch(() => void 0));
+var Q = null, Rn = () => Q, zn = (e) => void (Q = e);
+function Bn() {
+	Q !== null && (Q = null, import("./chunk-samples-_x0GtVlI.mjs").then((e) => e.n).then((e) => e.stopSample()).catch(() => void 0));
 }
 // ../../web/src/ui/calm/nature/useNature.ts
-var $ = () => import("./chunk-samples-BWg4CeGQ.mjs").then((e) => e.n);
-async function an(e, t) {
+var $ = () => import("./chunk-samples-_x0GtVlI.mjs").then((e) => e.n);
+async function Vn(e, t) {
 	let n = await $();
-	if (!Me(e)) return n.startSample(e, t);
-	let r = await je(e);
+	if (!Ve(e)) return n.startSample(e, t);
+	let r = await Be(e);
 	return r.ok ? n.startOwn(e, r.value, t) : {
 		ok: !1,
 		error: r.error
 	};
 }
-function on(e) {
-	let [t, i] = s(we), [a, c] = s(tn), [l, u] = s(""), d = o(t);
+function Hn(e) {
+	let [t, i] = s(Ae), [a, c] = s(Rn), [l, u] = s(""), d = o(t);
 	d.current = t;
 	let { player: f, guarded: p } = e;
 	r(() => {
-		e.snap.playing || (rn(), c(null));
+		e.snap.playing || (Bn(), c(null));
 	}, [e.snap.playing]);
 	let m = n(async (e) => {
-		if (u(""), f.snapshot().playing || await f.play(), !f.snapshot().playing) return void u(C.errorAudio);
+		if (u(""), f.snapshot().playing || await f.play(), !f.snapshot().playing) return void u(k.errorAudio);
 		(await $()).setBlend(d.current.blend);
-		let t = await an(e, d.current.level);
+		let t = await Vn(e, d.current.level);
 		if (!t.ok) return void u(t.error);
-		t.note !== void 0 && u(t.note), nn(e), c(e);
+		t.note !== void 0 && u(t.note), zn(e), c(e);
 		let n = {
 			...d.current,
 			id: e
 		};
-		i(n), De(n);
+		i(n), Pe(n);
 	}, [f]), h = n((e) => p(() => void m(e)), [p, m]), g = n(() => {
-		nn(null), c(null), $().then((e) => e.stopSample());
+		zn(null), c(null), $().then((e) => e.stopSample());
 	}, []), _ = n((e, t) => {
 		let n = {
 			...d.current,
 			...e
 		};
-		i(n), De(n), tn() !== null && $().then(t);
+		d.current = n, i(n), Pe(n), Rn() !== null && $().then(t);
 	}, []);
 	return {
 		prefs: t,
@@ -1371,12 +1723,12 @@ function on(e) {
 	};
 }
 // ../../web/src/ui/calm/nature/forget.ts
-async function sn() {
-	Te(), await Ae();
+async function Un() {
+	Me(), await ze();
 }
 // src/engine/useSession.ts
-function cn() {
-	let { player: e, store: t, engine: i } = v(), [a, c] = s(() => e.snapshot()), [l, u] = s(E), [d, f] = s(!1), [p, m, h] = k(), g = o(null), _ = o(l);
+function Wn() {
+	let { player: e, store: t, engine: i } = v(), [a, c] = s(() => e.snapshot()), [l, u] = s(T), [d, f] = s(!1), [p, m, h] = ee(), g = o(null), _ = o(l);
 	r(() => (c(e.snapshot()), e.subscribe(c)), [e]);
 	let y = n((e) => {
 		_.current ? e() : (g.current = e, f(!0));
@@ -1393,7 +1745,7 @@ function cn() {
 		userReduced: h,
 		guarded: y,
 		accept: n(() => {
-			A(j, !0), _.current = !0, u(!0), f(!1);
+			te(A, !0), _.current = !0, u(!0), f(!1);
 			let e = g.current;
 			g.current = null, e?.();
 		}, []),
@@ -1414,24 +1766,24 @@ function cn() {
 	};
 }
 // ../../web/src/ui/calm/Guide.tsx
-var ln = "zonked.guide.v1", un = (e) => {
+var Gn = "zonked.guide.v1", Kn = (e) => {
 	try {
-		return e.get(ln) === "1";
+		return e.get(Gn) === "1";
 	} catch {
 		return !1;
 	}
-}, dn = (e) => {
+}, qn = (e) => {
 	try {
-		e.set(ln, "1");
+		e.set(Gn, "1");
 	} catch {}
-};
-function fn({ reduced: e, onClose: t, onCrew: n }) {
+}, Jn = (e) => e.open || !e.seen && !e.onboarding && e.endClosed && !e.endCardShown && !e.playing;
+function Yn({ reduced: e, onClose: t, onCrew: n }) {
 	let [i, a] = s(0), c = o(null);
 	r(() => c.current?.querySelector("h2")?.focus(), [i]);
-	let l = C.guideCards[i] ?? C.guideCards[0], u = i === C.guideCards.length - 1;
-	return /* @__PURE__ */ B("div", {
+	let l = k.guideCards[i] ?? k.guideCards[0], u = i === k.guideCards.length - 1;
+	return H(t), /* @__PURE__ */ L("div", {
 		className: "c-overlay",
-		children: /* @__PURE__ */ V("div", {
+		children: /* @__PURE__ */ R("div", {
 			ref: c,
 			className: "c-dialog c-guide",
 			role: "dialog",
@@ -1439,67 +1791,66 @@ function fn({ reduced: e, onClose: t, onCrew: n }) {
 			"aria-labelledby": "c-guide-title",
 			"data-testid": "guide",
 			onKeyDown: (e) => {
-				if (e.key === "Escape") e.stopPropagation(), t();
-				else if (e.key === "Tab") {
+				if (e.key === "Tab") {
 					let t = Array.from(c.current?.querySelectorAll("button") ?? []), n = document.activeElement;
 					e.shiftKey && (n === t[0] || n === c.current?.querySelector("h2")) ? (e.preventDefault(), t[t.length - 1]?.focus()) : !e.shiftKey && n === t[t.length - 1] && (e.preventDefault(), t[0]?.focus());
 				}
 			},
 			children: [
-				/* @__PURE__ */ V("div", {
+				/* @__PURE__ */ R("div", {
 					className: "c-fhead",
-					children: [/* @__PURE__ */ B(R, {
+					children: [/* @__PURE__ */ L(F, {
 						size: 72,
 						mood: "happy",
 						reduced: e
-					}), /* @__PURE__ */ V("div", {
+					}), /* @__PURE__ */ R("div", {
 						className: "c-fhead-text",
-						children: [/* @__PURE__ */ B("p", {
+						children: [/* @__PURE__ */ L("p", {
 							className: "c-step",
-							children: C.guideStep(i + 1)
-						}), /* @__PURE__ */ B("div", {
+							children: k.guideStep(i + 1)
+						}), /* @__PURE__ */ L("div", {
 							className: "c-bar",
 							"aria-hidden": "true",
-							children: C.guideCards.map((e, t) => /* @__PURE__ */ B("i", { "data-on": t <= i ? "true" : "false" }, e.title))
+							children: k.guideCards.map((e, t) => /* @__PURE__ */ L("i", { "data-on": t <= i ? "true" : "false" }, e.title))
 						})]
 					})]
 				}),
-				/* @__PURE__ */ B("h2", {
+				/* @__PURE__ */ L("h2", {
 					id: "c-guide-title",
 					className: "c-ftitle",
 					tabIndex: -1,
 					children: l?.title
 				}),
-				/* @__PURE__ */ B("p", {
+				/* @__PURE__ */ L("p", {
 					className: "c-helper",
 					children: l?.body
 				}),
-				i === 2 && /* @__PURE__ */ B("button", {
+				i === 2 && /* @__PURE__ */ L("button", {
 					type: "button",
 					className: "c-btn c-ghost c-guide-crew",
 					onClick: n,
-					children: C.guideCrewLink
+					children: k.guideCrewLink
 				}),
-				/* @__PURE__ */ B(H, {
+				/* @__PURE__ */ L(De, {
 					left: {
-						label: C.guideSkip,
+						label: k.guideSkip,
 						onClick: t,
 						testid: "guide-skip"
 					},
 					next: {
-						label: u ? C.guideDone : C.next,
+						label: u ? k.guideDone : k.next,
 						onClick: u ? t : () => a(i + 1),
 						testid: "guide-next"
 					}
 				}),
-				!u && /* @__PURE__ */ B("p", {
+				!u && /* @__PURE__ */ L("p", {
 					className: "c-guide-done",
-					children: /* @__PURE__ */ B("button", {
+					children: /* @__PURE__ */ L("button", {
 						type: "button",
 						className: "c-btn c-ghost",
 						"data-testid": "guide-done",
 						onClick: t,
-						children: C.guideDone
+						children: k.guideDone
 					})
 				})
 			]
@@ -1507,13 +1858,13 @@ function fn({ reduced: e, onClose: t, onCrew: n }) {
 	});
 }
 // ../../web/src/ui/calm/Painted.tsx
-function pn(e) {
+function Xn(e) {
 	let t = Number.isFinite(e) ? (Math.floor(e) % 24 + 24) % 24 : 12;
 	return t >= 5 && t < 8 ? "dawn" : t >= 8 && t < 17 ? "day" : t >= 17 && t < 20 ? "dusk" : "night";
 }
-function mn({ hour: e = (/* @__PURE__ */ new Date()).getHours() }) {
-	let t = `pt${i().replace(/[^a-zA-Z0-9]/g, "")}`, n = pn(e);
-	return /* @__PURE__ */ V("svg", {
+function Zn({ hour: e = (/* @__PURE__ */ new Date()).getHours() }) {
+	let t = `pt${i().replace(/[^a-zA-Z0-9]/g, "")}`, n = Xn(e);
+	return /* @__PURE__ */ R("svg", {
 		className: "pt",
 		"data-tod": n,
 		viewBox: "0 0 1600 900",
@@ -1522,122 +1873,122 @@ function mn({ hour: e = (/* @__PURE__ */ new Date()).getHours() }) {
 		focusable: "false",
 		"data-testid": "painted",
 		children: [
-			/* @__PURE__ */ V("defs", { children: [
-				/* @__PURE__ */ V("linearGradient", {
+			/* @__PURE__ */ R("defs", { children: [
+				/* @__PURE__ */ R("linearGradient", {
 					id: `${t}-sky`,
 					x1: "0",
 					y1: "0",
 					x2: "0",
 					y2: "1",
 					children: [
-						/* @__PURE__ */ B("stop", {
+						/* @__PURE__ */ L("stop", {
 							offset: "0",
 							className: "pt-s1"
 						}),
-						/* @__PURE__ */ B("stop", {
+						/* @__PURE__ */ L("stop", {
 							offset: "0.6",
 							className: "pt-s2"
 						}),
-						/* @__PURE__ */ B("stop", {
+						/* @__PURE__ */ L("stop", {
 							offset: "1",
 							className: "pt-s3"
 						})
 					]
 				}),
-				/* @__PURE__ */ V("radialGradient", {
+				/* @__PURE__ */ R("radialGradient", {
 					id: `${t}-glow`,
-					children: [/* @__PURE__ */ B("stop", {
+					children: [/* @__PURE__ */ L("stop", {
 						offset: "0",
 						className: "pt-gl",
 						stopOpacity: "0.9"
-					}), /* @__PURE__ */ B("stop", {
+					}), /* @__PURE__ */ L("stop", {
 						offset: "1",
 						className: "pt-gl",
 						stopOpacity: "0"
 					})]
 				}),
-				/* @__PURE__ */ B("filter", {
+				/* @__PURE__ */ L("filter", {
 					id: `${t}-soft`,
 					x: "-2%",
 					y: "-2%",
 					width: "104%",
 					height: "104%",
-					children: /* @__PURE__ */ B("feGaussianBlur", { stdDeviation: "2.5" })
+					children: /* @__PURE__ */ L("feGaussianBlur", { stdDeviation: "2.5" })
 				}),
-				/* @__PURE__ */ B("filter", {
+				/* @__PURE__ */ L("filter", {
 					id: `${t}-cloud`,
 					x: "-20%",
 					y: "-50%",
 					width: "140%",
 					height: "200%",
-					children: /* @__PURE__ */ B("feGaussianBlur", { stdDeviation: "9" })
+					children: /* @__PURE__ */ L("feGaussianBlur", { stdDeviation: "9" })
 				}),
-				/* @__PURE__ */ V("filter", {
+				/* @__PURE__ */ R("filter", {
 					id: `${t}-grain`,
 					x: "0",
 					y: "0",
 					width: "100%",
 					height: "100%",
-					children: [/* @__PURE__ */ B("feTurbulence", {
+					children: [/* @__PURE__ */ L("feTurbulence", {
 						type: "fractalNoise",
 						baseFrequency: "0.8",
 						numOctaves: "2",
 						seed: "11"
-					}), /* @__PURE__ */ B("feColorMatrix", { values: "0 0 0 0 0.3  0 0 0 0 0.25  0 0 0 0 0.2  0 0 0 0.9 -0.25" })]
+					}), /* @__PURE__ */ L("feColorMatrix", { values: "0 0 0 0 0.3  0 0 0 0 0.25  0 0 0 0 0.2  0 0 0 0.9 -0.25" })]
 				})
 			] }),
-			/* @__PURE__ */ B("rect", {
+			/* @__PURE__ */ L("rect", {
 				width: "1600",
 				height: "900",
 				fill: `url(#${t}-sky)`
 			}),
-			/* @__PURE__ */ B("circle", {
+			/* @__PURE__ */ L("circle", {
 				className: "pt-orb",
 				cx: "1180",
 				cy: "250",
 				r: "260",
 				fill: `url(#${t}-glow)`
 			}),
-			/* @__PURE__ */ V("g", {
+			/* @__PURE__ */ R("g", {
 				className: "pt-clouds",
 				filter: `url(#${t}-cloud)`,
 				children: [
-					/* @__PURE__ */ V("g", {
+					/* @__PURE__ */ R("g", {
 						className: "pt-cloud pt-c1",
-						children: [/* @__PURE__ */ B("ellipse", {
+						children: [/* @__PURE__ */ L("ellipse", {
 							cx: "300",
 							cy: "190",
 							rx: "190",
 							ry: "34"
-						}), /* @__PURE__ */ B("ellipse", {
+						}), /* @__PURE__ */ L("ellipse", {
 							cx: "400",
 							cy: "168",
 							rx: "120",
 							ry: "30"
 						})]
 					}),
-					/* @__PURE__ */ V("g", {
+					/* @__PURE__ */ R("g", {
 						className: "pt-cloud pt-c2",
-						children: [/* @__PURE__ */ B("ellipse", {
+						children: [/* @__PURE__ */ L("ellipse", {
 							cx: "900",
 							cy: "120",
 							rx: "150",
 							ry: "26"
-						}), /* @__PURE__ */ B("ellipse", {
+						}), /* @__PURE__ */ L("ellipse", {
 							cx: "970",
 							cy: "104",
 							rx: "90",
 							ry: "22"
 						})]
 					}),
-					/* @__PURE__ */ V("g", {
+					/* @__PURE__ */ R("g", {
 						className: "pt-cloud pt-c3",
-						children: [/* @__PURE__ */ B("ellipse", {
+						children: [/* @__PURE__ */ L("ellipse", {
 							cx: "1380",
 							cy: "300",
 							rx: "170",
 							ry: "28"
-						}), /* @__PURE__ */ B("ellipse", {
+						}), /* @__PURE__ */ L("ellipse", {
 							cx: "1300",
 							cy: "284",
 							rx: "100",
@@ -1646,30 +1997,30 @@ function mn({ hour: e = (/* @__PURE__ */ new Date()).getHours() }) {
 					})
 				]
 			}),
-			/* @__PURE__ */ V("g", {
+			/* @__PURE__ */ R("g", {
 				filter: `url(#${t}-soft)`,
 				children: [
-					/* @__PURE__ */ B("path", {
+					/* @__PURE__ */ L("path", {
 						className: "pt-h1",
 						d: "M-40 620C200 540 420 540 640 600C860 660 1080 560 1300 540C1440 528 1540 560 1640 590V900H-40Z"
 					}),
-					/* @__PURE__ */ B("path", {
+					/* @__PURE__ */ L("path", {
 						className: "pt-h2",
 						d: "M-40 720C240 640 480 680 720 720C960 760 1200 660 1420 660C1500 660 1580 680 1640 700V900H-40Z"
 					}),
-					/* @__PURE__ */ B("path", {
+					/* @__PURE__ */ L("path", {
 						className: "pt-h3",
 						d: "M-40 820C260 770 520 800 800 830C1060 858 1300 790 1640 800V900H-40Z"
 					})
 				]
 			}),
-			/* @__PURE__ */ B("rect", {
+			/* @__PURE__ */ L("rect", {
 				className: "pt-grain",
 				width: "1600",
 				height: "900",
 				filter: `url(#${t}-grain)`
 			}),
-			/* @__PURE__ */ B("rect", {
+			/* @__PURE__ */ L("rect", {
 				className: "pt-veil",
 				width: "1600",
 				height: "900"
@@ -1678,16 +2029,16 @@ function mn({ hour: e = (/* @__PURE__ */ new Date()).getHours() }) {
 	});
 }
 // ../../web/src/ui/calm/useCrewBridge.ts
-function hn(e, t) {
+function Qn(e, t) {
 	let [n, i] = s("standalone"), [a, o] = s(() => w());
-	return r(() => ee(o), []), r(() => {
-		let n = !1, r = new g({
+	return r(() => O(o), []), r(() => {
+		let n = !1, r = new _({
 			...t === void 0 ? {} : { create: t },
 			onStatus: (t) => {
 				i(t), t === "standalone" && (f().source !== "demo" && e.crewLost(), n && l(), n = !1);
 			},
 			onState: (t) => {
-				n = !0, te(e, t);
+				n = !0, m(e, t);
 			}
 		});
 		return r.start(), () => r.stop();
@@ -1698,18 +2049,18 @@ function hn(e, t) {
 	};
 }
 // ../../web/src/ui/calm/useFeel.ts
-function gn(e, t = Date.now) {
-	let [r, i] = s(() => se(e)), o = n((n, r) => {
+function $n(e, t = Date.now) {
+	let [r, i] = s(() => ce(e)), o = n((n, r) => {
 		i((i) => {
-			let a = _e(i, {
+			let a = Se(i, {
 				id: n,
 				a: r,
 				day: U(t())
 			});
-			return ce(e, a), a;
+			return z(e, a), a;
 		});
 	}, [e, t]), c = n(() => {
-		oe(e), i([]);
+		we(e), i([]);
 	}, [e]);
 	return a(() => ({
 		entries: r,
@@ -1722,15 +2073,15 @@ function gn(e, t = Date.now) {
 	]);
 }
 // ../../web/src/ui/calm/sprint.ts
-var _n = {
+var er = {
 	kind: "pomodoro",
 	focusMin: 25,
 	breakMin: 5
-}, vn = ["starter-rain", "starter-deep"], yn = .8, bn = 6e3, xn = {
+}, tr = ["starter-rain", "starter-deep"], nr = .8, rr = 6e3, ir = {
 	chimeLevel: .25,
 	chimeRatePerMin: 10
 };
-function Sn(e, t) {
+function ar(e, t) {
 	return t.kind === "pomodoro" ? e === "focus" && t.phase === "break" ? {
 		phase: "break",
 		action: "break"
@@ -1745,25 +2096,25 @@ function Sn(e, t) {
 		action: "cancel"
 	};
 }
-function Cn(e, t) {
-	let n = vn.find((t) => t !== e);
+function or(e, t) {
+	let n = tr.find((t) => t !== e);
 	return t.find((e) => e.id === n);
 }
-function wn(e, t) {
-	return !Number.isFinite(e) || !Number.isFinite(t) ? 0 : Math.round(Math.min(0, e * yn - t) * 1e3) / 1e3;
+function sr(e, t) {
+	return !Number.isFinite(e) || !Number.isFinite(t) ? 0 : Math.round(Math.min(0, e * nr - t) * 1e3) / 1e3;
 }
-async function Tn(e, t, n = (e, t) => window.setTimeout(e, t)) {
+async function cr(e, t, n = (e, t) => window.setTimeout(e, t)) {
 	let r = e.snapshot().voice.gain;
-	e.setLayerOverride(xn), n(() => e.clearLayerOverrides(), bn), await e.playTemplate(t) && e.nudgeGain(wn(r, e.snapshot().voice.gain));
+	e.setLayerOverride(ir), n(() => e.clearLayerOverrides(), rr), await e.playTemplate(t) && e.nudgeGain(sr(r, e.snapshot().voice.gain));
 }
 // ../../web/src/ui/calm/useSprint.ts
-function En(e) {
+function lr(e) {
 	let [t, i] = s(null), c = o(!1), { player: l, guarded: u } = e, { playing: d, templateId: f, timer: p } = e.snap, m = n(() => {
 		i(null), l.stopTimer();
 	}, [l]), h = n((e) => u(() => {
 		c.current = !1;
 		let t = () => {
-			l.startTimer(_n), i({
+			l.startTimer(er), i({
 				focus: e,
 				breakId: null,
 				phase: "focus"
@@ -1776,16 +2127,16 @@ function En(e) {
 		if (t === null) return;
 		if (d) c.current = !0;
 		else if (c.current) return m();
-		let e = Sn(t.phase, p);
+		let e = ar(t.phase, p);
 		if (e.action === "cancel") return i(null);
 		if (e.action === null) d && f !== t.focus.id && f !== t.breakId && m();
 		else if (e.action === "break") {
-			let e = Cn(t.focus.id, M());
+			let e = or(t.focus.id, j());
 			i({
 				...t,
 				phase: "break",
 				breakId: e?.id ?? null
-			}), e !== void 0 && Tn(l, e);
+			}), e !== void 0 && cr(l, e);
 		} else i(null), l.stopTimer(), l.stop();
 	}, [
 		t,
@@ -1807,17 +2158,17 @@ function En(e) {
 	]);
 }
 // ../../web/src/ui/calm/useFavorite.ts
-function Dn(e, t) {
-	let [i, a] = s(Ie);
+function ur(e, t) {
+	let [i, a] = s(Ge);
 	r(() => {
 		let t = !0;
-		return e.getRecord("favorites").then((e) => t && a(Fe(e, Date.now()))).catch(() => void 0), () => {
+		return e.getRecord("favorites").then((e) => t && a(We(e, Date.now()))).catch(() => void 0), () => {
 			t = !1;
 		};
 	}, [e]);
 	let o = n(() => {
 		if (t === null) return;
-		let n = Ne(i, "template", t, Date.now());
+		let n = He(i, "template", t, Date.now());
 		a(n), e.setRecord("favorites", n).catch(() => void 0);
 	}, [
 		i,
@@ -1825,153 +2176,162 @@ function Dn(e, t) {
 		e
 	]);
 	return {
-		on: t !== null && Pe(i, "template", t),
+		on: t !== null && Ue(i, "template", t),
 		toggle: o
 	};
 }
 // ../../web/src/ui/calm/CalmApp.tsx
-var On = t(() => import("./chunk-Onboarding-C1Hgaomr.mjs").then((e) => ({ default: e.Onboarding }))), kn = (e) => Math.max(180, e * 60 * .8);
-function An({ engine: t, clock: i, store: a, bridgeCreate: c }) {
-	let l = cn(t, i, a), u = rt(l.store, l.snap.playing), d = hn(l.player, c), f = on(l), [p, m] = s("today"), [h, g] = s(null), _ = o(null), v = Dn(l.store, l.snap.templateId), y = gn(u.storage), b = En(l), x = u.profile.createdAt === 0;
+var dr = t(() => import("./chunk-Onboarding-BfgyB5QT.mjs").then((e) => ({ default: e.Onboarding }))), fr = (e) => Math.max(180, e * 60 * .8);
+function pr({ engine: t, clock: i, store: a, bridgeCreate: c }) {
+	let l = Wn(t, i, a), u = Ot(l.store, l.snap.playing), d = Qn(l.player, c), f = Hn(l), [p, m] = s("today"), [h, g] = s(null), _ = o(null), v = ur(l.store, l.snap.templateId), y = $n(u.storage), b = lr(l), x = u.profile.createdAt === 0;
 	r(() => t.setListening?.(u.profile.device), [t, u.profile.device]);
-	let S = In(u.storage), w = Ye(l.snap, !x && p !== "reset" && p !== "breathe", b.focus === null ? null : {
+	let S = yr(u.storage), C = Ct(l.snap, !x && p !== "reset" && p !== "breathe", b.focus === null ? null : {
 		id: b.focus.id,
-		name: C.sprintName
-	}), T = l.reduced || u.profile.extraGentle, [E, D] = s(!1), [ee, O] = s(() => un(u.storage)), k = () => {
-		dn(u.storage), O(!0), D(!1);
-	}, { look: A, prefs: j, dim: te, setPrefs: M } = ke(), [ne, N] = s(!1), P = n(() => {
+		name: k.sprintName
+	}), w = l.reduced || u.profile.extraGentle, [T, E] = s(!1), [D, O] = s(() => Kn(u.storage)), [ee, te] = s(!1), A = () => {
+		qn(u.storage), O(!0), E(!1);
+	}, { look: j, prefs: ne, dim: re, setPrefs: ie } = Re(), [M, N] = s(!1), P = n(() => {
 		N(!0), m("player");
 	}, []), F = n(() => N(!1), []);
-	Ln(P);
-	let I = n((e) => m(e), []), { play: L, playDay: R, finish: z } = Nn({
+	br(P);
+	let I = n((e) => m(e), []), { play: z, playDay: B, finish: ae } = gr({
 		s: l,
 		data: u,
 		last: S,
-		end: w,
+		end: C,
 		active: _,
 		setView: m
 	});
-	return Bn(l.snap.playing, l.snap.elapsedSec, _, u.progress, u.setJourney), /* @__PURE__ */ V("div", {
+	return Cr(l.snap.playing, l.snap.elapsedSec, _, u.progress, u.setJourney), /* @__PURE__ */ R("div", {
 		className: "c-app",
-		"data-theme": A.theme,
-		"data-contrast": A.highContrast ? "high" : "normal",
+		"data-theme": j.theme,
+		"data-contrast": j.highContrast ? "high" : "normal",
 		"data-view": p,
-		"data-dim": te ? "true" : "false",
-		"data-motion": T ? "off" : "on",
+		"data-dim": re ? "true" : "false",
+		"data-motion": w ? "off" : "on",
 		"data-playing": l.snap.playing ? "true" : "false",
 		children: [
-			/* @__PURE__ */ B(mn, {}),
-			/* @__PURE__ */ B(zn, {}),
-			/* @__PURE__ */ B(Rn, { engine: t }),
-			d.view.source === "demo" && /* @__PURE__ */ B("p", {
+			/* @__PURE__ */ L(Zn, {}),
+			/* @__PURE__ */ L(Sr, {}),
+			/* @__PURE__ */ L(xr, { engine: t }),
+			d.view.source === "demo" && /* @__PURE__ */ L("p", {
 				className: "c-badge-sim",
 				role: "status",
 				"data-testid": "demo-badge",
-				children: C.crewDemoBadge
+				children: k.crewDemoBadge
 			}),
-			/* @__PURE__ */ B("main", {
+			/* @__PURE__ */ L("main", {
 				id: "c-main",
 				className: "c-main",
 				tabIndex: -1,
-				children: /* @__PURE__ */ B("div", {
+				children: /* @__PURE__ */ L("div", {
 					className: "c-sheet",
-					children: /* @__PURE__ */ B(e, {
-						fallback: /* @__PURE__ */ B("p", {
+					children: /* @__PURE__ */ L(e, {
+						fallback: /* @__PURE__ */ L("p", {
 							className: "c-loading",
 							role: "status",
-							children: C.loading
+							children: k.loading
 						}),
-						children: x ? /* @__PURE__ */ B(On, {
+						children: x ? /* @__PURE__ */ L(dr, {
 							playing: l.snap.playing,
-							reduced: T,
+							reduced: w,
 							initial: u.profile,
 							onAccept: l.accept,
 							onPreview: (e) => l.playTemplate(e, null),
 							onStop: () => void l.player.stop(),
-							onFinish: z
-						}) : /* @__PURE__ */ B(en, {
+							onFinish: ae
+						}) : /* @__PURE__ */ L(Ln, {
 							view: p,
 							journeyId: h,
 							s: l,
 							data: u,
 							crewInfo: d,
 							nature: f,
-							still: T,
+							still: w,
 							fav: v,
 							last: S.template,
-							look: A,
-							prefs: j,
-							onPrefs: M,
+							look: j,
+							prefs: ne,
+							onPrefs: ie,
 							feel: y.entries,
 							sprint: b,
 							handlers: {
 								go: I,
-								play: L,
-								playDay: R,
+								play: z,
+								playDay: B,
 								openJourney: (e) => {
 									g(e), m("journey");
 								},
 								forget: () => {
-									de(u.storage), y.clear(), f.stop(), sn(), u.setProfile(ge), m("today");
+									ot(u.storage, l.store), y.clear(), f.stop(), Un(), u.setProfile(pe), m("today");
 								},
 								onStudio: P,
-								advancedPending: ne,
+								advancedPending: M,
 								advancedShown: F,
 								onMix: (e) => l.guarded(() => l.player.playMix(e)),
-								openGuide: () => D(!0)
+								openGuide: () => E(!0)
 							}
 						})
 					})
 				})
 			}),
-			!x && p !== "player" && p !== "reset" && p !== "breathe" && p !== "crew" && /* @__PURE__ */ B(Be, {
+			!x && p !== "player" && p !== "reset" && p !== "breathe" && p !== "crew" && /* @__PURE__ */ L(Ye, {
 				snap: l.snap,
 				crewPresetId: d.view.state?.target.presetId ?? null,
 				onOpen: () => I("player"),
 				onStop: () => void l.player.stop()
 			}),
-			!x && /* @__PURE__ */ B(Re, {
+			!x && /* @__PURE__ */ L(qe, {
 				view: p,
 				onGo: I,
-				reduced: T
+				reduced: w
 			}),
-			/* @__PURE__ */ B("p", {
+			/* @__PURE__ */ L("p", {
 				className: "c-sr",
 				role: "status",
 				"data-testid": "play-status",
-				children: l.snap.playing ? `Playing. ${C.volumeCapped}` : "Stopped."
+				children: l.snap.playing ? `Playing. ${k.volumeCapped}` : "Stopped."
 			}),
-			w.card !== null && !l.snap.playing && /* @__PURE__ */ B(jn, {
-				card: w.card,
-				play: L,
-				dismiss: w.dismiss,
+			C.card !== null && !l.snap.playing && /* @__PURE__ */ L(mr, {
+				card: C.card,
+				play: z,
+				dismiss: () => {
+					C.dismiss(), te(!0);
+				},
 				feel: y,
-				firstRun: U(u.profile.createdAt) === G()
+				firstRun: U(u.profile.createdAt) === Y()
 			}),
-			(E || !ee && !x && w.card !== null && !l.snap.playing) && /* @__PURE__ */ B(fn, {
-				reduced: T,
-				onClose: k,
+			Jn({
+				open: T,
+				seen: D,
+				onboarding: x,
+				endClosed: ee,
+				endCardShown: C.card !== null,
+				playing: l.snap.playing
+			}) && /* @__PURE__ */ L(Yn, {
+				reduced: w,
+				onClose: A,
 				onCrew: () => {
-					k(), I("crew");
+					A(), I("crew");
 				}
 			}),
-			l.gate && /* @__PURE__ */ B(be, {
+			l.gate && /* @__PURE__ */ L(Te, {
 				onAccept: l.accept,
 				onCancel: l.cancelGate
 			})
 		]
 	});
 }
-function jn({ card: e, play: t, dismiss: n, feel: r, firstRun: i }) {
-	return /* @__PURE__ */ B(Qe, {
+function mr({ card: e, play: t, dismiss: n, feel: r, firstRun: i }) {
+	return /* @__PURE__ */ L(Et, {
 		info: e,
-		onAgain: () => Fn(e.id, t),
+		onAgain: () => vr(e.id, t),
 		onClose: n,
 		firstRun: i,
 		onFeel: (t) => r.answer(e.id, t)
 	});
 }
-function Mn(e, t) {
+function hr(e, t) {
 	return t === null ? null : e === "sleep" ? {
 		kind: "sleep-fade",
 		minutes: Math.max(20, t)
@@ -1980,9 +2340,9 @@ function Mn(e, t) {
 		minutes: t
 	};
 }
-function Nn({ s: e, data: t, last: r, end: i, active: a, setView: o }) {
+function gr({ s: e, data: t, last: r, end: i, active: a, setView: o }) {
 	let s = n((n, s = n.recommendedMinutes, c = t.profile.goal) => {
-		a.current = null, r.remember(n.id), i.dismiss(), e.playTemplate(n, Mn(c, s)), o("player");
+		a.current = null, r.remember(n.id), i.dismiss(), e.playTemplate(n, hr(c, s)), o("player");
 	}, [
 		e,
 		r,
@@ -1997,33 +2357,33 @@ function Nn({ s: e, data: t, last: r, end: i, active: a, setView: o }) {
 			s(n), a.current = {
 				id: e,
 				no: t,
-				needSec: kn(n.recommendedMinutes)
+				needSec: fr(n.recommendedMinutes)
 			};
 		},
 		finish: (n, i) => {
 			if (t.setProfile(n), !e.snap.playing || e.snap.templateId !== i.id) return s(i, i.recommendedMinutes, n.goal);
-			r.remember(i.id), e.player.startTimer(Mn(n.goal, i.recommendedMinutes) ?? {
+			r.remember(i.id), e.player.startTimer(hr(n.goal, i.recommendedMinutes) ?? {
 				kind: "countdown",
 				minutes: i.recommendedMinutes
 			}), o("player");
 		}
 	};
 }
-var Pn = (e) => e === null ? null : M().find((t) => t.id === e) ?? null;
-function Fn(e, t) {
-	let n = Pn(e);
+var _r = (e) => e === null ? null : j().find((t) => t.id === e) ?? null;
+function vr(e, t) {
+	let n = _r(e);
 	n !== null && t(n);
 }
-function In(e) {
-	let [t, r] = s(() => le(e)), i = a(() => Pn(t), [t]), o = n((t) => {
-		he(e, t), r(t);
+function yr(e) {
+	let [t, r] = s(() => ue(e)), i = a(() => _r(t), [t]), o = n((t) => {
+		fe(e, t), r(t);
 	}, [e]);
 	return a(() => ({
 		template: i,
 		remember: o
 	}), [i, o]);
 }
-function Ln(e) {
+function br(e) {
 	r(() => {
 		let t = (t) => {
 			t.altKey && t.shiftKey && t.code === "KeyS" && (t.preventDefault(), e());
@@ -2031,29 +2391,29 @@ function Ln(e) {
 		return window.addEventListener("keydown", t), () => window.removeEventListener("keydown", t);
 	}, [e]);
 }
-function Rn({ engine: e }) {
+function xr({ engine: e }) {
 	let [t, n] = s(() => e.status.state === "error" ? e.status.error ?? "" : null);
-	return r(() => e.onStatus((e) => n(e.state === "error" ? e.error ?? "" : null)), [e]), t === null ? null : /* @__PURE__ */ B("p", {
+	return r(() => e.onStatus((e) => n(e.state === "error" ? e.error ?? "" : null)), [e]), t === null ? null : /* @__PURE__ */ L("p", {
 		className: "c-note",
 		role: "status",
 		"data-testid": "engine-notice",
-		children: t === "audio-unsupported" ? C.unsupported : C.errorAudio
+		children: t === "audio-unsupported" ? k.unsupported : k.errorAudio
 	});
 }
-function zn() {
-	return /* @__PURE__ */ V(z, { children: [/* @__PURE__ */ B("a", {
+function Sr() {
+	return /* @__PURE__ */ R(I, { children: [/* @__PURE__ */ L("a", {
 		className: "c-skip",
 		href: "#c-main",
 		children: "Skip to content"
-	}), /* @__PURE__ */ B("header", {
+	}), /* @__PURE__ */ L("header", {
 		className: "c-topbar",
-		children: /* @__PURE__ */ B("span", {
+		children: /* @__PURE__ */ L("span", {
 			className: "c-brand",
-			children: C.brand
+			children: k.brand
 		})
 	})] });
 }
-function Bn(e, t, n, i, a) {
+function Cr(e, t, n, i, a) {
 	r(() => {
 		let r = n.current, o = r === null ? void 0 : i[r.id];
 		!e || r === null || o === void 0 || t < r.needSec || (n.current = null, o.doneDays.includes(r.no) || a(r.id, {
@@ -2069,7 +2429,7 @@ function Bn(e, t, n, i, a) {
 	]);
 }
 // src/App.tsx
-var Vn = {
+var wr = {
 	position: "fixed",
 	left: 12,
 	right: 12,
@@ -2082,12 +2442,12 @@ var Vn = {
 	fontSize: 14,
 	textAlign: "center"
 };
-function Hn() {
-	x(import.meta.url), D();
+function Tr() {
+	S(import.meta.url), D();
 	let { engine: e, store: t } = v();
 	r(() => (b(!0), () => b(!1)), []);
 	let [n, i] = s(!1);
-	return /* @__PURE__ */ V("div", {
+	return /* @__PURE__ */ R("div", {
 		"data-testid": "zonked-app",
 		style: {
 			height: "100%",
@@ -2096,23 +2456,23 @@ function Hn() {
 			position: "relative",
 			transform: "translateZ(0)"
 		},
-		children: [/* @__PURE__ */ B("div", {
+		children: [/* @__PURE__ */ L("div", {
 			style: {
 				height: "100%",
 				overflowY: "auto"
 			},
-			children: /* @__PURE__ */ B(An, {
+			children: /* @__PURE__ */ L(pr, {
 				engine: e,
 				store: t,
 				onStudio: () => i(!0)
 			})
-		}), n && /* @__PURE__ */ B("p", {
+		}), n && /* @__PURE__ */ L("p", {
 			role: "status",
-			style: Vn,
+			style: wr,
 			"data-testid": "studio-note",
 			onClick: () => i(!1),
 			children: "Studio, the advanced mode, is not in the Kiro Crew app yet. Tap to close."
 		})]
 	});
 }
-export { Hn as default };
+export { Tr as default };
