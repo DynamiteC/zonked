@@ -5,6 +5,7 @@ import type { Layers } from '../sbg/layers';
 import { COPY } from './copy';
 import { Drawer } from './Drawer';
 import { Tip } from './Tip';
+import { RangeField, levelTicks } from './shared/RangeField';
 
 export interface MixerPort {
   setLayerOverride(p: Partial<Layers>): void;
@@ -41,16 +42,17 @@ export function Mixer({ snap, player, onClose }: Props): React.JSX.Element {
             <label htmlFor={r.id}>{r.label}</label>
             <Tip label={r.label} text={r.tip} />
           </span>
-          <input
+          <RangeField
             id={r.id}
-            data-testid={r.id}
-            type="range"
+            testId={r.id}
             min={0}
             max={1}
             step={0.05}
             value={layers[r.key]}
-            aria-valuetext={`${Math.round(layers[r.key] * 100)} percent`}
-            onChange={(e) => player.setLayerOverride({ [r.key]: Number(e.target.value) })}
+            valueText={`${Math.round(layers[r.key] * 100)} percent`}
+            bubbleText={`${Math.round(layers[r.key] * 100)}`}
+            ticks={levelTicks()}
+            onChange={(v) => player.setLayerOverride({ [r.key]: v })}
           />
           <output htmlFor={r.id}>{Math.round(layers[r.key] * 100)}</output>
         </div>

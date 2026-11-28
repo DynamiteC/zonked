@@ -4,6 +4,7 @@ import type { DeviceType, RecContext, Recommendation, Sensitivity, Situation, Ti
 import { COPY } from './copy';
 import { Drawer } from './Drawer';
 import { Tip } from './Tip';
+import { RangeField } from './shared/RangeField';
 import { SITUATION_LABELS } from './recContext';
 
 export const REC_LIMIT = 6;
@@ -45,15 +46,17 @@ export function Recommender({ ctx, onCtx, onPlay, onClose }: Props): React.JSX.E
           <label htmlFor="rec-minutes">Time: {ctx.availableMinutes} min</label>
           <Tip label="time" text={COPY.helper.minutes} />
         </span>
-        <input
+        <RangeField
           id="rec-minutes"
-          data-testid="rec-minutes"
-          type="range"
+          testId="rec-minutes"
           min={5}
           max={120}
           step={5}
           value={ctx.availableMinutes}
-          onChange={(e) => set({ availableMinutes: Number(e.target.value) })}
+          valueText={`${ctx.availableMinutes} minutes`}
+          bubbleText={`${ctx.availableMinutes} min`}
+          ticks={[5, 30, 60, 90, 120].map((v) => ({ value: v, label: String(v) }))}
+          onChange={(v) => set({ availableMinutes: v })}
         />
         <span className="tip-field">
           <label htmlFor="rec-tod">Time of day</label>
