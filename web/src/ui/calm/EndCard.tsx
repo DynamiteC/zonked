@@ -4,6 +4,7 @@ import { CALM } from './copy';
 import { UX } from './copy-ux';
 import { UNTIL_STOP_MIN } from './TimerChips';
 import type { FeelAnswer } from './data';
+import { CalmCardAction } from './CalmCardAction';
 
 /** A session shorter than this ends without a card, so quick toggles and previews stay quiet. */
 export const END_CARD_MIN_SEC = 60;
@@ -85,6 +86,7 @@ export function EndCard({ info, onAgain, onClose, firstRun = false, onFeel }: Pr
         {onFeel !== undefined && <FeelRow onFeel={onFeel} />}
         {firstRun && <p className="c-note" data-testid="first-run-note">{CALM.studioNote}</p>}
         {firstRun && <p className="c-muted" data-testid="home-screen-line">{UX.doneCard.addHome}</p>}
+        <CalmCardAction info={{ name: info.name, minutes: info.minutes }} />
         <div className="c-actions">
           <button ref={again} type="button" className="c-btn c-primary" data-testid="end-again" onClick={onAgain}>
             {CALM.playAgain}

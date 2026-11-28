@@ -7,7 +7,10 @@
   "license": "MIT",
   "minKiroCrewVersion": "0.13.1",
   "iconPath": "assets/icon.png",
+  "iconPathDark": "assets/icon-dark.png",
   "heroImage": "assets/hero.png",
+  "heroImageDark": "assets/hero-dark.png",
+  "heroImageDetail": "assets/hero-detail.png",
   "screenshots": [
     "assets/screenshots/screenshot-today.png",
     "assets/screenshots/screenshot-player.png",
@@ -24,7 +27,8 @@
     "Works offline. Sound is made on your device.",
     "Safe volume: slow fade in and a hard cap on loudness.",
     "239 sounds, 22 nature loops, a breathing session and a 25 plus 5 study sprint.",
-    "Optional Crew link: the sound can ease down when a long coding session gets heavy."
+    "Save a calm card as a picture, or share a nature mix as a short code. All on your device.",
+    "Optional Kiro Crew link: the sound can ease down when a long coding session gets heavy."
   ],
   "agents": [
     "agents/burnout-sentinel.json",

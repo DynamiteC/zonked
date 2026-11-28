@@ -126,7 +126,7 @@ describe('CalmMascot', () => {
     expect(container.querySelectorAll('.cm-eye')).toHaveLength(2);
     expect(container.querySelectorAll('.cm-bar')).toHaveLength(4);
     expect(container.querySelectorAll('.cm-pod')).toHaveLength(2);
-    expect(container.querySelectorAll('polygon.cm-f-mask')).toHaveLength(2);
+    expect(container.querySelectorAll('path.cm-f-mask')).toHaveLength(2);
     expect(container.querySelectorAll('.cm-gem')).toHaveLength(1);
   });
 

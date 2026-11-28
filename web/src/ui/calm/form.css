@@ -74,3 +74,13 @@
 .c-blend .rf-input { width: 100%; }
 .c-blend { padding: 0 28px; box-sizing: border-box; grid-template-columns: minmax(0, 1fr); }
 .c-blend .rf { min-width: 0; }
+/* Options sheet fit at 390 wide: no sideways scroll, chips wrap, groups stack. */
+.c-opts { overflow-x: hidden; box-sizing: border-box; overscroll-behavior: contain; }
+.c-opts .c-chips.c-nature-row { flex-wrap: wrap; overflow: visible; padding-bottom: 0; }
+.c-opts .c-nature-row .c-tchip { flex: 0 1 auto; white-space: normal; max-width: 100%; min-width: 0; }
+.c-o-sub { display: block; margin: 12px 0 2px; font-size: 0.875rem; font-weight: 600; color: var(--c-soft); }
+.c-nature-groups > .c-tchip { margin-top: 4px; }
+.c-mix-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.c-mix-in { flex: 1 1 10rem; min-width: 0; min-height: 44px; padding: 0 12px; box-sizing: border-box; border-radius: 8px; border: var(--c-bw) solid var(--c-edge); background: var(--c-bg); color: var(--c-text); font: inherit; }
+.c-mixcode { overflow-wrap: anywhere; user-select: all; }
+.c-card-action { margin: 8px 0; text-align: center; }

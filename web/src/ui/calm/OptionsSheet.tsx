@@ -1,30 +1,14 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import type { Player, PlayerSnapshot } from '../../app/player';
 import type { AudioEngine } from '../../audio/types';
-import { listSamples } from '../../audio/samples';
 import { CALM, EVIDENCE } from './copy';
-import { Slider } from './nature/NatureScreen';
-import { RangeField } from '../shared/RangeField';
-import type { RangeTick } from '../shared/RangeField';
-import { orderForDevice } from './data';
 import type { Device, Goal } from './data';
-import { MAX_NATURE_LEVEL } from './nature/prefs';
 import type { Nature } from './nature/useNature';
+import { OptionsNature } from './OptionsNature';
 import { TimerChips } from './TimerChips';
 import { loadAdvanced } from './advancedLoader';
 
 const AdvancedPanels = lazy(loadAdvanced);
-
-const BLEND_TICKS: readonly RangeTick[] = [
-  { value: 0, label: 'More beats' },
-  { value: 0.5, label: 'Even' },
-  { value: 1, label: 'More nature' },
-];
-
-function blendText(v: number): string {
-  if (v < 0.4) return 'More beats';
-  return v > 0.6 ? 'More nature' : 'Even';
-}
 
 interface Props {
   readonly player: Player;
@@ -67,8 +51,7 @@ export function OptionsSheet({ player, snap, nature, favorite, evidence, onFavor
       }
     }
   };
-  const samples = orderForDevice(listSamples(), device);
-  return (
+    return (
     <div className="c-overlay c-sheet-wrap" onClick={onClose}>
       <div ref={box} className="c-opts" role="dialog" aria-modal="true" aria-labelledby="c-opts-title" data-testid="options-sheet" onKeyDown={onKey} onClick={(e) => e.stopPropagation()}>
         <div className="c-opts-head">
@@ -83,22 +66,7 @@ export function OptionsSheet({ player, snap, nature, favorite, evidence, onFavor
         </section>
         <section aria-labelledby="c-o-nature">
           <h3 id="c-o-nature" className="c-o-h">{CALM.optNature}</h3>
-          <div className="c-chips c-left c-nature-row" role="group" aria-label={CALM.optNature}>
-            <button type="button" className="c-tchip" aria-pressed={nature.on === null} data-testid="sheet-nature-none" onClick={nature.stop}>
-              {CALM.natureNone}
-            </button>
-            {samples.map((s) => (
-              <button key={s.id} type="button" className="c-tchip" aria-pressed={nature.on === s.id} data-testid={`sheet-nature-${s.id}`} onClick={() => (nature.on === s.id ? nature.stop() : nature.start(s.id))}>
-                {s.label}
-              </button>
-            ))}
-          </div>
-          <div className="c-slider c-blend">
-            <label htmlFor="c-blend">{CALM.natureBlend}</label>
-            <RangeField id="c-blend" min={0} max={1} step={0.05} value={nature.prefs.blend} valueText={blendText(nature.prefs.blend)} bubbleText={blendText(nature.prefs.blend)} ticks={BLEND_TICKS} onChange={nature.setBlend} />
-          </div>
-          {nature.on !== null && <Slider id="c-nlevel" label={CALM.natureLevel} value={nature.prefs.level} max={MAX_NATURE_LEVEL} onChange={nature.setLevel} />}
-          <p className="c-status" role="status">{nature.message}</p>
+          <OptionsNature nature={nature} device={device} />
         </section>
         <section aria-labelledby="c-o-more">
           <h3 id="c-o-more" className="c-o-h">{CALM.optMore}</h3>
