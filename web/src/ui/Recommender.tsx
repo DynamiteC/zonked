@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { SITUATIONS, VIBES, recommendTemplates } from '../catalog';
+import { CATEGORY_LABEL, SITUATIONS, VIBES, recommendTemplates } from '../catalog';
 import type { DeviceType, RecContext, Recommendation, Sensitivity, Situation, TimeOfDay, Vibe } from '../catalog/types';
 import { COPY } from './copy';
 import { Drawer } from './Drawer';
@@ -120,7 +120,7 @@ export function Recommender({ ctx, onCtx, onPlay, onClose }: Props): React.JSX.E
               </span>
             </div>
             <p className="meta">
-              {r.template.category}, {r.template.recommendedMinutes} min, intensity {r.template.intensity} of 5
+              {CATEGORY_LABEL[r.template.category]}, {r.template.recommendedMinutes} min, intensity {r.template.intensity} of 5
             </p>
             <ul className="chips tags" aria-label="Layers">
               {r.template.layerTags.map((t) => (

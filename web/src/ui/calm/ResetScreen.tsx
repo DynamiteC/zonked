@@ -9,8 +9,8 @@ import type { CalmSession } from './useCalmSession';
 
 /** Length of the guided pause. */
 export const RESET_SECONDS = 90;
-/** A catalog template whose beat eases from 12 Hz to 7.83 Hz, inside the safe bands. */
-export const RESET_TEMPLATE_ID = 'android-wakeful-relax-5';
+/** A catalog template whose beat eases from 11 Hz to 8 Hz, inside the safe bands. */
+export const RESET_TEMPLATE_ID = 'seed-pause-five';
 
 /** One guided session: how long it lasts, what plays, and the words around it. */
 export interface ResetPlan {

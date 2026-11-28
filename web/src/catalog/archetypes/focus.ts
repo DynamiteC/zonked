@@ -3,7 +3,7 @@ import { arch, type CategorySpec } from '../dsl';
 export const FOCUS: CategorySpec = {
   category: 'focus',
   prefix: 'focus',
-  adjectives: ['Sharp', 'Deep', 'Clear', 'Lucid', 'Bright', 'Keen', 'Locked', 'Precise', 'Crisp', 'Direct', 'Tuned', 'Honed'],
+  adjectives: ['Sharp', 'Deep', 'Clear', 'Limpid', 'Bright', 'Keen', 'Locked', 'Precise', 'Crisp', 'Direct', 'Tuned', 'Honed'],
   nouns: ['Beam', 'Signal', 'Compass', 'Engine', 'Vector', 'Prism', 'Forge', 'Spire', 'Circuit', 'Current', 'Summit', 'Scope'],
   archs: [
     arch({

@@ -9,3 +9,4 @@ export { templateToEvents, resolveLayers } from './events';
 export { recommendTemplates } from './recommend';
 export { searchTemplates } from './search';
 export { usesPercussion, usesCrackle, usesBinaural } from './features';
+export { LEGACY_TEMPLATE_IDS, currentTemplateId } from './legacyIds';

@@ -20,9 +20,9 @@ describe('catalog data', () => {
     expect(new Set(T.map((t) => t.id)).size).toBe(T.length);
     expect(new Set(T.map((t) => t.name)).size).toBe(T.length);
   });
-  it('counts android and gnaural seeds', () => {
-    expect(T.filter((t) => t.source === 'android').length).toBe(21);
-    expect(T.filter((t) => t.source === 'gnaural').length).toBe(3);
+  it('counts the 24 original seeds', () => {
+    expect(T.filter((t) => t.id.startsWith('seed-')).length).toBe(24);
+    expect(T.filter((t) => t.source === 'original' && t.id.startsWith('seed-')).length).toBe(24);
   });
   it('is deterministic', () => {
     expect(buildTemplates()).toEqual(buildTemplates());

@@ -30,4 +30,9 @@ describe('favorites', () => {
     const many = parseFavorites({ v: 1, items: Array.from({ length: 2000 }, (_, i) => ({ kind: 'template', id: `t${i}`, at: 1 })) }, 5);
     expect(many.items).toHaveLength(MAX_FAVORITES);
   });
+
+  it('moves a saved old seed id to its original replacement and drops the duplicate', () => {
+    const p = parseFavorites({ v: 1, items: [{ kind: 'template', id: 'android-morphine', at: 1 }, { kind: 'template', id: 'seed-warm-hum', at: 2 }, { kind: 'mix', id: 'android-morphine', at: 3 }] }, 50);
+    expect(p.items.map((i) => `${i.kind}:${i.id}`)).toEqual(['template:seed-warm-hum', 'mix:android-morphine']);
+  });
 });

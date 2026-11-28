@@ -19,12 +19,12 @@ export function defaultRecContext(now: Date = new Date()): RecContext {
 }
 
 export const SITUATION_LABELS: Readonly<Record<string, string>> = {
-  'adhd-focus': 'ADHD focus',
+  'adhd-focus': 'Steady focus',
   'cant-sleep': "Can't sleep",
-  'lucid-dream': 'Lucid dreaming',
+  'lucid-dream': 'Dreamy night',
   meditate: 'Meditate',
-  'heal-stress': 'Heal stress',
-  'ai-burnout': 'AI coding burnout',
+  'heal-stress': 'Calm down',
+  'ai-burnout': 'After a long coding session',
   'deep-work': 'Deep work',
   'quick-reset': 'Quick reset',
 };

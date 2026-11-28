@@ -51,12 +51,11 @@ describe('walk 2 fixes', () => {
     expect(screen.getByText('Alpha one').closest('[aria-hidden="true"]')).not.toBeNull();
   });
 
-  it('the safety notice states the numeric limits and keeps every plain line', () => {
+  it('the safety notice states the volume cap in plain words and keeps every plain line', () => {
     render(<SafetyNotice onAccept={() => undefined} />);
     const t = screen.getByTestId('safety-limits').textContent ?? '';
-    expect(t).toMatch(/20 to 1500 Hz/);
-    expect(t).toMatch(/40 Hz/);
-    expect(t).toMatch(/capped/);
+    expect(t).not.toMatch(/Hz/);
+    expect(t).toMatch(/volume cap/);
     for (const l of CALM.safetyLines) expect(screen.getByText(l)).toBeTruthy();
   });
 

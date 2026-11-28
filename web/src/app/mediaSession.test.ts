@@ -48,7 +48,7 @@ describe('media session', () => {
     const { nav, ms } = fakeNav();
     setMediaMetadata({ name: 'Deep Rest', category: 'sleep' }, nav);
     const m = ms.metadata as FakeMetadata;
-    expect(m.init).toMatchObject({ title: 'Deep Rest', artist: 'Zonked', album: 'sleep' });
+    expect(m.init).toMatchObject({ title: 'Deep Rest', artist: 'Zonked', album: 'Zonked' });
     const art = m.init['artwork'] as { src: string }[];
     expect(art.map((a) => a.src)).toEqual(['/pwa-512x512.png', '/pwa-192x192.png']);
     setMediaMetadata(null, nav);
