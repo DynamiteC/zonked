@@ -225,7 +225,7 @@ Crew agents exchange data only through files, so no agent needs network access a
 
 Layered, each layer sufficient for its own bound:
 
-- Edge: CSP `default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' ws://localhost:43210 http://localhost:43210; object-src 'none'; base-uri 'none'; frame-ancestors 'none'`, plus COOP `same-origin`, COEP `require-corp`, CORP `same-origin`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: no-referrer`, `X-Frame-Options: DENY`, and a Permissions-Policy that denies camera, microphone and geolocation.
+- Edge: CSP `default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self'; connect-src 'self' ws://localhost:43210 http://localhost:43210; object-src 'none'; base-uri 'none'; frame-ancestors 'none'`, plus COOP `same-origin`, COEP `require-corp`, CORP `same-origin`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: no-referrer`, `X-Frame-Options: DENY`, and a Permissions-Policy that denies camera, microphone and geolocation.
 - Bridge: loopback bind, Host allow-list, Origin allow-list, GET/HEAD/OPTIONS only, read-only toward the project.
 - Parsers: hard size and count limits, line-numbered diagnostics, never execute input.
 - DSP: clamps, non-finite sanitizing, limiter, zero panics. The layer bus is soft-limited to 0.6 before the master gain, so layers cannot raise the worst case above 0.935 before the limiter.
