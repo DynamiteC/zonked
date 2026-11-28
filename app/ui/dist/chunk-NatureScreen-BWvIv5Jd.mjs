@@ -1,86 +1,87 @@
 import { Suspense as e, lazy as t, useState as n } from "react";
-import { r, t as i } from "./chunk-samples-4EZJclX4.mjs";
-import { W as a } from "./chunk-crewLink-CH1NzHoN.mjs";
+import { r, t as i } from "./chunk-samples-BgYriVps.mjs";
+import { Y as a } from "./chunk-crewLink-DfIjAvPP.mjs";
 import { t as o } from "./chunk-icons-C-FdU5cO.mjs";
-import { n as s } from "./chunk-MascotView-CeVF4lFc.mjs";
-import { jsx as c, jsxs as l } from "react/jsx-runtime";
+import { n as s } from "./chunk-MascotView-Cmnhlpu8.mjs";
+import { g as c } from "./chunk-data-Bhxfb-cT.mjs";
+import { jsx as l, jsxs as u } from "react/jsx-runtime";
 // ../../web/src/ui/calm/nature/groups.ts
-var u = [
+var d = [
 	"Water",
 	"Rain",
 	"Wind and birds",
 	"Fire and bells",
 	"Made in code"
-], d = /* @__PURE__ */ new Set([
+], f = /* @__PURE__ */ new Set([
 	"rain",
 	"lightrain",
 	"thunder",
 	"veranda",
 	"window",
 	"storm"
-]), f = /* @__PURE__ */ new Set([
+]), p = /* @__PURE__ */ new Set([
 	"forest",
 	"birds",
 	"breeze",
 	"hum"
-]), p = /* @__PURE__ */ new Set([
+]), m = /* @__PURE__ */ new Set([
 	"fire",
 	"chimes",
 	"koshi",
 	"gong"
 ]);
-function m(e) {
-	return e.kind === "synth" ? "Made in code" : d.has(e.id) ? "Rain" : f.has(e.id) ? "Wind and birds" : p.has(e.id) ? "Fire and bells" : "Water";
+function h(e) {
+	return e.kind === "synth" ? "Made in code" : f.has(e.id) ? "Rain" : p.has(e.id) ? "Wind and birds" : m.has(e.id) ? "Fire and bells" : "Water";
 }
 // ../../web/src/ui/calm/nature/prefs.ts
-var h = "zonked.nature.v1", g = .3, _ = .4, v = .85, y = {
+var g = "zonked.nature.v1", _ = .3, v = .4, y = .85, b = {
 	id: null,
-	blend: g,
-	level: _
-}, b = (e, t, n, r) => typeof e == "number" && Number.isFinite(e) ? Math.min(n, Math.max(t, e)) : r;
-function x(e) {
-	if (e === null || e.length > 400) return y;
+	blend: _,
+	level: v
+}, x = (e, t, n, r) => typeof e == "number" && Number.isFinite(e) ? Math.min(n, Math.max(t, e)) : r;
+function S(e) {
+	if (e === null || e.length > 400) return b;
 	try {
 		let t = JSON.parse(e);
 		return {
 			id: typeof t.id == "string" && /^(own:)?[a-z0-9]{3,40}$/.test(t.id) ? t.id : null,
-			blend: b(t.blend, 0, 1, g),
-			level: b(t.level, 0, v, _)
+			blend: x(t.blend, 0, 1, _),
+			level: x(t.level, 0, y, v)
 		};
 	} catch {
-		return y;
+		return b;
 	}
 }
-var S = () => {
+var C = () => {
 	try {
 		return typeof localStorage > "u" ? null : localStorage;
 	} catch {
 		return null;
 	}
-}, C = () => x(S()?.getItem("zonked.nature.v1") ?? null);
-function w(e) {
+}, w = () => S(C()?.getItem("zonked.nature.v1") ?? null);
+function T(e) {
 	try {
-		S()?.setItem(h, JSON.stringify(e));
+		C()?.setItem(g, JSON.stringify(e));
 	} catch {}
 }
-function T() {
+function E() {
 	try {
-		S()?.removeItem(h);
+		C()?.removeItem(g);
 	} catch {}
 }
 // ../../web/src/ui/calm/nature/NatureScreen.tsx
-var E = /* @__PURE__ */ r({ NatureScreen: () => P }), D = {
+var D = /* @__PURE__ */ r({ NatureScreen: () => F }), O = {
 	wind: "breeze",
 	waterfall: "rapids",
 	flute: "wave"
-}, O = t(() => import("./chunk-MySounds-CeJhiPxI.mjs").then((e) => ({ default: e.MySounds }))), k = t(() => import("./chunk-Credits-D_Dv2ZGx.mjs").then((e) => ({ default: e.Credits })));
-function A({ id: e, label: t, value: n, max: r, onChange: i }) {
-	return /* @__PURE__ */ l("div", {
+}, k = t(() => import("./chunk-MySounds-Dn4O_e5Q.mjs").then((e) => ({ default: e.MySounds }))), A = t(() => import("./chunk-Credits-Bhokne3A.mjs").then((e) => ({ default: e.Credits })));
+function j({ id: e, label: t, value: n, max: r, onChange: i }) {
+	return /* @__PURE__ */ u("div", {
 		className: "c-slider",
-		children: [/* @__PURE__ */ c("label", {
+		children: [/* @__PURE__ */ l("label", {
 			htmlFor: e,
 			children: t
-		}), /* @__PURE__ */ c("input", {
+		}), /* @__PURE__ */ l("input", {
 			id: e,
 			type: "range",
 			min: 0,
@@ -92,73 +93,73 @@ function A({ id: e, label: t, value: n, max: r, onChange: i }) {
 		})]
 	});
 }
-function j({ nature: e }) {
-	return /* @__PURE__ */ l("div", {
+function M({ nature: e }) {
+	return /* @__PURE__ */ u("div", {
 		className: "c-nature-controls",
-		children: [/* @__PURE__ */ c(A, {
+		children: [/* @__PURE__ */ l(j, {
 			id: "c-blend",
 			label: a.natureBlend,
 			value: e.prefs.blend,
 			max: 1,
 			onChange: e.setBlend
-		}), /* @__PURE__ */ c(A, {
+		}), /* @__PURE__ */ l(j, {
 			id: "c-nlevel",
 			label: a.natureLevel,
 			value: e.prefs.level,
-			max: v,
+			max: y,
 			onChange: e.setLevel
 		})]
 	});
 }
-function M({ s: e, i: t, nature: n }) {
-	return /* @__PURE__ */ c("li", { children: /* @__PURE__ */ l("button", {
+function N({ s: e, i: t, nature: n }) {
+	return /* @__PURE__ */ l("li", { children: /* @__PURE__ */ u("button", {
 		type: "button",
 		className: `c-tile c-g${t % 6 + 1}`,
 		"data-testid": `nature-${e.id}`,
 		"aria-pressed": n.on === e.id,
 		onClick: () => n.start(e.id),
 		children: [
-			/* @__PURE__ */ c(o, { name: D[e.id] ?? e.id }),
-			/* @__PURE__ */ c("span", {
+			/* @__PURE__ */ l(o, { name: O[e.id] ?? e.id }),
+			/* @__PURE__ */ l("span", {
 				className: "c-tile-name",
 				children: e.label
 			}),
-			/* @__PURE__ */ c("span", {
+			/* @__PURE__ */ l("span", {
 				className: "c-tile-mood",
 				children: e.note ?? (e.kind === "synth" ? a.natureMade : a.natureFree)
 			}),
-			n.on === e.id && /* @__PURE__ */ c("span", {
+			n.on === e.id && /* @__PURE__ */ l("span", {
 				className: "c-tile-count",
 				children: a.natureOn
 			})
 		]
 	}) });
 }
-function N({ samples: t }) {
+function P({ samples: t }) {
 	let [r, i] = n(""), o = t.find((e) => e.id === r);
-	return /* @__PURE__ */ l("section", {
+	return /* @__PURE__ */ u("section", {
 		className: "c-credits-foot",
 		"aria-label": a.natureCredits,
 		children: [
-			/* @__PURE__ */ c("label", {
+			/* @__PURE__ */ l("label", {
 				htmlFor: "c-credit-pick",
 				children: a.natureCredits
 			}),
-			/* @__PURE__ */ l("select", {
+			/* @__PURE__ */ u("select", {
 				id: "c-credit-pick",
 				value: r,
 				onChange: (e) => i(e.currentTarget.value),
-				children: [/* @__PURE__ */ c("option", {
+				children: [/* @__PURE__ */ l("option", {
 					value: "",
 					children: a.natureCreditsPick
-				}), t.map((e) => /* @__PURE__ */ c("option", {
+				}), t.map((e) => /* @__PURE__ */ l("option", {
 					value: e.id,
 					children: e.label
 				}, e.id))]
 			}),
-			o !== void 0 && /* @__PURE__ */ c(e, {
+			o !== void 0 && /* @__PURE__ */ l(e, {
 				fallback: null,
-				children: /* @__PURE__ */ c(k, {
+				children: /* @__PURE__ */ l(A, {
 					id: o.id,
 					synth: o.kind === "synth"
 				})
@@ -166,23 +167,23 @@ function N({ samples: t }) {
 		]
 	});
 }
-function P({ nature: t, reduced: n, onBack: r }) {
-	let o = i();
-	return /* @__PURE__ */ l("div", {
+function F({ nature: t, reduced: n, onBack: r, device: o = "wired" }) {
+	let f = i();
+	return /* @__PURE__ */ u("div", {
 		className: "c-nature",
 		children: [
-			/* @__PURE__ */ c(s, {
+			/* @__PURE__ */ l(s, {
 				title: a.natureHead,
 				reduced: n
 			}),
-			/* @__PURE__ */ c("p", {
+			/* @__PURE__ */ l("p", {
 				className: "c-lead",
 				children: a.natureIntro
 			}),
-			/* @__PURE__ */ l("div", {
+			/* @__PURE__ */ u("div", {
 				className: "c-sticky",
 				"data-testid": "nature-sticky",
-				children: [/* @__PURE__ */ c(j, { nature: t }), t.on !== null && /* @__PURE__ */ c("button", {
+				children: [/* @__PURE__ */ l(M, { nature: t }), t.on !== null && /* @__PURE__ */ l("button", {
 					type: "button",
 					className: "c-btn c-wide",
 					"data-testid": "nature-stop",
@@ -190,40 +191,40 @@ function P({ nature: t, reduced: n, onBack: r }) {
 					children: a.natureOff
 				})]
 			}),
-			u.map((e) => {
-				let n = o.filter((t) => m(t) === e);
-				return n.length === 0 ? null : /* @__PURE__ */ l("section", {
+			d.map((e) => {
+				let n = c(f.filter((t) => h(t) === e), o);
+				return n.length === 0 ? null : /* @__PURE__ */ u("section", {
 					"aria-labelledby": `c-ng-${e.replaceAll(" ", "-")}`,
-					children: [/* @__PURE__ */ c("h2", {
+					children: [/* @__PURE__ */ l("h2", {
 						className: "c-h3",
 						id: `c-ng-${e.replaceAll(" ", "-")}`,
 						children: e
-					}), /* @__PURE__ */ c("ul", {
+					}), /* @__PURE__ */ l("ul", {
 						className: "c-tiles c-nature-tiles",
-						children: n.map((e) => /* @__PURE__ */ c(M, {
+						children: n.map((e) => /* @__PURE__ */ l(N, {
 							s: e,
-							i: o.indexOf(e),
+							i: f.indexOf(e),
 							nature: t
 						}, e.id))
 					})]
 				}, e);
 			}),
-			/* @__PURE__ */ c("p", {
+			/* @__PURE__ */ l("p", {
 				className: "c-status",
 				role: "status",
 				"data-testid": "nature-message",
 				children: t.message
 			}),
-			/* @__PURE__ */ c("p", {
+			/* @__PURE__ */ l("p", {
 				className: "c-note",
 				children: a.natureNote
 			}),
-			/* @__PURE__ */ c(N, { samples: o }),
-			/* @__PURE__ */ c(e, {
+			/* @__PURE__ */ l(P, { samples: f }),
+			/* @__PURE__ */ l(e, {
 				fallback: null,
-				children: /* @__PURE__ */ c(O, { nature: t })
+				children: /* @__PURE__ */ l(k, { nature: t })
 			}),
-			/* @__PURE__ */ c("button", {
+			/* @__PURE__ */ l("button", {
 				type: "button",
 				className: "c-btn c-link c-back",
 				onClick: r,
@@ -232,4 +233,4 @@ function P({ nature: t, reduced: n, onBack: r }) {
 		]
 	});
 }
-export { C as a, T as i, A as n, w as o, v as r, E as t };
+export { w as a, E as i, j as n, T as o, y as r, D as t };

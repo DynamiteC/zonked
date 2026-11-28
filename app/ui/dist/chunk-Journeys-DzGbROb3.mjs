@@ -1,15 +1,15 @@
-import { a as e } from "./chunk-catalog-DjXCbOxc.mjs";
-import { W as t } from "./chunk-crewLink-CH1NzHoN.mjs";
-import { n } from "./chunk-MascotView-CeVF4lFc.mjs";
-import { _ as r, h as i, v as a } from "./chunk-data-CUBWt-Gc.mjs";
+import { a as e } from "./chunk-catalog-DUQ1JcEF.mjs";
+import { Y as t } from "./chunk-crewLink-DfIjAvPP.mjs";
+import { n } from "./chunk-MascotView-Cmnhlpu8.mjs";
+import { b as r, h as i, y as a } from "./chunk-data-Bhxfb-cT.mjs";
 import { jsx as o, jsxs as s } from "react/jsx-runtime";
 // ../../web/src/ui/calm/Journeys.tsx
 var c = (e) => e.days.length;
-function l({ progress: e, onOpen: i, reduced: a = !1 }) {
+function l({ progress: e, onOpen: r, reduced: i = !1 }) {
 	return /* @__PURE__ */ s("div", { children: [
 		/* @__PURE__ */ o(n, {
 			title: t.journeysTitle,
-			reduced: a
+			reduced: i
 		}),
 		/* @__PURE__ */ o("p", {
 			className: "c-lead",
@@ -17,16 +17,16 @@ function l({ progress: e, onOpen: i, reduced: a = !1 }) {
 		}),
 		/* @__PURE__ */ o("ul", {
 			className: "c-list",
-			children: r.map((n) => {
-				let r = e[n.id]?.doneDays.length ?? 0;
+			children: a.map((n) => {
+				let i = e[n.id]?.doneDays.length ?? 0;
 				return /* @__PURE__ */ o("li", { children: /* @__PURE__ */ s("button", {
 					type: "button",
 					className: "c-journey-card c-wide",
-					onClick: () => i(n.id),
+					onClick: () => r(n.id),
 					children: [
 						/* @__PURE__ */ o("b", { children: n.title }),
 						/* @__PURE__ */ o("small", { children: n.blurb }),
-						/* @__PURE__ */ o("em", { children: r === 0 ? t.dayZero(c(n)) : `${r} of ${c(n)} done` })
+						/* @__PURE__ */ o("em", { children: i === 0 ? t.dayZero(c(n)) : `${i} of ${c(n)} done` })
 					]
 				}) }, n.id);
 			})
@@ -50,12 +50,12 @@ function u(e, t) {
 	});
 }
 function d(n) {
-	let r = a(n.id);
-	if (r === void 0) return /* @__PURE__ */ o("p", {
+	let a = r(n.id);
+	if (a === void 0) return /* @__PURE__ */ o("p", {
 		className: "c-empty",
 		children: t.journeysEmpty
 	});
-	let c = n.progress[n.id], l = e(), d = u(r, c?.pickedIds ?? []), f = d.find((e) => !e.rest && !(c?.doneDays.includes(e.no) ?? !1))?.no;
+	let c = n.progress[n.id], l = e(), d = u(a, c?.pickedIds ?? []), f = d.find((e) => !e.rest && !(c?.doneDays.includes(e.no) ?? !1))?.no;
 	return /* @__PURE__ */ s("div", { children: [
 		/* @__PURE__ */ o("button", {
 			type: "button",
@@ -65,11 +65,11 @@ function d(n) {
 		}),
 		/* @__PURE__ */ o("h1", {
 			className: "c-h1",
-			children: r.title
+			children: a.title
 		}),
 		/* @__PURE__ */ o("p", {
 			className: "c-lead",
-			children: r.blurb
+			children: a.blurb
 		}),
 		c === void 0 ? /* @__PURE__ */ o("button", {
 			type: "button",

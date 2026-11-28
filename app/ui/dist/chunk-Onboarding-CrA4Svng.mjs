@@ -1,10 +1,10 @@
 import { useEffect as e, useId as t, useMemo as n, useRef as r, useState as i } from "react";
 import { Fragment as a, jsx as o, jsxs as s } from "react/jsx-runtime";
-import { G as c, J as l, W as u, X as d, Y as f } from "./chunk-crewLink-CH1NzHoN.mjs";
-import { b as p, g as m, t as h, x as g, y as _ } from "./chunk-data-CUBWt-Gc.mjs";
-import { n as v, r as y, t as b } from "./chunk-FormFrame-BnLJENRx.mjs";
-import { t as x } from "./chunk-SafetyNotice-DNihttKl.mjs";
-import { n as S } from "./chunk-catalog-DjXCbOxc.mjs";
+import { $ as c, X as l, Y as u, et as d, tt as f } from "./chunk-crewLink-DfIjAvPP.mjs";
+import { C as p, S as m, _ as h, t as g, x as _ } from "./chunk-data-Bhxfb-cT.mjs";
+import { n as v, r as y, t as b } from "./chunk-FormFrame-DeBPfgdj.mjs";
+import { t as x } from "./chunk-SafetyNotice-DNa2dEUQ.mjs";
+import { n as S } from "./chunk-catalog-DUQ1JcEF.mjs";
 // ../../web/src/ui/calm/ChoiceGrid.tsx
 function C({ legend: e, options: n, value: r, onChange: i }) {
 	let a = t();
@@ -42,11 +42,11 @@ function C({ legend: e, options: n, value: r, onChange: i }) {
 var w = 1e4, T = (e) => e.replace(/-\d+$/, "");
 function E(e, t = /* @__PURE__ */ new Date()) {
 	let n = /* @__PURE__ */ new Set(), r = [];
-	for (let i of S(m(e, t), 12)) {
+	for (let i of S(h(e, t), 12)) {
 		let e = T(i.template.id);
 		if (!n.has(e) && (n.add(e), r.push({
 			template: i.template,
-			reason: d(i.reasons[0] ?? i.template.reasonTemplate),
+			reason: f(i.reasons[0] ?? i.template.reasonTemplate),
 			score: i.score
 		}), r.length === 3)) break;
 	}
@@ -136,13 +136,13 @@ var k = (e, t) => e.map((e) => ({
 	2: u.whenHelper,
 	3: u.listenNote
 };
-function M({ step: e, answers: t, set: n, onBack: r, onNext: i, onSkip: d, reduced: m }) {
+function M({ step: e, answers: t, set: n, onBack: r, onNext: i, onSkip: f, reduced: h }) {
 	return /* @__PURE__ */ s(a, { children: [
 		/* @__PURE__ */ o(y, {
 			step: e,
 			text: u.stepOf(e),
 			mood: e === 1 ? "happy" : "idle",
-			reduced: m
+			reduced: h
 		}),
 		/* @__PURE__ */ s(b, {
 			title: A[e],
@@ -150,19 +150,19 @@ function M({ step: e, answers: t, set: n, onBack: r, onNext: i, onSkip: d, reduc
 			children: [
 				e === 1 && /* @__PURE__ */ o(C, {
 					legend: u.goalTitle,
-					options: k(p, l),
+					options: k(m, c),
 					value: t.goal,
 					onChange: n.goal
 				}),
 				e === 2 && /* @__PURE__ */ o(C, {
 					legend: u.whenTitle,
-					options: k(g, f),
+					options: k(p, d),
 					value: t.when,
 					onChange: n.when
 				}),
 				e === 3 && /* @__PURE__ */ o(C, {
 					legend: u.listenTitle,
-					options: k(_, c),
+					options: k(_, l),
 					value: t.device,
 					onChange: n.device
 				})
@@ -171,7 +171,7 @@ function M({ step: e, answers: t, set: n, onBack: r, onNext: i, onSkip: d, reduc
 		/* @__PURE__ */ o(v, {
 			left: r === null ? {
 				label: u.skip,
-				onClick: d,
+				onClick: f,
 				testid: "onb-skip"
 			} : {
 				label: u.back,
@@ -184,10 +184,10 @@ function M({ step: e, answers: t, set: n, onBack: r, onNext: i, onSkip: d, reduc
 		})
 	] });
 }
-function N({ playing: e, reduced: t, onAccept: n, onPreview: r, onStop: a, onFinish: c, initial: l = h }) {
-	let [d, f] = i(1), [p, m] = i(!1), [g, _] = i(l.goal), [v, b] = i(l.timeOfDay), [S, C] = i(l.device), w = {
+function N({ playing: e, reduced: t, onAccept: n, onPreview: r, onStop: a, onFinish: c, initial: l = g }) {
+	let [d, f] = i(1), [p, m] = i(!1), [h, _] = i(l.goal), [v, b] = i(l.timeOfDay), [S, C] = i(l.device), w = {
 		...l,
-		goal: g,
+		goal: h,
 		timeOfDay: v,
 		device: S,
 		createdAt: Date.now()
@@ -205,7 +205,7 @@ function N({ playing: e, reduced: t, onAccept: n, onPreview: r, onStop: a, onFin
 			A !== null && /* @__PURE__ */ o(M, {
 				step: A,
 				answers: {
-					goal: g,
+					goal: h,
 					when: v,
 					device: S
 				},

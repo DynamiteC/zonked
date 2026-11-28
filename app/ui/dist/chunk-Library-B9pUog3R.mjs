@@ -1,10 +1,10 @@
 import { useEffect as e, useMemo as t, useState as n } from "react";
-import { r, t as i } from "./chunk-favorites-DI7jvAxx.mjs";
-import { a, t as o } from "./chunk-catalog-DjXCbOxc.mjs";
+import { r, t as i } from "./chunk-favorites-CH3XBDrL.mjs";
+import { a, t as o } from "./chunk-catalog-DUQ1JcEF.mjs";
 import { t as s } from "./chunk-soundMenu-C52iaQfx.mjs";
-import { K as c, W as l, q as u } from "./chunk-crewLink-CH1NzHoN.mjs";
+import { Q as c, Y as l, Z as u } from "./chunk-crewLink-DfIjAvPP.mjs";
 import { t as d } from "./chunk-icons-C-FdU5cO.mjs";
-import { n as f } from "./chunk-MascotView-CeVF4lFc.mjs";
+import { n as f } from "./chunk-MascotView-Cmnhlpu8.mjs";
 import { Fragment as p, jsx as m, jsxs as h } from "react/jsx-runtime";
 // ../../web/src/ui/calm/Library.tsx
 var g = 10;
@@ -24,7 +24,7 @@ var v = ({ text: e }) => /* @__PURE__ */ m("p", {
 	children: e
 });
 function y({ onPlay: e }) {
-	let [r, i] = n(null), [o, s] = n(0), c = t(() => {
+	let [r, i] = n(null), [o, s] = n(0), u = t(() => {
 		let e = {};
 		for (let t of a()) for (let n of t.situations) e[n] = (e[n] ?? 0) + 1;
 		return e;
@@ -32,7 +32,7 @@ function y({ onPlay: e }) {
 	return /* @__PURE__ */ h(p, { children: [
 		/* @__PURE__ */ m("ul", {
 			className: "c-tiles",
-			children: u.map((e) => /* @__PURE__ */ m("li", { children: /* @__PURE__ */ h("button", {
+			children: c.map((e) => /* @__PURE__ */ m("li", { children: /* @__PURE__ */ h("button", {
 				type: "button",
 				className: "c-tile",
 				"aria-pressed": r === e.id,
@@ -51,7 +51,7 @@ function y({ onPlay: e }) {
 					}),
 					/* @__PURE__ */ m("span", {
 						className: "c-tile-count",
-						children: l.sounds(c[e.id] ?? 0)
+						children: l.sounds(u[e.id] ?? 0)
 					})
 				]
 			}) }, e.id))
@@ -98,7 +98,7 @@ function b({ onPlay: e, onBreathe: t }) {
 				children: [
 					/* @__PURE__ */ m("b", { children: t.name }),
 					/* @__PURE__ */ m("small", { children: t.blurb }),
-					/* @__PURE__ */ m("small", { children: t.id === "violet" ? "Start very quiet." : c[t.evidence] })
+					/* @__PURE__ */ m("small", { children: t.id === "violet" ? "Start very quiet." : u[t.evidence] })
 				]
 			}) }, t.id);
 		})]
