@@ -6,8 +6,8 @@ import type { AudioContextStateLike, AudioEngine, EngineStats, EngineStatus, Tel
 import {
   PARAM_COUNT, PARAM_SAB_BYTES, ParamWriter, clampRamp, clampVoice, voiceToParams,
 } from './params';
-import { setSampleBus } from './samples/bus';
-import { guardCurve } from './samples/math';
+import { createSampleInput, setSampleBus } from './samples/bus';
+import { SAMPLE_HP_HZ, beatGain, guardCurve } from './samples/math';
 import { btNoiseLevel, createBtPath } from './btFilter';
 import type { BtPath, ListenDevice } from './btFilter';
 import { healthLog, isLateJump } from './health';
@@ -117,8 +117,9 @@ export class ZonkedAudioEngine implements AudioEngine {
     node.port.onmessage = (e: MessageEvent): void => this.onWorkletMessage(e.data as Record<string, unknown>);
     const master = ctx.createGain();
     master.gain.value = 0;
-    // Beat path goes through a duck gain, nature samples join at master, a clip guard ends the chain.
+    // Beat path goes through a duck gain (with the fixed tone trim), nature samples join at master through a 40 Hz high-pass, a clip guard ends the chain.
     const duck = ctx.createGain();
+    duck.gain.value = beatGain(0);
     const guard = ctx.createWaveShaper();
     guard.curve = guardCurve();
     // Bluetooth path sits between master and the clip guard: dsp-core and its limits are not touched.
@@ -133,7 +134,7 @@ export class ZonkedAudioEngine implements AudioEngine {
     this.analyser = analyser;
     this.freq = new Float32Array(analyser.frequencyBinCount);
     bt.setOn(this.listening === 'bluetooth');
-    setSampleBus({ ctx, input: master, duck });
+    setSampleBus({ ctx, input: createSampleInput(ctx, master, SAMPLE_HP_HZ), duck });
     this.node = node;
     this.master = master;
     this.writer = sab ? new ParamWriter(sab) : null;

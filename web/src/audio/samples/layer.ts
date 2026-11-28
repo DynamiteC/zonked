@@ -1,12 +1,16 @@
 import { SAMPLES } from './catalog';
-import { hasSeamJump, healthLog } from '../health';
+import { hasSeamTick, healthLog, stepP999 } from '../health';
+import { SAMPLE_REV } from './versions';
 import type { SampleInfo } from './catalog';
 import type { SampleBus } from './bus';
 import type { SynthHandle, SynthId } from './synth/graph';
 import {
   DUCK_TAU_SEC, FADE_IN_SEC, FADE_OUT_SEC, LEVEL_TAU_SEC,
-  blendFromLevel, clampBlend, clampLevel, duckGain,
+  beatGain, blendFromLevel, clampBlend, clampLevel, equalPowerCurve, natureScale, trimGain,
 } from './math';
+
+/** Switching from one nature sound to another: the old one falls and the new one rises over this long, equal power. */
+export const XFADE_SEC = 1.5;
 
 /** Plain result. The layer never throws. */
 export type SampleResult = { ok: true; note?: string } | { ok: false; error: string };
@@ -37,9 +41,7 @@ function decodeWithin(ctx: BaseAudioContext, bytes: ArrayBuffer, ms: number): Pr
 function checkSeam(buf: AudioBuffer): void {
   if (typeof buf.getChannelData !== 'function' || !(buf.length >= 2)) return;
   const d = buf.getChannelData(0);
-  let peak = 0;
-  for (let i = 0; i < d.length; i += 64) peak = Math.max(peak, Math.abs(d[i] ?? 0));
-  if (hasSeamJump(d[0] ?? 0, d[d.length - 1] ?? 0, peak)) healthLog.record(Date.now(), 'seam');
+  if (hasSeamTick(d[0] ?? 0, d[d.length - 1] ?? 0, stepP999(d))) healthLog.record(Date.now(), 'seam');
 }
 
 export interface LayerDeps {
@@ -49,9 +51,11 @@ export interface LayerDeps {
   origin: string;
   /** Test hook. Defaults to DECODE_TIMEOUT_MS. */
   decodeTimeoutMs?: number;
+  /** Day number added to the synth seed, so the first minute differs from day to day. Defaults to the UTC day. */
+  dayNumber?: () => number;
 }
 
-interface Active { id: string; src: AudioBufferSourceNode | SynthHandle; gain: GainNode }
+interface Active { id: string; src: AudioBufferSourceNode | SynthHandle; gain: GainNode; trim: number }
 
 const fail = (error: string): SampleResult => ({ ok: false, error });
 /** Fixed base seed. Each start adds one, so a session is repeatable and starts differ. */
@@ -70,13 +74,33 @@ export function createSampleLayer(deps: LayerDeps) {
   const effectiveBlend = (): number => (active === null ? 0 : blend ?? blendFromLevel(level));
 
   function applyDuck(bus: SampleBus): void {
-    bus.duck.gain.setTargetAtTime(duckGain(effectiveBlend()), bus.ctx.currentTime, DUCK_TAU_SEC);
+    bus.duck.gain.setTargetAtTime(beatGain(effectiveBlend()), bus.ctx.currentTime, DUCK_TAU_SEC);
+  }
+
+  /** Level slider times the sound's trim times the blend scale. The scale is 1 until a blend is set. */
+  function targetGain(a: Active): number {
+    return level * a.trim * (blend === null ? 1 : natureScale(blend));
+  }
+
+  const trimOf = (id: string): number => trimGain(SAMPLES.find((s) => s.id === id)?.trimDb ?? 0);
+
+  /** Fade a new sound in. Plain ramp on a first start, equal-power curve when it replaces another sound. */
+  function fadeIn(a: Active, bus: SampleBus, crossfade: boolean): void {
+    const t = bus.ctx.currentTime;
+    const g = a.gain.gain;
+    const to = targetGain(a);
+    g.setValueAtTime(0, t);
+    if (!crossfade) { g.linearRampToValueAtTime(to, t + FADE_IN_SEC); return; }
+    const curve = equalPowerCurve(true);
+    for (let i = 0; i < curve.length; i++) curve[i] = (curve[i] ?? 0) * to;
+    g.setValueCurveAtTime(curve, t, XFADE_SEC);
   }
 
   function urlFor(id: string): string | null {
     if (!ID_OK.test(id) || !SAMPLES.some((s) => s.id === id)) return null;
     try {
-      const url = new URL(`${deps.baseUrl}samples/${id}.mp3.json`, deps.origin);
+      const rev = SAMPLE_REV[id];
+      const url = new URL(`${deps.baseUrl}samples/${id}.mp3.json${rev === undefined ? '' : `?v=${rev}`}`, deps.origin);
       return url.origin === new URL(deps.origin).origin ? url.href : null;
     } catch {
       return null;
@@ -108,28 +132,34 @@ export function createSampleLayer(deps: LayerDeps) {
     return run;
   }
 
-  function fadeOut(a: Active, bus: SampleBus): void {
+  function fadeOut(a: Active, bus: SampleBus, crossfade = false): void {
     const t = bus.ctx.currentTime;
     const g = a.gain.gain;
+    const from = g.value;
+    const sec = crossfade ? XFADE_SEC : FADE_OUT_SEC;
     g.cancelScheduledValues(t);
-    g.setValueAtTime(g.value, t);
-    g.linearRampToValueAtTime(0, t + FADE_OUT_SEC);
-    try { a.src.stop(t + FADE_OUT_SEC + 0.05); } catch { /* already stopped */ }
+    g.setValueAtTime(from, t);
+    if (crossfade) {
+      const curve = equalPowerCurve(false);
+      for (let i = 0; i < curve.length; i++) curve[i] = (curve[i] ?? 0) * from;
+      g.setValueCurveAtTime(curve, t, sec);
+    } else g.linearRampToValueAtTime(0, t + sec);
+    try { a.src.stop(t + sec + 0.05); } catch { /* already stopped */ }
     a.src.onended = () => { a.src.disconnect(); a.gain.disconnect(); };
   }
 
   function begin(bus: SampleBus, id: string, buffer: AudioBuffer, lvl: number, loop: boolean): SampleResult {
-    if (active !== null) fadeOut(active, bus);
+    const switching = active !== null;
+    if (active !== null) fadeOut(active, bus, true);
     level = clampLevel(lvl, level);
     const src = bus.ctx.createBufferSource();
     const gain = bus.ctx.createGain();
     src.buffer = buffer;
     src.loop = loop;
-    gain.gain.setValueAtTime(0, bus.ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(level, bus.ctx.currentTime + FADE_IN_SEC);
+    const mine: Active = { id, src, gain, trim: trimOf(id) };
+    fadeIn(mine, bus, switching);
     src.connect(gain);
     gain.connect(bus.input);
-    const mine: Active = { id, src, gain };
     if (!loop) {
       src.onended = () => {
         src.disconnect();
@@ -152,15 +182,17 @@ export function createSampleLayer(deps: LayerDeps) {
       return fail('sample unavailable: reinstall the app files');
     }
     if (mine !== token) return { ok: true };
-    if (active !== null) fadeOut(active, bus);
+    const switching = active !== null;
+    if (active !== null) fadeOut(active, bus, true);
     level = clampLevel(lvl, level);
-    const src = build(bus.ctx, id, SESSION_SEED + starts++);
+    const day = Math.trunc(deps.dayNumber?.() ?? Date.now() / 86400000);
+    const src = build(bus.ctx, id, SESSION_SEED + (Number.isFinite(day) ? Math.abs(day) % 100000 : 0) * 31 + starts++);
     const gain = bus.ctx.createGain();
-    gain.gain.setValueAtTime(0, bus.ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(level, bus.ctx.currentTime + FADE_IN_SEC);
+    const cur: Active = { id, src, gain, trim: trimOf(id) };
+    fadeIn(cur, bus, switching);
     src.connect(gain);
     gain.connect(bus.input);
-    active = { id, src, gain };
+    active = cur;
     applyDuck(bus);
     return { ok: true };
   }
@@ -200,14 +232,16 @@ export function createSampleLayer(deps: LayerDeps) {
       if (bus === null || active === null) return;
       const g = active.gain.gain;
       g.cancelScheduledValues(bus.ctx.currentTime);
-      g.setTargetAtTime(level, bus.ctx.currentTime, LEVEL_TAU_SEC);
+      g.setTargetAtTime(targetGain(active), bus.ctx.currentTime, LEVEL_TAU_SEC);
       applyDuck(bus);
     },
 
     setBlend(b: number): void {
       blend = clampBlend(b, blend ?? 0);
       const bus = deps.getBus();
-      if (bus !== null) applyDuck(bus);
+      if (bus === null) return;
+      if (active !== null) active.gain.gain.setTargetAtTime(targetGain(active), bus.ctx.currentTime, LEVEL_TAU_SEC);
+      applyDuck(bus);
     },
 
     stop(): void {
