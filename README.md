@@ -50,7 +50,7 @@ Numbers from one verify:all run on commit `102f9930353c` (2026-11-28). Generated
 - Real browser checks (Playwright, Chromium, real audio engine): 38 of 38
 - Browser matrix (Chromium, Firefox, WebKit builds from Playwright, 9 combinations): 162 of 162 checks
 <!-- counts:end -->
-- Not tested: listening by ear to the 22 recordings and 10 made-in-code sounds, real Firefox, real Safari, real phones, a real screen reader, and a live Kiro Crew host. `docs/OWNER-TEST.md` lists the steps for these.
+- Not tested: listening by ear to the 20 recordings and 10 made-in-code sounds, real Firefox, real Safari, real phones, a real screen reader, and a live Kiro Crew host. `docs/OWNER-TEST.md` lists the steps for these.
 - Publish readiness against the App Kit guide: `docs/PUBLISH-CHECKLIST.md`.
 
 ## Quick start (60 s)
@@ -75,7 +75,7 @@ Zonked resurrects two old things. One is SBaGen (1998), the `.sbg` brainwave seq
 
 ## Free, private, for everyone
 
-Zonked is a free calm sound player for long working days and winding down. No account, no ads, no tracking, no internet at run time (the only call is the optional crew bridge on your own computer). The engine makes the sound on your device, plus 22 bundled nature loops that play only when chosen, and 10 sounds made in code. The app works offline: 6 of the 22 loops are saved at install, and the others work offline after you have played them once online.
+Zonked is a free calm sound player for long working days and winding down. No account, no ads, no tracking, no internet at run time (the only call is the optional crew bridge on your own computer). The engine makes the sound on your device, plus 20 bundled nature loops that play only when chosen, and 10 sounds made in code. The app works offline: 6 of the 22 loops are saved at install, and the others work offline after you have played them once online.
 
 The Sanctuary panel (More menu) holds:
 
@@ -124,13 +124,13 @@ npm run preview        # http://localhost:4173 (COOP/COEP set)
 # or: npm run dev      # http://localhost:5173
 ```
 
-Click the mask or press Space. Accept the safety notice once. Pick a preset or open the editor (`E`) to write `.sbg` text. After the first load the app works with the network off. Of the nature loops, 6 are ready offline at once and the other 16 after you play them once online.
+Click the mask or press Space. Accept the safety notice once. Pick a preset or open the editor (`E`) to write `.sbg` text. After the first load the app works with the network off. Of the nature loops, 6 are ready offline at once and the other 14 after you play them once online.
 
 Presets: Deep Focus (40 Hz gamma), Flow State (18 Hz beta), AI Burnout Reset (10 Hz alpha to 6 Hz theta), Breathwork Sync (5.5 Hz theta with a breath pacer), Deep Rest (2.5 Hz delta), Classic 1998 SBaGen Demo.
 
 ## The library
 
-Sound comes from the engine and a few bundled loops. The engine makes beats, noise, lo-fi and piano itself. 22 short CC0 or public domain nature loops (MP3, lazy loaded) ship in the repo and play only when chosen. 6 are precached at install. The other 16 are saved for offline use the first time you play them. Each is listed with source and licence in `docs/SAMPLES-LICENSES.md`. Ten more sounds (wind, waterfall, flute, roof rain, singing bowl, soft chimes, campfire, brown noise, ocean swell, crickets) are made in the browser. A person's own sound file never leaves their device. No internet at run time.
+Sound comes from the engine and a few bundled loops. The engine makes beats, noise, lo-fi and piano itself. 20 short CC0 or public domain nature loops (MP3, lazy loaded) ship in the repo and play only when chosen. 6 are precached at install. The other 14 are saved for offline use the first time you play them. Each is listed with source and licence in `docs/SAMPLES-LICENSES.md`. Ten more sounds (wind, waterfall, flute, roof rain, singing bowl, soft chimes, campfire, brown noise, ocean swell, crickets) are made in the browser. A person's own sound file never leaves their device. No internet at run time.
 
 ### Templates
 

@@ -16,7 +16,7 @@ const db = (g: number): number => 20 * Math.log10(g);
 
 describe('trims table', () => {
   it('has a finite trim and measured loudness for every sound', () => {
-    expect(SAMPLES.length).toBe(32);
+    expect(SAMPLES.length).toBe(30);
     for (const s of SAMPLES) {
       expect(Number.isFinite(s.trimDb), s.id).toBe(true);
       expect(Number.isFinite(s.rawLufs), s.id).toBe(true);
@@ -118,7 +118,7 @@ describe('sample cache version', () => {
       const sha = createHash('sha256').update(readFileSync(join(dir, `${s.id}.mp3.json`))).digest('hex');
       expect(SAMPLE_REV[s.id], s.id).toBe(sha.slice(0, 10));
     }
-    expect(Object.keys(SAMPLE_REV)).toHaveLength(22);
+    expect(Object.keys(SAMPLE_REV)).toHaveLength(20);
   });
   it('the runtime cache name moved past the old one, and the build config uses it', () => {
     expect(SAMPLE_CACHE_NAME).not.toBe('zonked-samples');

@@ -23,7 +23,6 @@ A short guide for your final test. Plain words. Do the parts in order. Fill in t
 |---|---|---|---|---|
 | Rain | | | | |
 | Stream | | | | |
-| Ocean waves | | | | |
 | Forest | | | | |
 | Birds | | | | |
 | Breeze and birds | | | | |
@@ -129,7 +128,7 @@ They sit under "Made in code" in the same picker. Same steps as above.
 
 ## D. Known untested
 
-- Nobody has listened to the 22 recordings or the 10 made-in-code sounds. Ratings are yours.
+- Nobody has listened to the 20 recordings or the 10 made-in-code sounds. Ratings are yours.
 - Firefox could not run in the build sandbox. Safari ran on the Skip path only, in WebKit.
 - No real phone, no real screen reader, no axe scan.
 - The Kiro Crew app has not been installed on a real host. The manifest rules are a hand copy of the 0.13.1 validator.

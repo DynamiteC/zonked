@@ -33,8 +33,6 @@ export const moreSamples = (list: readonly SampleInfo[] = SAMPLES): readonly Sam
 export const SAMPLES: readonly SampleInfo[] = [
   { id: 'rain', label: 'Rain', kind: 'loop', note: 'Steady rain on leaves and ground.', hiss: 0.0851, trimDb: 2.0, rawLufs: -28.2, btFriendly: false, moods: ['focus', 'calm', 'sleep', 'nature'] },
   { id: 'stream', label: 'Stream', kind: 'loop', note: 'Clear water running close by.', hiss: 0.0132, trimDb: 12.0, rawLufs: -38.1, btFriendly: true, moods: ['focus', 'calm', 'nature'] },
-  { id: 'ocean', label: 'Ocean waves', kind: 'loop', note: 'Slow waves on a tropical beach.', hiss: 0.0106, trimDb: 2.5, rawLufs: -28.5, btFriendly: true, moods: ['calm', 'sleep', 'nature'] },
-  { id: 'rapids', label: 'River rapids', kind: 'loop', note: 'A wide river over rocks, a steady wash.', hiss: 0.0121, trimDb: 2.5, rawLufs: -28.3, btFriendly: true, moods: ['focus', 'nature'] },
   { id: 'forest', label: 'Forest', kind: 'loop', note: 'Quiet woods with a little air in the trees.', hiss: 0.0126, trimDb: 2.5, rawLufs: -28.5, btFriendly: true, moods: ['focus', 'calm', 'nature'] },
   { id: 'birds', label: 'Birds', kind: 'loop', note: 'Birds singing in a garden.', hiss: 0.4457, trimDb: 2.5, rawLufs: -28.4, more: true, btFriendly: false, moods: ['calm', 'nature'] },
   { id: 'breeze', label: 'Breeze and birds', kind: 'loop', note: 'A soft breeze with birds far off.', hiss: 0.0002, trimDb: 17.0, rawLufs: -43.1, more: true, btFriendly: true, moods: ['calm', 'nature'] },
