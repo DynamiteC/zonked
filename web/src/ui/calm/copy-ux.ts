@@ -11,15 +11,15 @@ export const UX = {
   } satisfies Record<PlanKind, string>,
   planEyebrow: {
     sprint: 'Today: 25 minutes of focus, then 5 minutes of rest',
-    winddown: 'Tonight: a gentle wind down',
+    winddown: 'Today: a gentle wind down',
     focus: 'Today: a focus session',
     calm: 'Today: a short calm break',
     reset: 'Today: a quick, quiet reset',
   } satisfies Record<PlanKind, string>,
   planStart: {
-    sprint: 'Start the sprint',
-    winddown: 'Start winding down',
-    focus: 'Start focus',
+    sprint: 'Start sprint',
+    winddown: 'Start',
+    focus: 'Start',
     calm: 'Start',
     reset: 'Start',
   } satisfies Record<PlanKind, string>,
@@ -61,10 +61,7 @@ export const UX = {
     'Zonked is not a medical device. See the notice you saw before your first sound.',
   ] as const,
   doneCard: {
-    copyMix: 'Copy mix code',
-    copied: 'Copied. Paste it anywhere to share this mix.',
     addHome: 'You can add Zonked to your home screen from your browser menu.',
-    sameAgain: 'Same as last time',
   },
   helped: {
     title: 'What helped',
@@ -75,5 +72,4 @@ export const UX = {
     today: (min: number) => `About ${min} minutes of sound today.`,
     rest: 'You have listened for a while. A short rest for your ears may feel good.',
   },
-  lowPowerNote: 'Simple look on this device.',
 } as const;
