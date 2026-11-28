@@ -384,6 +384,9 @@ export async function runFeatureChecks(h) {
       await waitSound(s.page);
       assert((await s.page.locator('.c-app[data-dim="true"]').count()) === 1, 'dim is not on');
       await s.page.getByTestId('player-options').click();
+      // The sheet rises over 200 ms. Measure it after it has settled.
+      await s.page.getByTestId('options-sheet').waitFor();
+      await s.page.waitForTimeout(600);
       const box = await s.page.getByTestId('options-sheet').boundingBox();
       assert(box !== null && box.y >= 0 && box.y + box.height <= 740 + 1 && box.x >= 0 && box.x + box.width <= 360 + 1, `sheet outside the screen: ${JSON.stringify(box)}`);
       const chip = s.page.getByTestId('options-sheet').getByRole('button', { name: '30 min' });
