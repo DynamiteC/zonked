@@ -1,6 +1,6 @@
 import { useId, useRef, type CSSProperties, type JSX } from 'react';
 import './mascot.css';
-import { Defs, EyesLayer, FaceLayer, MotesLayer, PlatesLayer, ShadowLayer } from './layers';
+import { Defs, HeadLayer, MotesLayer, ShadowLayer } from './layers';
 import { BandLayer, BodyLayer, RippleLayer } from './layersExtra';
 import type { CalmMascotProps } from './types';
 import { useParallax } from './useParallax';
@@ -14,16 +14,20 @@ function prefersReduced(): boolean {
 
 const unit = (v: number | undefined): number => (v !== undefined && Number.isFinite(v) ? Math.max(0, Math.min(1, v)) : 0);
 
+/** Up to this pixel size only the head is drawn, cropped, with the paint filter off. */
+const COMPACT_MAX = 96;
+
 export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = 'Zonked mascot', breathPhase, level, situation }: CalmMascotProps): JSX.Element {
   const id = `cm${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
   const stage = useRef<HTMLDivElement>(null);
   const still = reducedMotion ?? prefersReduced();
-  useParallax(stage, !still);
-  const px = Number.isFinite(size) ? Math.max(48, Math.min(640, size)) : 220;
+  const px = Number.isFinite(size) ? Math.max(24, Math.min(640, size)) : 220;
+  const compact = px <= COMPACT_MAX;
+  useParallax(stage, !still && !compact);
   return (
     <div
       ref={stage}
-      className={`cm-stage cm-${mood}${situation ? ` cm-s-${situation}` : ''}${still ? ' cm-still' : ''}${breathPhase !== undefined ? ' cm-driven' : ''}`}
+      className={`cm-stage cm-${mood}${situation ? ` cm-s-${situation}` : ''}${still ? ' cm-still' : ''}${compact ? ' cm-compact' : ''}${breathPhase !== undefined ? ' cm-driven' : ''}`}
       style={{ width: px, height: px, '--bp': unit(breathPhase), '--lv': level === undefined && mood === 'listening' ? 0.35 : unit(level) } as CSSProperties}
       role="img"
       aria-label={label}
@@ -32,19 +36,17 @@ export function CalmMascot({ mood = 'idle', size = 220, reducedMotion, label = '
     >
       <Defs id={id} />
       <div className="cm-body">
-        <ShadowLayer />
-        <BodyLayer id={id} />
+        {!compact && <ShadowLayer />}
+        {!compact && <BodyLayer id={id} />}
         <div className="cm-sway">
           <div className="cm-head">
-            <RippleLayer />
-            <FaceLayer id={id} />
-            <EyesLayer id={id} />
-            <PlatesLayer id={id} mood={mood} />
+            {!compact && <RippleLayer />}
+            <HeadLayer id={id} mood={mood} plain={compact} />
             <BandLayer />
-            <MotesLayer />
+            {!compact && <MotesLayer />}
           </div>
         </div>
-        <span className="cm-z" aria-hidden="true">z</span>
+        {!compact && <span className="cm-z" aria-hidden="true">z</span>}
       </div>
     </div>
   );

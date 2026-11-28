@@ -1,8 +1,21 @@
-export type MascotMood = 'idle' | 'happy' | 'sleepy' | 'listening' | 'breathing';
+export type MascotMood =
+  | 'idle'
+  | 'happy'
+  | 'sleepy'
+  | 'listening'
+  | 'breathing'
+  | 'focus'
+  | 'steering'
+  | 'tired'
+  | 'done'
+  | 'offline'
+  | 'error'
+  | 'loading';
 export type MascotSituation = 'focus' | 'calm' | 'sleep' | 'nature';
 
 export interface CalmMascotProps {
   readonly mood?: MascotMood;
+  /** Pixel size, clamped 24..640. Up to 96 the head alone is drawn with fewer details. */
   readonly size?: number;
   readonly reducedMotion?: boolean;
   readonly label?: string;

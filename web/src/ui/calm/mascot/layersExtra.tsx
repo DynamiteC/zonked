@@ -1,4 +1,5 @@
 import type { JSX } from 'react';
+import { HEAD_T } from './layers';
 
 const VB = '0 0 512 512';
 const INK = '#3A2A2E';
@@ -28,17 +29,13 @@ export function BodyLayer({ id }: IdProps): JSX.Element {
   );
 }
 
-/** Headphones drawn as part of the character: an ink band over the head and a cup on each side. Cups glow with --lv. */
+/** Headband over the head. It ends in the cups drawn around the ear pods, so the pods are not repeated. */
 export function BandLayer(): JSX.Element {
   return (
     <svg className="cm-layer cm-band" viewBox={VB} aria-hidden="true" focusable="false">
-      <path d="M104 205C100 -10 412 -10 408 205" fill="none" stroke={INK} strokeWidth="15" strokeLinecap="round" />
-      <path d="M118 190C120 20 392 20 394 190" fill="none" stroke="#FFF3D0" strokeOpacity="0.2" strokeWidth="4" strokeLinecap="round" />
-      <g className="cm-ear-glow">
-        <rect x="80" y="168" width="52" height="96" rx="24" fill="#5C4650" stroke={INK} strokeWidth="4" />
-        <rect x="380" y="168" width="52" height="96" rx="24" fill="#5C4650" stroke={INK} strokeWidth="4" />
-        <rect x="92" y="192" width="10" height="48" rx="5" fill="#8FE3D0" opacity="0.7" />
-        <rect x="410" y="192" width="10" height="48" rx="5" fill="#8FE3D0" opacity="0.7" />
+      <g transform={HEAD_T}>
+        <path className="cm-s-ink cm-bandink" d="M42 204C20 -34 492 -34 470 204" fill="none" stroke={INK} strokeWidth="16" strokeLinecap="round" />
+        <path d="M60 190C50 10 462 10 452 190" fill="none" stroke="#FFF3D0" strokeOpacity="0.22" strokeWidth="5" strokeLinecap="round" />
       </g>
     </svg>
   );
@@ -51,7 +48,7 @@ export function RippleLayer(): JSX.Element {
       key={`${cx}-${k}`}
       className="cm-ripple"
       style={{ animationDelay: `${k * -1.6}s` }}
-      d={`M${cx + dir * 14} 176Q${cx + dir * 50} 216 ${cx + dir * 14} 256`}
+      d={`M${cx + dir * 14} 170Q${cx + dir * 50} 215 ${cx + dir * 14} 260`}
       fill="none"
       stroke="#8FE3D0"
       strokeWidth="5"
@@ -60,8 +57,8 @@ export function RippleLayer(): JSX.Element {
   );
   return (
     <svg className="cm-layer cm-ripples" viewBox={VB} aria-hidden="true" focusable="false">
-      {[0, 1, 2].map((k) => ring(78, -1, k))}
-      {[0, 1, 2].map((k) => ring(434, 1, k))}
+      {[0, 1, 2].map((k) => ring(96, -1, k))}
+      {[0, 1, 2].map((k) => ring(416, 1, k))}
     </svg>
   );
 }

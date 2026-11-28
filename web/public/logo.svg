@@ -1,42 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#FFE600"/>
-      <stop offset="1" stop-color="#FFB800"/>
-    </linearGradient>
-    <filter id="glow" x="-10%" y="-10%" width="120%" height="120%">
-      <feGaussianBlur stdDeviation="3" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE600"/><stop offset="1" stop-color="#FFB800"/></linearGradient>
+    <radialGradient id="shade" cx="0.35" cy="0.3" r="0.9"><stop offset="0.5" stop-color="#C9772A" stop-opacity="0"/><stop offset="1" stop-color="#C9772A" stop-opacity="0.35"/></radialGradient>
   </defs>
   <circle cx="256" cy="256" r="252" fill="#0A0B0F"/>
-  <circle cx="256" cy="256" r="251" fill="none" stroke="#FFE600" stroke-opacity="0.15" stroke-width="1"/>
-  <g filter="url(#glow)" fill="none" stroke="url(#gold)" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
-    <circle cx="256" cy="256" r="200"/>
-    <rect x="218" y="146" width="76" height="8" rx="4" fill="url(#gold)" stroke="none"/>
+  <g transform="translate(25.6 35.6) scale(0.9)">
     <g id="ear-left">
-      <rect x="22" y="212" width="40" height="88" rx="16" fill="#0A0B0F"/>
-      <rect x="35" y="234" width="14" height="10" rx="3" fill="#0A0B0F" stroke-width="3"/>
-      <rect x="35" y="268" width="14" height="10" rx="3" fill="#0A0B0F" stroke-width="3"/>
+      <rect x="8" y="196" width="68" height="120" rx="30" fill="#6B4A3C" stroke="#3A2A2E" stroke-width="6"/>
+      <rect x="22" y="212" width="40" height="88" rx="16" fill="#241F2B" stroke="#3A2A2E" stroke-width="4"/>
+      <rect x="35" y="234" width="14" height="10" rx="3" fill="#241F2B" stroke="#FFD23A" stroke-width="3"/><rect x="35" y="268" width="14" height="10" rx="3" fill="#241F2B" stroke="#FFD23A" stroke-width="3"/>
     </g>
     <g id="ear-right">
-      <rect x="450" y="212" width="40" height="88" rx="16" fill="#0A0B0F"/>
-      <rect x="463" y="234" width="14" height="10" rx="3" fill="#0A0B0F" stroke-width="3"/>
-      <rect x="463" y="268" width="14" height="10" rx="3" fill="#0A0B0F" stroke-width="3"/>
+      <rect x="436" y="196" width="68" height="120" rx="30" fill="#6B4A3C" stroke="#3A2A2E" stroke-width="6"/>
+      <rect x="450" y="212" width="40" height="88" rx="16" fill="#241F2B" stroke="#3A2A2E" stroke-width="4"/>
+      <rect x="463" y="234" width="14" height="10" rx="3" fill="#241F2B" stroke="#FFD23A" stroke-width="3"/><rect x="463" y="268" width="14" height="10" rx="3" fill="#241F2B" stroke="#FFD23A" stroke-width="3"/>
     </g>
+    <circle cx="256" cy="256" r="200" fill="url(#gold)"/>
+    <circle cx="256" cy="256" r="200" fill="url(#shade)"/>
+    <circle cx="256" cy="256" r="186" fill="none" stroke="#FFF3B0" stroke-opacity="0.7" stroke-width="12" stroke-dasharray="330 1500" stroke-linecap="round" transform="rotate(200 256 256)"/>
+    <circle cx="256" cy="256" r="200" fill="none" stroke="#3A2A2E" stroke-width="8"/>
+    <circle cx="256" cy="256" r="200" fill="none" stroke="#3A2A2E" stroke-width="6" stroke-dasharray="420 1500" stroke-linecap="round" transform="rotate(100 256 256)"/>
+    <rect x="218" y="146" width="76" height="8" rx="4" fill="#241F2B"/>
     <g id="eye-left" class="eye" style="transform-box:fill-box;transform-origin:center">
-      <circle cx="178" cy="150" r="40" fill="#0A0B0F"/>
-      <circle cx="178" cy="150" r="24" stroke-width="4" stroke-opacity="0.8"/>
-      <circle cx="178" cy="150" r="7" fill="url(#gold)" stroke="none"/>
+      <circle cx="178" cy="150" r="40" fill="#241F2B" stroke="#3A2A2E" stroke-width="5"/>
+      <circle cx="178" cy="150" r="24" fill="none" stroke="#FFD23A" stroke-width="4" stroke-opacity="0.9"/>
+      <circle cx="178" cy="150" r="8" fill="#FFD23A"/>
+      <circle cx="169" cy="140" r="4" fill="#FFF6DC" opacity="0.8"/>
     </g>
     <g id="eye-right" class="eye" style="transform-box:fill-box;transform-origin:center">
-      <circle cx="334" cy="150" r="40" fill="#0A0B0F"/>
-      <circle cx="334" cy="150" r="24" stroke-width="4" stroke-opacity="0.8"/>
-      <circle cx="334" cy="150" r="7" fill="url(#gold)" stroke="none"/>
+      <circle cx="334" cy="150" r="40" fill="#241F2B" stroke="#3A2A2E" stroke-width="5"/>
+      <circle cx="334" cy="150" r="24" fill="none" stroke="#FFD23A" stroke-width="4" stroke-opacity="0.9"/>
+      <circle cx="334" cy="150" r="8" fill="#FFD23A"/>
+      <circle cx="325" cy="140" r="4" fill="#FFF6DC" opacity="0.8"/>
     </g>
-    <polygon id="plate-left" points="96,240 240,276 240,350 168,370 120,320" fill="#0A0B0F"/>
-    <polygon id="plate-right" points="416,240 272,276 272,350 344,370 392,320" fill="#0A0B0F"/>
-    <path d="M190 392V426M226 392V426M286 392V426M322 392V426" stroke-width="8"/>
+    <polygon id="plate-left" points="96,240 240,276 240,350 168,370 120,320" fill="#2F2430" stroke="#3A2A2E" stroke-width="11" stroke-linejoin="round"/>
+    <polygon id="plate-right" points="416,240 272,276 272,350 344,370 392,320" fill="#2F2430" stroke="#3A2A2E" stroke-width="11" stroke-linejoin="round"/>
+    <path d="M190 392V426M226 392V426M286 392V426M322 392V426" fill="none" stroke="#3A2A2E" stroke-width="9" stroke-linecap="round"/>
+    <polygon id="phase-diamond" points="256,300 270,316 256,332 242,316" fill="#00E5A8" fill-opacity="0.35" stroke="#00E5A8" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M42 204C20 -34 492 -34 470 204" fill="none" stroke="#9A8590" stroke-width="16" stroke-linecap="round"/>
   </g>
-  <polygon id="phase-diamond" points="256,300 270,316 256,332 242,316" fill="none" stroke="#00E5A8" stroke-width="4" stroke-linejoin="round"/>
 </svg>
