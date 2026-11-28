@@ -9,7 +9,8 @@ import type { BridgeDeps } from '../bridgeClient';
 import { MiniPlayer, TabBar } from './CalmChrome';
 import type { View } from './CalmChrome';
 import { CALM } from './copy';
-import { DEFAULT_PROFILE, clearAll, loadLast, saveLast } from './data';
+import { DEFAULT_PROFILE, loadLast, saveLast } from './data';
+import { forgetEverything } from './data/forget';
 import type { StorageLike } from './data';
 import { EndCard, useEndCard } from './EndCard';
 import type { EndInfo } from './EndCard';
@@ -24,7 +25,7 @@ import { forgetNature } from './nature/forget';
 import { toDayNumber } from './data';
 import { today, useCalmData } from './useCalmData';
 import { useCalmSession } from './useCalmSession';
-import { Guide, guideDone, markGuideDone } from './Guide';
+import { Guide, guideDone, guideDue, markGuideDone } from './Guide';
 import { Painted } from './Painted';
 import { useCrewBridge } from './useCrewBridge';
 import { useFeel } from './useFeel';
@@ -70,6 +71,8 @@ export function CalmApp({ engine, clock, store, bridgeCreate }: CalmAppProps): R
   const still = s.reduced || data.profile.extraGentle;
   const [guideOpen, setGuideOpen] = useState(false);
   const [guideSeen, setGuideSeen] = useState(() => guideDone(data.storage));
+  // The first-time guide waits until the person has closed the end card, so it never covers the feel check.
+  const [endClosed, setEndClosed] = useState(false);
   const closeGuide = (): void => {
     markGuideDone(data.storage);
     setGuideSeen(true);
@@ -93,7 +96,7 @@ export function CalmApp({ engine, clock, store, bridgeCreate }: CalmAppProps): R
     setView('journey');
   };
   const forget = (): void => {
-    clearAll(data.storage);
+    void forgetEverything(data.storage, s.store);
     feel.clear();
     nature.stop();
     void forgetNature();
@@ -147,8 +150,8 @@ export function CalmApp({ engine, clock, store, bridgeCreate }: CalmAppProps): R
       <p className="c-sr" role="status" data-testid="play-status">
         {s.snap.playing ? `Playing. ${CALM.volumeCapped}` : 'Stopped.'}
       </p>
-      {end.card !== null && !s.snap.playing && <EndCardHost card={end.card} play={play} dismiss={end.dismiss} feel={feel} firstRun={toDayNumber(data.profile.createdAt) === today()} />}
-      {(guideOpen || (!guideSeen && !onboarding && end.card !== null && !s.snap.playing)) && <Guide reduced={still} onClose={closeGuide} onCrew={() => { closeGuide(); go('crew'); }} />}
+      {end.card !== null && !s.snap.playing && <EndCardHost card={end.card} play={play} dismiss={() => { end.dismiss(); setEndClosed(true); }} feel={feel} firstRun={toDayNumber(data.profile.createdAt) === today()} />}
+      {guideDue({ open: guideOpen, seen: guideSeen, onboarding, endClosed, endCardShown: end.card !== null, playing: s.snap.playing }) && <Guide reduced={still} onClose={closeGuide} onCrew={() => { closeGuide(); go('crew'); }} />}
       {s.gate && <SafetyNotice onAccept={s.accept} onCancel={s.cancelGate} />}
     </div>
   );

@@ -75,7 +75,7 @@ describe('CalmMascot', () => {
       unmount();
     }
     for (const size of [72, 120, 200]) {
-      const { container, unmount } = render(<CalmMascot size={size} reducedMotion />);
+      const { container, unmount } = render(<CalmMascot size={size} reducedMotion={false} />);
       expect(container.querySelectorAll('filter')).toHaveLength(1);
       expect(container.querySelectorAll('[filter]')).toHaveLength(1);
       unmount();
@@ -221,5 +221,36 @@ describe('CalmMascot', () => {
     expect(el.classList.contains('cm-paused')).toBe(false);
     unmount();
     expect(del.mock.calls.some(([t]) => t === 'visibilitychange')).toBe(true);
+  });
+});
+
+describe('CalmMascot low power path', () => {
+  const draw = (): number => {
+    const { container, unmount } = render(<CalmMascot size={200} reducedMotion={false} />);
+    const n = container.querySelectorAll('filter').length;
+    unmount();
+    return n;
+  };
+  const media = (match: (q: string) => boolean): void => {
+    vi.stubGlobal('matchMedia', (q: string) => ({ matches: match(q), media: q, addEventListener: () => undefined, removeEventListener: () => undefined }));
+  };
+  afterEach(() => vi.unstubAllGlobals());
+
+  it('skips the paint filter under reduced motion', () => {
+    const { container } = render(<CalmMascot size={200} reducedMotion />);
+    expect(container.querySelectorAll('filter')).toHaveLength(0);
+  });
+  it('skips the paint filter when reduced data is asked for', () => {
+    media((q) => q.includes('reduced-data'));
+    expect(draw()).toBe(0);
+  });
+  it('skips the paint filter on low memory or few cores, and keeps it otherwise', () => {
+    media(() => false);
+    vi.stubGlobal('navigator', { deviceMemory: 8, hardwareConcurrency: 8 });
+    expect(draw()).toBe(1);
+    vi.stubGlobal('navigator', { deviceMemory: 1, hardwareConcurrency: 8 });
+    expect(draw()).toBe(0);
+    vi.stubGlobal('navigator', { deviceMemory: 8, hardwareConcurrency: 2 });
+    expect(draw()).toBe(0);
   });
 });

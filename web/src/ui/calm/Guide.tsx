@@ -22,6 +22,19 @@ export const markGuideDone = (storage: StorageLike): void => {
   }
 };
 
+interface DueInput {
+  readonly open: boolean;
+  readonly seen: boolean;
+  readonly onboarding: boolean;
+  /** The person has closed the end card at least once. */
+  readonly endClosed: boolean;
+  readonly endCardShown: boolean;
+  readonly playing: boolean;
+}
+
+/** The guide shows when asked for, or once after the first end card is closed. Never over the end card or the feel check. */
+export const guideDue = (d: DueInput): boolean => d.open || (!d.seen && !d.onboarding && d.endClosed && !d.endCardShown && !d.playing);
+
 interface Props {
   readonly reduced: boolean;
   /** Called for Skip, Done and Escape. The parent saves that the guide is done. */

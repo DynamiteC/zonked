@@ -15,3 +15,5 @@ export {
   FEEL_ANSWERS, FEEL_KEY, MAX_FEEL_BYTES, MAX_FEEL_ENTRIES, addFeel, clearFeel, feelBias, loadFeel, nudgeRecs, parseFeel, saveFeel,
 } from './feel';
 export type { FeelAnswer, FeelEntry } from './feel';
+export { USE_CASES, echoLine, feelEcho, helpedCounts, plainLine, todayPlan, useCasePlan } from './todayPlan';
+export type { Echo, PlanKind, TodayPlan, UseCase } from './todayPlan';

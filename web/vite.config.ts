@@ -33,7 +33,7 @@ export default defineConfig({
       manifest: {
         name: 'Zonked',
         short_name: 'Zonked',
-        description: 'Acoustic recovery companion for coding sessions.',
+        description: 'Calm sound for tired minds. Free, private, works offline.',
         theme_color: '#0A0B0F',
         background_color: '#0A0B0F',
         display: 'standalone',

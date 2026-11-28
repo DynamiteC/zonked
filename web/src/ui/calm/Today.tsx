@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import type { Template } from '../../catalog/types';
-import { CALM, GOAL_LABEL, briefReason, greeting } from './copy';
-import { nudgeRecs, profileToRecommendation, recommendForDevice } from './data';
+import { getTemplates } from '../../catalog';
+import { CALM, GOAL_LABEL, greeting } from './copy';
+import { UX } from './copy-ux';
+import { USE_CASES, echoLine, feelEcho, nudgeRecs, plainLine, recommendForDevice, toDayNumber, todayPlan, useCasePlan } from './data';
 import type { FeelEntry, Goal, Profile, ProgressMap, WeekStats } from './data';
 import { FormFoot } from './FormFrame';
 import { Mascot } from './MascotView';
@@ -10,6 +12,8 @@ import { WeekDots } from './WeekDots';
 const realNow = (): Date => new Date();
 const NO_FEEL: readonly FeelEntry[] = [];
 const SPRINT_GOALS: readonly Goal[] = ['focus', 'study'];
+const REST_NOTE_MIN = 120;
+const NO_RECS: readonly never[] = [];
 
 interface Props {
   readonly profile: Profile;
@@ -21,6 +25,8 @@ interface Props {
   readonly hasHistory?: boolean;
   /** True on the day the person joined: the first dot is filled and a short note names Studio. */
   readonly joinedToday?: boolean;
+  /** Minutes of sound heard today on this device. A quiet rest note shows only after 2 hours. */
+  readonly todayMinutes?: number;
   readonly now?: () => Date;
   /** Last session played on this device, if any. */
   readonly last?: Template | null;
@@ -28,7 +34,8 @@ interface Props {
   readonly feel?: readonly FeelEntry[];
   /** Starts a focus sprint on a sound. Shown for Focus and Study goals. */
   readonly onSprint?: (t: Template) => void;
-  readonly onPlay: (t: Template) => void;
+  /** Plays a sound. `minutes` and `goal` set the session length and whether the Sleep fade runs. */
+  readonly onPlay: (t: Template, minutes?: number, goal?: Goal) => void;
   readonly onOpenJourney: (id: string) => void;
   readonly onGo: (view: 'journeys' | 'library') => void;
   readonly onReset: () => void;
@@ -37,13 +44,22 @@ interface Props {
   readonly onGuide?: () => void;
 }
 
-export function Today({ profile, week, reduced, crewConnected, hasHistory = true, joinedToday = false, now = realNow, last = null, feel = NO_FEEL, onSprint, onPlay, onGo, onReset, onBreathe, onGuide }: Props): React.JSX.Element {
+export function Today({ profile, week, reduced, crewConnected, hasHistory = true, joinedToday = false, todayMinutes = 0, now = realNow, last = null, feel = NO_FEEL, onSprint, onPlay, onGo, onReset, onBreathe, onGuide }: Props): React.JSX.Element {
   const [skip, setSkip] = useState(0);
+  const plan = useMemo(() => todayPlan(profile, now()), [profile, now]);
   const recs = useMemo(() => {
-    const ctx = profileToRecommendation(profile, now());
-    return nudgeRecs(recommendForDevice(ctx, profile.device, 5), feel.length === 0 ? [] : recommendForDevice(ctx, profile.device, 12), feel);
-  }, [profile, now, feel]);
+    const top = recommendForDevice(plan.ctx, profile.device, 5);
+    return nudgeRecs(top, feel.length === 0 ? NO_RECS : recommendForDevice(plan.ctx, profile.device, 12), feel);
+  }, [plan, profile.device, feel]);
   const pick = recs[skip % Math.max(1, recs.length)];
+  const echo = useMemo(() => feelEcho(feel, toDayNumber(now().getTime())), [feel, now]);
+  const echoSound = echo === null ? undefined : getTemplates().find((t) => t.id === echo.id);
+  const playPlan = (t: Template): void => (plan.kind === 'sprint' && onSprint !== undefined ? onSprint(t) : onPlay(t, plan.minutes, plan.fade ? 'sleep' : profile.goal));
+  const useCase = (u: (typeof USE_CASES)[number]): void => {
+    const p = useCasePlan(profile, now(), u);
+    const r = recommendForDevice(p.ctx, profile.device, 1)[0];
+    if (r !== undefined) onPlay(r.template, p.minutes, p.fade ? 'sleep' : profile.goal);
+  };
   return (
     <div className="c-today">
       <header className="c-pagehead">
@@ -57,15 +73,33 @@ export function Today({ profile, week, reduced, crewConnected, hasHistory = true
           {`${CALM.playAgain}: ${last.name}`}
         </button>
       )}
+      {echo !== null && echoSound !== undefined && (
+        <p className="c-echo" data-testid="feel-echo">
+          {echoLine(echoSound.name, echo)}{' '}
+          <button type="button" className="c-btn c-link" data-testid="feel-echo-play" onClick={() => onPlay(echoSound)}>
+            {UX.echo.play}
+          </button>
+        </p>
+      )}
       {pick !== undefined && (
-        <section className="c-daily" aria-labelledby="c-daily-h">
-          <p className="c-eyebrow">{CALM.dailyEyebrow}</p>
-          <h2 id="c-daily-h">{pick.template.name}</h2>
-          <p className="c-muted">{`${pick.template.recommendedMinutes} min. ${briefReason(pick.reasons[0] ?? CALM.suggested)}`}</p>
-          <FormFoot left={{ label: CALM.notThisOne, onClick: () => setSkip((n) => n + 1) }} next={{ label: CALM.start, onClick: () => onPlay(pick.template), testid: 'today-play' }} />
+        <section className="c-daily" aria-labelledby="c-daily-h" data-plan={plan.kind}>
+          <p className="c-eyebrow" data-testid="plan-eyebrow">{UX.planEyebrow[plan.kind]}</p>
+          <h2 id="c-daily-h">{`${UX.planTitle[plan.kind]}: ${pick.template.name}`}</h2>
+          <p className="c-muted">{`${UX.minutes(plan.minutes)}. ${plainLine(pick.template)}`}</p>
+          <FormFoot left={{ label: CALM.notThisOne, onClick: () => setSkip((n) => n + 1) }} next={{ label: UX.planStart[plan.kind], onClick: () => playPlan(pick.template), testid: 'today-play' }} />
         </section>
       )}
-      {onSprint !== undefined && pick !== undefined && SPRINT_GOALS.includes(profile.goal) && (
+      <section aria-labelledby="c-uses-h">
+        <h2 id="c-uses-h" className="c-h3">{UX.useCasesTitle}</h2>
+        <div className="c-chips">
+          {USE_CASES.map((u) => (
+            <button key={u} type="button" className="c-tchip" data-testid={`use-${u}`} onClick={() => useCase(u)}>
+              {UX.useCases[u]}
+            </button>
+          ))}
+        </div>
+      </section>
+      {onSprint !== undefined && pick !== undefined && plan.kind !== 'sprint' && SPRINT_GOALS.includes(profile.goal) && (
         <button type="button" className="c-link-card c-sprint-entry" data-testid="today-sprint" onClick={() => onSprint(pick.template)}>
           <b>{CALM.sprintTitle}</b>
           <small>{CALM.sprintLine}</small>
@@ -94,13 +128,16 @@ export function Today({ profile, week, reduced, crewConnected, hasHistory = true
             <li key={r.template.id}>
               <button type="button" className="c-mini-card" onClick={() => onPlay(r.template)}>
                 <b>{r.template.name}</b>
-                <small>{briefReason(r.reasons[0] ?? CALM.suggested)}</small>
+                <small>{plainLine(r.template)}</small>
                 <em>{`${r.template.recommendedMinutes} min`}</em>
               </button>
             </li>
           ))}
         </ul>
       </section>
+      {todayMinutes >= REST_NOTE_MIN && (
+        <p className="c-muted" data-testid="rest-note">{`${UX.listened.today(Math.round(todayMinutes))} ${UX.listened.rest}`}</p>
+      )}
       <button type="button" className="c-link-card" onClick={() => onGo('library')}>
         <b>{`Browse all sounds`}</b>
       </button>
